@@ -1,0 +1,51 @@
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Register a new API Gatekeeper</h4>
+      </div>
+      <div class="modal-body">
+
+		<p>You are about to register a new API to be accessed through the Feide Connect platform.</p>
+
+			<form class="registerform" role="form">  
+
+				<div class="form-group">
+					<label for="newAPIid">Identifier</label>
+					<p>The identifier will be part of the Feide Connect hosted API gatekeeper.</p>
+					<input style="font-size: 150%" id="newAPIid" type="text" class="form-control input" placeholder="">
+				</div>
+
+
+				<div class="form-group">
+					<label for="newAPIname">Name</label>
+					<p style="margin: 0px;">Give your API a short desriptive name. </p>					
+					<input style="" id="newAPIname" type="text" class="form-control input" placeholder="">
+				</div>
+
+				<div class="form-group">
+					<label for="newAPIdescr">Description of client</label>
+					<p style="margin: 0px;">And a longer descriptive text to explain what your API.</p>
+					<textarea style="" class="form-control" id="newAPIdescr" placeholder="Describe your client..."></textarea>
+				</div>
+
+
+				<div class="form-group">
+					<label for="newAPIendpoint">API Endpoint</label>
+					<p>Enter the API endpoint of the base URL of the API on your side.</p>
+					<input style="" id="newAPIendpoint" type="text" class="form-control input" placeholder="http://example.org/api">
+				</div>
+
+			</form>
+
+      </div>
+
+      <div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+		<a href="#" class="createNewBtn btn btn-primary">Register new API</a>
+      </div>
+      
+    </div>
+  </div>
+</div>

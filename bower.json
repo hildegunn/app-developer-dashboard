@@ -1,0 +1,26 @@
+{
+	"name": "feideconnect-app-developer-dashboard",
+	"version": "0.1.0",
+	"description": "Feide Connect Developer Dashboard",
+	"authors": [
+		"Andreas Åkre Solberg"
+	],
+	"homepage": "http://feideconnect.no",
+	"private": true,
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+	],
+	"dependencies": {
+		"uninett-theme": "git@scm.uninett.no:system/uninett-theme.git",
+		"requirejs": "~2.1.14",
+		"text": "~2.0.13",
+		"jso": "*",
+		"selectize": "~0.11.2",
+		"dustjs-linkedin": "~2.5.1",
+		"momentjs": "~2.9.0"
+	}
+}
