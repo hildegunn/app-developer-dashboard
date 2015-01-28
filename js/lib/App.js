@@ -87,7 +87,7 @@ define(function(require, exports, module) {
 				console.log("Client is removed, update client pool and mainlisting");
 				that.clientpool.removeClient(id);
 				that.mainlisting.activate();
-				this.setHash('/');
+				that.setHash('/');
 			});
 
 
@@ -104,7 +104,7 @@ define(function(require, exports, module) {
 				console.log("APIGK is removed, update client pool and mainlisting");
 				that.clientpool.removeAPIGK(id);
 				that.mainlisting.activate();
-				this.setHash('/');
+				that.setHash('/');
 			});
 
 
