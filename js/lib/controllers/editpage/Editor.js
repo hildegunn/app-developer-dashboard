@@ -60,42 +60,42 @@ define(function(require, exports, module) {
 					var file = files[i];
 
 					that.logoUploaded(file);
-					return;
+					// return;
 
 
-					var reader = new FileReader();
-					console.log("File:", file, reader);
+					// var reader = new FileReader();
+					// console.log("File:", file, reader);
 
-					//attach event handlers here...
+					// //attach event handlers here...
 
-					reader.readAsBinaryString(file);
-					// reader.readAsArrayBuffer(file);
+					// reader.readAsBinaryString(file);
+					// // reader.readAsArrayBuffer(file);
 
-					reader.onprogress = function(event) {
-						if (event.lengthComputable) {
-							var value = event.loaded;
-							var max = event.total;
-							var percent = Math.round(100*value / max)
-							console.log("Progress uploading file " + percent + "%");
+					// reader.onprogress = function(event) {
+					// 	if (event.lengthComputable) {
+					// 		var value = event.loaded;
+					// 		var max = event.total;
+					// 		var percent = Math.round(100*value / max);
+					// 		console.log("Progress uploading file " + percent + "%");
 							
-						}
-					};
-					reader.onloadend = function(event) {
-						var 
-							contents = event.target.result,
-							error = event.target.error;
+					// 	}
+					// };
+					// reader.onloadend = function(event) {
+					// 	var 
+					// 		contents = event.target.result,
+					// 		error = event.target.error;
 
-						console.log(event.target);
+					// 	console.log(event.target);
 
-						if (error != null) {
-							console.error("File could not be read! Code " + error.code);
-						} else {
-							console.log("Upløoad completed");
-							// that.logoUploaded(contents);
-							that.logoUploaded(file);
-							// console.log("Contents: " + contents);
-						}
-					};
+					// 	if (error != null) {
+					// 		console.error("File could not be read! Code " + error.code);
+					// 	} else {
+					// 		console.log("Upløoad completed");
+					// 		// that.logoUploaded(contents);
+					// 		that.logoUploaded(file);
+					// 		// console.log("Contents: " + contents);
+					// 	}
+					// };
 
 
 
@@ -109,8 +109,7 @@ define(function(require, exports, module) {
 		},
 
 		"logoUploaded": function(data) {
-
-			throw new "Photo uploaded handler not implemented";
+			throw "Photo uploaded handler not implemented";
 		},
 
 
