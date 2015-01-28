@@ -14,6 +14,7 @@ define(function(require, exports, module) {
 
 		ClientPool = require('./models/ClientPool'),
 		Client = require('./models/Client'),
+		APIGK = require('./models/APIGK'),
 
 		PaneController = require('./controllers/PaneController'),
 

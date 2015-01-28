@@ -151,6 +151,10 @@ define(function(require, exports, module) {
 		var path = "/apigkadm/apigks/";
 		this._request('core', path, null, ['peoplesearch'], callback);			
 	};
+	FeideConnect.prototype.apigkRegister = function(obj, callback) {
+		var path = "/apigkadm/apigks/";
+		this._requestObj('POST', 'core', path, null, ['peoplesearch'], obj, callback);
+	};
 	FeideConnect.prototype.apigkUpdate = function(obj, callback) {
 		var path = "/apigkadm/apigks/" + obj.id;
 		// delete obj.id;

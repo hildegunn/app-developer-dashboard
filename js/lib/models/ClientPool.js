@@ -62,10 +62,12 @@ define(function(require, exports, module) {
 			}
 		},
 		"setClient": function(client) {
-
 			this.clients[client.id] = client;
 			this.emit("clientChange", this.clients);
-
+		},
+		"setAPIGK": function(apigk) {
+			this.apigks[apigk.id] = apigk;
+			this.emit("apigkChange", this.apigks);
 		},
 		"removeClient": function(id) {
 			delete this.clients[id];
