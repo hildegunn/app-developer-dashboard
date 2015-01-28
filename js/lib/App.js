@@ -116,7 +116,6 @@ define(function(require, exports, module) {
 			});
 			this.mainlisting.on('apigkSelected', function(apigkid) {
 				var apigk = that.clientpool.getAPIGK(apigkid);
-				console.error("Selected APIGK", apigkid, apigk);
 				that.apigkeditor.edit(apigk, 'tabBasic');
 				that.setHash('/apigk/' + apigkid + '/edit/tabBasic');
 			});

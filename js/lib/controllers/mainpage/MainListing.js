@@ -93,8 +93,6 @@ define(function(require, exports, module) {
 			e.preventDefault(); // e.stopPropgate();
 			var apigkid = $(e.currentTarget).data('apigkid');
 			this.emit('apigkSelected', apigkid);
-
-			console.error("apigkSelected", apigkid);
 		},
 
 		"updateClients": function(clients) {
