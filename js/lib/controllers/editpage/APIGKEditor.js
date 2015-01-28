@@ -33,8 +33,7 @@ define(function(require, exports, module) {
 
 
 			this.ebind("click", ".actSaveChanges", "actSaveChanges");
-			// this.ebind("click", ".actScopeAdd", "actScopeAdd");
-			// this.ebind("click", ".actScopeRemove", "actScopeRemove");
+			this.ebind("click", ".actDelete", "actDelete");
 
 		
 		},
@@ -103,6 +102,13 @@ define(function(require, exports, module) {
 				that.emit("saved", x);
 			});
 
+		},
+		"actDelete": function(e) {
+			e.preventDefault();
+			var that = this;
+			this.feideconnect.apigkDelete(this.current.id, function(data) {
+				that.emit("deleted", that.current.id);
+			});
 		}
 
 	});

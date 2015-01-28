@@ -163,7 +163,7 @@ define(function(require, exports, module) {
 	};
 	FeideConnect.prototype.apigkDelete = function(id, callback) {
 		var path = "/apigkadm/apigks/" + id;
-		this._requestObj('DELETE', 'core', path, null, ['peoplesearch'], obj, callback);
+		this._requestObj('DELETE', 'core', path, null, ['peoplesearch'], null, callback);
 	};
 	FeideConnect.prototype.apigkUpdateLogo = function(id, obj, callback) {
 		var path = "/apigkadm/apigks/" + id + "/logo";
