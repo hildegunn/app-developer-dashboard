@@ -172,6 +172,11 @@ define(function(require, exports, module) {
 		contenttype = "image/jpeg";
 		this._requestBinary('POST', 'core', path, null, ['peoplesearch'], obj, contenttype, callback);
 	};
+	FeideConnect.prototype.apigkCheck = function(id, callback) {
+		var path = "/apigkadm/apigks/" + id + "/exists";
+		this._request('core', path, null, ['peoplesearch'], callback);	
+	};
+
 
 
 

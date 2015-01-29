@@ -12,9 +12,10 @@ define(function(require, exports, module) {
 
 
 
-	var APIGKCreate = function() {
+	var APIGKCreate = function(feideconnect) {
 
 		var that = this;
+		this.feideconnect = feideconnect;
 
 		// this.container = container;
 		this.callback = null;
@@ -36,6 +37,8 @@ define(function(require, exports, module) {
 			$("div#modalContainer").append(that.element);
 
 			that.element.on('keyup change', '#newAPIid', $.proxy(that.checkIfReady, that));
+			that.element.on('keyup change', '#newAPIname', $.proxy(that.checkIfReady, that));
+			that.element.on('keyup change', '#newAPIendpoint', $.proxy(that.checkIfReady, that));
 			that.element.on('click', '.createNewBtn', $.proxy(that.submit, that));
 
 			console.log("third element", that.element);
@@ -102,21 +105,133 @@ CREATE TABLE feideconnect.apigk (
 	};
 
 
+	APIGKCreate.prototype.setStatus = function(ok, text) {
+
+		if (ok === null) {
+
+			$(this.element).find('.inputStateIDok').hide();
+			$(this.element).find('.inputStateIDwaiting').css('display', 'table-cell');
+			$(this.element).find('.inputStateIDwarning').hide();
+
+		} else if (ok) {
+			$(this.element).find('.inputStateIDok').hide();
+			$(this.element).find('.inputStateIDwaiting').hide();
+			$(this.element).find('.inputStateIDwarning').css('display', 'table-cell');
+		} else {
+			$(this.element).find('.inputStateIDok').css('display', 'table-cell');
+			$(this.element).find('.inputStateIDwaiting').hide();
+			$(this.element).find('.inputStateIDwarning').hide();
+			$(this.element).find('span.inputStateIDwarningText').empty().append(text);
+		}
+
+	};
+
+
+	APIGKCreate.prototype.checkPing = function(str) {
+
+
+		var that = this;
+		if(!this.checkCounter) this.checkCounter = 0;
+		++this.checkCounter;
+
+		console.log("Check ping " + this.checkCounter);
+
+		setTimeout(function() {
+			if (--that.checkCounter <= 0) {
+				that.checkCounter = 0;
+
+				console.error("Perform validation of ID " + str);
+
+				that.lastChecked = str;
+
+				that.feideconnect.apigkCheck(str, function(exists) {
+					if (!exists) {
+						that.setStatus(true);
+						that.checkContinue(true);
+					} else {
+						that.setStatus(false, 'Already taken');
+						that.checkContinue(false);
+					}
+				});
+
+			}
+		}, 400);
+
+
+
+	}
+
+
+
+	APIGKCreate.prototype.checkContinue = function(ready) {
+
+		
+
+		var identifier = $(this.element).find("#newAPIid").val();
+		var name = $(this.element).find("#newAPIname").val(); 
+		var endpoint = $(this.element).find("#newAPIendpoint").val();
+
+		if (!identifier.match(/^[a-z0-9\-_]+$/)) {
+			ready = false;
+		}
+
+		if (!endpoint || endpoint === '') {
+			ready = false;
+		}
+
+
+		if (ready) {
+			$(this.element).find(".createNewBtn").removeAttr("disabled");
+		} else {
+			$(this.element).find(".createNewBtn").attr("disabled", "disabled");
+		}
+
+
+	};
+
 
 	APIGKCreate.prototype.checkIfReady = function() {
+
 		console.log("check if ready");
-		var name = this.element.find("#newAPIid").val();
-		if (name && name.length && name.length > 1) {
-			console.log("READY");
-			// $(this.element).find(".createNewBtn").attr("disabled", "disabled");
-			$(this.element).find(".createNewBtn").removeClass("disabled");
+		var that = this;
+		var identifier = $(this.element).find("#newAPIid").val();
+
+
+
+		if (!identifier) {
+			ready = false;
+			this.setStatus(false, 'Required');
+			that.lastChecked = null;
+			this.checkContinue(false);
+		} else if  (identifier === '') {
+			ready = false;
+			this.setStatus(false, 'Required');
+			that.lastChecked = null;
+			this.checkContinue(false);
+		} else if (!identifier.match(/^[a-z0-9\-_]+$/)) {
+			ready = false;
+			this.setStatus(false, 'Invalid characters');
+			that.lastChecked = null;
+			this.checkContinue(false);
 		} else {
-			console.log("NOT READY");
-			// $(this.element).find(".createNewBtn").removeAttr("disabled");
+
+			if (identifier !== that.lastChecked) {
+				this.checkPing(identifier);
+				this.setStatus(null);		
+			} else {
+				this.checkContinue(true);	
+			}
 			
-			$(this.element).find(".createNewBtn").addClass("disabled");
+
 		}
+
+
+
+
 	};
+
+
+
 
 
 

@@ -53,7 +53,7 @@ define(function(require, exports, module) {
 			this._super();
 
 			this.pc = new PaneController(this.el.find('#panecontainer'));
-			this.mainlisting = new MainListing();
+			this.mainlisting = new MainListing(this.feideconnect);
 			this.pc.add(this.mainlisting);
 
 
@@ -188,6 +188,8 @@ define(function(require, exports, module) {
 
 			});
 
+	
+			
 
 		},
 		"routeEditClient": function(clientid, tabid) {

@@ -27,11 +27,12 @@ define(function(require, exports, module) {
 	 * This controller controls 
 	 */
 	var MainListing = Pane.extend({
-		"init": function() {
+		"init": function(feideconnect) {
 
 			console.log("initiator (MainListing)");
 
 			var that = this;
+			this.feideconnect = feideconnect;
 			// this.groups = groups;
 
 			// this.itemid = null;
@@ -53,7 +54,6 @@ define(function(require, exports, module) {
 
 
 
-
 			this.clientcreate = new ClientCreate();
 			this.clientcreate.onSubmit(function(obj) {
 				console.log("Create new obj", obj);
@@ -61,7 +61,8 @@ define(function(require, exports, module) {
 			});
 
 
-			this.apigkcreate = new APIGKCreate();
+
+			this.apigkcreate = new APIGKCreate(this.feideconnect);
 			this.apigkcreate.onSubmit(function(obj) {
 				console.log("Create new obj", obj);
 				that.emit("apigkCreate", obj);
