@@ -83,8 +83,9 @@ define(function(require, exports, module) {
 		},
 		"removeAPIGK": function(id) {
 			delete this.apigks[id];
+			console.error("DELETE APIGK", id);
 			this.emit("apigkChange", this.apigks);
-		},
+		}
 
 	}).extend(EventEmitter);
 

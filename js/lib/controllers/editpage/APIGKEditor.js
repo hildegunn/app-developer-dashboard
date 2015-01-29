@@ -3,15 +3,10 @@ define(function(require, exports, module) {
 	var 
 		dust = require('dust'),
 		Pane = require('../Pane'),
-
 		Client = require('../../models/Client'),
-
-		EventEmitter = require('../../EventEmitter'),
-
+		APIGK = require('../../models/APIGK'),
 		Editor = require('./Editor'),
-
 		scopePolicy = require('../../../../etc/scopepolicy'),
-
 		utils = require('../../utils')
 		;
 

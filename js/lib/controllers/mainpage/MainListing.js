@@ -14,15 +14,6 @@ define(function(require, exports, module) {
 
 
 
-	// var tmpl = {
-	// 	"grouplist": require('uwap-core/js/text!../../templates/grouplist2.html')
-	// };
-	// var templates = {
-	// 	"grouplist": hb.compile(tmpl.grouplist),
-	// };
-
-
-
 	/*
 	 * This controller controls 
 	 */
@@ -33,14 +24,9 @@ define(function(require, exports, module) {
 
 			var that = this;
 			this.feideconnect = feideconnect;
-			// this.groups = groups;
 
-			// this.itemid = null;
-			// this.selected = null;
 
 			this._super();
-
-			// this.el.empty().append('<p>Juhu. This is the mainlisting</p>');
 
 			var x = dust.compile(template, "mainlisting");
 			dust.loadSource(x);
@@ -147,8 +133,6 @@ define(function(require, exports, module) {
 				that.elAPIGKsAttached = true;
 			}
 
-			// that.el.find('')
-
 		},
 
 		"load": function() {
@@ -161,26 +145,24 @@ define(function(require, exports, module) {
 		"draw": function(act) {
 			var that = this;
 
+			console.error("DRAW Maiunlisting");
+
 
 			dust.render("mainlisting", {}, function(err, out) {
-				console.log(out);
 				that.el.empty().append(out);
-
 				that.el.find('#listingClients').append(that.elClients);
 				that.el.find('#listingAPIGKs').append(that.elAPIGKs);
 				that.elClientsAttached = true;
 				that.elAPIGKsAttached = true;
 				that.templateLoaded = true;
 
-				console.log("About to attach client list ",that.el.find('#listingClients'),  that.elClients);
-
 			});
-
 	
 
 			if (act) {
 				this.activate();
 			}
+
 		}
 	}).extend(EventEmitter);
 

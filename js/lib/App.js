@@ -175,8 +175,6 @@ define(function(require, exports, module) {
 					$(".showLoggedIn").show();
 					$(".showLoggedOut").hide();
 
-					// that.load();
-
 				} else {
 
 					$(".loader-hideOnLoad").show();
