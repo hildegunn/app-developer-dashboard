@@ -53,13 +53,11 @@ define(function(require, exports, module) {
 			this.elAPIGKsAttached = false;
 
 
-
 			this.clientcreate = new ClientCreate();
 			this.clientcreate.onSubmit(function(obj) {
 				console.log("Create new obj", obj);
 				that.emit("clientCreate", obj);
 			});
-
 
 
 			this.apigkcreate = new APIGKCreate(this.feideconnect);
@@ -74,8 +72,6 @@ define(function(require, exports, module) {
 			this.el.on("click", "#registerNewAPIGK", function() {
 				that.apigkcreate.activate();
 			});
-
-
 
 
 			this.ebind("click", ".clientEntry", "selectedClient");

@@ -2,7 +2,8 @@ define(function(require, exports, module) {
 
 
 	var
-		dust = require('dust')
+		dust = require('dust'),
+		utils = require('../../utils')
 		;
 
 	var template = require('text!templates/newAPIGK.html');
@@ -87,11 +88,17 @@ CREATE TABLE feideconnect.apigk (
 			"clientid": true
 		};
 		obj.requireuser = true;
-		// obj.scopedef =  {
-		// 	"policy": {
-		// 		"auto": false
-		// 	}
-		// };
+		obj.trust = {
+			"type": "basic",
+			"username": "feideconnect",
+			"password": utils.guid()
+		};
+		obj.scopedef =  {
+			"title": "Basic access",
+			"policy": {
+				"auto": false
+			}
+		};
 
 
 

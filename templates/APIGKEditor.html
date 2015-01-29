@@ -11,7 +11,7 @@
 		<ul class="nav nav-pills nav-stacked tabselector" style="text-align:right">
 			<li role="presentation" data-tabid="tabBasic" class=""><a href="#">Basic info</a></li>
 			<li role="presentation" data-tabid="tabTrust" class=""><a href="#">Trust</a></li>
-			<li role="presentation" data-tabid="tabScopes" class=""><a href="#">Scopes</a></li>
+			
 			<li role="presentation" data-tabid="tabRequests" class=""><a href="#">Requests</a></li>
 			<li role="presentation" data-tabid="tabClients" class=""><a href="#">Clients</a></li>
 			<li role="presentation" data-tabid="tabStatistics" class=""><a href="#">Usage statistics</a></li>
@@ -33,11 +33,6 @@
 
 
 				<form class="" style="">
-
-		<!-- 			<div class="form-group">
-						<label for="exampleInputEmail1">Client Identifier</label>
-						<input type="email" class="form-control" id="client_id" value="{id}" disabled="disabled">
-					</div> -->
 
 
 					<div class="form-group">
@@ -94,174 +89,36 @@
 
 
 		<div id="tabTrust">
-		<div class="row" style="">
 
-			<div class="col-sm-6">
-				<h3>OAuth Client credentials</h3>
+			<div class="row" style="">
 
-				<dl>
-					<dt>Client ID</dt>
-					<dd><code>{id}</code></dd>
-
-					<dt>Client Secret</dt>
-					<dd><code>{client_secret}</code></dd>
-
-
-					<dt>Redirect URI</dt>
-					{#redirect_uri}
-					<dd><code>{.}</code></dd>
-					{/redirect_uri}
-
-				</dl>
-			</div>
-
-			<div class="col-sm-6">
-
-				<h3>OAuth Provider</h3>
-
-				<dl>
-					<dt>Authorization endpoint</dt>
-					<dd><code>{oauth.authorization}</code></dd>
-
-					<dt>Token endpoint</dt>
-					<dd><code>{oauth.token}</code></dd>
-				</dl>
-
-			</div>
-
-		<!--
-			<div class="col-md-4">
-				<h3>Usage Statistics</h3>
-
-				<p><img src="img/plot.jpg" style="border-radius: 5px"></p>
-
-				<p>{count} registered users. ( <a href="">see more statistics</a> )</p>
-
-			</div>
-		-->
-
-		</div>
-
-
-
-
-		<div style="margin-top: .2em" class="row">
-			<div class="col-sm-12">
-
-				<h3>Authorized Scopes</h3>
-
-				<p><code>
-				{#scopes}
-					{.} 
-				{/scopes}
-				</code></p>
-
-			</div>
-		</div>
-
-		</div>
-
-
-
-
-
-
-		<div id="tabScopes"  style="" class="row">
-
-
-			<div class="col-sm-6">
-
-				<h3>Accepted scopes</h3>
-
-				<div class="list-group">
-					{#scopelist.accepted}
-						<div class="list-group-item scopeEntry" data-scopeid="{scope}">
-							<div class="pull-right"><code class="">{scope}</code></div>
-							<h4 class="list-group-item-heading">{title}</h4>
-							<p class="list-group-item-text">{descr}</p>
-
-							<div class="">
-									<button class="btn btn-xs btn-danger actScopeRemove">
-										<i class="glyphicon glyphicon-remove"></i>
-										Remove scope 
-										</button>
-							</div>
-							<p class="clearfix"></p>
-						</div>
-					{:else}
-						<p>No available scopes</p>
-					{/scopelist.accepted}
+				<div class="col-sm-12">
 					
-				</div>
+					{#trust}
+					<dl>
+						<dt>Trust type</dt>
+						<dd><code>{type}</code></dd>
+
+						<dt>Username</dt>
+						<dd><code>{username}</code></dd>
+
+						<dt>Password</dt>
+						
+						<dd><code>{password}</code></dd>
+						
+
+					</dl>
+					{/trust}
 
 
-				<h3 style="margin-top: 1.5em">Requested scopes</h3>
-
-				<div class="list-group">
-					{#scopelist.requested}
-						<div class="list-group-item scopeEntry" data-scopeid="{scope}">
-							<div class="pull-right"><code class="">{scope}</code></div>
-							<h4 class="list-group-item-heading">{title}</h4>
-							<p class="list-group-item-text">{descr}</p>
-
-							<div class="" style="margin-top: .3em; margin-bottom: 0px">
-									<button class="btn btn-xs btn-default actScopeRemove">
-										<i class="glyphicon glyphicon-remove"></i>
-										Remove scope 
-										</button>
-							</div>
-							<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
-
-						</div>
-					{:else}
-						<p>No requested scopes</p>
-					{/scopelist.requested}
 				</div>
 
 			</div>
 
-
-
-			<div class="col-sm-6">
-
-				<h3>Available scopes</h3>
-
-				<div class="list-group">
-					{#scopelist.available}
-						<div class="list-group-item scopeEntry" data-scopeid="{scope}">
-							<div class="pull-right"><code class="">{scope}</code></div>
-							<h4 class="list-group-item-heading">{title}</h4>
-							<p class="list-group-item-text">{descr}</p>
-
-
-							<p style="margin-top: .3em; margin-bottom: 0px">
-								{?policy.auto}
-									<button class="btn btn-sm btn-primary actScopeAdd">
-										<i class="glyphicon glyphicon-chevron-left"></i>
-										Add scope</button>
-								{/policy.auto}
-								{^policy.auto}
-									<button class="btn btn-sm btn-warning actScopeAdd">
-										<i class="glyphicon glyphicon-chevron-left"></i>
-										Request scope</button>
-								{/policy.auto}
-							</p>
-							<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
-
-						</div>
-					{:else}
-						<p>No available scopes</p>
-					{/scopelist.available}
-				</div>
+		</div>
 
 
 
-
-			</div>
-
-
-
-			</div>
 
 
 		<div id="tabRequests"  style="" class="row">
@@ -328,137 +185,3 @@
 </div>
 
 
-<!--
-
-
-
-
-<div class="row">
-
-	<div class="col-md-12">
-
-		<h3>Generic Authorization Scopes</h3>
-		<table class="table table-striped">
-
-			<thead>
-				<tr>
-					<th>Scope</th>
-					<th>Descr</th>
-					<th>Status</th>
-					<th>Action</th>
-				</tr>
-			</thead>
-
-			<tbody>
-
-			{! 
-					<tr class="scope" data-scope="{@key}">
-						<td><code>{key}</code></td>
-						<td>{name}. {descr}</td>
-						<td>
-							{#granted}
-								<span class="label label-success">Granted</span>
-							{/granted}
-							{#requested}
-								<span class="label label-danger">Requested</span>
-							{/requested}
-						</td>
-						<td>
-							{#granted}
-								<button class="btn btn-mini actRemoveAccessGeneric">Remove</button>
-							{{/granted}}
-							{#else2}
-								{#requested}
-									<button class="btn btn-mini actRemoveAccessGeneric">Remove</button>
-								{/requested}
-								{#else}
-									<button class="btn btn-mini actRequestAccessGeneric">Request</button>
-								{/else}
-								
-							{/else2}
-						</td>
-					</tr>
-				!}
-
-			</tbody>
-		</table>
-
-	</div>
-
-
-</div>
-
-
-
--->
-
-
-
-<!--
-
-<div class="row">
-
-	<div class="col-md-12">
-
-
-
-		<div class="panel panel-default authorizationlistcontainer" id="authorizedAPIContainer">
-
-			<div class="panel-heading">
-
-				<h3>Authorized APIs</h3>
-
-			</div>
-
-
-			<div class="panel-body">
-
-				<p style="margin: .8em .6em">These APIs are already authorized for your client, or pending moderation.</p>
-			
-
-				<div class="panel-body clientauthorizations" id="authorizedAPIlisting">
-					<div class="items"></div>
-				</div>
-				<div style="margin: 0px; padding: 0px; text-align: center" class="listpager"></div>
-
-			</div>
-
-		</div>
-
-
-
-
-
-
-		<div class="panel panel-default authorizationlistcontainer" id="availableAPIContainer">
-			<div class="panel-heading">
-
-				<form class=" pull-right" role="search">
-			      <div class="form-group">
-			        <input id="apiSearch" type="text" class="form-control" placeholder="Search">
-			      </div>
-			      
-			    </form>
-
-				<h3>Available APIs</h3>
-
-			</div>
-			<div class="panel-body">
-
-				<p style="margin: .8em .6em">Navigate through available APIs, and request permissions.</p>
-			
-				<div class="panel-body clientauthorizations" id="publicAPIlisting">
-					<div class="items"></div>
-				</div>
-				<div style="margin: 0px; padding: 0px; text-align: center" class="listpager"></div>
-
-			</div>
-		</div>
-
-
-	</div>
-
-</div>
-
-
--->
