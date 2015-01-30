@@ -22,6 +22,7 @@
 		"jso": "*",
 		"selectize": "~0.11.2",
 		"dustjs-linkedin": "~2.5.1",
-		"momentjs": "~2.9.0"
+		"momentjs": "~2.9.0",
+		"almond": "~0.3.0"
 	}
 }
