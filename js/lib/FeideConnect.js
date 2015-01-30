@@ -54,6 +54,7 @@ define(function(require, exports, module) {
 		this.config = $.extend({}, selectedConfig, defaults, config);
 
 		this.jso = new JSO(this.config);
+		console.log("JSO LOAded", this.jso);
 		this.jso.callback();
 
 
@@ -118,21 +119,21 @@ define(function(require, exports, module) {
 	
 	FeideConnect.prototype.clientsList = function(callback) {
 		var path = "/clientadm/clients/";
-		this._request('core', path, null, ['peoplesearch'], callback);		
+		this._request('core', path, null, ['clientadmin'], callback);		
 	};
 
 	FeideConnect.prototype.clientsRegister = function(obj, callback) {
 		var path = "/clientadm/clients/";
-		this._requestObj('POST', 'core', path, null, ['peoplesearch'], obj, callback);
+		this._requestObj('POST', 'core', path, null, ['clientadmin'], obj, callback);
 	};
 
 	FeideConnect.prototype.clientsUpdate = function(obj, callback) {
 		var path = "/clientadm/clients/" + obj.id;
-		this._requestObj('PATCH', 'core', path, null, ['peoplesearch'], obj, callback);
+		this._requestObj('PATCH', 'core', path, null, ['clientadmin'], obj, callback);
 	};
 	FeideConnect.prototype.clientsDelete = function(clientid, callback) {
 		var path = "/clientadm/clients/" + clientid;
-		this._requestObj('DELETE', 'core', path, null, ['peoplesearch'], null, callback);
+		this._requestObj('DELETE', 'core', path, null, ['clientadmin'], null, callback);
 	};
 
 	
@@ -142,39 +143,39 @@ define(function(require, exports, module) {
 		var contenttype = obj.contenttype;
 		console.log("File content type: " + contenttype);
 		contenttype = "image/jpeg";
-		this._requestBinary('POST', 'core', path, null, ['peoplesearch'], obj, contenttype, callback);
+		this._requestBinary('POST', 'core', path, null, ['clientadmin'], obj, contenttype, callback);
 
 	};
 
 
 	FeideConnect.prototype.apigkList = function(callback) {
 		var path = "/apigkadm/apigks/";
-		this._request('core', path, null, ['peoplesearch'], callback);			
+		this._request('core', path, null, ['apigkadmin'], callback);			
 	};
 	FeideConnect.prototype.apigkRegister = function(obj, callback) {
 		var path = "/apigkadm/apigks/";
-		this._requestObj('POST', 'core', path, null, ['peoplesearch'], obj, callback);
+		this._requestObj('POST', 'core', path, null, ['apigkadmin'], obj, callback);
 	};
 	FeideConnect.prototype.apigkUpdate = function(obj, callback) {
 		var path = "/apigkadm/apigks/" + obj.id;
 		// delete obj.id;
 		// var x = {name: obj.name};
-		this._requestObj('PATCH', 'core', path, null, ['peoplesearch'], obj, callback);	
+		this._requestObj('PATCH', 'core', path, null, ['apigkadmin'], obj, callback);	
 	};
 	FeideConnect.prototype.apigkDelete = function(id, callback) {
 		var path = "/apigkadm/apigks/" + id;
-		this._requestObj('DELETE', 'core', path, null, ['peoplesearch'], null, callback);
+		this._requestObj('DELETE', 'core', path, null, ['apigkadmin'], null, callback);
 	};
 	FeideConnect.prototype.apigkUpdateLogo = function(id, obj, callback) {
 		var path = "/apigkadm/apigks/" + id + "/logo";
 		var contenttype = obj.contenttype;
 		console.log("File content type: " + contenttype);
 		contenttype = "image/jpeg";
-		this._requestBinary('POST', 'core', path, null, ['peoplesearch'], obj, contenttype, callback);
+		this._requestBinary('POST', 'core', path, null, ['apigkadmin'], obj, contenttype, callback);
 	};
 	FeideConnect.prototype.apigkCheck = function(id, callback) {
 		var path = "/apigkadm/apigks/" + id + "/exists";
-		this._request('core', path, null, ['peoplesearch'], callback);	
+		this._request('core', path, null, ['apigkadmin'], callback);	
 	};
 
 
@@ -312,6 +313,7 @@ define(function(require, exports, module) {
 
 	FeideConnect.prototype.check = function() {
 
+		console.log("JSO LOAded", this.jso);
 		var token = this.jso.checkToken({
 			"scopes": {
 				"require": ["userinfo"]
