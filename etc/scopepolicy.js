@@ -1,6 +1,5 @@
 define(function() {
 
-
 	return {
 		"userinfo": {
 			"title": "Brukerinfo",
@@ -39,7 +38,7 @@ define(function() {
 			"descr": "Langvarig tilgang. Tilgang inntil brukeren trekker rettighetene tilbake.",
 			"public": true,
 		},
-		"clientadm": {	
+		"clientadmin": {	
 			"title": "Klient Admin",
 			"descr": "Adminsitrer klienter",
 			"public": false,
@@ -47,7 +46,7 @@ define(function() {
 				"auto": false
 			}
 		},
-		"apigkadm": {	
+		"apigkadmin": {	
 			"title": "API Gatekeeper Admin",
 			"descr": "Administrer API Gatekeeper instanser.",
 			"public": false,
