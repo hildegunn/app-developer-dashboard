@@ -25,6 +25,9 @@ define(function(require, exports, module) {
 		JSO = require('bower/jso/src/jso');
 		
 
+
+	require('../../bower_components/bootstrap/dist/js/bootstrap.min.js');
+
 	JSO.enablejQuery($);
 
 
