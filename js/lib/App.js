@@ -3,7 +3,7 @@
 define(function(require, exports, module) {
 
 	var
-		FeideConnect = require('./FeideConnect').FeideConnect,
+		FeideConnect = require('bower/feideconnectjs/src/FeideConnect').FeideConnect,
 
 		AppController = require('./controllers/AppController'),
 
@@ -21,14 +21,9 @@ define(function(require, exports, module) {
 
 		config = require('../../etc/config');
 
-	var 
-		JSO = require('bower/jso/src/jso');
-		
-
 
 	require('../../bower_components/bootstrap/dist/js/bootstrap.min.js');
 
-	JSO.enablejQuery($);
 
 
 
