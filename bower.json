@@ -1,0 +1,21 @@
+{
+	"name": "feideconnectjs",
+	"version": "0.1.0",
+	"description": "Feide Connect Javascript Library",
+	"authors": [
+		"Andreas Åkre Solberg"
+	],
+	"homepage": "http://feideconnect.no",
+	"main": "src/FeideConnect.js",
+	"private": true,
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+	],
+	"dependencies": {
+		"jso": "~2.0.1"
+	}
+}
