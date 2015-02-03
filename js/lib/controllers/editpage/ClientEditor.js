@@ -15,10 +15,11 @@ define(function(require, exports, module) {
 
 
 	var ClientEditor = Editor.extend({
-		"init": function(app, feideconnect) {
+		"init": function(app, feideconnect, publicapis) {
 			
 			var that = this;
 			this.editor = "clients";
+			this.publicapis = publicapis;
 			this._super(app, feideconnect);
 
 			var x = dust.compile(clientTemplate, "clienteditor");
@@ -41,6 +42,20 @@ define(function(require, exports, module) {
 
 		},
 
+
+
+		"showPublicAPIs": function() {
+
+
+			var apis = this.publicapis.apigks;
+			$("#apigklisting").empty();
+			for(var key in apis) {
+				$("#apigklisting").append('<div>' + apis + '</div>');
+			}
+
+
+		},
+
 		"edit": function(item, setTab) {
 
 			var that = this;
@@ -52,27 +67,41 @@ define(function(require, exports, module) {
 
 			console.log("SCOPES", scopes);
 			
+			// var apis = this.publicapis.apigks;
+
 			if (this.feideconnect) {
 				$.extend(view, {
 					"oauth": that.feideconnect.getConfig(),
 					"scopelist": scopes
 				});
 			}
-			
 
-			console.log("view is ", view);
 
-			dust.render("clienteditor", view, function(err, out) {
-				// console.log(out);
+			console.log("PUBLIC API FETCH");
 
-				var tab = that.currentTab;
-				if (setTab) tab = setTab;
-				that.el.empty().append(out);
-				that.selectTab(tab);
+			this.publicapis.ready(function(apis) {
+				view.apis = that.publicapis.getView();
+
+				console.log("APIs are ", apis);
+				console.log("view is ", view);
+
+				dust.render("clienteditor", view, function(err, out) {
+					// console.log(out);
+
+					var tab = that.currentTab;
+					if (setTab) tab = setTab;
+					that.el.empty().append(out);
+					that.selectTab(tab);
+
+				});
+
+				that.activate();
+
 
 			});
+			
 
-			this.activate();
+
 		},
 		"actScopeAdd": function(e) {
 			e.preventDefault();

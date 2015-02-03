@@ -12,6 +12,7 @@ define(function(require, exports, module) {
 
 		MainListing = require('./controllers/mainpage/MainListing'),
 
+		PublicAPIPool = require('./models/PublicAPIPool'),
 		ClientPool = require('./models/ClientPool'),
 		Client = require('./models/Client'),
 		APIGK = require('./models/APIGK'),
@@ -63,6 +64,7 @@ define(function(require, exports, module) {
 			this.setupRoute(/^\/new$/, "newGroup");
 
 
+			this.publicapis = new PublicAPIPool(this.feideconnect);
 
 
 			this.clientpool = new ClientPool(this.feideconnect);
@@ -76,7 +78,7 @@ define(function(require, exports, module) {
 
 
 
-			this.clienteditor = new ClientEditor(this, this.feideconnect);
+			this.clienteditor = new ClientEditor(this, this.feideconnect, this.publicapis);
 			this.pc.add(this.clienteditor);
 			this.clienteditor.on("saved", function(client) {
 				console.log("Client is saved, updatge client pool and mainlisting");

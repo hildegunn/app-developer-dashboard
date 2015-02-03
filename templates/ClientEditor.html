@@ -247,24 +247,122 @@
 					{/scopelist.available}
 				</div>
 
-
-
-
 			</div>
 
 
 
-			</div>
+		</div>
 
 
 		<div id="tabAPI"  style="" class="row">
 
 
-			<div class="col-sm-12">
+
+
+
+			<div class="col-sm-6">
+
+				<h3>Accepted APIs</h3>
+
+				<div class="list-group">
+					{#xscopelist.accepted}
+						<div class="list-group-item scopeEntry" data-scopeid="{scope}">
+							<div class="pull-right"><code class="">{scope}</code></div>
+							<h4 class="list-group-item-heading">{title}</h4>
+							<p class="list-group-item-text">{descr}</p>
+
+							<div class="">
+									<button class="btn btn-xs btn-danger actScopeRemove">
+										<i class="glyphicon glyphicon-remove"></i>
+										Remove scope 
+										</button>
+							</div>
+							<p class="clearfix"></p>
+						</div>
+					{:else}
+						<p>No available scopes</p>
+					{/xscopelist.accepted}
+					
+				</div>
+
+
+				<h3 style="margin-top: 1.5em">Requested API access</h3>
+
+				<div class="list-group">
+					{#xscopelist.requested}
+						<div class="list-group-item scopeEntry" data-scopeid="{scope}">
+							<div class="pull-right"><code class="">{scope}</code></div>
+							<h4 class="list-group-item-heading">{title}</h4>
+							<p class="list-group-item-text">{descr}</p>
+
+							<div class="" style="margin-top: .3em; margin-bottom: 0px">
+									<button class="btn btn-xs btn-default actScopeRemove">
+										<i class="glyphicon glyphicon-remove"></i>
+										Remove scope 
+										</button>
+							</div>
+							<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
+
+						</div>
+					{:else}
+						<p>No requested scopes</p>
+					{/xscopelist.requested}
+				</div>
+
+			</div>
+
+
+
+			<div class="col-sm-6">
+
+
 
 				<h3>Third party APIs</h3>
+
+				<div class="list-group">
+					{#apis}
+						<div class="list-group-item apiEntry media" data-apigkid="{id}">
+
+							<div class="media-left">
+								<img style="max-width: 48px; max-height: 48px" class="media-object" src="http://api.dev.feideconnect.no:6543/apigkadm/apigks/{id}/logo" alt="Logo of 3rd party API">
+							</div>
+							<div class="media-body">
+
+								<div class="pull-right"><code class="">gk_{id}</code></div>
+								<h4 class="list-group-item-heading">{name}</h4>
+								<p class="list-group-item-text">{descr}</p>
+
+
+								<p style="margin-top: .3em; margin-bottom: 0px">
+									{?scopedef.policy.auto}
+										<button class="btn btn-sm btn-primary actAPIadd">
+											<i class="glyphicon glyphicon-chevron-left"></i>
+											Add access</button>
+									{/scopedef.policy.auto}
+									{^scopedef.policy.auto}
+										<button class="btn btn-sm btn-warning actAPIadd">
+											<i class="glyphicon glyphicon-chevron-left"></i>
+											Request access</button>
+									{/scopedef.policy.auto}
+								</p>
+								<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
+
+
+							</div>
+
+
+
+						</div>
+					{:else}
+						<p>No third party APIs available</p>
+					{/apis}
+				</div>
+
 			</div>
+
 		</div>
+
+
 
 
 
