@@ -164,22 +164,23 @@ define(function(require, exports, module) {
 
 				if (authenticated) {
 
+					$("body").addClass("stateLoggedIn");
+					$("body").removeClass("stateLoggedOut");
+
 					$("#username").empty().text(user.name);
 					$("#profilephoto").html('<img style="margin-top: -28px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" src="https://auth.dev.feideconnect.no/user/media/' + user.profilephoto + '" alt="Profile photo" />');
 
 					$(".loader-hideOnLoad").hide();
 					$(".loader-showOnLoad").show();
 
-					$(".showLoggedIn").show();
-					$(".showLoggedOut").hide();
-
 				} else {
+
+					$("body").removeClass("stateLoggedIn");
+					$("body").addClass("stateLoggedOut");
 
 					$(".loader-hideOnLoad").show();
 					$(".loader-showOnLoad").hide();
 
-					$(".showLoggedIn").hide();
-					$(".showLoggedOut").show();
 				}
 
 			});

@@ -1,8 +1,15 @@
-
 @import url("../bower_components/bootstrap/dist/css/bootstrap.min.css");
 @import url("../bower_components/fontawesome/css/font-awesome.min.css");
 @import url("../bower_components/bootstrap/dist/css/bootstrap.min.css");
 @import url("../bower_components/uninett-theme/css/uninett.css");
+
+
+body.stateLoggedIn  .showOnLoggedIn { display: block !important; }
+body.stateLoggedIn  .showOnLoggedOut { display: none; }
+
+body.stateLoggedOut .showOnLoggedIn { display: none ; }
+body.stateLoggedOut .showOnLoggedOut { display: block !important; }
+
 
 
 
@@ -31,7 +38,7 @@
 .form-group {
 	margin-bottom: 1.6em;
 }
-form-group p {
+.form-group p {
 	margin: 0px;
 }
 
@@ -248,6 +255,5 @@ input[type=button]:hover {
 .icon.source {
 	background-image: url(images/repo-source.png);
 }
-
 
 
