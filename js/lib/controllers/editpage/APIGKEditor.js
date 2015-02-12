@@ -5,6 +5,7 @@ define(function(require, exports, module) {
 		Pane = require('../Pane'),
 		Client = require('../../models/Client'),
 		APIGK = require('../../models/APIGK'),
+		ScopeDefBuilder = require('./ScopeDefBuilder'),
 		Editor = require('./Editor'),
 		scopePolicy = require('../../../../etc/scopepolicy'),
 		utils = require('../../utils')
@@ -26,6 +27,19 @@ define(function(require, exports, module) {
 			var x = dust.compile(apigkTemplate, "apigkeditor");
 			dust.loadSource(x);
 
+			this.scopedefbuilder = new ScopeDefBuilder(this.feideconnect);
+			this.scopedefbuilder.on("save", function(obj) {
+
+				console.log("About to save: ", obj);
+
+				that.feideconnect.apigkUpdate(obj, function(savedClient) {
+					var x = new APIGK(savedClient);
+					that.edit(x);
+					that.emit("saved", x);
+				});
+
+
+			});
 
 			this.ebind("click", ".actSaveChanges", "actSaveChanges");
 			this.ebind("click", ".actDelete", "actDelete");
@@ -50,6 +64,8 @@ define(function(require, exports, module) {
 			this.current = item;
 
 			var view = item.getView(this.feideconnect);
+			console.log("About to pass on view", view);
+			this.scopedefbuilder.setAPIGK(item);
 			
 			if (this.feideconnect) {
 				$.extend(view, {
@@ -65,8 +81,12 @@ define(function(require, exports, module) {
 
 				var tab = that.currentTab;
 				if (setTab) tab = setTab;
-				that.el.empty().append(out);
+				that.el.children().detach();
+				that.el.append(out);
 				that.selectTab(tab);
+
+				that.el.find("#scopedef").append(that.scopedefbuilder.el);
+
 
 			});
 

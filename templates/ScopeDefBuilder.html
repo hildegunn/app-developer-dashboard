@@ -1,0 +1,213 @@
+<div class="row">
+	<div class="col-sm-5">
+			
+		<p>
+			Scopes can be used to control different access levels between set of clients. 
+		</p>
+
+
+		<p>
+			<button class="btn btn-primary pull-right actScopesSaveChanges"><i class="fa fa-check"></i>&nbsp;Save changes</button>
+		</p>
+
+
+		<p class="clearfix"></p>
+
+		<h3 style="margin-top: 2em" >Current scope definitions</h3>
+
+		<table style="font-size: 85%" class="table table-striped">
+
+			<tbody>
+				<tr>
+					<td>{existing.scopedef.title}</td>
+					<td style="font-size: 90%"><code>gk_{existing.id}</code></td>
+
+					<td>
+						{#existing.scopedef.policy.auto}
+							<span class="label label-success">
+								<i class="fa fa-check"></i>&nbsp;
+								Accept</span>
+						{:else}
+							<span class="label label-danger">
+								<i class="fa fa-check-square-o"></i>&nbsp;
+								Moderate</span>
+						{/existing.scopedef.policy.auto}
+					</td>
+				</tr>
+
+				{#existing.scopedef.subscopes}
+
+					<tr>
+						<td>{title}</td>
+						<td style="font-size: 90%"><code>gk_{existing.id}_{scope}</code></td>
+
+						<td>
+							{#policy.auto}
+								<span class="label label-success">
+									<i class="fa fa-check"></i>&nbsp;
+									Accept</span>
+							{:else}
+								<span class="label label-danger">
+									<i class="fa fa-check-square-o"></i>&nbsp;
+									Moderate</span>
+							{/policy.auto}
+						</td>
+					</tr>
+
+				{:else}
+					<tr><td colspan="3">No subscopes</td></tr>
+				{/existing.scopedef.subscopes}
+
+
+			</thead>
+
+		</table>
+
+
+
+
+		<pre id="out"></pre>
+
+
+
+	</div>
+
+	<div class="col-sm-7">
+			
+
+
+
+
+
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Primary scope</h3>
+			</div>
+			<div class="panel-body">
+
+				<form class="form-horizontal">
+
+					<p>This scope is required by all client in order to even get in contact with the API.</p>
+
+					<div class="form-group">
+						<label for="basicTitle" class="col-sm-3 control-label">Name</label>
+						<div class="col-sm-9">
+							<input style="" id="basicTitle" type="text" class="form-control input" placeholder="Name of basic access" value="{updated.scopedef.title}" />	
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="basicDescr"  class="col-sm-3 control-label">Description</label>
+						<div class="col-sm-9">
+							<textarea style="" class="form-control" id="basicDescr" placeholder="Description of basic access...">{updated.scopedef.descr}</textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="basicPolicy" class="col-sm-3 control-label">Accept policy </label>
+
+						<div class="checkbox col-sm-9">
+							<label><input id="basicPolicy" type="checkbox"
+									{#updated.scopedef.policy.auto}
+										checked="checked"
+									{/updated.scopedef.policy.auto}
+								> Auto-accept</label>
+
+							<p style="font-size: 90%">If auto-accept is not enabled, you will have to manually moderate and explicitly accept all new access requests from clients.</p>
+						</div>
+
+					</div>
+
+				</form>
+			</div>
+
+		</div>
+
+
+
+		{#updated.scopedef.subscopes}
+
+
+			<div class="panel panel-default subScopeEntry">
+
+				<div class="panel-body">
+
+					<form class="form-horizontal">
+
+						<div class="form-group">
+							<label for="newAPIid"  class="col-sm-3 control-label">Identifier</label>
+							<div class="col-sm-9">
+								<div class="input-group " style="">
+									<div class="input-group-addon">gk_{existing.id}_</div>
+									<input  id="{id}_scopeID" type="text" class="scopeID form-control input" placeholder="" style="" value="{scope}">
+								</div>
+							</div>
+						</div>
+						
+
+						<div class="form-group">
+							<label for="{id}_scopeTitle" class="col-sm-3 control-label">Name</label>
+							<div class="col-sm-9">
+								<input style="" id="{id}_scopeTitle" type="text" class="scopeTitle form-control input" placeholder="Name of basic access" value="{title}" />	
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="{id}_scopeDescr"  class="col-sm-3 control-label">Description</label>
+							<div class="col-sm-9">
+								<textarea style="" class="scopeDescr form-control" id="{id}_scopeDescr" placeholder="Description of basic access...">{descr}</textarea>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="{id}_scopePolicy" class="col-sm-3 control-label">Accept policy </label>
+
+							<div class="checkbox col-sm-9">
+								<label><input id="{id}_scopePolicy" class="scopePolicy"
+									{#policy.auto}
+										checked="checked"
+									{/policy.auto}
+									type="checkbox"> Auto-accept</label>
+
+							</div>
+
+						</div>
+
+						<div><button class="btn btn-sm btn-danger pull-right actRemoveSubscope"><i class="fa fa-times"></i>&nbsp;Remove this subscope</button></div>
+
+					</form>
+				</div>
+
+			</div>
+
+
+
+
+		{:else}
+			<div>No subscopes is currently defined</div>
+		{/updated.scopedef.subscopes}
+
+
+
+
+
+
+
+
+		<p>
+			<button class="btn btn-default pull-right actAddSubScope"><i class="fa fa-plus"></i>&nbsp;Add subscope</button>
+		</p>
+
+
+
+	</div>
+</div>
+
+
+
+
+
+
+
+
+

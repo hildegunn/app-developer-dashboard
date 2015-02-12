@@ -2,7 +2,8 @@ define(function(require, exports, module) {
 
 	var 
 		moment = require('bower/momentjs/moment'),
-		Model = require('./Model')
+		Model = require('./Model'),
+		ScopeDef = require('./ScopeDef')
 	;
 
 	function parseDate (input) {
@@ -13,6 +14,16 @@ define(function(require, exports, module) {
 
 
 	var APIGK = Model.extend({
+		"init": function(props) {
+
+			if (props.scopedef) {
+				this.scopedef = new ScopeDef(props.scopedef);
+				delete props.scopedef;
+			}
+
+			this._super(props);
+
+		},
 		"getView": function() {
 			var res = this._super();
 
@@ -30,8 +41,12 @@ define(function(require, exports, module) {
 				res.updatedH = res.updated.format('D. MMM YYYY');
 			}
 
+			if (this.scopedef) {
+				res.scopedef = this.scopedef.getView();
+			} else {
+				res.scopes = [];
+			}
 
-			res.foo = "#bar";
 
 			return res;			
 		}

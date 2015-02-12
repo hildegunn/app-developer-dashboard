@@ -54,9 +54,25 @@ define(function() {
 				"auto": false
 			}
 		},
+		"peoplesearch": {
+			"title": "PeopleSearch",
+			"descr": "Search for users",
+			"public": true,
+			"policy": {
+				"auto": false
+			}
+		},
 		"groups": {	
 			"title": "Grupper",
 			"descr": "Tilgang til basis gruppeinfo",
+			"public": true,
+			"policy": {
+				"auto": true
+			}
+		},
+		"adhocgroupadmin": {
+			"title": "Håndtering av ad-hoc groupper",
+			"descr": "Legge til, endre ad-hoc grupper, og kunne legge til og fjerne medlemmer.",
 			"public": false,
 			"policy": {
 				"auto": false
