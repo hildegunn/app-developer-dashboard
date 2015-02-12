@@ -29,6 +29,9 @@ define(function(require, exports, module) {
 			this.ebind("click", ".actScopeAdd", "actScopeAdd");
 			this.ebind("click", ".actScopeRemove", "actScopeRemove");
 			this.ebind("click", ".actDelete", "actDelete");
+
+			this.ebind("click", ".actAPIadd", "actAPIadd");
+			
 		
 		},
 
@@ -65,7 +68,7 @@ define(function(require, exports, module) {
 
 			var scopes = item.getScopes(scopePolicy);
 
-			console.log("SCOPES", scopes);
+			// console.log("SCOPES", scopes);
 			
 			// var apis = this.publicapis.apigks;
 
@@ -77,13 +80,14 @@ define(function(require, exports, module) {
 			}
 
 
-			console.log("PUBLIC API FETCH");
+			// console.log("PUBLIC API FETCH");
 
 			this.publicapis.ready(function(apis) {
 				view.apis = that.publicapis.getView();
 
-				console.log("APIs are ", apis);
+				console.error("APIs are ", view.apis);
 				console.log("view is ", view);
+
 
 				dust.render("clienteditor", view, function(err, out) {
 					// console.log(out);
@@ -100,6 +104,48 @@ define(function(require, exports, module) {
 
 			});
 			
+
+
+		},
+
+		"actAPIadd": function(e) {
+
+			e.preventDefault();
+
+			var that = this;
+			var newscopes = [];
+
+			var container = $(e.currentTarget).closest(".apiEntry");
+			var apigkid = container.data('apigkid');
+			var apigk = this.publicapis.getAPIGK(apigkid);
+
+			newscopes.push("gk_" + apigkid);
+			container.find("input.subScopeSelection").each(function(i, item) {
+
+				if ($(item).prop("checked")) {
+					newscopes.push($(item).attr("name"));
+				}
+
+			});
+
+			// console.log("Adding API ", apigk);
+			console.error("Adding scopes", newscopes);
+
+			this.current.addScopes(newscopes);
+
+			var fullobj = this.current.getStorable();
+			var obj = {};
+			obj.id = fullobj.id;
+			obj.scopes_requested = fullobj.scopes_requested;
+
+			this.feideconnect.clientsUpdate(obj, function(savedClient) {
+				var x = new Client(savedClient);
+				that.edit(x);
+				that.emit("saved", x);
+			});
+
+
+			console.log("trying to actScopeAdd ", scopeid);
 
 
 		},

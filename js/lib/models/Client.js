@@ -52,6 +52,11 @@ define(function(require, exports, module) {
 			}
 			
 		},
+		"addScopes": function(scopes) {
+			for(var i = 0; i < scopes.length; i++) {
+				this.addScope(scopes[i]);
+			}
+		},
 		"addScope": function(scope) {
 			var exists = false;
 			var existingScopes = [];

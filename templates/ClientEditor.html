@@ -328,9 +328,64 @@
 							</div>
 							<div class="media-body">
 
-								<div class="pull-right"><code class="">gk_{id}</code></div>
+								<!-- <div class="pull-right"><code class="">gk_{id}</code></div> -->
 								<h4 class="list-group-item-heading">{name}</h4>
 								<p class="list-group-item-text">{descr}</p>
+
+
+								{#scopedef}
+
+									<table style="font-size: 85%" class="table table-striped">
+										<tbody>
+											<tr>
+												<td><input type="checkbox" checked="checked" disabled="disabled" /></td>
+												<td>{title}</td>
+												<td style="font-size: 90%"><code>gk_{id}</code></td>
+
+												<td>
+													{#policy.auto}
+														<span class="label label-success">
+															<i class="fa fa-check"></i>&nbsp;
+															Accept</span>
+													{:else}
+														<span class="label label-danger">
+															<i class="fa fa-check-square-o"></i>&nbsp;
+															Moderate</span>
+													{/policy.auto}
+												</td>
+											</tr>
+
+											{#subscopes}
+
+												<tr>
+													<td><input type="checkbox" class="subScopeSelection" name="gk_{id}_{scope}" /></td>
+													<td>{title}</td>
+													<td style="font-size: 90%"><code>gk_{id}_{scope}</code></td>
+
+													<td>
+														{#policy.auto}
+															<span class="label label-success">
+																<i class="fa fa-check"></i>&nbsp;
+																Accept</span>
+														{:else}
+															<span class="label label-danger">
+																<i class="fa fa-check-square-o"></i>&nbsp;
+																Moderate</span>
+														{/policy.auto}
+													</td>
+												</tr>
+
+											{:else}
+												<tr><td colspan="4">No subscopes</td></tr>
+											{/subscopes}
+
+
+										</thead>
+
+									</table>
+
+								{/scopedef}
+
 
 
 								<p style="margin-top: .3em; margin-bottom: 0px">
@@ -417,9 +472,6 @@
 
 
 		</div>
-
-
-
 
 
 

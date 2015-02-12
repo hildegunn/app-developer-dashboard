@@ -41,7 +41,7 @@ define(function(require, exports, module) {
 			for(var key in this.apigks) {
 				var x = this.apigks[key];
 				x.id = key;
-				items.push(x);
+				items.push(x.getView());
 			}
 			return items;
 
