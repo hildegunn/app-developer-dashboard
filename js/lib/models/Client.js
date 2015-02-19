@@ -49,7 +49,7 @@ define(function(require, exports, module) {
 			v.sd.authz = authz;
 
 			v.sd.req = false;
-			if (this.scopeIsRequested(bs)) {
+			if (!this.scopeIsAccepted(bs) && this.scopeIsRequested(bs)) {
 				v.sd.req = true;
 			}
 
@@ -64,11 +64,13 @@ define(function(require, exports, module) {
 					} else if (this.scopeIsRequested(siq)) {
 						v.sd.subscopes[i].status.requested = true;
 						v.sd.req = true;
+						console.error("SCOPE IS REQUESTED", siq);
 					}
 
 				}
 
 			}
+			console.error("IS requested ", this.name, v.sd.req);
 
 			return v;
 		},
@@ -136,6 +138,7 @@ define(function(require, exports, module) {
 			return false;
 		},
 		"scopeIsRequested": function(scope) {
+			// console.error("CHECKING IS SCOPE IS REQUESTED", scope, this.scopes_requested);
 			if (!this.scopes_requested) return false;
 			if (!this.scopes_requested.length) return false;
 			for(var i = 0; i < this.scopes_requested.length; i++) {

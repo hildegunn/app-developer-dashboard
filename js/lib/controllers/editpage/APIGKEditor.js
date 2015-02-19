@@ -96,11 +96,13 @@ define(function(require, exports, module) {
 						nc = new Client(clients[i]);
 						that.clients[nc.id] = nc;
 						cv = nc.getAPIGKview(that.current);
+
 						if (cv.sd.authz) {
 							view.clients.push(cv);
-						} else if (cv.sd.req) {
-							view.clientsReq.push(cv);
 						}
+						if (cv.sd.req) {
+							view.clientsReq.push($.extend({}, cv));
+						} 
 
 					}
 

@@ -136,7 +136,190 @@
 
 			<div class="col-sm-12">
 
-				<h3>Clients</h3>
+				<h3>Clients requesting access</h3>
+
+
+
+
+				{#clientsReq}
+
+					<div class="panel panel-default authzClient" data-clientid="{id}">
+						<div class="panel-body">
+
+
+
+							<div class="media-left">
+								<img style="max-width: 48px; max-height: 48px" class="media-object" src="http://api.dev.feideconnect.no:6543/clientadm/clients/{id}/logo" alt="client logo">
+							</div>
+							<div class="media-body">
+								<h4 class="list-group-item-heading">{name}</h4>
+								<p class="list-group-item-text" style="font-size: 80%">
+									<i class="glyphicon glyphicon-chevron-right"></i> {id}
+								</p>
+								<p class="list-group-item-text">{descr}</p>
+
+								<p class="list-group-item-text" style="margin-top: 15px">Redirect URIs
+									<ul class="list-group-item-text" style="margin: 0px;">
+										{#redirect_uri}
+											<li style="margin:0px; padding: 0px"><code>{.}</code></li>
+										{/redirect_uri}
+									</ul>
+								</p>
+								<p class="list-group-item-text">Created {createdAgo}. Updated {updatedAgo}.</p>
+								<p class="list-group-item-text">Client owner: {owner}</p>
+
+								<p class="list-group-item-text" style="margin-top: 15px">Authorized scopes &nbsp;
+								
+									{#scopes}
+										<code>{.}</code> &nbsp;
+									{/scopes}
+								</p>
+							</div>
+
+
+
+
+
+							<table style="font-size: 95%; margin-top: 2em" class="table table-striped">
+
+								<thead>
+									<tr>
+										
+										<td>Scope name</td>
+										<td>Scope</td>
+										<td>Policy</td>
+										<td>Status</td>
+										<td>Authorization</td>
+									</tr>
+
+								</thead>
+
+								<tbody>
+									<tr>
+										<td>{sd.title}</td>
+										<td style="font-size: 90%"><code>gk_{sd.apigkid}</code></td>
+
+										<td>
+											{#sd.policy.auto}
+												<span class="label label-success">
+													<i class="fa fa-check"></i>&nbsp;
+													Accept</span>
+											{:else}
+												<span class="label label-danger">
+													<i class="fa fa-check-square-o"></i>&nbsp;
+													Moderate</span>
+											{/sd.policy.auto}
+										</td>
+
+										<td>
+
+											{#sd.authz}
+												<span class="label label-success">
+													<i class="fa fa-check"></i>&nbsp;
+													Accepted</span>
+											{:else}
+
+												{#sd.req}
+													<span class="label label-danger">
+														<i class="fa fa-check-square-o"></i>&nbsp;
+														Requested</span>
+												{/sd.req}
+
+											{/sd.authz}
+
+										</td>
+
+										<td>
+
+											{#sd.authz}
+												<input class="authscope" data-scopemoderate="gk_{sd.apigkid}" type="checkbox" checked="checked" /> 
+											{:else}
+
+												{#sd.req}
+													<input class="authscope" data-scopemoderate="gk_{sd.apigkid}" type="checkbox"  /> 
+												{/sd.req}
+
+											{/sd.authz}
+
+
+
+										</td>
+									</tr>
+
+
+
+
+									{#sd.subscopes}
+
+										<tr>
+											<td>{title}</td>
+											<td style="font-size: 90%"><code>gk_{sd.apigkid}_{scope}</code></td>
+
+											<td>
+												{?policy.auto}
+													<span class="label label-success">
+														<i class="fa fa-check"></i>&nbsp;
+														Accept</span>
+												{:else}
+													<span class="label label-danger">
+														<i class="fa fa-check-square-o"></i>&nbsp;
+														Moderate</span>
+												{/policy.auto}
+											</td>
+											<td>
+
+												{?status.accepted}
+													<span class="label label-success">
+														<i class="fa fa-check"></i>&nbsp;
+														Accepted</span>
+												{/status.accepted}
+
+												{?status.requested}
+													<span class="label label-danger">
+														<i class="fa fa-check-square-o"></i>&nbsp;
+														Requested</span>
+												{/status.requested}
+
+
+											</td>
+											<td>
+
+												{?status.accepted}
+													<input class="authscope" type="checkbox" data-scopemoderate="gk_{sd.apigkid}_{scope}" checked="checked" /> 
+												{/status.accepted}
+
+												{?status.requested}
+													<input class="authscope" type="checkbox" data-scopemoderate="gk_{sd.apigkid}_{scope}" /> 
+												{/status.requested}
+
+
+											</td>
+										</tr>
+
+									{:else}
+										<tr><td colspan="5">No subscopes</td></tr>
+									{/sd.subscopes}
+
+
+								</thead>
+
+							</table>
+
+							<div class="pull-right">
+								
+							<button class="btn btn-primary btn-sm actUpdateAuthz">Update authorizations</button>
+
+							</div>
+
+
+						</div>
+					</div>
+
+				{/clientsReq}
+
+
+
+
 			</div>
 		</div>
 
