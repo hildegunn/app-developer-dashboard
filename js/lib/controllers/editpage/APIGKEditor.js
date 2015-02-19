@@ -14,47 +14,41 @@ define(function(require, exports, module) {
 
 	var apigkTemplate = require('text!templates/APIGKEditor.html');
 
-
-
 	var APIGKEditor = Editor.extend({
+
 		"init": function(app, feideconnect) {
 				
 			var that = this;
 			this.editor = "apigk";
 			this._super(app, feideconnect);
 
-
 			var x = dust.compile(apigkTemplate, "apigkeditor");
 			dust.loadSource(x);
+
+			this.clients = {};
 
 			this.scopedefbuilder = new ScopeDefBuilder(this.feideconnect);
 			this.scopedefbuilder.on("save", function(obj) {
 
 				console.log("About to save: ", obj);
-
 				that.feideconnect.apigkUpdate(obj, function(savedClient) {
 					var x = new APIGK(savedClient);
 					that.edit(x);
 					that.emit("saved", x);
 				});
 
-
 			});
 
+			this.ebind("click", ".actUpdateAuthz", "actUpdateAuthz");
 			this.ebind("click", ".actSaveChanges", "actSaveChanges");
 			this.ebind("click", ".actDelete", "actDelete");
 
-		
 		},
 
 		"loadClients": function() {
 
 			var that = this;
 			return new Promise(function(resolve, reject) {
-
-
-				
-
 
 			});
 		},
@@ -89,25 +83,107 @@ define(function(require, exports, module) {
 					"oauth": that.feideconnect.getConfig()
 				});
 			}
-			
 
-			console.log("view is ", view);
+			that.feideconnect.clientsByScope(this.current.getBasicScope()).
+				then(function(clients) {
+					var i, nc, cv;
+					console.log("clientsByScope", clients);
+					
+					view.clients = [];
+					view.clientsReq = [];
 
-			dust.render("apigkeditor", view, function(err, out) {
-				// console.log(out);
+					for (i = 0; i < clients.length; i++) {
+						nc = new Client(clients[i]);
+						that.clients[nc.id] = nc;
+						cv = nc.getAPIGKview(that.current);
+						if (cv.sd.authz) {
+							view.clients.push(cv);
+						} else if (cv.sd.req) {
+							view.clientsReq.push(cv);
+						}
 
-				var tab = that.currentTab;
-				if (setTab) tab = setTab;
-				that.el.children().detach();
-				that.el.append(out);
-				that.selectTab(tab);
-
-				that.el.find("#scopedef").append(that.scopedefbuilder.el);
+					}
 
 
-			});
+					// $("#debug").append("<pre style='background-color: #cc7; margin-bottom: 5em'>" + JSON.stringify(view, undefined, 4) + "</pre>");
+
+
+					console.error("view is ", view);
+					dust.render("apigkeditor", view, function(err, out) {
+
+						var tab = that.currentTab;
+						if (setTab) tab = setTab;
+						that.el.children().detach();
+						that.el.append(out);
+						that.selectTab(tab);
+
+						that.el.find("#scopedef").append(that.scopedefbuilder.el);
+
+
+					});
+				
+				});
+
+
+
+
+
 
 			this.activate();
+		},
+
+		"actUpdateAuthz": function(e) {
+
+			e.preventDefault();
+
+			var that = this;
+			var clientContainer = $(e.currentTarget).closest("div.authzClient");
+			var clientid = clientContainer.data("clientid");
+
+
+
+			console.log("Client container", clientContainer);
+
+			var scopes = {};
+
+			$(clientContainer).find("input.authscope").each(function(i, item) {
+				console.log("Auth z input element", item);
+				var scope = $(item).data("scopemoderate");
+				var enabled = $(item).prop("checked");
+				scopes[scope] = enabled;
+			});
+
+
+			var client = this.clients[clientid];
+			for(var scope in scopes) {
+				if (scopes[scope]) {
+					client.addScope(scope);
+				} else {
+					client.removeScope(scope);
+				}
+			}
+
+			var obj = {
+				"id": clientid,
+				"scopes_requested": client.scopes_requested,
+				"scopes": client.scopes_requested
+			};
+
+			this.feideconnect.clientsUpdate(obj, function(savedClient) {
+				var x = new Client(savedClient);
+				that.clients[clientid] = x;
+				that.edit(that.current);
+
+				// that.edit(x);
+				// that.emit("saved", x);
+			}).catch(function(err) {
+				that.app.setErrorMessage("Error authorizing client scopes", "danger", err);
+			});
+
+
+			console.error("Update authoizations for ", obj);
+
+
 		},
 
 		"actSaveChanges": function(e) {

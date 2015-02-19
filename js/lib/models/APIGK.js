@@ -24,6 +24,9 @@ define(function(require, exports, module) {
 			this._super(props);
 
 		},
+		"getBasicScope": function() {
+			return "gk_" + this.id;
+		},
 		"getView": function() {
 			var res = this._super();
 
@@ -50,6 +53,7 @@ define(function(require, exports, module) {
 
 			return res;			
 		}
+
 	});
 
 	return APIGK;

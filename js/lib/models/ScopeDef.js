@@ -37,7 +37,7 @@ define(function(require, exports, module) {
 			var s = [], x;
 			if (res.subscopes) {
 				for (var key in res.subscopes) {
-					x = res.subscopes[key];
+					x = $.extend({}, res.subscopes[key]);
 					x.scope = key;
 					s.push(x);
 				}

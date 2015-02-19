@@ -36,6 +36,42 @@ define(function(require, exports, module) {
 
 			return res;			
 		},
+		"getAPIGKview": function(apigk) {
+
+			var that = this;
+			var bs = apigk.getBasicScope();
+			var authz = this.scopeIsAccepted(bs);
+			var v = this.getView();
+
+
+			v.sd = apigk.scopedef.getView();
+			v.sd.apigkid = apigk.id;
+			v.sd.authz = authz;
+
+			v.sd.req = false;
+			if (this.scopeIsRequested(bs)) {
+				v.sd.req = true;
+			}
+
+			v.sd.subscopes = v.sd.subscopes;
+
+			if (v.sd.subscopes) {
+				for(var i = 0; i < v.sd.subscopes.length; i++) {
+					v.sd.subscopes[i].status = {};
+					var siq = bs + '_' + v.sd.subscopes[i].scope;
+					if (this.scopeIsAccepted(siq)) {
+						v.sd.subscopes[i].status.accepted = true;
+					} else if (this.scopeIsRequested(siq)) {
+						v.sd.subscopes[i].status.requested = true;
+						v.sd.req = true;
+					}
+
+				}
+
+			}
+
+			return v;
+		},
 		"setName": function(name) {
 			this.name = name;
 		},
@@ -88,11 +124,15 @@ define(function(require, exports, module) {
 		},
 		"scopeIsAccepted": function(scope) {
 
+
+			// console.error("Checkif if scope is accapted", scope, this.scopes);
 			if (!this.scopes) return false;
 			if (!this.scopes.length) return false;
+			// console.error("FALSE--");
 			for(var i = 0; i < this.scopes.length; i++) {
 				if (scope === this.scopes[i]) return true;
 			}
+			// console.error("FALSE");
 			return false;
 		},
 		"scopeIsRequested": function(scope) {
@@ -124,6 +164,7 @@ define(function(require, exports, module) {
 			}
 			return res;
 		}
+
 	});
 
 	return Client;
