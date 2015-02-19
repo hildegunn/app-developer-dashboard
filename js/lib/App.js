@@ -157,8 +157,6 @@ define(function(require, exports, module) {
 			this.route();
 
 
-			
-
 			$(".login").on('click', function() {
 
 				that.feideconnect.authenticate();
