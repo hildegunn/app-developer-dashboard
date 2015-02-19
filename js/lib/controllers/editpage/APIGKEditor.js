@@ -47,6 +47,20 @@ define(function(require, exports, module) {
 		
 		},
 
+		"loadClients": function() {
+
+			var that = this;
+			return new Promise(function(resolve, reject) {
+
+
+				
+
+
+			});
+		},
+
+
+
 		"logoUploaded": function(data) {
 			var that = this;
 			this.feideconnect.apigkUpdateLogo(that.current.id, data, function() {
