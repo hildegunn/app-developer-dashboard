@@ -37,11 +37,15 @@ define(function(require, exports, module) {
 
 		"logoUploaded": function(data) {
 			var that = this;
-			that.feideconnect.clientsUpdateLogo(this.current.id, data, function() {
-				console.log("Successfully posted logo to feideconnect");
-				var url = "http://api.dev.feideconnect.no:6543/clientadm/clients/" + that.current.id + "/logo?r=" + utils.guid();
-				that.el.find('.itemlogo').attr("src", url);
-			});
+			that.feideconnect.clientsUpdateLogo(this.current.id, data)
+				.then(function() {
+					console.log("Successfully posted logo to feideconnect");
+					var url = "http://api.dev.feideconnect.no:6543/clientadm/clients/" + that.current.id + "/logo?r=" + utils.guid();
+					that.el.find('.itemlogo').attr("src", url);
+				})
+				.catch(function(err) {
+					that.app.setErrorMessage("Error uploading logo", "danger", err);
+				});
 
 		},
 

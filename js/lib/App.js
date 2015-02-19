@@ -19,6 +19,7 @@ define(function(require, exports, module) {
 
 		PaneController = require('./controllers/PaneController'),
 
+		utils  = require('./utils'),
 
 		config = require('../../etc/config');
 
@@ -54,7 +55,6 @@ define(function(require, exports, module) {
 			this.pc = new PaneController(this.el.find('#panecontainer'));
 			this.mainlisting = new MainListing(this.feideconnect);
 			this.pc.add(this.mainlisting);
-
 
 
 			this.setupRoute(/^\/$/, "routeMainlisting");
@@ -123,24 +123,34 @@ define(function(require, exports, module) {
 			
 
 			this.mainlisting.on("clientCreate", function(obj) {
-				that.feideconnect.clientsRegister(obj, function(data) {
-					console.log("Client successfully registerd", data);
-
-					var client = new Client(data);
-					that.clientpool.setClient(client);
-					that.clienteditor.edit(client, 'tabBasic');
-					that.setHash('/clients/' + client.id + '/edit/tabBasic');
-				});
+				that.feideconnect.clientsRegister(obj)
+					.then(function(data) {
+						var client = new Client(data);
+						that.clientpool.setClient(client);
+						that.clienteditor.edit(client, 'tabBasic');
+						that.setHash('/clients/' + client.id + '/edit/tabBasic');
+					})
+					.then(function() {
+						that.setErrorMessage("Successfully created new client", "success");
+					})
+					.catch(function(err) {
+						that.setErrorMessage("Error creating new client", "danger", err);
+					});
 			});
 			this.mainlisting.on("apigkCreate", function(obj) {
-				that.feideconnect.apigkRegister(obj, function(data) {
-					console.log("Client successfully registerd", data);
-
-					var apigk = new APIGK(data);
-					that.clientpool.setAPIGK(apigk);
-					that.apigkeditor.edit(apigk, 'tabBasic');
-					that.setHash('/apigk/' + apigk.id + '/edit/tabBasic');
-				});
+				that.feideconnect.apigkRegister(obj)
+					.then(function(data) {
+						var apigk = new APIGK(data);
+						that.clientpool.setAPIGK(apigk);
+						that.apigkeditor.edit(apigk, 'tabBasic');
+						that.setHash('/apigk/' + apigk.id + '/edit/tabBasic');
+					})
+					.then(function() {
+						that.setErrorMessage("Successfully created new API Gatekeeper", "success");
+					})
+					.catch(function(err) {
+						that.setErrorMessage("Error creating new API Gatekeeper", "danger", err);
+					});
 			});
 
 			this.pc.debug();
@@ -187,10 +197,42 @@ define(function(require, exports, module) {
 
 			});
 
-	
-			
 
 		},
+
+		"setErrorMessage": function(title, type, msg) {
+
+			var that = this;
+			var type = (type ? type : "danger");
+
+			// console.error("Error ", title, type, typeof msg, msg);
+
+			var pmsg = '';
+			if (typeof msg === 'object' && msg.hasOwnProperty("message")) {
+				pmsg = '<p>' + utils.escape(msg.message, false).replace("\n", "<br />") + '</p>';
+			} else if (typeof msg === 'string') {
+				pmsg = '<p>' + utils.escape(msg, false).replace("\n", "<br />") + '</p>';
+			}
+
+			var str = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' +  
+				' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+				(title ? '<strong>' + utils.escape(title, false).replace("\n", "<br />")  + '</strong>' : '') +
+				pmsg + 
+				'</div>'
+
+			if (this.hasOwnProperty("errorClearCallback")) {
+				clearTimeout(this.errorClearCallback);
+			}
+
+			this.errorClearCallback = setTimeout(function() {
+				$("#errorcontainer").empty();
+			}, 10000);
+
+			$("#errorcontainer").empty().append(str);
+
+		},
+
+
 		"routeEditClient": function(clientid, tabid) {
 			var that = this;
 			console.log("Route edit client", clientid);
