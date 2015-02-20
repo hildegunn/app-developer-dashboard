@@ -20,6 +20,17 @@ module.exports = function(grunt) {
 		// 		dest: 'build/<%= pkg.name %>.min.js'
 		// 	}
 		// },
+	    shell: {
+	        rcss: {
+				command: 'r.js -o build.css.js'
+	        },
+	        rjs: {
+				command: 'r.js -o build.js'
+	        },
+	        bower: {
+	        	command: "bower --allow-root install"
+	        }
+	    },
 		watch: {
 			files: ['<%= jshint.files %>'],
 			tasks: ['jshint']
@@ -80,10 +91,14 @@ module.exports = function(grunt) {
 	// grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-requirejs');
+	grunt.loadNpmTasks('grunt-shell');
 	
+
 
 	// Default task(s).
 	grunt.registerTask('default', ['jshint']);
-	grunt.registerTask('build', ['requirejs']);
+	grunt.registerTask('buildx', ['requirejs']);
+	grunt.registerTask('bower', ['shell:bower']);
+	grunt.registerTask('build', ['shell:bower', 'shell:rcss', 'shell:rjs']);
 
 };
