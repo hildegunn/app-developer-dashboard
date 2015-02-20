@@ -157,8 +157,6 @@ define(function(require, exports, module) {
 		"draw": function(act) {
 			var that = this;
 
-			console.error("DRAW Maiunlisting");
-
 
 			dust.render("mainlisting", {}, function(err, out) {
 				that.el.empty().append(out);
