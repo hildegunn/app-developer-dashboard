@@ -51,8 +51,8 @@ define(function(require, exports, module) {
 			var parameters;
 
 			for(var i = 0; i < this.routes.length; i++) {
-
-				if (parameters = hash.match(this.routes[i][0])) {
+				parameters = hash.match(this.routes[i][0]);
+				if (parameters) {
 					console.log("Found a route match on ", this.routes[i], parameters);
 					if (typeof this[this.routes[i][1]] === 'function') {
 						var args = Array.prototype.slice.call(parameters, 1);

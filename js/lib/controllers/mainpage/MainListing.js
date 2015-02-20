@@ -148,15 +148,11 @@ define(function(require, exports, module) {
 		},
 
 		"load": function() {
-
-
-
 			this.draw(true);
-
 		},
+		
 		"draw": function(act) {
 			var that = this;
-
 
 			dust.render("mainlisting", {}, function(err, out) {
 				that.el.empty().append(out);

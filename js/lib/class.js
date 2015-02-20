@@ -7,9 +7,13 @@
  * @copyright John Resig, MIT Licensed. Inspired by base2 and Prototype
  * @version 1.0
  */
+		
+
+/* jshint ignore:start */
 
 
 define(function(require) {
+
 
 
 	/* Simple JavaScript Inheritance
@@ -18,10 +22,13 @@ define(function(require) {
 	 */
 	// Inspired by base2 and Prototype
 	(function(){
+
+
 		var 
 			initializing = false, 
 			fnTest = (/xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/);
-	 
+
+
 		// The base Class implementation (does nothing)
 		this.Class = function(){};
 	 
@@ -35,6 +42,7 @@ define(function(require) {
 			var prototype = new this();
 			initializing = false;
 		 
+
 			// Copy the properties over onto the new prototype
 			for (var name in prop) {
 				// Check if we're overwriting an existing function
@@ -58,7 +66,8 @@ define(function(require) {
 					})(name, prop[name]) :
 					prop[name];
 			}
-		 
+
+
 			// The dummy class constructor
 			function Class() {
 				// All construction is actually done in the init method
@@ -83,3 +92,5 @@ define(function(require) {
 	return this.Class;
 
 });
+
+/* jshint ignore:end */

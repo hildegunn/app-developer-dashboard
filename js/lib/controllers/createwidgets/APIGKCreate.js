@@ -166,7 +166,7 @@ CREATE TABLE feideconnect.apigk (
 
 
 
-	}
+	};
 
 
 

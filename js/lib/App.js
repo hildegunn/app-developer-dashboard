@@ -201,7 +201,7 @@ define(function(require, exports, module) {
 		"setErrorMessage": function(title, type, msg) {
 
 			var that = this;
-			var type = (type ? type : "danger");
+			type = (type ? type : "danger");
 
 			// console.error("Error ", title, type, typeof msg, msg);
 
@@ -216,7 +216,7 @@ define(function(require, exports, module) {
 				' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
 				(title ? '<strong>' + utils.escape(title, false).replace("\n", "<br />")  + '</strong>' : '') +
 				pmsg + 
-				'</div>'
+				'</div>';
 
 			if (this.hasOwnProperty("errorClearCallback")) {
 				clearTimeout(this.errorClearCallback);
