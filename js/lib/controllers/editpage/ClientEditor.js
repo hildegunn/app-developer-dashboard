@@ -104,7 +104,7 @@ define(function(require, exports, module) {
 				view.requestedAPIs = [];
 
 
-				console.error("APIS", apis);
+				// console.error("APIS", apis);
 
 				view.apis = [];
 				for(var key in apis) {
@@ -131,7 +131,7 @@ define(function(require, exports, module) {
 
 				}
 
-				console.error("view is ", view);
+				
 
 				dust.render("clienteditor", view, function(err, out) {
 
@@ -171,7 +171,7 @@ define(function(require, exports, module) {
 			});
 
 			// console.log("Adding API ", apigk);
-			console.error("Adding scopes", newscopes);
+			// console.error("Adding scopes", newscopes);
 
 			this.current.addScopes(newscopes);
 
@@ -279,7 +279,7 @@ define(function(require, exports, module) {
 
 			var obj = this.current.getStorable();
 
-			console.error("Get storable", obj);
+			// console.error("Get storable", obj);
 
 
 
