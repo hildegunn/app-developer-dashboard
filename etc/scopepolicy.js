@@ -77,6 +77,14 @@ define(function() {
 			"policy": {
 				"auto": false
 			}
+		},
+		"authzinfo": {
+			"title": "List ut samtykke",
+			"descr": "List ut og endre samtykke gitt til applikasjoner.",
+			"public": false,
+			"policy": {
+				"auto": false
+			}
 		}
 	};
 
