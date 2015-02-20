@@ -49,8 +49,6 @@ define(function(require, exports, module) {
 				v.sd.req = true;
 			}
 
-			v.sd.subscopes = v.sd.subscopes;
-
 			if (v.sd.subscopes) {
 				for(var i = 0; i < v.sd.subscopes.length; i++) {
 					v.sd.subscopes[i].status = {};
@@ -65,7 +63,9 @@ define(function(require, exports, module) {
 				}
 
 			}
+
 			return v;
+
 		},
 		"setName": function(name) {
 			this.name = name;
