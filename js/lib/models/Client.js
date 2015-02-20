@@ -2,7 +2,9 @@ define(function(require, exports, module) {
 
 	var 
 		moment = require('bower/momentjs/moment'),
-		Model = require('./Model')
+		APIGK = require('./APIGK'),
+		Model = require('./Model'),
+		utils = require('../utils')
 	;
 
 	function parseDate (input) {
@@ -14,21 +16,14 @@ define(function(require, exports, module) {
 
 	var Client = Model.extend({
 		"getView": function() {
-
-			var oauth = {};
-
-
 			var res = this._super();
-
 			if (this.created) {
-
 				res.created = parseDate(this.created);
 				res.createdAgo = res.created.fromNow();
 				res.createdH = res.created.format('D. MMM YYYY');
 			}
 
 			if  (this.updated) {
-
 				res.updated = parseDate(this.updated);
 				res.updatedAgo = res.updated.fromNow();
 				res.updatedH = res.updated.format('D. MMM YYYY');
@@ -36,6 +31,7 @@ define(function(require, exports, module) {
 
 			return res;			
 		},
+
 		"getAPIGKview": function(apigk) {
 
 			var that = this;
@@ -64,14 +60,11 @@ define(function(require, exports, module) {
 					} else if (this.scopeIsRequested(siq)) {
 						v.sd.subscopes[i].status.requested = true;
 						v.sd.req = true;
-						console.error("SCOPE IS REQUESTED", siq);
 					}
 
 				}
 
 			}
-			console.error("IS requested ", this.name, v.sd.req);
-
 			return v;
 		},
 		"setName": function(name) {
@@ -124,21 +117,25 @@ define(function(require, exports, module) {
 			}
 			this.scopes_requested = newscopes;
 		},
+		/**
+		 * Check if a scope is found in "scopes"
+		 * @param  {[type]} scope [description]
+		 * @return {[type]}       [description]
+		 */
 		"scopeIsAccepted": function(scope) {
-
-
-			// console.error("Checkif if scope is accapted", scope, this.scopes);
 			if (!this.scopes) return false;
 			if (!this.scopes.length) return false;
-			// console.error("FALSE--");
 			for(var i = 0; i < this.scopes.length; i++) {
 				if (scope === this.scopes[i]) return true;
 			}
-			// console.error("FALSE");
 			return false;
 		},
+		/**
+		 * Check if a scope is found in "scopes_requested"
+		 * @param  {[type]} scope [description]
+		 * @return {[type]}       [description]
+		 */
 		"scopeIsRequested": function(scope) {
-			// console.error("CHECKING IS SCOPE IS REQUESTED", scope, this.scopes_requested);
 			if (!this.scopes_requested) return false;
 			if (!this.scopes_requested.length) return false;
 			for(var i = 0; i < this.scopes_requested.length; i++) {
@@ -146,6 +143,29 @@ define(function(require, exports, module) {
 			}
 			return false;
 		},
+
+		/*
+		 * Returns an array with API Gatekeeper IDs represented by scopes found in 
+		 * scopes_requested.
+		 */
+		"getAPIscopes": function() {
+			var apis = {}, api;
+			if (!this.scopes_requested) return apis;
+			if (!this.scopes_requested.length) return apis;
+			for(var i = 0; i < this.scopes_requested.length; i++) {
+				api = APIGK.getAPIfromScope(this.scopes_requested[i]);
+				if (api !== null) apis[api] = true;
+			}
+			return utils.getKeys(apis);
+		},
+
+		/**
+		 * Takes a scope definition as input and returns all scopes that is defined in the 
+		 * scopedef, sorted into available, requested and accepted lists.
+		 * 
+		 * @param  {[type]} scopedef Typically a global scope definition.
+		 * @return {[type]}          [description]
+		 */
 		"getScopes": function(scopedef) {
 
 			var res = {
