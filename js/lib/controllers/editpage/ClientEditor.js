@@ -6,13 +6,12 @@ define(function(require, exports, module) {
 		Client = require('../../models/Client'),
 		Editor = require('./Editor'),
 		scopePolicy = require('../../../../etc/scopepolicy'),
-		utils = require('../../utils')
+		utils = require('../../utils'),
+		StringSet = require('../../StringSet')
 		;
 
 
 	var clientTemplate = require('text!templates/ClientEditor.html');
-
-
 
 	var ClientEditor = Editor.extend({
 		"init": function(app, feideconnect, publicapis) {
@@ -29,8 +28,10 @@ define(function(require, exports, module) {
 			this.ebind("click", ".actScopeAdd", "actScopeAdd");
 			this.ebind("click", ".actScopeRemove", "actScopeRemove");
 			this.ebind("click", ".actDelete", "actDelete");
-
 			this.ebind("click", ".actAPIadd", "actAPIadd");
+
+			this.ebind("click", ".actAPIScopeUpdate", "actAPIScopeUpdate");
+			
 			
 		
 		},
@@ -72,10 +73,6 @@ define(function(require, exports, module) {
 
 			var scopes = item.getScopes(scopePolicy);
 
-			// console.log("SCOPES", scopes);
-			
-			// var apis = this.publicapis.apigks;
-
 			if (this.feideconnect) {
 				$.extend(view, {
 					"oauth": that.feideconnect.getConfig(),
@@ -83,18 +80,60 @@ define(function(require, exports, module) {
 				});
 			}
 
+			var apiids = item.getAPIscopes();
+			var clientAPIkeys = new StringSet(apiids);
 
-			// console.log("PUBLIC API FETCH");
 
 			this.publicapis.ready(function(apis) {
-				view.apis = that.publicapis.getView();
 
-				console.error("APIs are ", view.apis);
-				console.log("view is ", view);
+				var myapis = [], api, i;
 
+
+
+				for(i = 0; i < apiids.length; i++) {
+					api = that.publicapis.getAPIGK(apiids[i]);
+					if (api === null) {
+						console.error("This client got scopes for the API [" + apiids[i] + "] but did not find information about this public API.");
+					} else {
+						myapis.push(api);
+					}
+				}
+
+				var aapiview, includePublicListing;
+				view.authorizedAPIs = [];
+				view.requestedAPIs = [];
+
+
+				console.error("APIS", apis);
+
+				view.apis = [];
+				for(var key in apis) {
+
+					console.log("About to process ", apis[key].name, clientAPIkeys.has(apis[key].id));
+
+					if (clientAPIkeys.has(apis[key].id)) continue;
+					view.apis.push(apis[key].getView());
+				}
+
+				for(i = 0; i < myapis.length; i++) {
+
+					// if (new Client()  instanceof Client.prototype) {
+					// 	throw new Error("Cannot getClientView without providing a valid Client object.");
+					// }
+
+					aapiview = myapis[i].getClientView(that.current);
+					if (aapiview.sd.authz) {
+						view.authorizedAPIs.push(aapiview);
+					} 
+					if (aapiview.sd.req) {
+						view.requestedAPIs.push(aapiview);
+					}
+
+				}
+
+				console.error("view is ", view);
 
 				dust.render("clienteditor", view, function(err, out) {
-					// console.log(out);
 
 					var tab = that.currentTab;
 					if (setTab) tab = setTab;
@@ -104,7 +143,6 @@ define(function(require, exports, module) {
 				});
 
 				that.activate();
-
 
 			});
 			
@@ -123,7 +161,7 @@ define(function(require, exports, module) {
 			var apigkid = container.data('apigkid');
 			var apigk = this.publicapis.getAPIGK(apigkid);
 
-			newscopes.push("gk_" + apigkid);
+			newscopes.push(apigk.getBasicScope());
 			container.find("input.subScopeSelection").each(function(i, item) {
 
 				if ($(item).prop("checked")) {
@@ -153,6 +191,51 @@ define(function(require, exports, module) {
 
 
 		},
+
+		"actAPIScopeUpdate": function(e) {
+
+			e.preventDefault();
+
+			var that = this;
+
+			var container = $(e.currentTarget).closest(".apiEntry");
+			var apigkid = container.data('apigkid');
+			var apigk = this.publicapis.getAPIGK(apigkid);
+
+
+			var scopes = {};
+			$(container).find("input.authscope").each(function(i, item) {
+				console.log("Auth z input element", item);
+				var scope = $(item).data("scopemoderate");
+				var enabled = $(item).prop("checked");
+				scopes[scope] = enabled;
+			});
+
+			for(var scope in scopes) {
+				if (scopes[scope]) {
+					// console.error("Add scope", scope);
+					this.current.addScope(scope);
+				} else {
+					// console.error("Remove scope", scope);
+					this.current.removeScope(scope);
+				}
+			}
+
+			// return;
+			var fullobj = this.current.getStorable();
+			var obj = {};
+			obj.id = fullobj.id;
+			obj.scopes_requested = fullobj.scopes_requested;
+
+			this.feideconnect.clientsUpdate(obj, function(savedClient) {
+				var x = new Client(savedClient);
+				that.edit(x);
+				that.emit("saved", x);
+			});
+
+
+		},
+
 		"actScopeAdd": function(e) {
 			e.preventDefault();
 			var scopeid = $(e.currentTarget).closest(".scopeEntry").data("scopeid");

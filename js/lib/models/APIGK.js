@@ -3,6 +3,7 @@ define(function(require, exports, module) {
 	var 
 		moment = require('bower/momentjs/moment'),
 		Model = require('./Model'),
+		Client = require('./Client'),
 		ScopeDef = require('./ScopeDef')
 	;
 
@@ -24,14 +25,6 @@ define(function(require, exports, module) {
 			this._super(props);
 		},
 
-		/**
-		 * Returns the scope representing basic access for this API Gatekeeper.
-		 * 
-		 * @return {[type]} Scope, like this `gk_foodleapi`
-		 */
-		"getBasicScope": function() {
-			return "gk_" + this.id;
-		},
 
 		"getView": function() {
 			var res = this._super();
@@ -51,11 +44,63 @@ define(function(require, exports, module) {
 			if (this.scopedef) {
 				res.scopedef = this.scopedef.getView();
 			} else {
-				res.scopes = [];
+				res.scopedef = [];
 			}
 
 			return res;			
+		},
+
+		"getClientView": function(client) {
+			// console.error("Client ", client);
+			// if (typeof client !== 'object') throw new Error("Cannot getClientView without providing a valid Client object");
+			// if (new Client()  instanceof Client.prototype) {
+			// 	throw new Error("Cannot getClientView without providing a valid Client object.");
+			// }
+
+			var that = this;
+			var bs = this.getBasicScope();
+			var authz = client.scopeIsAccepted(bs);
+			var v = this.getView();
+
+			v.sd = $.extend({}, v.scopedef);
+			// v.sd.clientid = apigk.id;
+			v.sd.authz = authz;
+
+			v.sd.req = false;
+			if (!client.scopeIsAccepted(bs) && client.scopeIsRequested(bs)) {
+				v.sd.req = true;
+			}
+
+			if (v.sd.subscopes) {
+				for(var i = 0; i < v.sd.subscopes.length; i++) {
+					v.sd.subscopes[i].status = {};
+					var siq = bs + '_' + v.sd.subscopes[i].scope;
+					if (client.scopeIsAccepted(siq)) {
+						v.sd.subscopes[i].status.accepted = true;
+						v.sd.subscopes[i].status.checked = true;
+					} else if (client.scopeIsRequested(siq)) {
+						v.sd.subscopes[i].status.requested = true;
+						v.sd.subscopes[i].status.checked = true;
+						v.sd.req = true;
+					}
+
+				}
+
+			}
+
+			return v;
+		},
+
+		/**
+		 * Returns the scope representing basic access for this API Gatekeeper.
+		 * 
+		 * @return {[type]} Scope, like this `gk_foodleapi`
+		 */
+		"getBasicScope": function() {
+			return "gk_" + this.id;
 		}
+
+
 
 	});
 
