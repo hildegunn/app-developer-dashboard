@@ -1,9 +1,7 @@
+/**
+ * This utility object contains a few function that is used in various placed, and is more generic functions.
+ */
 define(function(require, exports, module) {
-
-	// var 
-	// 	// $ = require('jquery')
-	// 	;
-
 
 	var utils = {
 		"guid": function() {
@@ -28,6 +26,14 @@ define(function(require, exports, module) {
 				return MAP[c];
 			});
 			return p;
+		},
+		"getKeys": function(obj) {
+			var list = [];
+			if (typeof obj !== "object") return list;
+			for(var key in obj) {
+				if (obj.hasOwnProperty(key)) list.push(key);
+			}
+			return list;
 		}
 	};
 
