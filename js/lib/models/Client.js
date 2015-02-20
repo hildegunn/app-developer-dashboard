@@ -15,6 +15,7 @@ define(function(require, exports, module) {
 
 
 	var Client = Model.extend({
+		
 		"getView": function() {
 			var res = this._super();
 			if (this.created) {
@@ -67,13 +68,15 @@ define(function(require, exports, module) {
 			return v;
 
 		},
+
 		"setName": function(name) {
 			this.name = name;
 		},
+
 		"setDescr": function(descr) {
 			this.descr = descr;
-
 		},
+
 		"setOneRedirectURI": function(redirect_uri) {
 			if (!this.redirect_uri) redirect_uri = [];
 			if (redirect_uri.length < 1) {
@@ -83,11 +86,13 @@ define(function(require, exports, module) {
 			}
 			
 		},
+
 		"addScopes": function(scopes) {
 			for(var i = 0; i < scopes.length; i++) {
 				this.addScope(scopes[i]);
 			}
 		},
+
 		"addScope": function(scope) {
 			var exists = false;
 			var existingScopes = [];
@@ -104,6 +109,7 @@ define(function(require, exports, module) {
 			}
 			this.scopes_requested = newscopes;
 		},
+
 		"removeScope": function(scope) {
 			var existingScopes = [];
 			var newscopes = [];
@@ -117,6 +123,7 @@ define(function(require, exports, module) {
 			}
 			this.scopes_requested = newscopes;
 		},
+
 		/**
 		 * Check if a scope is found in "scopes"
 		 * @param  {[type]} scope [description]
@@ -130,6 +137,7 @@ define(function(require, exports, module) {
 			}
 			return false;
 		},
+
 		/**
 		 * Check if a scope is found in "scopes_requested"
 		 * @param  {[type]} scope [description]
