@@ -1,7 +1,8 @@
 
 /**
  * @package Simple JavaScript Inheritance
- * @description A very simple class inheritance framework, that is used within UWAP for the Model implementations.
+ * @description A very simple class inheritance framework, 
+ *              that is used within Feide Connect for the Model implementations.
  * @author John Resig
  * @copyright John Resig, MIT Licensed. Inspired by base2 and Prototype
  * @version 1.0
@@ -17,7 +18,9 @@ define(function(require) {
 	 */
 	// Inspired by base2 and Prototype
 	(function(){
-		var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
+		var 
+			initializing = false, 
+			fnTest = (/xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/);
 	 
 		// The base Class implementation (does nothing)
 		this.Class = function(){};
