@@ -66,11 +66,11 @@ define(function(require, exports, module) {
 
 
 			setTimeout(function() {
-		
-				that.feideconnect.apigkClientRequests().
-					then(function(data) {
-						console.log("DATA CLIENT REQUESTS...", data);
-					});
+				// TODO: This API fails. Should be fixed. 
+				// that.feideconnect.apigkClientRequests().
+				// 	then(function(data) {
+				// 		console.log("DATA CLIENT REQUESTS...", data);
+				// 	});
 
 			}, 1000);
 
