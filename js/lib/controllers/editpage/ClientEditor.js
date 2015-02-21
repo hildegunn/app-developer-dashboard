@@ -1,8 +1,7 @@
-define(function(require, exports, module) {
+define(function(require) {
 
 	var 
 		dust = require('dust'),
-		Pane = require('../Pane'),
 		Client = require('../../models/Client'),
 		Editor = require('./Editor'),
 		scopePolicy = require('../../../../etc/scopepolicy'),
@@ -16,7 +15,6 @@ define(function(require, exports, module) {
 	var ClientEditor = Editor.extend({
 		"init": function(app, feideconnect, publicapis) {
 			
-			var that = this;
 			this.editor = "clients";
 			this.publicapis = publicapis;
 			this._super(app, feideconnect);
@@ -29,12 +27,9 @@ define(function(require, exports, module) {
 			this.ebind("click", ".actScopeRemove", "actScopeRemove");
 			this.ebind("click", ".actDelete", "actDelete");
 			this.ebind("click", ".actAPIadd", "actAPIadd");
-
 			this.ebind("click", ".actAPIScopeUpdate", "actAPIScopeUpdate");
-			
 			this.ebind("click", ".actRemoveRedirectURI", "actRemoveRedirectURI");
 			this.ebind("click", ".actAddRedirectURI", "actAddRedirectURI");
-			
 		
 		},
 
@@ -59,9 +54,7 @@ define(function(require, exports, module) {
 				.catch(function(err) {
 					that.app.setErrorMessage("Error uploading logo", "danger", err);
 				});
-
 		},
-
 
 
 		"showPublicAPIs": function() {
@@ -70,9 +63,10 @@ define(function(require, exports, module) {
 			var apis = this.publicapis.apigks;
 			$("#apigklisting").empty();
 			for(var key in apis) {
-				$("#apigklisting").append('<div>' + apis + '</div>');
+				if (apis.hasOwnProperty(key)) {
+					$("#apigklisting").append('<div>' + apis + '</div>');	
+				}
 			}
-
 
 		},
 
@@ -111,7 +105,7 @@ define(function(require, exports, module) {
 					}
 				}
 
-				var aapiview, includePublicListing;
+				var aapiview;
 				view.authorizedAPIs = [];
 				view.requestedAPIs = [];
 
@@ -120,11 +114,11 @@ define(function(require, exports, module) {
 
 				view.apis = [];
 				for(var key in apis) {
-
-					console.log("About to process ", apis[key].name, clientAPIkeys.has(apis[key].id));
-
-					if (clientAPIkeys.has(apis[key].id)) continue;
-					view.apis.push(apis[key].getView());
+					if (apis.hasOwnProperty(key)) {
+						console.log("About to process ", apis[key].name, clientAPIkeys.has(apis[key].id));
+						if (clientAPIkeys.has(apis[key].id)) continue;
+						view.apis.push(apis[key].getView());
+					}
 				}
 
 				for(i = 0; i < myapis.length; i++) {
@@ -148,7 +142,9 @@ define(function(require, exports, module) {
 				dust.render("clienteditor", view, function(err, out) {
 
 					var tab = that.currentTab;
-					if (setTab) tab = setTab;
+					if (setTab) {
+						tab = setTab;
+					}
 					that.el.empty().append(out);
 					that.selectTab(tab);
 
@@ -198,9 +194,7 @@ define(function(require, exports, module) {
 				that.emit("saved", x);
 			});
 
-
-			console.log("trying to actScopeAdd ", scopeid);
-
+			console.log("trying to actAPIadd ", newscopes);
 
 		},
 
@@ -211,9 +205,6 @@ define(function(require, exports, module) {
 			var that = this;
 
 			var container = $(e.currentTarget).closest(".apiEntry");
-			var apigkid = container.data('apigkid');
-			var apigk = this.publicapis.getAPIGK(apigkid);
-
 
 			var scopes = {};
 			$(container).find("input.authscope").each(function(i, item) {
@@ -225,15 +216,12 @@ define(function(require, exports, module) {
 
 			for(var scope in scopes) {
 				if (scopes[scope]) {
-					// console.error("Add scope", scope);
 					this.current.addScope(scope);
 				} else {
-					// console.error("Remove scope", scope);
 					this.current.removeScope(scope);
 				}
 			}
 
-			// return;
 			var fullobj = this.current.getStorable();
 			var obj = {};
 			obj.id = fullobj.id;
@@ -315,9 +303,10 @@ define(function(require, exports, module) {
 		"actDelete": function(e) {
 			e.preventDefault();
 			var that = this;
-			this.feideconnect.clientsDelete(this.current.id, function(data) {
-				that.emit("deleted", that.current.id);
-			});
+			this.feideconnect.clientsDelete(this.current.id)
+				.then(function() {
+					that.emit("deleted", that.current.id);
+				});
 		}
 
 	});
