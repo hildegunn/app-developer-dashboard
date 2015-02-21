@@ -8,3 +8,5 @@ install:
 before_script: 
   - mv bower.ci.json bower.json
   - grunt build
+notifications:
+  slack: uninett:5CpnkrlaqOLKLXDttDzpTqqU
