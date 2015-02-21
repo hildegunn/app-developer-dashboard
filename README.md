@@ -25,6 +25,9 @@ You can now already use the development version, by loading
 
 It will load all the CSS and javascript files one by one, where changes in the files will be immediately reflected in the app. It will not be that effective though, but perfect for development.
 
+The configuration file needs to be adjusted to reflect index.dev.html as your redirect_uri:
+
+	"redirect_uri": "http://xxxxx.example.org/index.dev.html",
 
 # Build production web app
 
