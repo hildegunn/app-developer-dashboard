@@ -182,7 +182,7 @@ CREATE TABLE feideconnect.apigk (
 			ready = false;
 		}
 
-		if (!endpoint || endpoint === '') {
+		if (!endpoint || endpoint === '') {
 			ready = false;
 		}
 
