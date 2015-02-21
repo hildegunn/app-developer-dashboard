@@ -27,7 +27,7 @@ define(function() {
 		},
 		"openid": {
 			"title": "OpenID Connect",
-			"descr": "Kilenten vil få utstedt en id_token og kunne bruke OpenID Connect for autentisering.",
+			"descr": "Klienten vil få utstedt en id_token og kunne bruke OpenID Connect for autentisering.",
 			"public": true,
 			"policy": {
 				"auto": true
