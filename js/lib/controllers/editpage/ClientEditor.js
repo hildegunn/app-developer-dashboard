@@ -32,8 +32,20 @@ define(function(require, exports, module) {
 
 			this.ebind("click", ".actAPIScopeUpdate", "actAPIScopeUpdate");
 			
+			this.ebind("click", ".actRemoveRedirectURI", "actRemoveRedirectURI");
+			this.ebind("click", ".actAddRedirectURI", "actAddRedirectURI");
 			
 		
+		},
+
+		"actRemoveRedirectURI": function(e) {
+			e.preventDefault();
+			$(e.currentTarget).closest(".redircontainer").remove();
+		},
+		"actAddRedirectURI": function(e) {
+			e.preventDefault();
+			var tmp = this.el.find("#redirtemplate").clone().css("display", "block");
+			this.el.find("#rediroutercontainer").append(tmp);
 		},
 
 		"logoUploaded": function(data) {
@@ -271,19 +283,28 @@ define(function(require, exports, module) {
 		"actSaveChanges": function(e) {
 			e.preventDefault();
 
-			console.log("About to sacve changes");
+			var that = this;
+			var redirectURIs;
+			var obj;
+
+			console.log("About to save changes");
 
 			this.current.setName(this.el.find("#name").val());
 			this.current.setDescr(this.el.find("#descr").val());
-			this.current.setOneRedirectURI(this.el.find("#redirect_uri").val());
 
-			var obj = this.current.getStorable();
+			redirectURIs = [];
+			this.el.find("input.redirect_uri").each(function(i, item) {
+				var x = $(item).val();
+				if (x !== '') {
+					redirectURIs.push(x);	
+				}
+			});
 
+			this.current.redirect_uri = redirectURIs;
+
+			obj = this.current.getStorable();
 			// console.error("Get storable", obj);
 
-
-
-			var that = this;
 			this.feideconnect.clientsUpdate(obj, function(savedClient) {
 				var x = new Client(savedClient);
 				that.edit(x);

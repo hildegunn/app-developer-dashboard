@@ -51,9 +51,43 @@
 					</div>
 
 					<div class="form-group">
-						<label for="redirect_uri">Redirect URI</label>
+						<label for="">Redirect URI</label>
 						<p>The OAuth Redirect URI is the URL where the user is send back to after authentication and authorization.</p>
-						<input type="text" class="form-control" id="redirect_uri" placeholder="https://example.org/callback" value="{redirect_uri[0]}">
+
+
+						<div id="redirtemplate" style="display: none">
+							<div class="input-group clearfix redircontainer" style="margin-top: 4px">
+								<input type="text" class="form-control redirect_uri" placeholder="https://example.org/callback">
+								<div class="input-group-btn">
+									<button class="btn btn-default actRemoveRedirectURI"><i class="fa fa-times"></i></button>
+								</div>
+							</div>
+						</div>
+						<div id="rediroutercontainer">
+							{#redirect_uri}
+								<div class="input-group clearfix redircontainer" style="margin-top: 4px">
+									<input type="text" class="form-control redirect_uri" placeholder="" value="{.}">
+									<div class="input-group-btn">
+										<button class="btn btn-default actRemoveRedirectURI"><i class="fa fa-times"></i></button>
+									</div>
+								</div>
+							{:else}
+								<div class="input-group clearfix redircontainer" style="margin-top: 4px">
+									<input type="text" class="form-control redirect_uri" placeholder="https://example.org/callback">
+									<div class="input-group-btn">
+										<button class="btn btn-default actRemoveRedirectURI"><i class="fa fa-times"></i></button>
+									</div>
+								</div>
+							{/redirect_uri}
+						</div>
+
+
+						<div class="clearfix"></div>
+						<div class="pull-right" style="margin-top: 3px; margin-right: 4px">
+							<button class="btn btn-default actAddRedirectURI"><i class="fa fa-plus"></i></button>
+						</div>
+
+
 					</div>
 
 					<p><button class="btn btn-success actSaveChanges" class="">
@@ -104,7 +138,7 @@
 
 						<dt>Redirect URI</dt>
 						{#redirect_uri}
-						<dd><code>{.}</code></dd>
+							<dd><code>{.}</code></dd>
 						{/redirect_uri}
 
 					</dl>
