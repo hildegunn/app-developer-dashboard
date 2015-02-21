@@ -13,13 +13,13 @@ module.exports = function(grunt) {
 		},
 	    shell: {
 	        rcss: {
-				command: 'r.js -o build.css.js'
+				command: 'node_modules/requirejs/bin/r.js -o build.css.js'
 	        },
 	        rjs: {
-				command: 'r.js -o build.js'
+				command: 'node_modules/requirejs/bin/r.js -o build.js'
 	        },
 	        bower: {
-	        	command: "bower --allow-root install"
+	        	command: "node_modules/bower/bin/bower --allow-root install"
 	        }
 	    },
 		watch: {
