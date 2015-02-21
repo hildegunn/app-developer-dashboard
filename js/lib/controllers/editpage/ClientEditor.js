@@ -243,15 +243,21 @@ define(function(require) {
 			this.current.addScope(scopeid);
 			var obj = this.current.getStorable();
 			var that = this;
-			this.feideconnect.clientsUpdate(obj, function(savedClient) {
-				var x = new Client(savedClient);
-				that.edit(x);
-				that.emit("saved", x);
-			});
 
+
+			this.feideconnect.clientsUpdate(obj)
+				.then(function(savedClient) {
+					var x = new Client(savedClient);
+					that.edit(x);
+					that.emit("saved", x);
+				})
+				.catch(function(err) {
+					that.app.setErrorMessage("Error adding scope", "danger", err);
+				});
 
 			console.log("trying to actScopeAdd ", scopeid);
 		},
+
 		"actScopeRemove": function(e) {
 			e.preventDefault();
 			var scopeid = $(e.currentTarget).closest(".scopeEntry").data("scopeid");
@@ -260,11 +266,17 @@ define(function(require) {
 			this.current.removeScope(scopeid);
 			var obj = this.current.getStorable();
 			var that = this;
-			this.feideconnect.clientsUpdate(obj, function(savedClient) {
-				var x = new Client(savedClient);
-				that.edit(x);
-				that.emit("saved", x);
-			});
+
+
+			this.feideconnect.clientsUpdate(obj)
+				.then(function(savedClient) {
+					var x = new Client(savedClient);
+					that.edit(x);
+					that.emit("saved", x);
+				})
+				.catch(function(err) {
+					that.app.setErrorMessage("Error removing scope", "danger", err);
+				});
 
 		},
 
