@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/feideconnect/app-developer-dashboard/badges/gpa.svg)](https://codeclimate.com/github/feideconnect/app-developer-dashboard)
+
 # Feide Connect Developer Dashboard	
 
 Manage clients and API Gatekeepers.
