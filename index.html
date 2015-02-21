@@ -13,13 +13,13 @@
 
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
 
+	<!-- Application: Javascript and CSS loaded from distribution build -->
 	<link href="dist/app.min.css" rel="stylesheet"/>
-
 	<script src="dist/app.min.js"></script>
 	<script type="text/javascript">
-		require('main-dev');
+		require('main');
 	</script>
-
+	<!--  o __ o __ o __ o __ o __ o __ o __ o __ o __ o __ o __ o __ o -->
 
 </head>
 
@@ -79,6 +79,9 @@
 
 	<div class="container">
 
+		<div id="debug" style="font-size: 70%"></div>
+		<div id="errorcontainer"></div>
+
 
 		<div id="panecontainer"></div>
 
@@ -93,8 +96,6 @@
 
 
 		</div>
-
-
 
 
 		<div class="row gutter" id="urlcontainer" style=" ">
