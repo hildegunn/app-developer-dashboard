@@ -9,7 +9,6 @@ define(function(require, exports, module) {
 
 	function parseDate (input) {
 		var x = input.substring(0, 19) + 'Z';
-		console.log("About to parse date " + input, x);
 		return moment(x);
 	}
 
