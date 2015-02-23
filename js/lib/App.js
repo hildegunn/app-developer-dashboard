@@ -21,7 +21,7 @@ define(function(require, exports, module) {
 
 		utils  = require('./utils'),
 
-		config = require('../../etc/config'),
+		rawconfig = require('text!/etc/config.js'),
 		$ = require('jquery');
 
 
@@ -47,6 +47,7 @@ define(function(require, exports, module) {
 		"init": function() {
 			var that = this;
 
+			var config = JSON.parse(rawconfig);
 			this.feideconnect = new FeideConnect(config);
 
 
