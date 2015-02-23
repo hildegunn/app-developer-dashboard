@@ -1,0 +1,9 @@
+{
+	"_lang": "no",
+	"devdash": "Dashboard for utviklere",
+	"registerinfo": "Registrer og administrer dine klienter og API Gatkeeepere",
+	"clients": "Klienter",
+	"clientsnew": "Registrer ny klient",
+	"apigks": "API Gatekeepere",
+	"apigksnew": "Registrer ny API Gatekeeper"
+}

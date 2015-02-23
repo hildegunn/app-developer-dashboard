@@ -13,7 +13,9 @@ requirejs.config({
 		"templates" : '/templates/',
 		"dust"      : '/bower_components/dustjs-linkedin/dist/dust-full.min',
 		"class"     : "class",
-		"jquery"	: "/bower_components/jquery/dist/jquery.min"
+		"jquery"	: "/bower_components/jquery/dist/jquery.min",
+
+		"dict"		: "/dictionaries/dictionary.en.json"
 	},
 	shim: {
 		"dust": {

@@ -4,7 +4,7 @@ define(function(require, exports, module) {
 		dust = require('dust'),
 		Pane = require('../Pane'),
 
-
+		Dictionary = require('../../Dictionary'),
 		ClientCreate = require('../createwidgets/ClientCreate'),
 		APIGKCreate = require('../createwidgets/APIGKCreate'),
 		EventEmitter = require('../../EventEmitter'),
@@ -33,6 +33,9 @@ define(function(require, exports, module) {
 
 
 			this._super();
+
+			this.dict = new Dictionary();
+			console.error("dict", this.dict.get());
 
 
 			dust.loadSource(dust.compile(template, "mainlisting"));
@@ -126,7 +129,8 @@ define(function(require, exports, module) {
 			view = {
 				"clients": clientlist,
 				"random": utils.guid(),
-				"_config": that.feideconnect.getConfig()
+				"_config": that.feideconnect.getConfig(),
+				"_": that.dict.get()
 			};
 
 			dust.render("mainlistingC", view, function(err, out) {
@@ -167,7 +171,8 @@ define(function(require, exports, module) {
 			view = {
 				"apigks": apigklist,
 				"random": utils.guid(),
-				"_config": that.feideconnect.getConfig()
+				"_config": that.feideconnect.getConfig(),
+				"_": that.dict.get()
 			};
 
 			dust.render("mainlistingA", view, function(err, out) {
@@ -186,7 +191,11 @@ define(function(require, exports, module) {
 		"draw": function(act) {
 			var that = this;
 
-			dust.render("mainlisting", {}, function(err, out) {
+			view = {
+				"_": that.dict.get()
+			};
+
+			dust.render("mainlisting", view, function(err, out) {
 				that.el.empty().append(out);
 				that.el.find('#listingClients').append(that.elClients);
 				that.el.find('#listingAPIGKs').append(that.elAPIGKs);
