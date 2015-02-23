@@ -111,7 +111,7 @@ define(function(require, exports, module) {
 					// $("#debug").append("<pre style='background-color: #cc7; margin-bottom: 5em'>" + JSON.stringify(view, undefined, 4) + "</pre>");
 
 
-					console.error("view is ", view);
+					// console.error("view is ", view);
 					dust.render("apigkeditor", view, function(err, out) {
 
 						var tab = that.currentTab;

@@ -128,7 +128,6 @@ define(function(require, exports, module) {
 				"random": utils.guid(),
 				"_config": that.feideconnect.getConfig()
 			};
-			console.error("View config", view);
 
 			dust.render("mainlistingC", view, function(err, out) {
 				that.elClients.empty().append(out);
@@ -191,9 +190,6 @@ define(function(require, exports, module) {
 				that.el.empty().append(out);
 				that.el.find('#listingClients').append(that.elClients);
 				that.el.find('#listingAPIGKs').append(that.elAPIGKs);
-
-
-				console.error("ATTACH APIGK.", that.el.find('#listingAPIGKs'));
 
 				that.elClientsAttached = true;
 				that.elAPIGKsAttached = true;
