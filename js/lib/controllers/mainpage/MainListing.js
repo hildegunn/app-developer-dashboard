@@ -113,6 +113,16 @@ define(function(require, exports, module) {
 				}
 			}
 
+			clientlist.sort(function(a, b) {
+				if (a.updated < b.updated) {
+					return 1;
+				}
+				if (a.updated > b.updated) {
+					return -1;
+				}
+				return 0;
+			});
+
 			view = {
 				"clients": clientlist,
 				"random": utils.guid()
@@ -142,6 +152,16 @@ define(function(require, exports, module) {
 					apigklist.push(apigks[key].getView());
 				}
 			}
+
+			apigklist.sort(function(a, b) {
+				if (a.updated < b.updated) {
+					return 1;
+				}
+				if (a.updated > b.updated) {
+					return -1;
+				}
+				return 0;
+			});
 
 			view = {
 				"apigks": apigklist,
