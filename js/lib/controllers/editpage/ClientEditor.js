@@ -82,7 +82,7 @@ define(function(require) {
 
 			if (this.feideconnect) {
 				$.extend(view, {
-					"oauth": that.feideconnect.getConfig(),
+					"_config": that.feideconnect.getConfig(),
 					"scopelist": scopes
 				});
 			}

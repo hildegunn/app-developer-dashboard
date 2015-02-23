@@ -81,7 +81,7 @@ define(function(require, exports, module) {
 			
 			if (this.feideconnect) {
 				$.extend(view, {
-					"oauth": that.feideconnect.getConfig()
+					"_config": that.feideconnect.getConfig()
 				});
 			}
 

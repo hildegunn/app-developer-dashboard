@@ -1,7 +1,7 @@
 {#clients}
 	<a href="#" data-clientid="{id}" class="list-group-item media clientEntry">
 		<div class="media-left">
-			<img style="max-width: 48px; max-height: 48px" class="media-object" src="http://api.dev.feideconnect.no:6543/clientadm/clients/{id}/logo?t={random}" alt="Client logo">
+			<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/clientadm/clients/{id}/logo?t={random}" alt="Client logo">
 		</div>
 		<div class="media-body">
 			<p class="pull-right" style="color: #666; font-size: 82%">Updated {updatedAgo}</p>
@@ -10,5 +10,7 @@
 			<p class="list-group-item-text">{descr}</p>
 		</div>
 	</a>
+{:else}
+	<p>No clients are currently registered.</p>
 {/clients}
 

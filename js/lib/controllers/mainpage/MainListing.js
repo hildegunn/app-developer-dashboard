@@ -125,8 +125,10 @@ define(function(require, exports, module) {
 
 			view = {
 				"clients": clientlist,
-				"random": utils.guid()
+				"random": utils.guid(),
+				"_config": that.feideconnect.getConfig()
 			};
+			console.error("View config", view);
 
 			dust.render("mainlistingC", view, function(err, out) {
 				that.elClients.empty().append(out);
@@ -165,7 +167,8 @@ define(function(require, exports, module) {
 
 			view = {
 				"apigks": apigklist,
-				"random": utils.guid()
+				"random": utils.guid(),
+				"_config": that.feideconnect.getConfig()
 			};
 
 			dust.render("mainlistingA", view, function(err, out) {

@@ -109,7 +109,7 @@
 			<div class="col-sm-3 ">
 				
 				<div class="imagezone" style="min-height: 128px; min-width: 128px">
-					<img class="itemlogo" src="http://api.dev.feideconnect.no:6543/clientadm/clients/{id}/logo" style="padding: 5px; border: 1px solid #ddd; border-radius: 4px; backgroud: #eee" />
+					<img class="itemlogo" src="{_config.apis.core}/clientadm/clients/{id}/logo" style="padding: 5px; border: 1px solid #ddd; border-radius: 4px; backgroud: #eee" />
 				</div>
 
 				<p>Drag a new square (1:1) PNG logo over the current one to replace it. <br /><span style="font-size: 90%">Minimum 128px</span></p>
@@ -150,10 +150,10 @@
 
 					<dl>
 						<dt>Authorization endpoint</dt>
-						<dd><code>{oauth.authorization}</code></dd>
+						<dd><code>{_config.authorization}</code></dd>
 
 						<dt>Token endpoint</dt>
-						<dd><code>{oauth.token}</code></dd>
+						<dd><code>{_config.token}</code></dd>
 					</dl>
 
 				</div>
@@ -311,7 +311,7 @@
 							<div class="media">
 								
 								<div class="media-left">
-									<img style="max-width: 48px; max-height: 48px" class="media-object" src="http://api.dev.feideconnect.no:6543/apigkadm/apigks/{id}/logo" alt="Logo of 3rd party API">
+									<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/apigkadm/apigks/{id}/logo" alt="Logo of 3rd party API">
 								</div>
 								<div class="media-body">
 
@@ -326,7 +326,7 @@
 										 <i class="fa fa-user"></i> &nbsp;
 											 {name}
 											<img class="" style="margin-top: -6px; margin-left: 10px; margin-bottom: 5px; margin-right: 5px max-height: 32px; max-width: 32px; border: 0px solid #b6b6b6; border-radius: 16px; box-shadow: 1px 1px 2px #aaa;" 
-												src="https://auth.dev.feideconnect.no/user/media/{id}" 
+												src="{_config.apis.auth}/user/media/{id}" 
 												alt="Profile photo" />
 
 											
@@ -499,7 +499,7 @@
 							<div class="media">
 								
 								<div class="media-left">
-									<img style="max-width: 48px; max-height: 48px" class="media-object" src="http://api.dev.feideconnect.no:6543/apigkadm/apigks/{id}/logo" alt="Logo of 3rd party API">
+									<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/apigkadm/apigks/{id}/logo" alt="Logo of 3rd party API">
 								</div>
 								<div class="media-body">
 
@@ -514,10 +514,8 @@
 										 <i class="fa fa-user"></i> &nbsp;
 											 {name}
 											<img class="" style="margin-top: -6px; margin-left: 10px; margin-bottom: 5px; margin-right: 5px max-height: 32px; max-width: 32px; border: 0px solid #b6b6b6; border-radius: 16px; box-shadow: 1px 1px 2px #aaa;" 
-												src="https://auth.dev.feideconnect.no/user/media/{id}" 
+												src="{_config.apis.auth}/user/media/{id}" 
 												alt="Profile photo" />
-
-											
 
 										</p>
 									</div>
@@ -693,7 +691,7 @@
 						<div class="list-group-item apiEntry media" data-apigkid="{id}">
 
 							<div class="media-left">
-								<img style="max-width: 48px; max-height: 48px" class="media-object" src="http://api.dev.feideconnect.no:6543/apigkadm/apigks/{id}/logo" alt="Logo of 3rd party API">
+								<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/apigkadm/apigks/{id}/logo" alt="Logo of 3rd party API">
 							</div>
 							<div class="media-body">
 
@@ -777,10 +775,8 @@
 										 <i class="fa fa-user"></i> &nbsp;
 											 {name}
 											<img class="" style="margin-top: -6px; margin-left: 10px; margin-bottom: 5px; margin-right: 5px max-height: 32px; max-width: 32px; border: 0px solid #b6b6b6; border-radius: 16px; box-shadow: 1px 1px 2px #aaa;" 
-												src="https://auth.dev.feideconnect.no/user/media/{id}" 
+												src="{_config.apis.auth}/user/media/{id}" 
 												alt="Profile photo" />
-
-											
 
 										</p>
 									</div>

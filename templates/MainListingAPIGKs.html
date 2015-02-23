@@ -1,7 +1,7 @@
 {#apigks}
 	<a href="#" data-apigkid="{id}" class="list-group-item media apigkEntry">
 		<div class="media-left">
-			<img style="max-width: 48px; max-height: 48px" class="media-object" src="http://api.dev.feideconnect.no:6543/apigkadm/apigks/{id}/logo?t={random}" alt="...">
+			<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/apigkadm/apigks/{id}/logo?t={random}" alt="...">
 		</div>
 		<div class="media-body">
 			<p class="pull-right" style="color: #666; font-size: 82%">Updated {updatedAgo}</p>
@@ -11,4 +11,6 @@
 			<p class="list-group-item-text">{descr}</p>
 		</div>
 	</a>
+{:else}
+	<p>No API Gatekeepers are currently registered.</p>
 {/apigks}
