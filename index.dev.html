@@ -12,6 +12,8 @@
 	<link href="bower_components/uninett-theme/ico/favicon.png" rel="shortcut icon" />
 
 
+
+
 	<!-- Application: Javascript and CSS loaded from developerment files -->
 	<link href="css/style.css" rel="stylesheet"/>
 	<script data-main="js/main" src="bower_components/requirejs/require.js"></script>
@@ -34,14 +36,12 @@
 
 
 			<ul class="nav navbar-nav">
-				<li ><a href="#">Personsøk</a></li>
-				<li><a href="#">Grupper</a></li>
 
-				<li class="active"><a href="#">Utviklere</a></li>
-				<li><a href="#">Min Feide Connect</a></li>
 
-				<!-- <li><a href="#">API</a></li> -->
-				<!-- <li><a href="http://feideconnect.no/docs/">Docs</a></li> -->
+				<li><a href="http://feideconnect.no/docs/gettingstarted/">Documentation</a></li>
+				<li><a href="http://feideconnect.no/api/">API Reference</a></li>
+
+
 
 				<li class="pull-right showOnLoggedOut">
 					<a href="#" id="" class="btn-sm btn btn-default login">Login</a>
@@ -55,10 +55,11 @@
 					</a>
 
 					<ul class="dropdown-menu">
-						<li><a href="#">Min Feide Connect</a></li>
-						<!-- <li><a href="#">Profile</a></li> -->
+						<li><a href="http://min.feideconnect.no"><i class="fa fa-user"></i>&nbsp;My Feide Connect</a></li>
+						<li><a href="http://groups.feideconnect.no"><i class="fa fa-group"></i>&nbsp;My Groups</a></li>
+						<li class="active"><a href="#"><i class="fa fa-cog"></i>&nbsp;Developer Dashboard</a></li>
 						<li class="divider"></li>
-						<li><a id="logout" href="#">Logg ut</a></li>
+						<li><a id="logout" href="#">Logout</a></li>
 					</ul>
 
 				</li>
@@ -113,12 +114,11 @@
 
 		<div class="row gutter">
 			<div class="col-lg-12 "> 
-				<!-- Main component for a primary marketing message or call to action -->
 				<div class="uninett-color-white uninett-padded">
 					<p style="margin-bottom: 0px; text-align: center"><a href="http://uninett.no">UNINETT</a> – <a href="http://feideconnect.no">Feide Connect</a></p>
 					<p style="margin-bottom: 0px; text-align: center">This service is experimental. 
 						For questions <a href="mailto:andreas.solberg@uninett.no">contact Andreas Åkre Solberg</a> or 
-						<a target="_blank" href="https://github.com/andreassolberg/httpjs/issues">report issues</a>.</p>
+						<a target="_blank" href="https://github.com/feideconnect/app-developer-dashboard/issues/new">report issues</a>.</p>
 				</div>
 			</div>
 		</div>
