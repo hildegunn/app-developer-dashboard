@@ -54,7 +54,11 @@ If you are curious on what `grunt build` does behind the scene, it can be replac
 
 
 
+# Updating
 
+To update current version from current active git branch:
 
-
+	git pull
+	npm install
+	grunt build
 
