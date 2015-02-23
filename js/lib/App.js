@@ -21,7 +21,7 @@ define(function(require, exports, module) {
 
 		utils  = require('./utils'),
 
-		rawconfig = require('text!/etc/config.js'),
+		rawconfig = require('text!../../etc/config.js'),
 		$ = require('jquery');
 
 
