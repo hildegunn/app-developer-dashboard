@@ -11,7 +11,12 @@ define(function(require, exports, module) {
 		utils = require('../../utils'),
 		$ = require('jquery')
 		;
-	var template = require('text!templates/MainListing.html');
+	var 
+		template = require('text!templates/MainListing.html'),
+		templateC = require('text!templates/MainListingClients.html'),
+		templateA = require('text!templates/MainListingAPIGKs.html')
+		;
+
 
 
 
@@ -29,8 +34,11 @@ define(function(require, exports, module) {
 
 			this._super();
 
-			var x = dust.compile(template, "mainlisting");
-			dust.loadSource(x);
+
+			dust.loadSource(dust.compile(template, "mainlisting"));
+			dust.loadSource(dust.compile(templateC, "mainlistingC"));
+			dust.loadSource(dust.compile(templateA, "mainlistingA"));
+
 
 			this.elClients = $("<div></div>");
 			this.elAPIGKs = $("<div></div>");
@@ -92,60 +100,61 @@ define(function(require, exports, module) {
 		},
 
 		"updateClients": function(clients) {
-			var key;
-			var that = this;
-			this.elClients.empty();
+
+			var 
+				that = this,
+				key,
+				clientlist = [],
+				view;
 
 			for (key in clients) {
-
-				that.elClients.append(
-
-					'<a href="#" data-clientid="' + clients[key].id + '" class="list-group-item media clientEntry">' +
-						'<div class="media-left">' + 
-							'<img style="max-width: 48px; max-height: 48px" class="media-object" src="http://api.dev.feideconnect.no:6543/clientadm/clients/' + clients[key].id + '/logo?t=' + utils.guid() + '" alt="...">' +
-						'</div>' + 
-						'<div class="media-body">' + 
-							'<h4 class="list-group-item-heading">' + utils.escape(clients[key].name) + '</h4>' +
-							'<p class="list-group-item-text" style="font-size: 80%" ><i class="glyphicon glyphicon-chevron-right"></i> ' + (clients[key].id ) + '</p>' + 
-							'<p class="list-group-item-text">' + (clients[key].descr ? utils.escape(clients[key].descr) : '') + '</p>' + 
-						'</div>' +
-					'</a>'
-				);
-
+				if (clients.hasOwnProperty(key)) {
+					clientlist.push(clients[key].getView());
+				}
 			}
-			if (!that.elClientsAttached && that.templateLoaded) {
-				that.el.find('#listingClients').append(this.elClients);
-				that.elClientsAttached = true;
-			}
+
+			view = {
+				"clients": clientlist,
+				"random": utils.guid()
+			};
+
+			dust.render("mainlistingC", view, function(err, out) {
+				that.elClients.empty().append(out);
+				if (!that.elClientsAttached && that.templateLoaded) {
+					that.el.find('#listingClients').append(that.elClients);
+					that.elClientsAttached = true;
+				}
+			});
+
+
 		},
+
 		"updateAPIGKs": function(apigks) {
 
+			var 
+				that = this,
+				key,
+				apigklist = [],
+				view;
 
-			var key;
-			var that = this;
-			this.elAPIGKs.empty();
 			for (key in apigks) {
-
-				that.elAPIGKs.append(
-
-					'<a href="#" data-apigkid="' + apigks[key].id + '" class="list-group-item media apigkEntry">' +
-						'<div class="media-left">' + 
-							'<img style="max-width: 48px; max-height: 48px" class="media-object" src="http://api.dev.feideconnect.no:6543/apigkadm/apigks/' + apigks[key].id + '/logo?t=' + utils.guid() + '" alt="...">' +
-						'</div>' + 
-						'<div class="media-body">' + 
-							'<h4 class="list-group-item-heading">' + utils.escape(apigks[key].name) + '</h4>' +
-							'<p class="list-group-item-text" style="font-size: 80%" ><i class="glyphicon glyphicon-chevron-right"></i> ' + (apigks[key].id ) + '</p>' + 
-							'<p class="list-group-item-text">' + (apigks[key].descr ? utils.escape(apigks[key].descr) : '') + '</p>' + 
-						'</div>' +
-					'</a>'
-				);
-
-			}
-			if (!that.elAPIGKsAttached && that.templateLoaded) {
-				that.el.find('#listingAPIGKs').append(this.elAPIGKs);
-				that.elAPIGKsAttached = true;
+				if (apigks.hasOwnProperty(key)) {
+					apigklist.push(apigks[key].getView());
+				}
 			}
 
+			view = {
+				"apigks": apigklist,
+				"random": utils.guid()
+			};
+
+			dust.render("mainlistingA", view, function(err, out) {
+				that.elAPIGKs.empty().append(out);
+				if (!that.elAPIGKsAttached && that.templateLoaded) {
+					that.el.find('#listingAPIGKs').append(that.elAPIGKs);
+					that.elAPIGKsAttached = true;
+				}
+			});
 		},
 
 		"load": function() {
@@ -159,13 +168,16 @@ define(function(require, exports, module) {
 				that.el.empty().append(out);
 				that.el.find('#listingClients').append(that.elClients);
 				that.el.find('#listingAPIGKs').append(that.elAPIGKs);
+
+
+				console.error("ATTACH APIGK.", that.el.find('#listingAPIGKs'));
+
 				that.elClientsAttached = true;
 				that.elAPIGKsAttached = true;
 				that.templateLoaded = true;
 
 			});
 	
-
 			if (act) {
 				this.activate();
 			}

@@ -1,0 +1,14 @@
+{#clients}
+	<a href="#" data-clientid="{id}" class="list-group-item media clientEntry">
+		<div class="media-left">
+			<img style="max-width: 48px; max-height: 48px" class="media-object" src="http://api.dev.feideconnect.no:6543/clientadm/clients/{id}/logo?t={random}" alt="Client logo">
+		</div>
+		<div class="media-body">
+			<p class="pull-right" style="color: #666; font-size: 82%">Updated {updatedAgo}</p>
+			<h4 class="list-group-item-heading">{name}</h4>
+			<p class="list-group-item-text" style="font-size: 80%" ><i class="glyphicon glyphicon-chevron-right"></i> {id}</p>
+			<p class="list-group-item-text">{descr}</p>
+		</div>
+	</a>
+{/clients}
+
