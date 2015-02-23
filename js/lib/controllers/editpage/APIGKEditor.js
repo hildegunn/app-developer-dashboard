@@ -8,7 +8,8 @@ define(function(require, exports, module) {
 		ScopeDefBuilder = require('./ScopeDefBuilder'),
 		Editor = require('./Editor'),
 		scopePolicy = require('../../../../etc/scopepolicy'),
-		utils = require('../../utils')
+		utils = require('../../utils'),
+		$ = require('jquery')
 		;
 
 

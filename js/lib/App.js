@@ -21,7 +21,8 @@ define(function(require, exports, module) {
 
 		utils  = require('./utils'),
 
-		config = require('../../etc/config');
+		config = require('../../etc/config'),
+		$ = require('jquery');
 
 
 	require('../../bower_components/bootstrap/dist/js/bootstrap.min.js');

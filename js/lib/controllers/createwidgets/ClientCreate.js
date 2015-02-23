@@ -2,7 +2,8 @@ define(function(require, exports, module) {
 
 
 	var
-		dust = require('dust')
+		dust = require('dust'),
+		$ = require('jquery')
 		;
 
 	var template = require('text!templates/newClient.html');

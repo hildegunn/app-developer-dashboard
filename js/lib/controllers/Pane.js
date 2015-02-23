@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 
 	var 
-		// $ = require('jquery'),
+		$ = require('jquery'),
 
 		utils = require('../utils'),
 		Controller = require('./Controller')

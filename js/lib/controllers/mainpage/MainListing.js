@@ -8,7 +8,8 @@ define(function(require, exports, module) {
 		ClientCreate = require('../createwidgets/ClientCreate'),
 		APIGKCreate = require('../createwidgets/APIGKCreate'),
 		EventEmitter = require('../../EventEmitter'),
-		utils = require('../../utils')
+		utils = require('../../utils'),
+		$ = require('jquery')
 		;
 	var template = require('text!templates/MainListing.html');
 

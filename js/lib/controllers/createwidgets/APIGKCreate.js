@@ -3,7 +3,8 @@ define(function(require, exports, module) {
 
 	var
 		dust = require('dust'),
-		utils = require('../../utils')
+		utils = require('../../utils'),
+		$ = require('jquery')
 		;
 
 	var template = require('text!templates/newAPIGK.html');

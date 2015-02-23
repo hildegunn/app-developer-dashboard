@@ -8,7 +8,8 @@ define(function(require, exports, module) {
 
 		EventEmitter = require('../../EventEmitter'),
 
-		scopePolicy = require('../../../../etc/scopepolicy')
+		scopePolicy = require('../../../../etc/scopepolicy'),
+		$ = require('jquery')
 		;
 
 

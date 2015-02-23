@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 
 	var 
-		// $ = require('jquery'),
+		$ = require('jquery'),
 		Class = require('../class'),
 		EventEmitter = require('../EventEmitter')
 		;

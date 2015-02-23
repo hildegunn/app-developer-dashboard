@@ -1,10 +1,5 @@
 define(function(require, exports, module) {
 
-	// var 
-	// 	// $ = require('jquery')
-	// 	// Class = require('lib/class')
-	// 	;
-
 	var EventEmitter = {
 
 		"on": function(type, callback) {

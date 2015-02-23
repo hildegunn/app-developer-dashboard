@@ -12,7 +12,8 @@ requirejs.config({
 		"text"      : '/bower_components/text/text',
 		"templates" : '/templates/',
 		"dust"      : '/bower_components/dustjs-linkedin/dist/dust-full.min',
-		"class"     : "class"
+		"class"     : "class",
+		"jquery"	: "/bower_components/jquery/dist/jquery.min"
 	},
 	shim: {
 		"dust": {
@@ -38,16 +39,18 @@ function buildUrl(url, parameters){
 }
 
 
-// define(function(require, exports, module) {
 
-define(['lib/App'], function(App) {
+define(function(require, exports, module) {
 
-	
+	var 
+		$ = require('jquery'),
+		App = require('lib/App');
 
 	$(document).ready(function() {
 		var app = new App();
 	});
+
 });
-	
+
 
 

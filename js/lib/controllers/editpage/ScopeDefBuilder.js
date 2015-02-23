@@ -8,7 +8,8 @@ define(function(require, exports, module) {
 		ScopeDef = require('../../models/ScopeDef'),
 
 		EventEmitter = require('../../EventEmitter'),
-		utils = require('../../utils')
+		utils = require('../../utils'),
+		$ = require('jquery')
 		;
 
 

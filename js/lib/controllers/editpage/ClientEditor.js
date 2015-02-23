@@ -6,7 +6,8 @@ define(function(require) {
 		Editor = require('./Editor'),
 		scopePolicy = require('../../../../etc/scopepolicy'),
 		utils = require('../../utils'),
-		StringSet = require('../../StringSet')
+		StringSet = require('../../StringSet'),
+		$ = require('jquery')
 		;
 
 
