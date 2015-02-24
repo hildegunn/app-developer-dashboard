@@ -29,6 +29,21 @@ The configuration file needs to be adjusted to reflect index.dev.html as your re
 
 	"redirect_uri": "http://xxxxx.example.org/index.dev.html",
 
+
+# Handling translation of web app
+
+Application is translated at:
+
+* <https://www.transifex.com/organization/erlang/dashboard/feide-connect>
+
+The source dictionary is located at `dictionaries/dictionary.en.json`.
+
+Downloading completed transaltions is done by:
+
+	grunt lang
+
+Then multi-lingual app packs are built automatically.
+
 # Build production web app
 
 Install npm dependencies
