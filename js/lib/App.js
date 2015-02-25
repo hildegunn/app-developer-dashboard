@@ -246,11 +246,14 @@ define(function(require, exports, module) {
 		"routeEditAPIGK": function(apigkid, tabid) {
 			var that = this;
 			console.log("Route edit apigkid", apigkid);
-			this.clientpool.ready(function() {
-				var apigk = that.clientpool.getAPIGK(apigkid);
-				that.apigkeditor.edit(apigk, tabid);
-			});
 
+			this.feideconnect.authenticated()
+				.then(function() {
+					that.clientpool.ready(function() {
+						var apigk = that.clientpool.getAPIGK(apigkid);
+						that.apigkeditor.edit(apigk, tabid);
+					});
+				});
 
 		},
 		"routeMainlisting": function() {
