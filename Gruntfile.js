@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
 
+
+
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -40,6 +42,71 @@ module.exports = function(grunt) {
 		}
 	});
 
+	
+	grunt.registerTask("langbuild", "Build dictionary files based upon transifex output.", function() {
+		grunt.log.writeln('Build dictionary files...');
+
+		var mainlang = "en";
+		var maindictFile = "dictionaries/transifex/dictionary." + mainlang + ".json";
+		var maindict = grunt.file.readJSON(maindictFile);
+
+		var lang, langdict, key;
+
+		// Iterate over all languages...
+		for(var i = 0; i < cfg.languages.length; i++) {
+			lang = cfg.languages[i];
+			if (lang === mainlang) { continue; }
+			langdict = grunt.file.readJSON("dictionaries/transifex/dictionary." + lang + ".json");
+
+			for(key in maindict) {
+				if (!langdict.hasOwnProperty(key)) {
+					grunt.log.writeln('Dictionary [' + lang + '] is missing translation of the term [' + key + ']. Using the [' + mainlang + '] string.');
+					langdict[key] = maindict[key];
+				}
+			}
+			langdict._lang = lang;
+			grunt.file.write("dictionaries/build/dictionary." + lang + ".json", JSON.stringify(langdict, undefined, 2));
+			
+		}
+		maindict._lang = mainlang;
+		grunt.file.write("dictionaries/build/dictionary." + mainlang + ".json", JSON.stringify(maindict, undefined, 2));
+
+	});
+
+
+	grunt.registerTask("langbuild", "Build dictionary files based upon transifex output.", function() {
+		grunt.log.writeln('Build dictionary files...');
+
+		var mainlang = "en";
+		var maindictFile = "dictionaries/transifex/dictionary." + mainlang + ".json";
+		var maindict = grunt.file.readJSON(maindictFile);
+
+		var lang, langdict, key;
+
+		// Iterate over all languages...
+		for(var i = 0; i < cfg.languages.length; i++) {
+			lang = cfg.languages[i];
+			if (lang === mainlang) { continue; }
+			langdict = grunt.file.readJSON("dictionaries/transifex/dictionary." + lang + ".json");
+
+			for(key in maindict) {
+				if (!langdict.hasOwnProperty(key)) {
+					grunt.log.writeln('Dictionary [' + lang + '] is missing translation of the term [' + key + ']. Using the [' + mainlang + '] string.');
+					langdict[key] = maindict[key];
+				}
+			}
+			langdict._lang = lang;
+			grunt.file.write("dictionaries/build/dictionary." + lang + ".json", JSON.stringify(langdict, undefined, 2));
+			
+		}
+		maindict._lang = mainlang;
+		grunt.file.write("dictionaries/build/dictionary." + mainlang + ".json", JSON.stringify(maindict, undefined, 2));
+
+	});
+
+
+
+
 
 	// ---- Section on building locale based app builds.
 	var shell = grunt.config.get("shell");
@@ -48,7 +115,7 @@ module.exports = function(grunt) {
 	shell.rjs.command = [];
 	for(var i = 0; i < cfg.languages.length; i++) {
 		lang = cfg.languages[i];
-		shell.rjs.command.push("node_modules/requirejs/bin/r.js -o build.js paths.dict=../dictionaries/transifex/dictionary." + lang + ".json out=dist/app.min.js." + lang + "");
+		shell.rjs.command.push("node_modules/requirejs/bin/r.js -o build.js paths.dict=../dictionaries/build/dictionary." + lang + ".json out=dist/app.min.js." + lang + "");
 	}
 	shell.rjs.command.push("cp dist/app.min.js.en app.min.js");
 
@@ -64,6 +131,8 @@ module.exports = function(grunt) {
 	var transifex = grunt.config.get("transifex");
 	transifex["feide-connect"].options.languages = cfg.languages;
 	grunt.config.set("transifex", transifex);
+	// ---- Section on building locale based app builds.
+	
 
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -77,5 +146,5 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', ['shell:bower', 'jshint', 'shell:rcss', 'lang', 'shell:rjs']);
 	grunt.registerTask('test', ['jshint']);
 
-	grunt.registerTask('lang', ['transifex']);
+	grunt.registerTask('lang', ['transifex', 'langbuild']);
 };
