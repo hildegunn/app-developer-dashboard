@@ -36,7 +36,7 @@ define(function() {
 		"longterm": {
 			"title": "Longterm",
 			"descr": "Langvarig tilgang. Tilgang inntil brukeren trekker rettighetene tilbake.",
-			"public": true,
+			"public": true
 		},
 		"clientadmin": {	
 			"title": "Klient Admin",
