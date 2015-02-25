@@ -180,23 +180,22 @@ define(function(require, exports, module) {
 			});
 
 
+			var authorizeScopes = {
+				"scopes_add": [],
+				"scopes_remove": []
+			};
+
 
 			var client = this.clients[clientid];
 			for(var scope in scopes) {
 				if (scopes[scope]) {
-					client.addScope(scope);
+					authorizeScopes.scopes_add.push(scope);
 				} else {
-					client.removeScope(scope);
+					authorizeScopes.scopes_remove.push(scope);
 				}
 			}
 
-			var obj = {
-				"id": clientid,
-				// "scopes_requested": client.scopes_requested,
-				"scopes": client.scopes_requested
-			};
-
-			this.feideconnect.clientsUpdate(obj, function(savedClient) {
+			this.feideconnect.clientsAuthorizeAPIGKscopes(clientid, authorizeScopes, function(savedClient) {
 				var x = new Client(savedClient);
 				that.clients[clientid] = x;
 				that.edit(that.current);
@@ -208,7 +207,7 @@ define(function(require, exports, module) {
 			});
 
 
-			console.error("Update authoizations for ", obj);
+			console.error("Update authoizations for ", clientid, authorizeScopes);
 
 
 		},
