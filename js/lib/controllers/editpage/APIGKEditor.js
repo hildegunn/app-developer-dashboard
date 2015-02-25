@@ -69,6 +69,22 @@ define(function(require, exports, module) {
 				});
 		},
 
+		"updateQueueCount": function(count) {
+
+			this.el.find(".queuecount").empty().append(count);
+
+			if (count > 0) {
+				this.el.find(".queuecount").css("display", "inline");
+			} else {
+				this.el.find(".queuecount").hide();
+			}
+
+			
+
+
+
+		},
+
 
 		"edit": function(item, setTab) {
 
@@ -85,10 +101,14 @@ define(function(require, exports, module) {
 				});
 			}
 
-			that.feideconnect.clientsByScope(this.current.getBasicScope()).
-				then(function(clients) {
+			// that.feideconnect.clientsByScope(this.current.getBasicScope()).
+			// 	then(function(clients) {
+
+			that.feideconnect.apigkClientRequests()
+				.then(function(clients) {
+
 					var i, nc, cv;
-					console.log("clientsByScope", clients);
+					// console.error("clientsByScope", clients);
 					
 					view.clients = [];
 					view.clientsReq = [];
@@ -98,6 +118,7 @@ define(function(require, exports, module) {
 						that.clients[nc.id] = nc;
 						cv = nc.getAPIGKview(that.current);
 
+						// console.error("Processing API GK View", cv);
 						if (cv.sd.authz) {
 							view.clients.push(cv);
 						}
@@ -121,7 +142,7 @@ define(function(require, exports, module) {
 						that.selectTab(tab);
 
 						that.el.find("#scopedef").append(that.scopedefbuilder.el);
-
+						that.updateQueueCount(view.clientsReq.length);
 
 					});
 				
@@ -145,6 +166,8 @@ define(function(require, exports, module) {
 
 
 
+
+
 			console.log("Client container", clientContainer);
 
 			var scopes = {};
@@ -155,6 +178,7 @@ define(function(require, exports, module) {
 				var enabled = $(item).prop("checked");
 				scopes[scope] = enabled;
 			});
+
 
 
 			var client = this.clients[clientid];
@@ -168,7 +192,7 @@ define(function(require, exports, module) {
 
 			var obj = {
 				"id": clientid,
-				"scopes_requested": client.scopes_requested,
+				// "scopes_requested": client.scopes_requested,
 				"scopes": client.scopes_requested
 			};
 
