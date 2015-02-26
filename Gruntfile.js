@@ -117,7 +117,9 @@ module.exports = function(grunt) {
 		lang = cfg.languages[i];
 		shell.rjs.command.push("node_modules/requirejs/bin/r.js -o build.js paths.dict=../dictionaries/build/dictionary." + lang + ".json out=dist/app.min.js." + lang + "");
 	}
-	shell.rjs.command.push("cp dist/app.min.js.en dist/app.min.js");
+	// We comment out this, because it overrides the langauge negotiation 
+	// when enabled.
+	// shell.rjs.command.push("cp dist/app.min.js.en dist/app.min.js");
 
 	for(var to in cfg["language-aliases"]) {
 		var tofile = "dist/app.min.js." + to;
