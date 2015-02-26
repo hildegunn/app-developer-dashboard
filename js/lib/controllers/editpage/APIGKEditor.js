@@ -179,6 +179,14 @@ define(function(require, exports, module) {
 				scopes[scope] = enabled;
 			});
 
+			$(clientContainer).find("input.radioscopeauthz:checked").each(function(i, item) {
+				console.log("Auth z input radio element", item);
+				var scope = $(item).attr("name");
+				var enabled = ($(item).attr("value") === 'accept');
+				// console.error("SCOPE ENABLED", scope, enabled);
+				scopes[scope] = enabled;
+			});
+
 
 			var authorizeScopes = {
 				"scopes_add": [],
@@ -194,6 +202,10 @@ define(function(require, exports, module) {
 					authorizeScopes.scopes_remove.push(scope);
 				}
 			}
+
+			// console.error("ABOUT TOP UPDATE AUTHORIZATION", authorizeScopes.scopes_add, authorizeScopes.scopes_remove);
+			// return;
+
 
 			this.feideconnect.clientsAuthorizeAPIGKscopes(clientid, authorizeScopes, function(savedClient) {
 				var x = new Client(savedClient);

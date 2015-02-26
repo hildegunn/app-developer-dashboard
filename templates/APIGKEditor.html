@@ -233,11 +233,28 @@
 										<td>
 
 											{#sd.authz}
-												<input class="authscope" data-scopemoderate="gk_{sd.apigkid}" type="checkbox" checked="checked" /> 
+												<label>
+													<input class="authscope" data-scopemoderate="gk_{sd.apigkid}" type="checkbox" checked="checked" />  Accepted
+												</label>
 											{:else}
 
 												{#sd.req}
-													<input class="authscope" data-scopemoderate="gk_{sd.apigkid}" type="checkbox"  /> 
+													<!-- <input class="authscope" data-scopemoderate="gk_{sd.apigkid}" type="checkbox"  />  -->
+
+														<div class="radio">
+															<label>
+																<input type="radio" name="gk_{sd.apigkid}" value="reject" class="radioscopeauthz">
+																<i class="fa fa-times"></i>&nbsp; Reject
+															</label>
+														</div>
+														<div class="radio">
+															<label>
+																<input type="radio" name="gk_{sd.apigkid}" value="accept" class="radioscopeauthz">
+																<i class="fa fa-check"></i>&nbsp; Accept
+															</label>
+														</div>
+
+
 												{/sd.req}
 
 											{/sd.authz}
@@ -286,12 +303,32 @@
 											<td>
 
 												{?status.accepted}
-													<input class="authscope" type="checkbox" data-scopemoderate="gk_{sd.apigkid}_{scope}" checked="checked" /> 
+													<label>
+													<input class="authscope" type="checkbox" data-scopemoderate="gk_{sd.apigkid}_{scope}" checked="checked" /> Accepted</label>
 												{/status.accepted}
 
 												{?status.requested}
-													<input class="authscope" type="checkbox" data-scopemoderate="gk_{sd.apigkid}_{scope}" /> 
+													<!-- <input class="authscope" type="checkbox" data-scopemoderate="gk_{sd.apigkid}_{scope}" />  -->
+
+
+													<div class="radio">
+														<label>
+															<input type="radio" name="gk_{sd.apigkid}_{scope}"  value="reject" class="radioscopeauthz">
+															<i class="fa fa-times"></i> Reject
+														</label>
+													</div>
+													<div class="radio">
+														<label>
+															<input type="radio" name="gk_{sd.apigkid}_{scope}" value="accept" class="radioscopeauthz">
+															<i class="fa fa-check"></i> Accept
+														</label>
+													</div>
 												{/status.requested}
+
+
+
+
+
 
 
 											</td>
