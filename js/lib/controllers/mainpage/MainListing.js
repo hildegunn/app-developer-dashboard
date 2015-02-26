@@ -35,7 +35,6 @@ define(function(require, exports, module) {
 			this._super();
 
 			this.dict = new Dictionary();
-			// console.error("dict", this.dict.get());
 
 
 			dust.loadSource(dust.compile(template, "mainlisting"));

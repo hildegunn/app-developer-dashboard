@@ -3,23 +3,23 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Register a new client</h4>
+        <h4 class="modal-title">{_.clientsnew}</h4>
       </div>
       <div class="modal-body">
 
-		<p>You are about to create a client to access the Feide Connect platform.</p>
+		<p>{_.createclientintro}</p>
 
 			<form class="registerform" role="form">  
 
-				<p>Give your client application a short desriptive name, and a longer descriptive text to explain what your application does.</p>
+				<p>{_.createclientname}</p>
 
 				<div class="form-group">
-					<label for="newClientName">Name</label>
+					<label for="newClientName">{_.name}</label>
 					<input style="" id="newClientName" type="text" class="form-control input" placeholder="">
 				</div>
 
 				<div class="form-group">
-					<label for="newClientDescr">Description of client</label>
+					<label for="newClientDescr">{_.descr}</label>
 					<textarea style="" class="form-control" id="newClientDescr" placeholder="Describe your client..."></textarea>
 				</div>
 
@@ -38,8 +38,8 @@
 
       </div>
       <div class="modal-footer">
-		<a href="#" class="btn" data-dismiss="modal">Cancel</a>
-		<a href="#" class="createNewBtn btn btn-primary">Register new client</a>
+		<a href="#" class="btn" data-dismiss="modal">{_.cancel}</a>
+		<a href="#" class="createNewBtn btn btn-primary">{_.clientsnew}</a>
       </div>
     </div>
   </div>

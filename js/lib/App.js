@@ -19,13 +19,21 @@ define(function(require, exports, module) {
 
 		PaneController = require('./controllers/PaneController'),
 
+		Dictionary = require('./Dictionary'),
+
+
 		utils  = require('./utils'),
 
 		rawconfig = require('text!../../etc/config.js'),
 		$ = require('jquery');
 
+	var tmpHeader = require('text!templates/header.html');
+	var tmpFooter = require('text!templates/footer.html');
+
+
 
 	require('../../bower_components/bootstrap/dist/js/bootstrap.min.js');
+
 
 
 
@@ -50,6 +58,11 @@ define(function(require, exports, module) {
 			var config = JSON.parse(rawconfig);
 			this.feideconnect = new FeideConnect(config);
 
+			this.dict = new Dictionary();
+
+
+			dust.loadSource(dust.compile(tmpHeader, "header"));
+			dust.loadSource(dust.compile(tmpFooter, "footer"));
 
 			// Call contructor of the AppController(). Takes no parameters.
 			this._super();
@@ -159,46 +172,104 @@ define(function(require, exports, module) {
 			this.route();
 
 
-			$(".login").on('click', function() {
+			this.draw();	
 
+			this.el.on("click", ".login", function() {
 				that.feideconnect.authenticate();
-
 			});
-
-
-			$("#logout").on('click', function() {
-
+			this.el.on("click", "#logout", function() {
 				that.feideconnect.logout();
-
 			});
+
+
 
 			this.feideconnect.onStateChange(function(authenticated, user) {
 
-				if (authenticated) {
+				that.onLoaded()
+					.then(function() {
 
-					$("body").addClass("stateLoggedIn");
-					$("body").removeClass("stateLoggedOut");
+						if (authenticated) {
 
-					$("#username").empty().text(user.name);
-					$("#profilephoto").html('<img style="margin-top: -28px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" src="https://auth.dev.feideconnect.no/user/media/' + user.profilephoto + '" alt="Profile photo" />');
+							$("body").addClass("stateLoggedIn");
+							$("body").removeClass("stateLoggedOut");
 
-					$(".loader-hideOnLoad").hide();
-					$(".loader-showOnLoad").show();
+							$("#username").empty().text(user.name);
+							$("#profilephoto").html('<img style="margin-top: -28px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" src="https://auth.dev.feideconnect.no/user/media/' + user.profilephoto + '" alt="Profile photo" />');
 
-				} else {
+							$(".loader-hideOnLoad").hide();
+							$(".loader-showOnLoad").show();
 
-					$("body").removeClass("stateLoggedIn");
-					$("body").addClass("stateLoggedOut");
+						} else {
 
-					$(".loader-hideOnLoad").show();
-					$(".loader-showOnLoad").hide();
+							$("body").removeClass("stateLoggedIn");
+							$("body").addClass("stateLoggedOut");
 
-				}
+							$(".loader-hideOnLoad").show();
+							$(".loader-showOnLoad").hide();
+
+						}
+
+
+					});
 
 			});
 
 
 		},
+
+
+		/**
+		 * A draw function that draws the header and footer template.
+		 * Supports promises
+		 * @return {[type]} [description]
+		 */
+		"draw": function() {
+			var that = this;
+
+			var view = {
+				"_": that.dict.get()
+			};
+
+			this.loaded = false;
+			return Promise.all([
+				new Promise(function(resolve, reject) {
+					dust.render("header", view, function(err, out) {
+						if (err) { return reject(err); }
+						that.el.find("#header").append(out);
+						resolve();
+					});
+				}),
+				new Promise(function(resolve, reject) {
+					dust.render("footer", view, function(err, out) {
+						if (err) { return reject(err); }
+						that.el.find("#footer").append(out);
+						resolve();
+					});
+				})
+			]).then(function() {
+				that.loaded = true;
+				if (that._onloadedCallback && typeof that._onloadedCallback === 'function') {
+					that._onloadedCallback();
+				}
+			});
+		},
+
+
+
+		"onLoaded": function() {
+			var that = this;
+			return new Promise(function(resolve, reject) {
+				if (that.loaded) {
+					resolve();
+				} else {
+					that._onloadedCallback = resolve;
+				}
+			});
+		},
+
+
+
+
 
 		"setErrorMessage": function(title, type, msg) {
 

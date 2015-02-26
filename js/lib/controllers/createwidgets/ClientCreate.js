@@ -3,6 +3,7 @@ define(function(require, exports, module) {
 
 	var
 		dust = require('dust'),
+		Dictionary = require('../../Dictionary'),
 		$ = require('jquery')
 		;
 
@@ -17,7 +18,9 @@ define(function(require, exports, module) {
 
 		var that = this;
 
-		// this.container = container;
+		this.dict = new Dictionary();
+
+
 		this.callback = null;
 		
 		this.verifiedidentifier = null;
@@ -30,7 +33,10 @@ define(function(require, exports, module) {
 
 		var x = dust.compile(template, "newclient");
 		dust.loadSource(x);
-		dust.render("newclient", {}, function(err, out) {
+		var view = {
+			"_": that.dict.get()
+		};
+		dust.render("newclient", view, function(err, out) {
 			console.log(out);
 
 			that.element = $(out);

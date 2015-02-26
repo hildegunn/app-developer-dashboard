@@ -4,6 +4,7 @@ define(function(require, exports, module) {
 	var
 		dust = require('dust'),
 		utils = require('../../utils'),
+		Dictionary = require('../../Dictionary'),
 		$ = require('jquery')
 		;
 
@@ -19,7 +20,8 @@ define(function(require, exports, module) {
 		var that = this;
 		this.feideconnect = feideconnect;
 
-		// this.container = container;
+		this.dict = new Dictionary();
+
 		this.callback = null;
 		
 		this.verifiedidentifier = null;
@@ -32,7 +34,11 @@ define(function(require, exports, module) {
 
 		var x = dust.compile(template, "newapi");
 		dust.loadSource(x);
-		dust.render("newapi", {}, function(err, out) {
+
+		var view = {
+			"_": that.dict.get()
+		};
+		dust.render("newapi", view, function(err, out) {
 			console.log(out);
 
 			that.element = $(out);
