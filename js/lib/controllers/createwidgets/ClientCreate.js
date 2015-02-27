@@ -3,8 +3,10 @@ define(function(require, exports, module) {
 
 	var
 		dust = require('dust'),
+		utils = require('../../utils'),
 		Dictionary = require('../../Dictionary'),
 		$ = require('jquery')
+
 		;
 
 	var template = require('text!templates/newClient.html');
@@ -68,6 +70,7 @@ define(function(require, exports, module) {
 		obj.descr = $(this.element).find("#newClientDescr").val();
 		obj.redirect_uri = [$(this.element).find("#newClientRedirectURI").val()];
 		obj.scopes_requested = ["userinfo"];
+		obj.client_secret = utils.guid();
 		// obj.type = 'client';
 
 
