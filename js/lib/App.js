@@ -179,6 +179,14 @@ define(function(require, exports, module) {
 			});
 			this.el.on("click", "#logout", function() {
 				that.feideconnect.logout();
+				setTimeout(function() {
+
+					var c = that.feideconnect.getConfig();
+					var url = c.apis.auth + '/logout';
+					console.error("Redirect to " + url);
+					window.location = url;
+
+				}, 200);
 			});
 
 
