@@ -126,7 +126,7 @@ module.exports = function(grunt) {
 	// grunt.registerTask('jslint', ['jslint']);
 	grunt.registerTask('bower', ['shell:bower']);
 	grunt.registerTask('build', ['shell:bower', 'jshint', 'shell:rcss', 'shell:rjs']);
-	// grunt.registerTask('test', ['jshint']);
+	grunt.registerTask('test', ['jshint']);
 
 	grunt.registerTask('lang', ['transifex', 'langbuild']);
 };
