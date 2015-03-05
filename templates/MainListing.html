@@ -1,3 +1,7 @@
+
+
+{#showHeader}
+
 <div id="banner" class="row ">
 	<div class="col-lg-12"> 
 		<!-- Main component for a primary marketing message or call to action -->
@@ -13,36 +17,45 @@
 		</div>
 	</div>
 </div>
-
+{/showHeader}
 
 <div class="row gutter pane" id="listing" style=" margin-bottom: 4em">
 	
 	<div class="col-md-6">
 		
 
-		<h3>{_.clients}</h3>
+		<div  class="pull-right">
+			<button id="registerNewClient" class="btn">
+				<i class="fa fa-edit"></i>&nbsp;
+				{_.clientsnew}</button></div>
 
-		<div class="">
+		<h3 >{_.clients}</h3>
+
+		<div style="margin-top: 2em" class="clearfix">
 			
 			<div id="listingClients"  class="list-group">
 			</div>
-			<div style="margin-bottom: 2em"><button id="registerNewClient" class="btn">
+			
 				
-				{_.clientsnew}</button></div>
+				
 		</div>
 
 
 	</div>
 	<div class="col-md-6">
 		
+		<div style="" class="pull-right">
+			<button id="registerNewAPIGK" class="btn">
+				<i class="fa fa-edit"></i>&nbsp;
+				{_.apigksnew}</button></div>
 
 		<h3>{_.apigks}</h3>
 
-		<div class="">
+		<div class="clearfix" style="margin-top: 2em">
 			
 			<div  id="listingAPIGKs"  class="list-group">
 			</div>
-			<div style="margin-bottom: 2em"><button id="registerNewAPIGK" class="btn">{_.apigksnew}</button></div>
+			
 		</div>
 		
 	</div>

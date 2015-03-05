@@ -1,4 +1,5 @@
 define(function(require, exports, module) {
+	"use strict";	
 
 	var 
 		dust = require('dust'),
@@ -136,7 +137,9 @@ define(function(require, exports, module) {
 					dust.render("apigkeditor", view, function(err, out) {
 
 						var tab = that.currentTab;
-						if (setTab) tab = setTab;
+						if (setTab) {
+							tab = setTab;	
+						} 
 						that.el.children().detach();
 						that.el.append(out);
 						that.selectTab(tab);

@@ -1,4 +1,5 @@
 define(function(require, exports, module) {
+	"use strict";	
 
 
 	var
@@ -9,9 +10,6 @@ define(function(require, exports, module) {
 		;
 
 	var template = require('text!templates/newAPIGK.html');
-
-
-
 
 
 
@@ -89,6 +87,7 @@ CREATE TABLE feideconnect.apigk (
 		obj.name = $(this.element).find("#newAPIname").val();
 		obj.descr = $(this.element).find("#newAPIdescr").val();
 		obj.endpoints = [$(this.element).find("#newAPIendpoint").val()];
+
 		obj.expose = {
 			"userid": true,
 			"scopes": true,
@@ -145,7 +144,9 @@ CREATE TABLE feideconnect.apigk (
 
 
 		var that = this;
-		if(!this.checkCounter) this.checkCounter = 0;
+		if(!this.checkCounter) {
+			this.checkCounter = 0;
+		}
 		++this.checkCounter;
 
 		console.log("Check ping " + this.checkCounter);
@@ -209,7 +210,7 @@ CREATE TABLE feideconnect.apigk (
 		console.log("check if ready");
 		var that = this;
 		var identifier = $(this.element).find("#newAPIid").val();
-
+		var ready;
 
 
 		if (!identifier) {

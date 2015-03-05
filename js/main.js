@@ -1,3 +1,4 @@
+"use strict";
 
 requirejs.config({
 	//By default load any module IDs from js/lib
@@ -14,7 +15,6 @@ requirejs.config({
 		"dust"      : '/bower_components/dustjs-linkedin/dist/dust-full.min',
 		"class"     : "class",
 		"jquery"	: "/bower_components/jquery/dist/jquery.min",
-
 		"dict"		: "/dictionaries/dictionary.en.json"
 	},
 	shim: {
@@ -23,23 +23,6 @@ requirejs.config({
 		}
 	}
 });
-
-
-
-
-function buildUrl(url, parameters){
-	var qs = "";
-	for(var key in parameters) {
-		var value = parameters[key];
-		qs += encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&";
-	}
-	if (qs.length > 0){
-	    qs = qs.substring(0, qs.length-1); //chop off last "&"
-	    url = url + "?" + qs;
-	}
-	return url;
-}
-
 
 
 define(function(require, exports, module) {

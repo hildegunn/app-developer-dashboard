@@ -1,5 +1,6 @@
 define(function(require, exports, module) {
 
+	"use strict";	
 
 	var 
 
@@ -27,7 +28,7 @@ define(function(require, exports, module) {
 				for (i = 0; i < apigks.length; i++) {
 					that.apigks[apigks[i].id] = new APIGK(apigks[i]);
 				}
-				if (!that.apigksLoaded) that.emit("ready", that.apigks);
+				if (!that.apigksLoaded) {that.emit("ready", that.apigks);}
 				that.apigksLoaded = true;
 				that.emit('apigkChange', that.apigks);
 
@@ -60,7 +61,7 @@ define(function(require, exports, module) {
 			this.emit("apigkChange", this.apigks);
 		},
 		"getAPIGK": function(id) {
-			if (this.apigks.hasOwnProperty(id)) return this.apigks[id];
+			if (this.apigks.hasOwnProperty(id)) {return this.apigks[id];}
 			return null;
 		},
 		"removeAPIGK": function(id) {

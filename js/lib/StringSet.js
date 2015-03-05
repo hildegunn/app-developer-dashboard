@@ -1,5 +1,5 @@
 define(function(require, exports, module) {
-
+	"use strict";
 
 	var 
 		Class = require('./class');
@@ -7,7 +7,7 @@ define(function(require, exports, module) {
 	var StringSet = Class.extend({
 		"init": function(set) {
 			this.items = {};
-			if (set) this.add(set);
+			if (set) {this.add(set);}
 		},
 		"add": function(key) {
 			if (typeof key === 'string') {

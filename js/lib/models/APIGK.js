@@ -1,6 +1,8 @@
 define(function(require, exports, module) {
+	"use strict";	
 
 	var 
+		$ = require('jquery'),
 		moment = require('bower/momentjs/moment'),
 		Model = require('./Model'),
 		Client = require('./Client'),
@@ -108,7 +110,7 @@ define(function(require, exports, module) {
 
 	APIGK.getAPIfromScope = function(scope) {
 		var match = scope.match(/^gk_([a-z0-9\-]+)(_([a-z0-9\-]+))?$/);
-		if (match !== null) return match[1];
+		if (match !== null) {return match[1];}
 		return null;
 	};
 

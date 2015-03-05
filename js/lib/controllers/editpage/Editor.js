@@ -1,4 +1,5 @@
 define(function(require, exports, module) {
+	"use strict";	
 
 	var 
 		dust = require('dust'),
@@ -61,43 +62,6 @@ define(function(require, exports, module) {
 					var file = files[i];
 
 					that.logoUploaded(file);
-					// return;
-
-
-					// var reader = new FileReader();
-					// console.log("File:", file, reader);
-
-					// //attach event handlers here...
-
-					// reader.readAsBinaryString(file);
-					// // reader.readAsArrayBuffer(file);
-
-					// reader.onprogress = function(event) {
-					// 	if (event.lengthComputable) {
-					// 		var value = event.loaded;
-					// 		var max = event.total;
-					// 		var percent = Math.round(100*value / max);
-					// 		console.log("Progress uploading file " + percent + "%");
-							
-					// 	}
-					// };
-					// reader.onloadend = function(event) {
-					// 	var 
-					// 		contents = event.target.result,
-					// 		error = event.target.error;
-
-					// 	console.log(event.target);
-
-					// 	if (error != null) {
-					// 		console.error("File could not be read! Code " + error.code);
-					// 	} else {
-					// 		console.log("Upløoad completed");
-					// 		// that.logoUploaded(contents);
-					// 		that.logoUploaded(file);
-					// 		// console.log("Contents: " + contents);
-					// 	}
-					// };
-
 
 
 				}

@@ -1,4 +1,5 @@
 define(function(require, exports, module) {
+	"use strict";	
 
 	var 
 		$ = require('jquery'),
@@ -15,8 +16,6 @@ define(function(require, exports, module) {
 			this.el.on(type, filter, $.proxy(this[func], this));
 		}
 	});
-
-	// Controller.extend(EventEmitter);
 
 	return Controller;
 });

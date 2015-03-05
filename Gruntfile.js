@@ -1,11 +1,17 @@
+"use strict";	
+
+/* jshint node: true */
 module.exports = function(grunt) {
-
-
-
+	
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		config: grunt.file.readJSON('etc/config.js'),
+		jslint: {
+			app: {
+				src: ['Gruntfile.js', 'js/**/*.js', 'test/**/*.js'],
+			}
+		},
 		jshint: {
 			files: ['Gruntfile.js', 'js/**/*.js', 'test/**/*.js'],
 			options: {
@@ -137,6 +143,7 @@ module.exports = function(grunt) {
 	
 
 
+	// grunt.loadNpmTasks('grunt-jslint');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-requirejs');
 	grunt.loadNpmTasks('grunt-shell');
@@ -144,6 +151,8 @@ module.exports = function(grunt) {
 	
 	// Tasks
 	grunt.registerTask('default', ['jshint']);
+	grunt.registerTask('jshint', ['jshint']);
+	// grunt.registerTask('jslint', ['jslint']);
 	grunt.registerTask('bower', ['shell:bower']);
 	grunt.registerTask('build', ['shell:bower', 'jshint', 'shell:rcss', 'shell:rjs']);
 	grunt.registerTask('test', ['jshint']);

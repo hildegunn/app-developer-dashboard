@@ -1,7 +1,9 @@
 define(function(require, exports, module) {
+	"use strict";	
 
 	var 
-		Model = require('./Model')
+		Model = require('./Model'),
+		$ = require('jquery')
 		;
 
 	var ScopeDef = Model.extend({

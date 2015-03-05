@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
 
-
+	"use strict";
 	var 
 		Class = require('./class'),
 		Dictionary = require('./Dictionary');
@@ -11,9 +11,9 @@ define(function(require, exports, module) {
 
 	var TemplateEngine = Class.extend({
 		"init": function() {
-			if (parsed === null) {
-				parsed = JSON.parse(dict);
-			}
+			// if (parsed === null) {
+			// 	parsed = JSON.parse(dict);
+			// }
 		},
 		"get": function() {
 			return parsed;

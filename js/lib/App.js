@@ -1,42 +1,29 @@
 
+define(function (require, exports, module) {
 
-define(function(require, exports, module) {
+	"use strict";
 
 	var
 		FeideConnect = require('bower/feideconnectjs/src/FeideConnect').FeideConnect,
-
 		AppController = require('./controllers/AppController'),
-
 		ClientEditor = require('./controllers/editpage/ClientEditor'),
 		APIGKEditor = require('./controllers/editpage/APIGKEditor'),
-
 		MainListing = require('./controllers/mainpage/MainListing'),
-
 		PublicAPIPool = require('./models/PublicAPIPool'),
 		ClientPool = require('./models/ClientPool'),
 		Client = require('./models/Client'),
 		APIGK = require('./models/APIGK'),
-
 		PaneController = require('./controllers/PaneController'),
-
 		Dictionary = require('./Dictionary'),
-
-
+		dust = require('dust'),
 		utils  = require('./utils'),
-
 		rawconfig = require('text!../../etc/config.js'),
 		$ = require('jquery');
 
 	var tmpHeader = require('text!templates/header.html');
 	var tmpFooter = require('text!templates/footer.html');
 
-
-
 	require('../../bower_components/bootstrap/dist/js/bootstrap.min.js');
-
-
-
-
 
 	/**
 	 * Here is what happens when the page loads:
@@ -48,7 +35,6 @@ define(function(require, exports, module) {
 	 * 
 	 * 
 	 */
-
 
 	var App = AppController.extend({
 		

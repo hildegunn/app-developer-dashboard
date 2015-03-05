@@ -1,4 +1,5 @@
 define(function(require, exports, module) {
+	"use strict";	
 
 
 	var 
@@ -34,7 +35,7 @@ define(function(require, exports, module) {
 				}
 				that.emit('apigkChange', that.apigks);
 				that.apigksLoaded = true;
-				if (that.clientsLoaded) that.emit('ready');
+				if (that.clientsLoaded) {that.emit('ready');}
 
 
 			});
@@ -48,7 +49,7 @@ define(function(require, exports, module) {
 				}
 				that.emit('clientChange', that.clients);
 				that.clientsLoaded = true;
-				if (that.apigksLoaded) that.emit('ready');
+				if (that.apigksLoaded) {that.emit('ready');}
 
 			});
 
@@ -74,11 +75,11 @@ define(function(require, exports, module) {
 			this.emit("clientChange", this.clients);
 		},
 		"getClient": function(id) {
-			if (this.clients.hasOwnProperty(id)) return this.clients[id];
+			if (this.clients.hasOwnProperty(id)) {return this.clients[id];}
 			return null;
 		},
 		"getAPIGK": function(id) {
-			if (this.apigks.hasOwnProperty(id)) return this.apigks[id];
+			if (this.apigks.hasOwnProperty(id)) {return this.apigks[id];}
 			return null;
 		},
 		"removeAPIGK": function(id) {
@@ -89,45 +90,7 @@ define(function(require, exports, module) {
 
 	}).extend(EventEmitter);
 
-	// ClientPool.extend(EventEmitter);
-
 	return ClientPool;
-
-
-
-
-
-// var ClientPool = function(items) {
-
-
-// 	if (items) {
-// 		this.addItems(items);	
-// 	}
-
-// };
-
-
-// ClientPool.prototype.addItem = function(item) {
-// 	this.items[item.id] = item;
-// };
-// ClientPool.prototype.addItems = function(items) {
-
-// 	var i;
-// 	for(i = 0; i < items.length; i++) {
-// 		this.items[items[i].id] = items[i];
-// 	}
-
-// };
-
-// ClientPool.prototype.get = function(id) {
-// 	if (this.items.hasOwnProperty(id)) {
-// 		return this.items[id];
-// 	}
-// 	return null;
-// }
-
-// return ClientPool;
-
 
 
 

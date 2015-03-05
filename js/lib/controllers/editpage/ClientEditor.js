@@ -1,4 +1,5 @@
 define(function(require) {
+	"use strict";	
 
 	var 
 		dust = require('dust'),
@@ -117,7 +118,7 @@ define(function(require) {
 				for(var key in apis) {
 					if (apis.hasOwnProperty(key)) {
 						console.log("About to process ", apis[key].name, clientAPIkeys.has(apis[key].id));
-						if (clientAPIkeys.has(apis[key].id)) continue;
+						if (clientAPIkeys.has(apis[key].id)) {continue;}
 						view.apis.push(apis[key].getView());
 					}
 				}

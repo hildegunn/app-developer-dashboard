@@ -1,4 +1,5 @@
 define(function(require, exports, module) {
+	"use strict";	
 
 	var 
 		dust = require('dust'),
@@ -190,8 +191,9 @@ define(function(require, exports, module) {
 		"draw": function(act) {
 			var that = this;
 
-			view = {
-				"_": that.dict.get()
+			var view = {
+				"_": that.dict.get(),
+				"showHeader": false
 			};
 
 			dust.render("mainlisting", view, function(err, out) {

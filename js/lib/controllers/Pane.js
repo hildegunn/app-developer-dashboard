@@ -1,4 +1,5 @@
 define(function(require, exports, module) {
+	"use strict";	
 
 	var 
 		$ = require('jquery'),
@@ -25,7 +26,7 @@ define(function(require, exports, module) {
 		},
 		"activate": function() {
 			console.log("ACTIVATE PANE");
-			if (this.panecontroller === null) throw new Error('Cannot activate pane that is not added to a controller');
+			if (this.panecontroller === null) {throw new Error('Cannot activate pane that is not added to a controller');}
 			this.panecontroller.activate(this.identifier);
 		},
 		"deactivate": function() {

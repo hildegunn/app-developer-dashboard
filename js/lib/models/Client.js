@@ -1,4 +1,5 @@
 define(function(require, exports, module) {
+	"use strict";	
 
 	var 
 		moment = require('bower/momentjs/moment'),
@@ -77,7 +78,7 @@ define(function(require, exports, module) {
 		},
 
 		"setOneRedirectURI": function(redirect_uri) {
-			if (!this.redirect_uri) redirect_uri = [];
+			if (!this.redirect_uri) {redirect_uri = [];}
 			if (redirect_uri.length < 1) {
 				this.redirect_uri.push(redirect_uri);
 			} else {
@@ -100,7 +101,7 @@ define(function(require, exports, module) {
 				existingScopes = this.scopes_requested;
 			}
 			for(var i = 0; i < existingScopes.length; i++) {
-				if (existingScopes[i] === scope) exists = true;				
+				if (existingScopes[i] === scope) {exists = true;}
 				newscopes.push(existingScopes[i]);
 			}
 			if (!exists) {
@@ -129,10 +130,10 @@ define(function(require, exports, module) {
 		 * @return {[type]}       [description]
 		 */
 		"scopeIsAccepted": function(scope) {
-			if (!this.scopes) return false;
-			if (!this.scopes.length) return false;
+			if (!this.scopes) {return false;}
+			if (!this.scopes.length) {return false;}
 			for(var i = 0; i < this.scopes.length; i++) {
-				if (scope === this.scopes[i]) return true;
+				if (scope === this.scopes[i]) {return true;}
 			}
 			return false;
 		},
@@ -143,10 +144,10 @@ define(function(require, exports, module) {
 		 * @return {[type]}       [description]
 		 */
 		"scopeIsRequested": function(scope) {
-			if (!this.scopes_requested) return false;
-			if (!this.scopes_requested.length) return false;
+			if (!this.scopes_requested) {return false;}
+			if (!this.scopes_requested.length) {return false;}
 			for(var i = 0; i < this.scopes_requested.length; i++) {
-				if (scope === this.scopes_requested[i]) return true;
+				if (scope === this.scopes_requested[i]) {return true;}
 			}
 			return false;
 		},
@@ -157,11 +158,11 @@ define(function(require, exports, module) {
 		 */
 		"getAPIscopes": function() {
 			var apis = {}, api;
-			if (!this.scopes_requested) return apis;
-			if (!this.scopes_requested.length) return apis;
+			if (!this.scopes_requested) {return apis;}
+			if (!this.scopes_requested.length) {return apis;}
 			for(var i = 0; i < this.scopes_requested.length; i++) {
 				api = APIGK.getAPIfromScope(this.scopes_requested[i]);
-				if (api !== null) apis[api] = true;
+				if (api !== null) {apis[api] = true;}
 			}
 			return utils.getKeys(apis);
 		},

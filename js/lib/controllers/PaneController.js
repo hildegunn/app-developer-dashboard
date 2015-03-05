@@ -1,4 +1,5 @@
 define(function(require, exports, module) {
+	"use strict";	
 
 	var 
 		$ = require('jquery'),
@@ -44,9 +45,9 @@ define(function(require, exports, module) {
 		},
 
 		"activate": function(paneID) {
-			if (paneID === this.current) return;
+			if (paneID === this.current) {return;}
 
-			if (!this.panelist[paneID]) throw new Error('Cannot activate this pane: Not Found');
+			if (!this.panelist[paneID]) {throw new Error('Cannot activate this pane: Not Found');}
 
 			if (this.current !== null) {
 				this.panelist[this.current].deactivate();
@@ -60,16 +61,6 @@ define(function(require, exports, module) {
 		}
 
 
-		// "get": function(id, title) {
-
-		// 	if (this.panelist.hasOwnProperty(id)) return this.panelist[id];
-		// 	var paneEl = $('<div class="pane"></div>').appendTo(this.panesEl);
-		// 	paneEl.hide();
-		// 	this.panelist[id] = new panes.Pane(paneEl, id, this);
-		// 	return this.panelist[id];
-		// },
-
-		// // Should only be called by the pane.
 
 	});
 

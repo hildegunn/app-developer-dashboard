@@ -1,4 +1,5 @@
 define(function(require, exports, module) {
+	"use strict";	
 
 	var 
 		$ = require('jquery'),
@@ -16,12 +17,11 @@ define(function(require, exports, module) {
 
 			this._super($("body"));
 
-			// $(".loader-hideOnLoad").hide();
-			// $(".loader-showOnLoad").show();
-
 			// Routing
 			
-			if (!this.routes) this.routes = [];
+			if (!this.routes) {
+				this.routes = [];
+			}
 			this.routingEnabled = true;
 			$(window).bind('hashchange', $.proxy(this.route, this));
 			$(window).bind('load', function() {
@@ -31,13 +31,13 @@ define(function(require, exports, module) {
 		},
 
 		"setupRoute": function(match, func) {
-			if (!this.routes) this.routes = [];
+			if (!this.routes) {this.routes = [];}
 			this.routes.push([match, func]);
 		},
 
 		"route": function() {
 			
-			if (!this.routingEnabled) return;
+			if (!this.routingEnabled) {return;}
 			// console.log("Routing continue", this.routingEnabled);
 
 			var hash = window.location.hash;

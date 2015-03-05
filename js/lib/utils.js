@@ -3,10 +3,16 @@
  */
 define(function(require, exports, module) {
 
+	"use strict";
+	/* jslint bitwise: true */
+	/* jshint ignore:start */
+
+
 	var utils = {
 		"guid": function() {
 			return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-				var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+				var r = Math.random()*16|0;
+				var v = c === 'x' ? r : (r & 0x3 | 0x8);
 				return v.toString(16);
 			});
 		},
@@ -29,15 +35,20 @@ define(function(require, exports, module) {
 		},
 		"getKeys": function(obj) {
 			var list = [];
-			if (typeof obj !== "object") return list;
+			if (typeof obj !== "object") {
+				return list;
+			}
 			for(var key in obj) {
-				if (obj.hasOwnProperty(key)) list.push(key);
+				if (obj.hasOwnProperty(key)) {
+					list.push(key);
+				}
 			}
 			return list;
 		}
 	};
 
 
-	return utils;
 
+	return utils;
+	/* jshint ignore:end */
 });
