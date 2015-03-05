@@ -13,8 +13,10 @@ module.exports = function(grunt) {
 			}
 		},
 		jshint: {
+
 			files: ['Gruntfile.js', 'js/**/*.js', 'test/**/*.js'],
 			options: {
+					jshintrc: true,
 				globals: {
 					jQuery: true
 				}
@@ -49,37 +51,6 @@ module.exports = function(grunt) {
 	});
 
 	
-	grunt.registerTask("langbuild", "Build dictionary files based upon transifex output.", function() {
-		grunt.log.writeln('Build dictionary files...');
-
-		var mainlang = "en";
-		var maindictFile = "dictionaries/transifex/dictionary." + mainlang + ".json";
-		var maindict = grunt.file.readJSON(maindictFile);
-
-		var lang, langdict, key;
-
-		// Iterate over all languages...
-		for(var i = 0; i < cfg.languages.length; i++) {
-			lang = cfg.languages[i];
-			if (lang === mainlang) { continue; }
-			langdict = grunt.file.readJSON("dictionaries/transifex/dictionary." + lang + ".json");
-
-			for(key in maindict) {
-				if (!langdict.hasOwnProperty(key)) {
-					grunt.log.writeln('Dictionary [' + lang + '] is missing translation of the term [' + key + ']. Using the [' + mainlang + '] string.');
-					langdict[key] = maindict[key];
-				}
-			}
-			langdict._lang = lang;
-			grunt.file.write("dictionaries/build/dictionary." + lang + ".json", JSON.stringify(langdict, undefined, 2));
-			
-		}
-		maindict._lang = mainlang;
-		grunt.file.write("dictionaries/build/dictionary." + mainlang + ".json", JSON.stringify(maindict, undefined, 2));
-
-	});
-
-
 	grunt.registerTask("langbuild", "Build dictionary files based upon transifex output.", function() {
 		grunt.log.writeln('Build dictionary files...');
 
@@ -151,11 +122,11 @@ module.exports = function(grunt) {
 	
 	// Tasks
 	grunt.registerTask('default', ['jshint']);
-	grunt.registerTask('jshint', ['jshint']);
+	// grunt.registerTask('jshint', ['jshint']);
 	// grunt.registerTask('jslint', ['jslint']);
 	grunt.registerTask('bower', ['shell:bower']);
 	grunt.registerTask('build', ['shell:bower', 'jshint', 'shell:rcss', 'shell:rjs']);
-	grunt.registerTask('test', ['jshint']);
+	// grunt.registerTask('test', ['jshint']);
 
 	grunt.registerTask('lang', ['transifex', 'langbuild']);
 };
