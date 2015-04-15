@@ -91,7 +91,8 @@ CREATE TABLE feideconnect.apigk (
 		obj.expose = {
 			"userid": true,
 			"scopes": true,
-			"clientid": true
+			"clientid": true,
+			"userid-sec": ["feide", "uuid"]
 		};
 		obj.requireuser = true;
 		obj.trust = {
