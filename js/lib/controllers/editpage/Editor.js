@@ -9,14 +9,8 @@ define(function(require, exports, module) {
 
 		EventEmitter = require('../../EventEmitter'),
 
-		scopePolicy = require('../../../../etc/scopepolicy'),
 		$ = require('jquery')
 		;
-
-
-	var template = require('text!templates/ClientEditor.html');
-
-
 
 	var Editor = Pane.extend({
 		"init": function(app, feideconnect) {
@@ -66,8 +60,6 @@ define(function(require, exports, module) {
 
 				}
 				return false;
-
-				// console.log("Drag dragenter");
 			});
 
 		

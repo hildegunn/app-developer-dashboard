@@ -4,7 +4,6 @@ define(function(require, exports, module) {
 	var 
 		dust = require('dust'),
 		Controller = require('../Controller'),
-		scopePolicy = require('../../../../etc/scopepolicy'),
 
 		ScopeDef = require('../../models/ScopeDef'),
 

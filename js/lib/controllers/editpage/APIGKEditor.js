@@ -8,7 +8,6 @@ define(function(require, exports, module) {
 		APIGK = require('../../models/APIGK'),
 		ScopeDefBuilder = require('./ScopeDefBuilder'),
 		Editor = require('./Editor'),
-		scopePolicy = require('../../../../etc/scopepolicy'),
 		utils = require('../../utils'),
 		$ = require('jquery')
 		;

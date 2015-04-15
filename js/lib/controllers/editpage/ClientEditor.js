@@ -39,6 +39,7 @@ define(function(require) {
 			e.preventDefault();
 			$(e.currentTarget).closest(".redircontainer").remove();
 		},
+
 		"actAddRedirectURI": function(e) {
 			e.preventDefault();
 			var tmp = this.el.find("#redirtemplate").clone().css("display", "block");
@@ -57,7 +58,6 @@ define(function(require) {
 					that.app.setErrorMessage("Error uploading logo", "danger", err);
 				});
 		},
-
 
 		"showPublicAPIs": function() {
 
@@ -96,8 +96,6 @@ define(function(require) {
 
 				var myapis = [], api, i;
 
-
-
 				for(i = 0; i < apiids.length; i++) {
 					api = that.publicapis.getAPIGK(apiids[i]);
 					if (api === null) {
@@ -110,7 +108,6 @@ define(function(require) {
 				var aapiview;
 				view.authorizedAPIs = [];
 				view.requestedAPIs = [];
-
 
 				// console.error("APIS", apis);
 
@@ -314,6 +311,7 @@ define(function(require) {
 			});
 
 		},
+		
 		"actDelete": function(e) {
 			e.preventDefault();
 			var that = this;
