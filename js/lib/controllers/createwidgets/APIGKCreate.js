@@ -26,7 +26,7 @@ define(function(require, exports, module) {
 		this.verified = false;
 		this.verifytimer = null;
 
-		console.log("Loaded dust ", dust);
+		// console.log("Loaded dust ", dust);
 
 		that.element = null;
 
@@ -37,7 +37,7 @@ define(function(require, exports, module) {
 			"_": that.dict.get()
 		};
 		dust.render("newapi", view, function(err, out) {
-			console.log(out);
+			// console.log(out);
 
 			that.element = $(out);
 			$("div#modalContainer").append(that.element);
@@ -47,7 +47,7 @@ define(function(require, exports, module) {
 			that.element.on('keyup change', '#newAPIendpoint', $.proxy(that.checkIfReady, that));
 			that.element.on('click', '.createNewBtn', $.proxy(that.submit, that));
 
-			console.log("third element", that.element);
+			// console.log("third element", that.element);
 
 			that.checkIfReady();
 		});
@@ -208,7 +208,7 @@ CREATE TABLE feideconnect.apigk (
 
 	APIGKCreate.prototype.checkIfReady = function() {
 
-		console.log("check if ready");
+		// console.log("check if ready");
 		var that = this;
 		var identifier = $(this.element).find("#newAPIid").val();
 		var ready;
