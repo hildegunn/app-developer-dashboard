@@ -9,16 +9,16 @@ define(function(require, exports, module) {
 		ClientCreate = require('../createwidgets/ClientCreate'),
 		APIGKCreate = require('../createwidgets/APIGKCreate'),
 		EventEmitter = require('../../EventEmitter'),
+		OrgRoleSelector = require('./OrgRoleSelector'),
 		utils = require('../../utils'),
 		$ = require('jquery')
 		;
+
 	var 
 		template = require('text!templates/MainListing.html'),
 		templateC = require('text!templates/MainListingClients.html'),
 		templateA = require('text!templates/MainListingAPIGKs.html')
 		;
-
-
 
 
 	/*
@@ -32,23 +32,30 @@ define(function(require, exports, module) {
 			var that = this;
 			this.feideconnect = feideconnect;
 
-
 			this._super();
 
 			this.dict = new Dictionary();
-
 
 			dust.loadSource(dust.compile(template, "mainlisting"));
 			dust.loadSource(dust.compile(templateC, "mainlistingC"));
 			dust.loadSource(dust.compile(templateA, "mainlistingA"));
 
-
 			this.elClients = $("<div></div>");
 			this.elAPIGKs = $("<div></div>");
+			this.elOrgSelector = $("<div></div>");
 
 			this.templateLoaded = false;
 			this.elClientsAttached = false;
 			this.elAPIGKsAttached = false;
+
+
+			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector);
+			this.orgRoleSelector.initLoad();
+
+			// this.orgRoleSelector.onLoaded()
+			// 	.then(function() {
+			// 		console.error("Jabraluba!");
+			// 	});
 
 
 			this.clientcreate = new ClientCreate();
@@ -79,10 +86,10 @@ define(function(require, exports, module) {
 
 			setTimeout(function() {
 				// TODO: This API fails. Should be fixed. 
-				// that.feideconnect.apigkClientRequests().
-				// 	then(function(data) {
-				// 		console.log("DATA CLIENT REQUESTS...", data);
-				// 	});
+				that.feideconnect.apigkClientRequests().
+					then(function(data) {
+						console.log("DATA CLIENT REQUESTS...", data);
+					});
 
 			}, 1000);
 
@@ -184,32 +191,43 @@ define(function(require, exports, module) {
 			});
 		},
 
-		"load": function() {
-			this.draw(true);
+		"initLoad": function() {
+
+			this.orgRoleSelector.onLoaded()
+				.then(this.proxy("draw", true))
+				.then(this.proxy("_initLoaded"));
+				
 		},
+
 		
 		"draw": function(act) {
 			var that = this;
 
-			var view = {
-				"_": that.dict.get(),
-				"showHeader": false
-			};
+			return new Promise(function(resolve, reject) {
 
-			dust.render("mainlisting", view, function(err, out) {
-				that.el.empty().append(out);
-				that.el.find('#listingClients').append(that.elClients);
-				that.el.find('#listingAPIGKs').append(that.elAPIGKs);
+				var view = {
+					"_": that.dict.get(),
+					"showHeader": false
+				};
+				dust.render("mainlisting", view, function(err, out) {
 
-				that.elClientsAttached = true;
-				that.elAPIGKsAttached = true;
-				that.templateLoaded = true;
+					that.el.children().detach();
+					that.el.append(out);
+					that.el.find('#listingClients').append(that.elClients);
+					that.el.find('#listingAPIGKs').append(that.elAPIGKs);
+					that.el.find('#orgSelector').append(that.elOrgSelector);
+
+					that.elClientsAttached = true;
+					that.elAPIGKsAttached = true;
+					that.templateLoaded = true;
+
+				});
+		
+				if (act) {
+					that.activate();
+				}
 
 			});
-	
-			if (act) {
-				this.activate();
-			}
 
 		}
 	}).extend(EventEmitter);

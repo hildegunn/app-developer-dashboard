@@ -15,7 +15,7 @@ define(function (require, exports, module) {
 		APIGK = require('./models/APIGK'),
 		PaneController = require('./controllers/PaneController'),
 		Dictionary = require('./Dictionary'),
-		dust = require('dust'),
+		TemplateEngine = require('./TemplateEngine'),
 		utils  = require('./utils'),
 		rawconfig = require('text!../../etc/config.js'),
 		$ = require('jquery');
@@ -46,9 +46,12 @@ define(function (require, exports, module) {
 
 			this.dict = new Dictionary();
 
+			this.tmpHeader = new TemplateEngine(tmpHeader);
+			this.tmpFooter = new TemplateEngine(tmpFooter);
 
-			dust.loadSource(dust.compile(tmpHeader, "header"));
-			dust.loadSource(dust.compile(tmpFooter, "footer"));
+
+			// dust.loadSource(dust.compile(tmpHeader, "header"));
+			// dust.loadSource(dust.compile(tmpFooter, "footer"));
 
 			// Call contructor of the AppController(). Takes no parameters.
 			this._super();
@@ -77,6 +80,21 @@ define(function (require, exports, module) {
 				that.mainlisting.updateAPIGKs(apigks);
 			});
 
+
+			this.mainlisting.orgRoleSelector.onLoaded()
+				.then(function() {
+					var orgid = that.mainlisting.orgRoleSelector.getOrg();
+					that.clientpool.initLoad(orgid);
+				});
+
+			this.mainlisting.orgRoleSelector.on("orgRoleSelected", function(orgid) {
+				that.clientpool.load(orgid)
+					.catch(function(err) {
+						that.setErrorMessage("Error loading client and apigk data from an organization", "danger", err);
+					});
+			});
+
+			// TODO Add listener to orgselector when user change role.
 
 
 			this.clienteditor = new ClientEditor(this, this.feideconnect, this.publicapis);
@@ -158,7 +176,7 @@ define(function (require, exports, module) {
 			this.route();
 
 
-			this.draw();	
+			this.initLoad();	
 
 			this.el.on("click", ".login", function() {
 				that.feideconnect.authenticate();
@@ -212,6 +230,14 @@ define(function (require, exports, module) {
 		},
 
 
+
+		"initLoad": function() {
+
+			return this.draw()
+				.then(this.proxy("_initLoaded"));
+				
+		},
+
 		/**
 		 * A draw function that draws the header and footer template.
 		 * Supports promises
@@ -224,42 +250,46 @@ define(function (require, exports, module) {
 				"_": that.dict.get()
 			};
 
-			this.loaded = false;
 			return Promise.all([
-				new Promise(function(resolve, reject) {
-					dust.render("header", view, function(err, out) {
-						if (err) { return reject(err); }
-						that.el.find("#header").append(out);
-						resolve();
-					});
-				}),
-				new Promise(function(resolve, reject) {
-					dust.render("footer", view, function(err, out) {
-						if (err) { return reject(err); }
-						that.el.find("#footer").append(out);
-						resolve();
-					});
-				})
-			]).then(function() {
-				that.loaded = true;
-				if (that._onloadedCallback && typeof that._onloadedCallback === 'function') {
-					that._onloadedCallback();
-				}
-			});
+				that.tmpHeader.render(that.el.find("#header"), view),
+				that.tmpFooter.render(that.el.find("#footer"), view)
+			]);
+
+
+			// 	new Promise(function(resolve, reject) {
+			// 		dust.render("header", view, function(err, out) {
+			// 			if (err) { return reject(err); }
+			// 			that.el.find("#header").append(out);
+			// 			resolve();
+			// 		});
+			// 	}),
+			// 	new Promise(function(resolve, reject) {
+			// 		dust.render("footer", view, function(err, out) {
+			// 			if (err) { return reject(err); }
+			// 			that.el.find("#footer").append(out);
+			// 			resolve();
+			// 		});
+			// 	})
+			// ]).then(function() {
+			// 	that.loaded = true;
+			// 	if (that._onloadedCallback && typeof that._onloadedCallback === 'function') {
+			// 		that._onloadedCallback();
+			// 	}
+			// });
 		},
 
 
 
-		"onLoaded": function() {
-			var that = this;
-			return new Promise(function(resolve, reject) {
-				if (that.loaded) {
-					resolve();
-				} else {
-					that._onloadedCallback = resolve;
-				}
-			});
-		},
+		// "onLoaded": function() {
+		// 	var that = this;
+		// 	return new Promise(function(resolve, reject) {
+		// 		if (that.loaded) {
+		// 			resolve();
+		// 		} else {
+		// 			that._onloadedCallback = resolve;
+		// 		}
+		// 	});
+		// },
 
 
 
@@ -324,7 +354,7 @@ define(function (require, exports, module) {
 		"routeMainlisting": function() {
 			console.log("ABOUT");
 			this.setHash('/');
-			this.mainlisting.load();
+			this.mainlisting.initLoad();
 		}
 
 

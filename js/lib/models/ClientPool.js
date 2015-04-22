@@ -4,7 +4,7 @@ define(function(require, exports, module) {
 
 	var 
 		// $ = require('jquery'),
-		Class = require('../class'),
+		Controller = require('../controllers/Controller'),
 		EventEmitter = require('../EventEmitter'),
 
 		Client = require('./Client'),
@@ -13,7 +13,7 @@ define(function(require, exports, module) {
 		;
 
 
-	var ClientPool = Class.extend({
+	var ClientPool = Controller.extend({
 		"init": function(feideconnect) {
 
 			var that = this;
@@ -26,42 +26,86 @@ define(function(require, exports, module) {
 			this.apigksLoaded = false;
 			this.clientsLoaded = false;
 
-			this.feideconnect.apigkList(function(apigks) {
 
-				console.log("APIgks", apigks);
-				var i;
-				for (i = 0; i < apigks.length; i++) {
-					that.apigks[apigks[i].id] = new APIGK(apigks[i]);
-				}
-				that.emit('apigkChange', that.apigks);
-				that.apigksLoaded = true;
-				if (that.clientsLoaded) {that.emit('ready');}
+			this.filterOutOrgEntries = true;
 
 
-			});
+			this._super();
 
-			this.feideconnect.clientsList(function(clients) {
+			// this.feideconnect.apigkList(function(apigks) {
 
-				console.log("clients", clients);
-				var i;
-				for (i = 0; i < clients.length; i++) {
-					that.clients[clients[i].id] = new Client(clients[i]);
-				}
-				that.emit('clientChange', that.clients);
-				that.clientsLoaded = true;
-				if (that.apigksLoaded) {that.emit('ready');}
+			// 	console.log("APIgks", apigks);
+			// 	var i;
+			// 	for (i = 0; i < apigks.length; i++) {
+			// 		that.apigks[apigks[i].id] = new APIGK(apigks[i]);
+			// 	}
+			// 	that.emit('apigkChange', that.apigks);
+			// 	that.apigksLoaded = true;
+			// 	if (that.clientsLoaded) {that.emit('ready');}
 
-			});
 
+			// });
+
+			// this.feideconnect.clientsList(function(clients) {
+
+			// 	console.log("clients", clients);
+			// 	var i;
+			// 	for (i = 0; i < clients.length; i++) {
+			// 		that.clients[clients[i].id] = new Client(clients[i]);
+			// 	}
+			// 	that.emit('clientChange', that.clients);
+			// 	that.clientsLoaded = true;
+			// 	if (that.apigksLoaded) {that.emit('ready');}
+
+			// });
 
 		},
-		"ready": function(callback) {
-			if (this.apigksLoaded && this.clientsLoaded) {
-				callback();
-			} else {
-				this.on("ready", callback);
-			}
+
+		"initLoad": function(orgid) {
+
+			return this.load(orgid);
+
 		},
+
+		"load": function(orgid) {
+			var that = this;
+
+			console.error("ABOUT TO LOAD client pool with org ", orgid);
+
+			return Promise.all([
+				that.loadClients(orgid),
+				that.loadAPIGKs(orgid),
+			]);
+		},
+
+		"loadClients": function(orgid) {
+			var that = this;
+			return this.feideconnect.clientsByOrg(orgid)
+				.then(function(clients) {
+					that.clients = {};
+					for (var i = 0; i < clients.length; i++) {
+
+						if (that.filterOutOrgEntries && clients[i].organization !== null && orgid === null) {
+							continue;
+						}
+						that.clients[clients[i].id] = new Client(clients[i]);
+					}
+					that.emit("clientChange", that.clients);
+				});
+		},
+
+		"loadAPIGKs": function(orgid) {
+			var that = this;
+			return this.feideconnect.apigkListByOrg(orgid)
+				.then(function(apigks) {
+					that.apigks = {};
+					for (var i = 0; i < apigks.length; i++) {
+						that.apigks[apigks[i].id] = new APIGK(apigks[i]);
+					}
+					that.emit("apigkChange", that.apigks);
+				});
+		},
+
 		"setClient": function(client) {
 			this.clients[client.id] = client;
 			this.emit("clientChange", this.clients);
