@@ -3,21 +3,35 @@ define(function(require, exports, module) {
 	"use strict";
 	var 
 		Class = require('./class'),
-		Dictionary = require('./Dictionary');
+		Dictionary = require('./Dictionary'),
+		utils  = require('./utils'),
+
+		dust = require('dust');
 
 
 
 	var parsed = null;
 
 	var TemplateEngine = Class.extend({
-		"init": function() {
-			// if (parsed === null) {
-			// 	parsed = JSON.parse(dict);
-			// }
+		"init": function(template) {
+			this.index = utils.guid();
+			// console.log("Template got index " + this.index);
+			dust.loadSource(dust.compile(template, this.index));
 		},
-		"get": function() {
-			return parsed;
+		"getIndex": function() {
+			return this.index;
+		},
+		"render": function(el, view) {
+			var that = this;
+			return new Promise(function(resolve, reject) {
+				dust.render(that.index, view, function(err, out) {
+					if (err) { return reject(err); }
+					el.append(out);
+					resolve();
+				});
+			});
 		}
+
 	});
 
 	return TemplateEngine;
