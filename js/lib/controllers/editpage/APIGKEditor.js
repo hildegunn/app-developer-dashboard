@@ -126,22 +126,24 @@ define(function(require, exports, module) {
 				.then(function(clients) {
 
 					var i, nc, cv;
-					// console.error("getClientRequests()", clients);
+					view.clients = [];
+					view.clientsReq = [];
 					
 					var reqClientsReq = [];
 
 					for (i = 0; i < clients.length; i++) {
 						nc = new Client(clients[i]);
+						that.clients[nc.id] = nc;
 						cv = nc.getAPIGKview(that.current);
 
 						// console.error("Processing API GK View", cv);
 
-						// if (cv.sd.authz) {
-						// 	view.clients.push(cv);
-						// }
-						// if (cv.sd.req) {
-						// 	view.clientsReq.push($.extend({}, cv));
-						// } 
+						if (cv.sd.authz) {
+							view.clients.push(cv);
+						}
+						if (cv.sd.req) {
+							view.clientsReq.push($.extend({}, cv));
+						} 
 
 					}
 
