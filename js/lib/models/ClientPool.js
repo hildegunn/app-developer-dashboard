@@ -71,6 +71,7 @@ define(function(require, exports, module) {
 				then(function(clients) {
 					// console.log("DATA CLIENT REQUESTS...", clients);
 
+					that.clientRequests = [];
 					var i, nc, cv;
 					var reqClientsReq = [];
 
@@ -90,6 +91,8 @@ define(function(require, exports, module) {
 		"processClientRequests": function() {
 
 			var i, k;
+
+
 
 			for(var apigkid in this.apigks) {
 
