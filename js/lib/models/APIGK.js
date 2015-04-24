@@ -27,6 +27,12 @@ define(function(require, exports, module) {
 			this._super(props);
 		},
 
+		"increaseClientRequestCounter": function() {
+			if  (!this.clientRequestCounter) {
+				this.clientRequestCounter = 0;
+			}
+			this.clientRequestCounter++;
+		},
 
 		"getView": function() {
 			var res = this._super();
@@ -47,6 +53,13 @@ define(function(require, exports, module) {
 				res.scopedef = this.scopedef.getView();
 			} else {
 				res.scopedef = [];
+			}
+
+			res.clientRequests = 0;
+			res.hasClientRequests = false;
+			if (this.clientRequestCounter && this.clientRequestCounter > 0) {
+				res.clientRequests = this.clientRequestCounter;
+				res.hasClientRequests = true;
 			}
 
 			return res;			

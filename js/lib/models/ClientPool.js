@@ -23,6 +23,7 @@ define(function(require, exports, module) {
 
 			this.apigks = {};
 			this.clients = {};
+			this.clientRequests = [];
 
 			this._super();
 
@@ -35,6 +36,7 @@ define(function(require, exports, module) {
 
 		},
 
+
 		"load": function(orgid) {
 			var that = this;
 
@@ -43,8 +45,83 @@ define(function(require, exports, module) {
 			return Promise.all([
 				that.loadClients(orgid),
 				that.loadAPIGKs(orgid),
-			]);
+				that.loadRequests(orgid)
+			]).then(function() {
+				return that.processClientRequests()
+			}).then(function() {
+				that.emit("clientChange", that.clients);
+				that.emit("apigkChange", that.apigks);
+			});
 		},
+
+
+
+		"getClientRequests": function(orgid) {
+			if  (orgid === null) {
+				return this.feideconnect.apigkClientRequests();
+			}
+			return this.feideconnect.apigkClientRequestsByOrg(orgid);
+		},
+
+
+		"loadRequests": function(orgid) {
+
+			var that = this;
+			return this.getClientRequests(orgid).
+				then(function(clients) {
+					console.log("DATA CLIENT REQUESTS...", clients);
+
+					var i, nc, cv;
+					var reqClientsReq = [];
+
+					for (i = 0; i < clients.length; i++) {
+						nc = new Client(clients[i]);
+						that.clientRequests.push(nc);
+
+
+					}
+
+				});
+
+		},
+
+		// Separate function because clientrequests and apigks are fetched in parallell, 
+		// this will need to wait for both to be completed.
+		"processClientRequests": function() {
+
+			var i, k;
+
+			for(var apigkid in this.apigks) {
+
+				// var api = new APIGK(this.apigks[apigkid]);
+
+
+				for (i = 0; i < this.clientRequests.length; i++) {
+					var x = this.clientRequests[i];
+					var cv = x.getAPIGKview(this.apigks[apigkid]);
+					
+					// console.error("Processing API GK View", cv);	
+
+					if (cv.sd.req) {
+						// if (!this.clientRequestsStructured.hasOwnProperty(apigkid)) {
+						// 	this.clientRequestsStructured[apigkid] = 0;
+						// }
+						// this.clientRequestsStructured[apigkid]++;
+
+						this.apigks[apigkid].increaseClientRequestCounter();
+						
+						console.error("Processing API GK View", cv);	
+						// view.clientsReq.push($.extend({}, cv));
+					}
+
+
+				}
+
+			}
+
+
+		},
+
 
 		"loadClients": function(orgid) {
 			var that = this;
@@ -58,7 +135,7 @@ define(function(require, exports, module) {
 						}
 						that.clients[clients[i].id] = new Client(clients[i]);
 					}
-					that.emit("clientChange", that.clients);
+					
 				});
 		},
 
@@ -70,7 +147,7 @@ define(function(require, exports, module) {
 					for (var i = 0; i < apigks.length; i++) {
 						that.apigks[apigks[i].id] = new APIGK(apigks[i]);
 					}
-					that.emit("apigkChange", that.apigks);
+
 				});
 		},
 

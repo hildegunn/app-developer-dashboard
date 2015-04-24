@@ -4,9 +4,16 @@
 			<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/apigkadm/apigks/{id}/logo?t={random}" alt="...">
 		</div>
 		<div class="media-body">
-			<p class="pull-right" style="color: #666; font-size: 82%">Updated {updatedAgo}</p>
 
-			<h4 class="list-group-item-heading">{name}</h4>
+			{#hasClientRequests}
+				<span style="margin-left: .7em" class="label label-danger queuecount pull-right">{clientRequests} pending requests</span>
+			{/hasClientRequests}
+
+			<p class="pull-right" style="clear: right; color: #666; font-size: 82%">Updated {updatedAgo}</p>
+
+			<h4 class="list-group-item-heading">{name} 
+
+			</h4>
 			<p class="list-group-item-text" style="font-size: 80%" ><i class="glyphicon glyphicon-chevron-right"></i> {id}</p>
 			<p class="list-group-item-text">{descr}</p>
 		</div>
