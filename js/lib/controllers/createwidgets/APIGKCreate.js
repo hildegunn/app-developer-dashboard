@@ -114,6 +114,8 @@ define(function(require, exports, module) {
 			    updated timestamp
 			 */
 
+
+
 			var obj = {};
 
 			obj.id = $(this.el).find("#newAPIid").val();
@@ -140,11 +142,8 @@ define(function(require, exports, module) {
 				}
 			};
 
-			if (typeof this.callback === 'function') {
-				this.emit("submit", obj);
-				$(this.el).find(".modal").modal("hide");
-			}
-
+			this.emit("submit", obj);
+			$(this.el).find(".modal").modal("hide");
 		},
 
 		"setStatus": function(ok, text) {
@@ -247,6 +246,10 @@ define(function(require, exports, module) {
 				ready = false;
 				this.setStatus(false, 'Required');
 				that.lastChecked = null;
+			} else if (identifier.length < 3) {
+				ready = false;
+				this.setStatus(false, 'Too short');
+				that.lastChecked = null;	
 			} else if (!identifier.match(/^[a-z0-9\-_]+$/)) {
 				ready = false;
 				this.setStatus(false, 'Invalid characters');
