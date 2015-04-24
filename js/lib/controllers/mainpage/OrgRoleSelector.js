@@ -14,9 +14,10 @@ define(function(require, exports, module) {
 
 
 	var OrgRoleSelector = Controller.extend({
-		"init": function(el) {
+		"init": function(el, feideconnect) {
 
 			var that = this;
+			this.feideconnect = feideconnect;
 
 			this._super(el);
 
@@ -32,8 +33,25 @@ define(function(require, exports, module) {
 
 		"getOrg": function() {
 			if (this.currentRole === '_') { return null; }
-			console.error("Get role is not _ but [" + this.currentRole + "]");
+			// console.error("Get role is not _ but [" + this.currentRole + "]");
 			return this.currentRole;
+		},
+
+
+
+		"getOrgInfo": function() {
+			if (this.currentRole === '_') { return null; }
+
+			var c = this.feideconnect.getConfig();
+			// console.error("Config was", c);
+
+			var orgInfo = {
+				"id": this.currentRole,
+				"displayName": this.roles[this.currentRole],
+				"logoURL": c.apis.core + '/orgs/' + this.currentRole + '/logo'
+			};
+
+			return orgInfo;
 		},
 
 		"actSelect": function(e) {
@@ -43,7 +61,7 @@ define(function(require, exports, module) {
 			var orgid = ct.closest("li").data("orgid");
 			ct.closest("ul").children().removeClass("active");
 			ct.closest("li").addClass("active");
-			console.error("Selected", orgid);
+			// console.error("Selected", orgid);
 
 			if (this.currentRole !== orgid) {
 				this.currentRole = orgid;

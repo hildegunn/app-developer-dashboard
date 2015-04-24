@@ -6,6 +6,10 @@ define(function(require, exports, module) {
 		dust = require('dust'),
 		utils = require('../../utils'),
 		Dictionary = require('../../Dictionary'),
+		Controller = require('../Controller'),
+		TemplateEngine = require('../../TemplateEngine'),
+		EventEmitter = require('../../EventEmitter'),
+
 		$ = require('jquery')
 
 		;
@@ -13,100 +17,89 @@ define(function(require, exports, module) {
 	var template = require('text!templates/newClient.html');
 
 
+	var ClientCreate = Controller.extend({
+		"init": function(main) {
+
+			this._super();
+
+			this.main = main;
+			this.dict = new Dictionary();
+			this.template = new TemplateEngine(template);
+			this.orgid = null;
+
+			this.ebind("keyup change", "#newClientName", "checkIfReady");
+			this.ebind("click", ".createNewBtn", "submit");
+
+		},
+
+		"initLoad": function() {
+			var that = this;
+			return this.draw()
+				.then(function() {
+					$("div#modalContainer").append(that.el);
+					that.checkIfReady();
+				})
+				.then(this.proxy("_initLoaded"));
+		},
+
+		"reload": function() {
+			return this.draw();
+		},
+
+		"draw": function() {
+			var view = {
+				"_": this.dict.get(),
+				"orgInfo": this.main.orgRoleSelector.getOrgInfo()
+			};
+			this.el.children().detach();
+			return this.template.render(this.el, view);
+		},
 
 
+		"setOrg": function(orgid) {
+
+			this.orgid = orgid;
+			return this.reload();
+
+		},
+
+		"activate": function() {
+			$(this.el).find(".modal").modal('show');
+			$(this.el).find("#newClientName").focus();
+
+		},		
 
 
-	var ClientCreate = function() {
+		"submit": function() {
 
-		var that = this;
+			var obj = {};
 
-		this.dict = new Dictionary();
+			// obj.id = $(this.element).find("#newClientIdentifier").val();
+			obj.name = $(this.el).find("#newClientName").val();
+			obj.descr = $(this.el).find("#newClientDescr").val();
+			obj.redirect_uri = [$(this.el).find("#newClientRedirectURI").val()];
+			obj.scopes_requested = ["userinfo"];
+			obj.client_secret = utils.guid();
 
-
-		this.callback = null;
-		
-		this.verifiedidentifier = null;
-		this.verified = false;
-		this.verifytimer = null;
-
-		console.log("Loaded dust ", dust);
-
-		that.element = null;
-
-		var x = dust.compile(template, "newclient");
-		dust.loadSource(x);
-		var view = {
-			"_": that.dict.get()
-		};
-		dust.render("newclient", view, function(err, out) {
-			console.log(out);
-
-			that.element = $(out);
-			$("div#modalContainer").append(that.element);
-
-			that.element.on('keyup change', '#newClientName', $.proxy(that.checkIfReady, that));
-			that.element.on('click', '.createNewBtn', $.proxy(that.submit, that));
-
-			console.log("thid element", that.elemet);
-
-			that.checkIfReady();
-		});
-
-	};
-
-	ClientCreate.prototype.onSubmit = function(callback) {
-
-		this.callback = callback;
-
-	};	
-
-
-	ClientCreate.prototype.submit = function() {
-
-		var obj = {};
-
-		// obj.id = $(this.element).find("#newClientIdentifier").val();
-		obj.name = $(this.element).find("#newClientName").val();
-		obj.descr = $(this.element).find("#newClientDescr").val();
-		obj.redirect_uri = [$(this.element).find("#newClientRedirectURI").val()];
-		obj.scopes_requested = ["userinfo"];
-		obj.client_secret = utils.guid();
-		// obj.type = 'client';
-
-
-		if (typeof this.callback === 'function') {
-			console.log("Create new object", obj);
-			this.callback(obj);
-			$(this.element).modal("hide");
-		}
-
-		// $(this.element).remove();
-	};
-
-
-
-	ClientCreate.prototype.checkIfReady = function() {
-		console.log("check if ready");
-		var name = this.element.find("#newClientName").val();
-		if (name.length > 1) {
-			console.log("READY");
-			// $(this.element).find(".createNewBtn").attr("disabled", "disabled");
-			$(this.element).find(".createNewBtn").removeClass("disabled");
-		} else {
-			console.log("NOT READY");
-			// $(this.element).find(".createNewBtn").removeAttr("disabled");
+			if (this.orgid !== null) {
+				obj.organization = this.orgid;	
+			}
 			
-			$(this.element).find(".createNewBtn").addClass("disabled");
+			this.emit("submit", obj);
+			$(this.el).find(".modal").modal("hide");
+
+		},
+
+		"checkIfReady": function() {
+			var name = this.el.find("#newClientName").val();
+			if (name.length > 1) {
+				$(this.el).find(".createNewBtn").removeClass("disabled");
+			} else {
+				$(this.el).find(".createNewBtn").addClass("disabled");
+			}
 		}
-	};
 
-
-
-	ClientCreate.prototype.activate = function() {
-		$(this.element).modal('show');
-		$(this.element).find("#newClientName").focus();
-	};
+	}).extend(EventEmitter);
 
 
 	return ClientCreate;

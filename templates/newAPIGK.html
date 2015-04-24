@@ -1,4 +1,4 @@
-<div class="modal fade" id="myModal">
+<div class="modal fade" id="apigkCreateModal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -46,10 +46,34 @@
 				<div class="form-group">
 					<label for="newAPIendpoint">API Endpoint</label>
 					<p>Enter the API endpoint of the base URL of the API on your side.</p>
-					<input style="" id="newAPIendpoint" type="text" class="form-control input" placeholder="http://example.org/api">
+					<input style="" id="newAPIendpoint" type="text" class="form-control input" placeholder="https://api.example.org">
+						<div class="endpointFormatDescr">
+							<p>
+								<i class="fa fa-check ifOK" style="display: none"></i>
+								<i class="fa fa-times ifBad" style="display: none"></i>
+								&nbsp;
+								The format of the endpoint MUST be http or https, a valid hostname, an optional portnumber, but no path or trailing slash.</p>
+							<p>In example:
+							<code>https://api.example.org</code></p>
+						</div>
+
 				</div>
 
 			</form>
+
+			{#orgInfo}
+				<div class="media">
+					<div class="media-left">
+					<a href="#">
+						<img class="media-object" style="max-height: 64px; max-width: 64px" src="{logoURL}" alt="Organiazation Logo">
+					</a>
+					</div>
+					<div class="media-body">
+						<h4 style="margin: 0px">{displayName}</h4>
+						<p>Client will be associated with this organization</p>
+					</div>
+				</div>
+			{/orgInfo}
 
       </div>
 

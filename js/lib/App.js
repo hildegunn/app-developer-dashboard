@@ -65,7 +65,7 @@ define(function (require, exports, module) {
 			this.setupRoute(/^\/clients\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditClient");
 			this.setupRoute(/^\/apigk\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditAPIGK");
 			// this.setupRoute(/^\/clients\/([a-zA-Z0-9_\-:]+)$/, "viewclient");
-			this.setupRoute(/^\/new$/, "newGroup");
+			// this.setupRoute(/^\/new$/, "newGroup");
 
 
 			this.publicapis = new PublicAPIPool(this.feideconnect);
@@ -331,11 +331,15 @@ define(function (require, exports, module) {
 		"routeEditClient": function(clientid, tabid) {
 			var that = this;
 			console.log("Route edit client", clientid);
-			this.clientpool.ready(function() {
-				var client = that.clientpool.getClient(clientid);
-				that.clienteditor.edit(client, tabid);
-			});
 
+			this.feideconnect.authenticated()
+				.then(function() {
+					return that.clientpool.onLoaded()
+				})
+				.then(function() {
+					var client = that.clientpool.getClient(clientid);
+					that.clienteditor.edit(client, tabid);
+				});
 
 		},
 		"routeEditAPIGK": function(apigkid, tabid) {
@@ -344,10 +348,11 @@ define(function (require, exports, module) {
 
 			this.feideconnect.authenticated()
 				.then(function() {
-					that.clientpool.ready(function() {
-						var apigk = that.clientpool.getAPIGK(apigkid);
-						that.apigkeditor.edit(apigk, tabid);
-					});
+					return that.clientpool.onLoaded()
+				})
+				.then(function() {
+					var apigk = that.clientpool.getAPIGK(apigkid);
+					that.apigkeditor.edit(apigk, tabid);
 				});
 
 		},

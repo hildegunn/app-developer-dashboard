@@ -27,8 +27,6 @@ define(function(require, exports, module) {
 	var MainListing = Pane.extend({
 		"init": function(feideconnect) {
 
-			console.log("initiator (MainListing)");
-
 			var that = this;
 			this.feideconnect = feideconnect;
 
@@ -49,39 +47,35 @@ define(function(require, exports, module) {
 			this.elAPIGKsAttached = false;
 
 
-			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector);
+			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector, this.feideconnect);
 			this.orgRoleSelector.initLoad();
 
-			// this.orgRoleSelector.onLoaded()
-			// 	.then(function() {
-			// 		console.error("Jabraluba!");
-			// 	});
-
-
-			this.clientcreate = new ClientCreate();
-			this.clientcreate.onSubmit(function(obj) {
-				console.log("Create new obj", obj);
+			this.clientcreate = new ClientCreate(this);
+			this.clientcreate.on("submit", function(obj) {
 				that.emit("clientCreate", obj);
 			});
+			this.clientcreate.initLoad();
 
-
-			this.apigkcreate = new APIGKCreate(this.feideconnect);
-			this.apigkcreate.onSubmit(function(obj) {
-				console.log("Create new obj", obj);
+			this.apigkcreate = new APIGKCreate(this.feideconnect, this);
+			this.apigkcreate.on("submit", function(obj) {
 				that.emit("apigkCreate", obj);
 			});
+			this.apigkcreate.initLoad();
 
 			this.el.on("click", "#registerNewClient", function() {
+				var orgid = that.orgRoleSelector.getOrg();
+				that.clientcreate.setOrg(orgid);
 				that.clientcreate.activate();
 			});
 			this.el.on("click", "#registerNewAPIGK", function() {
+				var orgid = that.orgRoleSelector.getOrg();
+				that.apigkcreate.setOrg(orgid);
 				that.apigkcreate.activate();
 			});
 
 
 			this.ebind("click", ".clientEntry", "selectedClient");
 			this.ebind("click", ".apigkEntry", "selectedAPIGK");
-
 
 
 			setTimeout(function() {

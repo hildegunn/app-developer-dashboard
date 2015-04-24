@@ -35,6 +35,23 @@ body.stateLoggedOut .showOnLoggedOut { display: block !important; }
 
 
 
+.endpointFormatDescr {
+	margin-left: 2em;
+	margin-top: 1em;
+}
+.endpointFormatDescr.endpointValidOK {
+	color: #060;
+}
+.endpointFormatDescr.endpointValidOK .ifOK {
+	display: inline !important;
+}
+.endpointFormatDescr.endpointValidBad {
+	color: #600;
+}
+.endpointFormatDescr.endpointValidBad .ifBad {
+	display: inline !important;
+}
+
 .form-group {
 	margin-bottom: 1.6em;
 }

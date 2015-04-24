@@ -19,58 +19,26 @@ define(function(require, exports, module) {
 			var that = this;
 
 			this.feideconnect = feideconnect;
+			this.filterOutOrgEntries = true;
 
 			this.apigks = {};
 			this.clients = {};
 
-			this.apigksLoaded = false;
-			this.clientsLoaded = false;
-
-
-			this.filterOutOrgEntries = true;
-
-
 			this._super();
-
-			// this.feideconnect.apigkList(function(apigks) {
-
-			// 	console.log("APIgks", apigks);
-			// 	var i;
-			// 	for (i = 0; i < apigks.length; i++) {
-			// 		that.apigks[apigks[i].id] = new APIGK(apigks[i]);
-			// 	}
-			// 	that.emit('apigkChange', that.apigks);
-			// 	that.apigksLoaded = true;
-			// 	if (that.clientsLoaded) {that.emit('ready');}
-
-
-			// });
-
-			// this.feideconnect.clientsList(function(clients) {
-
-			// 	console.log("clients", clients);
-			// 	var i;
-			// 	for (i = 0; i < clients.length; i++) {
-			// 		that.clients[clients[i].id] = new Client(clients[i]);
-			// 	}
-			// 	that.emit('clientChange', that.clients);
-			// 	that.clientsLoaded = true;
-			// 	if (that.apigksLoaded) {that.emit('ready');}
-
-			// });
 
 		},
 
 		"initLoad": function(orgid) {
 
-			return this.load(orgid);
+			return this.load(orgid)
+				.then(this.proxy("_initLoaded"));
 
 		},
 
 		"load": function(orgid) {
 			var that = this;
 
-			console.error("ABOUT TO LOAD client pool with org ", orgid);
+			// console.error("ABOUT TO LOAD client pool with org ", orgid);
 
 			return Promise.all([
 				that.loadClients(orgid),
@@ -128,7 +96,7 @@ define(function(require, exports, module) {
 		},
 		"removeAPIGK": function(id) {
 			delete this.apigks[id];
-			console.error("DELETE APIGK", id);
+			// console.error("DELETE APIGK", id);
 			this.emit("apigkChange", this.apigks);
 		}
 

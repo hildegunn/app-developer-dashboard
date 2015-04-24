@@ -1,4 +1,4 @@
-<div class="modal fade" id="myModal">
+<div class="modal fade" id="clientCreateModal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -24,7 +24,7 @@
 				</div>
 
 
-				
+
 
 				<div class="form-group">
 					<label for="newClientRedirectURI">OAuth 2.0 Redirect URL</label>
@@ -34,6 +34,22 @@
 
 
 			</form>
+
+			{#orgInfo}
+				<div class="media">
+					<div class="media-left">
+					<a href="#">
+						<img class="media-object" style="max-height: 64px; max-width: 64px" src="{logoURL}" alt="Organiazation Logo">
+					</a>
+					</div>
+					<div class="media-body">
+						<h4 style="margin: 0px">{displayName}</h4>
+						<p>Client will be associated with this organization</p>
+					</div>
+				</div>
+			{/orgInfo}
+
+
 
 
       </div>
