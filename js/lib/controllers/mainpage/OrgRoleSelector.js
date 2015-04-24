@@ -21,6 +21,8 @@ define(function(require, exports, module) {
 
 			this._super(el);
 
+			this.enabled = false;
+
 			this.roles = {};
 			this.currentRole = '_';
 
@@ -28,6 +30,34 @@ define(function(require, exports, module) {
 
 			this.ebind("click", ".orgSelector a", "actSelect");
 
+
+		},
+
+
+		"initLoad": function() {
+
+			var that = this;
+			that.roles = {
+				"_" : "Personal",
+				// "fc:org:uninett.no": "UNINETT AS",
+				// "fc:org:sigmund": "Sigmund AS"
+			};
+
+			return that.feideconnect.vootGroupsList()
+				.then(function(groups) {
+					console.error("Groups", groups);
+
+					for(var i = 0; i < groups.length; i++) {
+						if (groups[i].type !== 'fc:orgadmin') {continue; }
+						if (groups[i].membership.basic !== 'admin') {continue; }
+
+						that.enabled = true;
+						that.roles[groups[i].org] = groups[i].displayName;
+					}
+
+				})
+				.then(this.proxy("draw"))
+				.then(that.proxy("_initLoaded"));
 
 		},
 
@@ -79,6 +109,8 @@ define(function(require, exports, module) {
 			var view = {
 				"roles": []
 			};
+
+
 			for(var key in this.roles) {
 				var re = {
 					"id": key,
@@ -90,6 +122,9 @@ define(function(require, exports, module) {
 				}
 				view.roles.push(re);
 			}
+
+			if (!this.enabled) {return;}
+
 			// console.error("View s ", view);
 			return new Promise(function(resolve, reject) {
 				dust.render("OrgRoleSelector", view, function(err, out) {
@@ -98,29 +133,9 @@ define(function(require, exports, module) {
 					return resolve();
 				});
 			});
-		},
-
-		"initLoad": function() {
-
-			var that = this;
-
-			return new Promise(function(resolve, reject) {
-
-				setTimeout(function() {
-
-					that.roles = {
-						"_" : "Personal",
-						"fc:org:uninett.no": "UNINETT AS",
-						"fc:org:sigmund": "Sigmund AS"
-					};
-					resolve();
-
-				}, 200);
-
-			})
-				.then(this.proxy("draw"))
-				.then(that.proxy("_initLoaded"));
 		}
+
+
 
 	}).extend(EventEmitter);
 
