@@ -69,7 +69,7 @@ define(function(require, exports, module) {
 			var that = this;
 			return this.getClientRequests(orgid).
 				then(function(clients) {
-					console.log("DATA CLIENT REQUESTS...", clients);
+					// console.log("DATA CLIENT REQUESTS...", clients);
 
 					var i, nc, cv;
 					var reqClientsReq = [];
@@ -110,7 +110,7 @@ define(function(require, exports, module) {
 
 						this.apigks[apigkid].increaseClientRequestCounter();
 						
-						console.error("Processing API GK View", cv);	
+						// console.error("Processing API GK View", cv);	
 						// view.clientsReq.push($.extend({}, cv));
 					}
 
