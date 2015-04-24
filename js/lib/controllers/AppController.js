@@ -13,7 +13,7 @@ define(function(require, exports, module) {
 
 		"init": function() {
 			
-			console.log("initiator (AppController)");
+			// console.log("initiator (AppController)");
 
 			this._super($("body"));
 
@@ -25,7 +25,7 @@ define(function(require, exports, module) {
 			this.routingEnabled = true;
 			$(window).bind('hashchange', $.proxy(this.route, this));
 			$(window).bind('load', function() {
-				console.log("====> onload");
+				// console.log("====> onload");
 			});
 
 		},
@@ -53,25 +53,25 @@ define(function(require, exports, module) {
 			for(var i = 0; i < this.routes.length; i++) {
 				parameters = hash.match(this.routes[i][0]);
 				if (parameters) {
-					console.log("Found a route match on ", this.routes[i], parameters);
+					// console.log("Found a route match on ", this.routes[i], parameters);
 					if (typeof this[this.routes[i][1]] === 'function') {
 						var args = Array.prototype.slice.call(parameters, 1);
 						this[this.routes[i][1]].apply(this, args);
 					}
 					return;
 				} else {
-					console.log("Dit not found a route match on ", this.routes[i]);
+					// console.log("Dit not found a route match on ", this.routes[i]);
 				}
 
 			}
 
-			console.error("no match found for this route");
+			// console.error("no match found for this route");
 
 		},
 
 		"setHash": function(hash) {
 
-			console.log("Set hash", hash);
+			// console.log("Set hash", hash);
 			this.routingEnabled = false;
 			var that = this;
 

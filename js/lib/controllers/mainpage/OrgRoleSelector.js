@@ -45,7 +45,7 @@ define(function(require, exports, module) {
 
 			return that.feideconnect.vootGroupsList()
 				.then(function(groups) {
-					console.error("Groups", groups);
+					// console.error("Groups", groups);
 
 					for(var i = 0; i < groups.length; i++) {
 						if (groups[i].type !== 'fc:orgadmin') {continue; }

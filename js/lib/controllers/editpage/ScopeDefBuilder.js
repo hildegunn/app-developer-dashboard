@@ -103,7 +103,7 @@ define(function(require, exports, module) {
 			this.emit("save", obj);
 
 
-			console.log("Saving ", obj.scopedef);
+			// console.log("Saving ", obj.scopedef);
 			// $("#out").empty().append(JSON.stringify(obj.scopedef, undefined, 4));
 		},
 

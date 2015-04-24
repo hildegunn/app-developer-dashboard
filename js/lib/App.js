@@ -100,11 +100,11 @@ define(function (require, exports, module) {
 			this.clienteditor = new ClientEditor(this, this.feideconnect, this.publicapis);
 			this.pc.add(this.clienteditor);
 			this.clienteditor.on("saved", function(client) {
-				console.log("Client is saved, updatge client pool and mainlisting");
+				// console.log("Client is saved, updatge client pool and mainlisting");
 				that.clientpool.setClient(client);
 			});
 			this.clienteditor.on("deleted", function(id) {
-				console.log("Client is removed, update client pool and mainlisting");
+				// console.log("Client is removed, update client pool and mainlisting");
 				that.clientpool.removeClient(id);
 				that.mainlisting.activate();
 				that.setHash('/');
@@ -117,11 +117,11 @@ define(function (require, exports, module) {
 			this.apigkeditor = new APIGKEditor(this, this.feideconnect);
 			this.pc.add(this.apigkeditor);
 			this.apigkeditor.on("saved", function(apigk) {
-				console.log("APIGK is saved, updatge client pool and mainlisting");
+				// console.log("APIGK is saved, updatge client pool and mainlisting");
 				that.clientpool.setAPIGK(apigk);
 			});
 			this.apigkeditor.on("deleted", function(id) {
-				console.log("APIGK is removed, update client pool and mainlisting");
+				// console.log("APIGK is removed, update client pool and mainlisting");
 				that.clientpool.removeAPIGK(id);
 				that.mainlisting.activate();
 				that.setHash('/');
@@ -187,7 +187,7 @@ define(function (require, exports, module) {
 
 					var c = that.feideconnect.getConfig();
 					var url = c.apis.auth + '/logout';
-					console.error("Redirect to " + url);
+					// console.error("Redirect to " + url);
 					window.location = url;
 
 				}, 200);
@@ -330,7 +330,7 @@ define(function (require, exports, module) {
 
 		"routeEditClient": function(clientid, tabid) {
 			var that = this;
-			console.log("Route edit client", clientid);
+			// console.log("Route edit client", clientid);
 
 			this.feideconnect.authenticated()
 				.then(function() {
@@ -344,7 +344,7 @@ define(function (require, exports, module) {
 		},
 		"routeEditAPIGK": function(apigkid, tabid) {
 			var that = this;
-			console.log("Route edit apigkid", apigkid);
+			// console.log("Route edit apigkid", apigkid);
 
 			this.feideconnect.authenticated()
 				.then(function() {
@@ -357,7 +357,7 @@ define(function (require, exports, module) {
 
 		},
 		"routeMainlisting": function() {
-			console.log("ABOUT");
+			// console.log("ABOUT");
 			this.setHash('/');
 			this.mainlisting.initLoad();
 		}

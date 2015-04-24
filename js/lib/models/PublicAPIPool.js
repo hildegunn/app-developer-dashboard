@@ -23,7 +23,7 @@ define(function(require, exports, module) {
 
 			this.feideconnect.apigkPublicList(function(apigks) {
 
-				console.log("Loaded public set of apis", apigks);
+				// console.log("Loaded public set of apis", apigks);
 				var i;
 				for (i = 0; i < apigks.length; i++) {
 					that.apigks[apigks[i].id] = new APIGK(apigks[i]);
@@ -66,7 +66,7 @@ define(function(require, exports, module) {
 		},
 		"removeAPIGK": function(id) {
 			delete this.apigks[id];
-			console.error("DELETE APIGK", id);
+			// console.error("DELETE APIGK", id);
 			this.emit("apigkChange", this.apigks);
 		}
 

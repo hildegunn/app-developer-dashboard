@@ -40,8 +40,8 @@ define(function(require, exports, module) {
 		},
 
 		"debug": function() {
-			console.log("debug PaneController instance");
-			console.log(this.panelist);
+			// console.log("debug PaneController instance");
+			// console.log(this.panelist);
 		},
 
 		"activate": function(paneID) {
@@ -54,7 +54,7 @@ define(function(require, exports, module) {
 				this.panelist[this.current].el.hide();
 			}
 
-			console.log("About to activate pane", this.panelist[paneID].el);
+			// console.log("About to activate pane", this.panelist[paneID].el);
 			this.panelist[paneID].el.show();
 
 			this.current = paneID;

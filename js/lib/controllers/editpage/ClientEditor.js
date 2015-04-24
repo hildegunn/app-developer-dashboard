@@ -49,7 +49,7 @@ define(function(require) {
 			var that = this;
 			that.feideconnect.clientsUpdateLogo(this.current.id, data)
 				.then(function() {
-					console.log("Successfully posted logo to feideconnect");
+					// console.log("Successfully posted logo to feideconnect");
 					var url = "http://api.dev.feideconnect.no:6543/clientadm/clients/" + that.current.id + "/logo?r=" + utils.guid();
 					that.el.find('.itemlogo').attr("src", url);
 				})
@@ -83,7 +83,7 @@ define(function(require) {
 			var endpoint = fcc.apis.core + '/clientadm/scopes/';
 
 			$.getJSON(endpoint, function(scopePolicy) {
-				console.error("Scopedef is", scopePolicy);
+				// console.error("Scopedef is", scopePolicy);
 
 				var scopes = item.getScopes(scopePolicy);
 
@@ -105,7 +105,7 @@ define(function(require) {
 					for(i = 0; i < apiids.length; i++) {
 						api = that.publicapis.getAPIGK(apiids[i]);
 						if (api === null) {
-							console.error("This client got scopes for the API [" + apiids[i] + "] but did not find information about this public API.");
+							// console.error("This client got scopes for the API [" + apiids[i] + "] but did not find information about this public API.");
 						} else {
 							myapis.push(api);
 						}
@@ -120,7 +120,7 @@ define(function(require) {
 					view.apis = [];
 					for(var key in apis) {
 						if (apis.hasOwnProperty(key)) {
-							console.log("About to process ", apis[key].name, clientAPIkeys.has(apis[key].id));
+							// console.log("About to process ", apis[key].name, clientAPIkeys.has(apis[key].id));
 							if (clientAPIkeys.has(apis[key].id)) {continue;}
 							view.apis.push(apis[key].getView());
 						}
@@ -142,7 +142,7 @@ define(function(require) {
 
 					}
 
-					console.error("View is ", view);
+					// console.error("View is ", view);
 					
 
 					dust.render("clienteditor", view, function(err, out) {
@@ -206,7 +206,7 @@ define(function(require) {
 				that.emit("saved", x);
 			});
 
-			console.log("trying to actAPIadd ", newscopes);
+			// console.log("trying to actAPIadd ", newscopes);
 
 		},
 
@@ -220,7 +220,7 @@ define(function(require) {
 
 			var scopes = {};
 			$(container).find("input.authscope").each(function(i, item) {
-				console.log("Auth z input element", item);
+				// console.log("Auth z input element", item);
 				var scope = $(item).data("scopemoderate");
 				var enabled = $(item).prop("checked");
 				scopes[scope] = enabled;
@@ -267,13 +267,13 @@ define(function(require) {
 					that.app.setErrorMessage("Error adding scope", "danger", err);
 				});
 
-			console.log("trying to actScopeAdd ", scopeid);
+			// console.log("trying to actScopeAdd ", scopeid);
 		},
 
 		"actScopeRemove": function(e) {
 			e.preventDefault();
 			var scopeid = $(e.currentTarget).closest(".scopeEntry").data("scopeid");
-			console.log("trying to actScopeRemove  ", scopeid);
+			// console.log("trying to actScopeRemove  ", scopeid);
 
 			this.current.removeScope(scopeid);
 			var obj = this.current.getStorable();
@@ -299,7 +299,7 @@ define(function(require) {
 			var redirectURIs;
 			var obj;
 
-			console.log("About to save changes");
+			// console.log("About to save changes");
 
 			this.current.setName(this.el.find("#name").val());
 			this.current.setDescr(this.el.find("#descr").val());

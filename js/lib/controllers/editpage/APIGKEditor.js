@@ -31,7 +31,7 @@ define(function(require, exports, module) {
 			this.scopedefbuilder = new ScopeDefBuilder(this.feideconnect);
 			this.scopedefbuilder.on("save", function(obj) {
 
-				console.log("About to save: ", obj);
+				// console.log("About to save: ", obj);
 				that.feideconnect.apigkUpdate(obj, function(savedClient) {
 					var x = new APIGK(savedClient);
 					that.edit(x);
@@ -110,7 +110,7 @@ define(function(require, exports, module) {
 			this.current = item;
 
 			var view = item.getView(this.feideconnect);
-			console.log("About to pass on view", view);
+			// console.log("About to pass on view", view);
 			this.scopedefbuilder.setAPIGK(item);
 			
 			if (this.feideconnect) {
@@ -188,19 +188,19 @@ define(function(require, exports, module) {
 
 
 
-			console.log("Client container", clientContainer);
+			// console.log("Client container", clientContainer);
 
 			var scopes = {};
 
 			$(clientContainer).find("input.authscope").each(function(i, item) {
-				console.log("Auth z input element", item);
+				// console.log("Auth z input element", item);
 				var scope = $(item).data("scopemoderate");
 				var enabled = $(item).prop("checked");
 				scopes[scope] = enabled;
 			});
 
 			$(clientContainer).find("input.radioscopeauthz:checked").each(function(i, item) {
-				console.log("Auth z input radio element", item);
+				// console.log("Auth z input radio element", item);
 				var scope = $(item).attr("name");
 				var enabled = ($(item).attr("value") === 'accept');
 				// console.error("SCOPE ENABLED", scope, enabled);
@@ -239,7 +239,7 @@ define(function(require, exports, module) {
 			});
 
 
-			console.error("Update authoizations for ", clientid, authorizeScopes);
+			// console.error("Update authoizations for ", clientid, authorizeScopes);
 
 
 		},
@@ -258,7 +258,7 @@ define(function(require, exports, module) {
 			// obj.scopedef = {};
 			// obj.trust = {};
 
-			console.log("About to save changes to apigk", obj);
+			// console.log("About to save changes to apigk", obj);
 
 
 			var that = this;

@@ -49,7 +49,7 @@ define(function(require, exports, module) {
 			this.el.on("drop", ".imagezone", function(e) {
 				if (e.preventDefault) { e.preventDefault(); }
 
-				console.log("Drop event object", e);
+				// console.log("Drop event object", e);
 
 				var files = e.originalEvent.dataTransfer.files;
 				for (var i=0; i<files.length; i++) {
@@ -73,7 +73,7 @@ define(function(require, exports, module) {
 		"selectTab": function(id) {
 
 			var that = this;
-			console.log("seleted tab ", id);
+			// console.log("seleted tab ", id);
 
 			this.currentTab = id;
 			this.app.setHash('/' + this.editor + '/' + this.current.id + '/edit/' + id);

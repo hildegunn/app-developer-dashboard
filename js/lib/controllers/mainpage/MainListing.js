@@ -78,11 +78,12 @@ define(function(require, exports, module) {
 			this.ebind("click", ".apigkEntry", "selectedAPIGK");
 
 
+			// TODO Move til clientpool...
 			setTimeout(function() {
 				// TODO: This API fails. Should be fixed. 
 				that.feideconnect.apigkClientRequests().
 					then(function(data) {
-						console.log("DATA CLIENT REQUESTS...", data);
+						// console.log("DATA CLIENT REQUESTS...", data);
 					});
 
 			}, 1000);
