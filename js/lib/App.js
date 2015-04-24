@@ -256,41 +256,7 @@ define(function (require, exports, module) {
 			]);
 
 
-			// 	new Promise(function(resolve, reject) {
-			// 		dust.render("header", view, function(err, out) {
-			// 			if (err) { return reject(err); }
-			// 			that.el.find("#header").append(out);
-			// 			resolve();
-			// 		});
-			// 	}),
-			// 	new Promise(function(resolve, reject) {
-			// 		dust.render("footer", view, function(err, out) {
-			// 			if (err) { return reject(err); }
-			// 			that.el.find("#footer").append(out);
-			// 			resolve();
-			// 		});
-			// 	})
-			// ]).then(function() {
-			// 	that.loaded = true;
-			// 	if (that._onloadedCallback && typeof that._onloadedCallback === 'function') {
-			// 		that._onloadedCallback();
-			// 	}
-			// });
 		},
-
-
-
-		// "onLoaded": function() {
-		// 	var that = this;
-		// 	return new Promise(function(resolve, reject) {
-		// 		if (that.loaded) {
-		// 			resolve();
-		// 		} else {
-		// 			that._onloadedCallback = resolve;
-		// 		}
-		// 	});
-		// },
-
 
 
 
