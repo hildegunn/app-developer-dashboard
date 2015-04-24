@@ -104,9 +104,7 @@ define(function(require) {
 
 					for(i = 0; i < apiids.length; i++) {
 						api = that.publicapis.getAPIGK(apiids[i]);
-						if (api === null) {
-							// console.error("This client got scopes for the API [" + apiids[i] + "] but did not find information about this public API.");
-						} else {
+						if (api !== null) {
 							myapis.push(api);
 						}
 					}
