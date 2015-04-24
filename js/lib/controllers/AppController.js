@@ -59,9 +59,7 @@ define(function(require, exports, module) {
 						this[this.routes[i][1]].apply(this, args);
 					}
 					return;
-				} else {
-					// console.log("Dit not found a route match on ", this.routes[i]);
-				}
+				} 
 
 			}
 
