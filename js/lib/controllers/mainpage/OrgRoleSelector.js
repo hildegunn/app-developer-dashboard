@@ -52,7 +52,7 @@ define(function(require, exports, module) {
 						if (groups[i].membership.basic !== 'admin') {continue; }
 
 						that.enabled = true;
-						that.roles[groups[i].org] = groups[i].displayName;
+						that.roles[groups[i].org] = groups[i].orgName;
 					}
 
 				})
