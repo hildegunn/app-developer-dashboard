@@ -18,11 +18,11 @@ define(function(require, exports, module) {
 
 
 	var ClientCreate = Controller.extend({
-		"init": function(main) {
+		"init": function(app) {
 
 			this._super();
 
-			this.main = main;
+			this.app = app;
 			this.dict = new Dictionary();
 			this.template = new TemplateEngine(template);
 			this.orgid = null;
@@ -49,7 +49,7 @@ define(function(require, exports, module) {
 		"draw": function() {
 			var view = {
 				"_": this.dict.get(),
-				"orgInfo": this.main.orgRoleSelector.getOrgInfo()
+				"orgInfo": this.app.orgRoleSelector.getOrgInfo()
 			};
 			this.el.children().detach();
 			return this.template.render(this.el, view);

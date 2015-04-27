@@ -3,9 +3,9 @@ define(function(require, exports, module) {
 
 	var 
 		$ = require('jquery'),
-		Controller = require('../Controller'),
+		Controller = require('./Controller'),
 		dust = require('dust'),
-		EventEmitter = require('../../EventEmitter')
+		EventEmitter = require('../EventEmitter')
 		
 		;
 

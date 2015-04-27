@@ -9,6 +9,8 @@ define(function (require, exports, module) {
 		ClientEditor = require('./controllers/editpage/ClientEditor'),
 		APIGKEditor = require('./controllers/editpage/APIGKEditor'),
 		MainListing = require('./controllers/mainpage/MainListing'),
+		OrgRoleSelector = require('./controllers/OrgRoleSelector'),
+
 		PublicAPIPool = require('./models/PublicAPIPool'),
 		ClientPool = require('./models/ClientPool'),
 		Client = require('./models/Client'),
@@ -50,14 +52,17 @@ define(function (require, exports, module) {
 			this.tmpFooter = new TemplateEngine(tmpFooter);
 
 
-			// dust.loadSource(dust.compile(tmpHeader, "header"));
-			// dust.loadSource(dust.compile(tmpFooter, "footer"));
+			this.elOrgSelector = $("<div></div>");
+			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector, this.feideconnect);
+			this.orgRoleSelector.initLoad();
+
+
 
 			// Call contructor of the AppController(). Takes no parameters.
 			this._super();
 
 			this.pc = new PaneController(this.el.find('#panecontainer'));
-			this.mainlisting = new MainListing(this.feideconnect);
+			this.mainlisting = new MainListing(this.feideconnect, this);
 			this.pc.add(this.mainlisting);
 
 
@@ -71,6 +76,9 @@ define(function (require, exports, module) {
 			this.publicapis = new PublicAPIPool(this.feideconnect);
 
 
+
+
+
 			this.clientpool = new ClientPool(this.feideconnect);
 			this.clientpool.on('clientChange', function(clients) {
 				that.mainlisting.updateClients(clients);
@@ -81,13 +89,13 @@ define(function (require, exports, module) {
 			});
 
 
-			this.mainlisting.orgRoleSelector.onLoaded()
+			this.orgRoleSelector.onLoaded()
 				.then(function() {
-					var orgid = that.mainlisting.orgRoleSelector.getOrg();
+					var orgid = that.orgRoleSelector.getOrg();
 					that.clientpool.initLoad(orgid);
 				});
 
-			this.mainlisting.orgRoleSelector.on("orgRoleSelected", function(orgid) {
+			this.orgRoleSelector.on("orgRoleSelected", function(orgid) {
 				that.clientpool.load(orgid)
 					.catch(function(err) {
 						that.setErrorMessage("Error loading client and apigk data from an organization", "danger", err);
@@ -238,6 +246,10 @@ define(function (require, exports, module) {
 				
 		},
 
+		"getOrg": function() {
+			return this.orgRoleSelector.getOrg();
+		},
+
 		/**
 		 * A draw function that draws the header and footer template.
 		 * Supports promises
@@ -253,7 +265,9 @@ define(function (require, exports, module) {
 			return Promise.all([
 				that.tmpHeader.render(that.el.find("#header"), view),
 				that.tmpFooter.render(that.el.find("#footer"), view)
-			]);
+			]).then(function() {
+				that.el.find('#orgSelector').append(that.elOrgSelector);
+			});
 
 
 		},
@@ -310,14 +324,17 @@ define(function (require, exports, module) {
 		},
 		"routeEditAPIGK": function(apigkid, tabid) {
 			var that = this;
-			// console.log("Route edit apigkid", apigkid);
+			console.error("Route edit apigkid", apigkid);
 
 			this.feideconnect.authenticated()
 				.then(function() {
+					console.error("authenticated", apigkid);
 					return that.clientpool.onLoaded()
 				})
 				.then(function() {
+					console.error("load apigk", apigkid);
 					var apigk = that.clientpool.getAPIGK(apigkid);
+					console.error("load apigk", apigk);
 					that.apigkeditor.edit(apigk, tabid);
 				});
 

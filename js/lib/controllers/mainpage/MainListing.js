@@ -9,7 +9,7 @@ define(function(require, exports, module) {
 		ClientCreate = require('../createwidgets/ClientCreate'),
 		APIGKCreate = require('../createwidgets/APIGKCreate'),
 		EventEmitter = require('../../EventEmitter'),
-		OrgRoleSelector = require('./OrgRoleSelector'),
+
 		utils = require('../../utils'),
 		$ = require('jquery')
 		;
@@ -25,10 +25,11 @@ define(function(require, exports, module) {
 	 * This controller controls 
 	 */
 	var MainListing = Pane.extend({
-		"init": function(feideconnect) {
+		"init": function(feideconnect, app) {
 
 			var that = this;
 			this.feideconnect = feideconnect;
+			this.app = app;
 
 			this._super();
 
@@ -40,35 +41,32 @@ define(function(require, exports, module) {
 
 			this.elClients = $("<div></div>");
 			this.elAPIGKs = $("<div></div>");
-			this.elOrgSelector = $("<div></div>");
+
 
 			this.templateLoaded = false;
 			this.elClientsAttached = false;
 			this.elAPIGKsAttached = false;
 
 
-			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector, this.feideconnect);
-			this.orgRoleSelector.initLoad();
-
-			this.clientcreate = new ClientCreate(this);
+			this.clientcreate = new ClientCreate(this.app);
 			this.clientcreate.on("submit", function(obj) {
 				that.emit("clientCreate", obj);
 			});
 			this.clientcreate.initLoad();
 
-			this.apigkcreate = new APIGKCreate(this.feideconnect, this);
+			this.apigkcreate = new APIGKCreate(this.feideconnect, this.app);
 			this.apigkcreate.on("submit", function(obj) {
 				that.emit("apigkCreate", obj);
 			});
 			this.apigkcreate.initLoad();
 
 			this.el.on("click", "#registerNewClient", function() {
-				var orgid = that.orgRoleSelector.getOrg();
+				var orgid = that.app.getOrg();
 				that.clientcreate.setOrg(orgid);
 				that.clientcreate.activate();
 			});
 			this.el.on("click", "#registerNewAPIGK", function() {
-				var orgid = that.orgRoleSelector.getOrg();
+				var orgid = that.app.getOrg();
 				that.apigkcreate.setOrg(orgid);
 				that.apigkcreate.activate();
 			});
@@ -175,7 +173,7 @@ define(function(require, exports, module) {
 
 		"initLoad": function() {
 
-			this.orgRoleSelector.onLoaded()
+			this.app.orgRoleSelector.onLoaded()
 				.then(this.proxy("draw", true))
 				.then(this.proxy("_initLoaded"));
 				
@@ -197,7 +195,7 @@ define(function(require, exports, module) {
 					that.el.append(out);
 					that.el.find('#listingClients').append(that.elClients);
 					that.el.find('#listingAPIGKs').append(that.elAPIGKs);
-					that.el.find('#orgSelector').append(that.elOrgSelector);
+
 
 					that.elClientsAttached = true;
 					that.elAPIGKsAttached = true;
