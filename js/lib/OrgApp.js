@@ -173,7 +173,7 @@ define(function (require, exports, module) {
 			this.clientpool.onLoaded()
 				.then(function() {
 					var client = that.clientpool.getClient(clientid);
-					console.error("About to edit ", clientid, "on tab ", tabid, client);
+					// console.error("About to edit ", clientid, "on tab ", tabid, client);
 					that.clienteditor.edit(client, tabid);
 				});
 		},
@@ -184,7 +184,7 @@ define(function (require, exports, module) {
 			this.clientpool.onLoaded()
 				.then(function() {
 					var apigk = that.clientpool.getAPIGK(apigkid);
-					console.error("About to edit ", apigkid, "on tab ", tabid, apigk);
+					// console.error("About to edit ", apigkid, "on tab ", tabid, apigk);
 					that.apigkeditor.edit(apigk, tabid);
 				});
 		},

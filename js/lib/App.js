@@ -92,6 +92,24 @@ define(function (require, exports, module) {
 			this.publicapis = new PublicAPIPool(this.feideconnect);
 
 
+			$("#header").on("click", ".navbar-brand", function(e) {
+				e.preventDefault();
+
+				that.feideconnect.authenticated()
+					.then(function() {
+						return that.getOrgApp(that.orgRoleSelector.getOrg())
+					})
+					.then(function(orgApp) {
+						orgApp.actMainlisting();
+						orgApp.activate();
+						that.orgRoleSelector.show();
+					})
+					.catch(function(err) {
+						console.error("err", err);
+						that.setErrorMessage("Error loading front dashboard", "danger", err);
+					});
+
+			});
 
 			this.el.on("click", ".login", function() {
 				that.feideconnect.authenticate();
