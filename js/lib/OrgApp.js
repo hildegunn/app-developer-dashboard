@@ -190,9 +190,8 @@ define(function (require, exports, module) {
 		},
 
 		"actMainlisting": function() {
-
+			this.app.setHash('/' + this.orgid);
 			this.mainlisting.activate();
-
 		},
 
 
