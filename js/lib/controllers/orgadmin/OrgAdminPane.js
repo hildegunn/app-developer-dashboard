@@ -8,7 +8,7 @@ define(function(require, exports, module) {
 		Dictionary = require('../../Dictionary'),
 		// ClientCreate = require('../createwidgets/ClientCreate'),
 		// APIGKCreate = require('../createwidgets/APIGKCreate'),
-		// EventEmitter = require('../../EventEmitter'),
+		EventEmitter = require('../../EventEmitter'),
 		// OrgRoleSelector = require('./OrgRoleSelector'),
 		TemplateEngine = require('./TemplateEngine'),
 		utils = require('../../utils'),
@@ -57,15 +57,15 @@ define(function(require, exports, module) {
 				};
 				dust.render("mainlisting", view, function(err, out) {
 
-					that.el.children().detach();
-					that.el.append(out);
-					that.el.find('#listingClients').append(that.elClients);
-					that.el.find('#listingAPIGKs').append(that.elAPIGKs);
-					that.el.find('#orgSelector').append(that.elOrgSelector);
+					// that.el.children().detach();
+					// that.el.append(out);
+					// that.el.find('#listingClients').append(that.elClients);
+					// that.el.find('#listingAPIGKs').append(that.elAPIGKs);
+					// that.el.find('#orgSelector').append(that.elOrgSelector);
 
-					that.elClientsAttached = true;
-					that.elAPIGKsAttached = true;
-					that.templateLoaded = true;
+					// that.elClientsAttached = true;
+					// that.elAPIGKsAttached = true;
+					// that.templateLoaded = true;
 
 				});
 		
