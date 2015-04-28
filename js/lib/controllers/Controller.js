@@ -28,7 +28,7 @@ define(function(require, exports, module) {
 			var that = this;
 			if (this.isLoaded) {
 				return new Promise(function(resolve, reject) {
-					resolve();
+					resolve(that);
 				});
 			}
 
@@ -47,7 +47,7 @@ define(function(require, exports, module) {
 			if (!this.isLoaded) {
 				this.isLoaded = true;
 				for(i = 0; i < this.onLoadedCallbacks.length; i++) {
-					this.onLoadedCallbacks[i]();
+					this.onLoadedCallbacks[i](this);
 				}
 				this.onLoadedCallbacks = null;
 			}
@@ -58,6 +58,12 @@ define(function(require, exports, module) {
 				that._initLoaded();
 				resolve();
 			});
+		},
+		"show": function() {
+			this.el.show();
+		},
+		"hide": function() {
+			this.el.hide();
 		},
 		"ebind": function(type, filter, func) {
 			this.el.on(type, filter, $.proxy(this[func], this));
