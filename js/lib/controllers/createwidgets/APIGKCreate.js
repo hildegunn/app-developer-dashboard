@@ -26,7 +26,6 @@ define(function(require, exports, module) {
 			this.app = app;
 			this.dict = new Dictionary();
 			this.template = new TemplateEngine(template);
-			this.orgid = null;
 
 			this.verifiedidentifier = null;
 			this.verified = false;
@@ -74,15 +73,10 @@ define(function(require, exports, module) {
 		"draw": function() {
 			var view = {
 				"_": this.dict.get(),
-				"orgInfo": this.app.orgRoleSelector.getOrgInfo()
+				"orgInfo": this.app.getOrgInfo()
 			};
 			this.el.children().detach();
 			return this.template.render(this.el, view);
-		},
-
-		"setOrg": function(orgid) {
-			this.orgid = orgid;
-			return this.reload();
 		},
 
 		"activate": function() {
@@ -141,6 +135,10 @@ define(function(require, exports, module) {
 					"auto": false
 				}
 			};
+
+			if (this.app.orgid !== "_") {
+				obj.organization = this.app.orgid;	
+			}
 
 			this.emit("submit", obj);
 			$(this.el).find(".modal").modal("hide");

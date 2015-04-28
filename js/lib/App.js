@@ -6,10 +6,11 @@ define(function (require, exports, module) {
 	var
 		FeideConnect = require('bower/feideconnectjs/src/FeideConnect').FeideConnect,
 		AppController = require('./controllers/AppController'),
-		ClientEditor = require('./controllers/editpage/ClientEditor'),
-		APIGKEditor = require('./controllers/editpage/APIGKEditor'),
-		MainListing = require('./controllers/mainpage/MainListing'),
+		// ClientEditor = require('./controllers/editpage/ClientEditor'),
+		// APIGKEditor = require('./controllers/editpage/APIGKEditor'),
 		OrgRoleSelector = require('./controllers/OrgRoleSelector'),
+
+		OrgApp = require('./OrgApp'),
 
 		PublicAPIPool = require('./models/PublicAPIPool'),
 		ClientPool = require('./models/ClientPool'),
@@ -56,135 +57,41 @@ define(function (require, exports, module) {
 			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector, this.feideconnect);
 			this.orgRoleSelector.initLoad();
 
-
-
-			// Call contructor of the AppController(). Takes no parameters.
-			this._super();
-
-			this.pc = new PaneController(this.el.find('#panecontainer'));
-			this.mainlisting = new MainListing(this.feideconnect, this);
-			this.pc.add(this.mainlisting);
-
-
-			this.setupRoute(/^\/$/, "routeMainlisting");
-			this.setupRoute(/^\/clients\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditClient");
-			this.setupRoute(/^\/apigk\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditAPIGK");
-			// this.setupRoute(/^\/clients\/([a-zA-Z0-9_\-:]+)$/, "viewclient");
-			// this.setupRoute(/^\/new$/, "newGroup");
-
-
-			this.publicapis = new PublicAPIPool(this.feideconnect);
-
-
-
-
-
-			this.clientpool = new ClientPool(this.feideconnect);
-			this.clientpool.on('clientChange', function(clients) {
-				that.mainlisting.updateClients(clients);
-			});
-
-			this.clientpool.on('apigkChange', function(apigks) {
-				that.mainlisting.updateAPIGKs(apigks);
-			});
-
-
-			this.orgRoleSelector.onLoaded()
-				.then(function() {
-					var orgid = that.orgRoleSelector.getOrg();
-					that.clientpool.initLoad(orgid);
-				});
-
 			this.orgRoleSelector.on("orgRoleSelected", function(orgid) {
-				that.clientpool.load(orgid)
+				that.onLoaded()
+					.then(function() {
+						if (that.orgApps[orgid]) {
+							that.orgApps[orgid].actMainlisting();
+							that.orgApps[orgid].activate();
+							that.setHash('/' + that.orgRoleSelector.getOrg());	
+
+						}
+						
+					})
 					.catch(function(err) {
 						that.setErrorMessage("Error loading client and apigk data from an organization", "danger", err);
 					});
 			});
 
-			// TODO Add listener to orgselector when user change role.
+			// Call contructor of the AppController(). Takes no parameters.
+			this._super();
 
+			this.pc = new PaneController(this.el.find('#panecontainer'));
 
-			this.clienteditor = new ClientEditor(this, this.feideconnect, this.publicapis);
-			this.pc.add(this.clienteditor);
-			this.clienteditor.on("saved", function(client) {
-				// console.log("Client is saved, updatge client pool and mainlisting");
-				that.clientpool.setClient(client);
-			});
-			this.clienteditor.on("deleted", function(id) {
-				// console.log("Client is removed, update client pool and mainlisting");
-				that.clientpool.removeClient(id);
-				that.mainlisting.activate();
-				that.setHash('/');
-			});
-
-
-			
-
-
-			this.apigkeditor = new APIGKEditor(this, this.feideconnect);
-			this.pc.add(this.apigkeditor);
-			this.apigkeditor.on("saved", function(apigk) {
-				// console.log("APIGK is saved, updatge client pool and mainlisting");
-				that.clientpool.setAPIGK(apigk);
-			});
-			this.apigkeditor.on("deleted", function(id) {
-				// console.log("APIGK is removed, update client pool and mainlisting");
-				that.clientpool.removeAPIGK(id);
-				that.mainlisting.activate();
-				that.setHash('/');
-			});
-
-
-			this.mainlisting.on('clientSelected', function(clientid) {
-				var client = that.clientpool.getClient(clientid);
-				that.clienteditor.edit(client, 'tabBasic');
-				that.setHash('/clients/' + clientid + '/edit/tabBasic');
-			});
-			this.mainlisting.on('apigkSelected', function(apigkid) {
-				var apigk = that.clientpool.getAPIGK(apigkid);
-				that.apigkeditor.edit(apigk, 'tabBasic');
-				that.setHash('/apigk/' + apigkid + '/edit/tabBasic');
-			});
-
-			
-
-			this.mainlisting.on("clientCreate", function(obj) {
-				that.feideconnect.clientsRegister(obj)
-					.then(function(data) {
-						var client = new Client(data);
-						that.clientpool.setClient(client);
-						that.clienteditor.edit(client, 'tabBasic');
-						that.setHash('/clients/' + client.id + '/edit/tabBasic');
-					})
-					.then(function() {
-						that.setErrorMessage("Successfully created new client", "success");
-					})
-					.catch(function(err) {
-						that.setErrorMessage("Error creating new client", "danger", err);
-					});
-			});
-			this.mainlisting.on("apigkCreate", function(obj) {
-				that.feideconnect.apigkRegister(obj)
-					.then(function(data) {
-						var apigk = new APIGK(data);
-						that.clientpool.setAPIGK(apigk);
-						that.apigkeditor.edit(apigk, 'tabBasic');
-						that.setHash('/apigk/' + apigk.id + '/edit/tabBasic');
-					})
-					.then(function() {
-						that.setErrorMessage("Successfully created new API Gatekeeper", "success");
-					})
-					.catch(function(err) {
-						that.setErrorMessage("Error creating new API Gatekeeper", "danger", err);
-					});
-			});
-
-			this.pc.debug();
-			this.route();
-
+			this.orgApps = {};
 
 			this.initLoad();	
+
+			this.setupRoute(/^\/([a-zA-Z0-9_\-:]+)?$/, "routeMainlisting");
+			this.setupRoute(/^\/([a-zA-Z0-9_\-:]+)\/clients\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditClient");
+			this.setupRoute(/^\/([a-zA-Z0-9_\-:]+)\/apigk\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditAPIGK");
+			this.setupRoute(/^\/clients\/([a-zA-Z0-9_\-:]+)$/, "viewclient");
+			this.setupRoute(/^\/new$/, "newGroup");
+
+
+			this.publicapis = new PublicAPIPool(this.feideconnect);
+
+
 
 			this.el.on("click", ".login", function() {
 				that.feideconnect.authenticate();
@@ -240,11 +147,52 @@ define(function (require, exports, module) {
 
 
 		"initLoad": function() {
+			var that = this;
 
+			// Draw template..
 			return this.draw()
+
+				// Wait for orgRoleSelector to be loaded.
+				.then(function() {
+					return that.orgRoleSelector.onLoaded()
+				})
+
+				// Then setup all the orgApps.
+				.then(function() {
+
+
+					return Promise.all(
+						that.orgRoleSelector.getOrgIdentifiers().map(function(orgid) {
+
+							// console.log("Setting up a new orgapp for " + orgid);
+							that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.publicapis, orgid);
+							that.pc.add(that.orgApps[orgid]);
+						})
+					);
+				})
+
+				// Then activate one of them
+				.then(function() {
+					that.orgApps._.activate();
+
+					// now route.
+					that.route();
+				})
 				.then(this.proxy("_initLoaded"));
 				
 		},
+
+		// orgid = "_" means personal space
+		"getOrgApp": function(orgid) {
+
+			if (!this.orgApps.hasOwnProperty(orgid)) {
+				return new Error("Could not find org app for " + orgid);
+			}
+
+			var orgApp = this.orgApps[orgid];
+			return orgApp.onLoaded();
+		},
+
 
 		"getOrg": function() {
 			return this.orgRoleSelector.getOrg();
@@ -308,41 +256,66 @@ define(function (require, exports, module) {
 		},
 
 
-		"routeEditClient": function(clientid, tabid) {
+		"routeEditClient": function(orgid, clientid, tabid) {
 			var that = this;
-			// console.log("Route edit client", clientid);
-
 			this.feideconnect.authenticated()
 				.then(function() {
-					return that.clientpool.onLoaded()
+					return that.getOrgApp(orgid)
 				})
-				.then(function() {
-					var client = that.clientpool.getClient(clientid);
-					that.clienteditor.edit(client, tabid);
+				.then(function(orgApp) {
+					that.orgRoleSelector.setOrg(orgid, false);
+					that.orgRoleSelector.hide();
+					orgApp.editClient(clientid, tabid);
+					orgApp.activate();
+				})
+				.catch(function(err) {
+					that.setErrorMessage("Error loading client", "danger", err);
 				});
 
 		},
-		"routeEditAPIGK": function(apigkid, tabid) {
+		"routeEditAPIGK": function(orgid, apigkid, tabid) {
 			var that = this;
-			console.error("Route edit apigkid", apigkid);
-
 			this.feideconnect.authenticated()
 				.then(function() {
-					console.error("authenticated", apigkid);
-					return that.clientpool.onLoaded()
+					return that.getOrgApp(orgid)
 				})
-				.then(function() {
-					console.error("load apigk", apigkid);
-					var apigk = that.clientpool.getAPIGK(apigkid);
-					console.error("load apigk", apigk);
-					that.apigkeditor.edit(apigk, tabid);
+				.then(function(orgApp) {
+					that.orgRoleSelector.setOrg(orgid, false);
+					that.orgRoleSelector.hide();
+					orgApp.editAPIGK(apigkid, tabid);
+					orgApp.activate();
+				})
+				.catch(function(err) {
+					console.error("err", err);
+					that.setErrorMessage("Error loading API Gatekeeper", "danger", err);
 				});
 
 		},
-		"routeMainlisting": function() {
-			// console.log("ABOUT");
-			this.setHash('/');
-			this.mainlisting.initLoad();
+
+
+		"routeMainlisting": function(orgid) {
+
+			var that = this;
+			if (!orgid) {
+				orgid = '_';
+				this.setHash('/' + orgid);
+			}
+			this.orgRoleSelector.setOrg(orgid, false);
+			this.orgRoleSelector.show();
+
+			this.feideconnect.authenticated()
+				.then(function() {
+					return that.getOrgApp(orgid)
+				})
+				.then(function(orgApp) {
+					orgApp.actMainlisting();
+					orgApp.activate();
+				})
+				.catch(function(err) {
+					console.error("err", err);
+					that.setErrorMessage("Error loading API Gatekeeper", "danger", err);
+				});
+
 		}
 
 

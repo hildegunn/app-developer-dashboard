@@ -25,7 +25,6 @@ define(function(require, exports, module) {
 			this.app = app;
 			this.dict = new Dictionary();
 			this.template = new TemplateEngine(template);
-			this.orgid = null;
 
 			this.ebind("keyup change", "#newClientName", "checkIfReady");
 			this.ebind("click", ".createNewBtn", "submit");
@@ -49,26 +48,18 @@ define(function(require, exports, module) {
 		"draw": function() {
 			var view = {
 				"_": this.dict.get(),
-				"orgInfo": this.app.orgRoleSelector.getOrgInfo()
+				"orgInfo": this.app.getOrgInfo()
 			};
 			this.el.children().detach();
+
+			// console.error("Draw clientcreate", view);
 			return this.template.render(this.el, view);
-		},
-
-
-		"setOrg": function(orgid) {
-
-			this.orgid = orgid;
-			return this.reload();
-
 		},
 
 		"activate": function() {
 			$(this.el).find(".modal").modal('show');
 			$(this.el).find("#newClientName").focus();
-
-		},		
-
+		},
 
 		"submit": function() {
 
@@ -81,8 +72,8 @@ define(function(require, exports, module) {
 			obj.scopes_requested = ["userinfo"];
 			obj.client_secret = utils.guid();
 
-			if (this.orgid !== null) {
-				obj.organization = this.orgid;	
+			if (this.app.orgid !== "_") {
+				obj.organization = this.app.orgid;	
 			}
 			
 			this.emit("submit", obj);

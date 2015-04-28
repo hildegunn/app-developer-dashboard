@@ -14,11 +14,15 @@ define(function(require, exports, module) {
 
 
 	var ClientPool = Controller.extend({
-		"init": function(feideconnect) {
+		"init": function(feideconnect, orgid) {
 
 			var that = this;
 
+			// console.error("setting up clientpool with orgid ", orgid);
+
 			this.feideconnect = feideconnect;
+			this.orgid = orgid;
+
 			this.filterOutOrgEntries = true;
 
 			this.apigks = {};
@@ -29,23 +33,28 @@ define(function(require, exports, module) {
 
 		},
 
-		"initLoad": function(orgid) {
-
-			return this.load(orgid)
+		"initLoad": function() {
+			return this.load()
 				.then(this.proxy("_initLoaded"));
-
 		},
 
 
-		"load": function(orgid) {
+		"load": function() {
 			var that = this;
 
 			// console.error("ABOUT TO LOAD client pool with org ", orgid);
 
+
+			// if (orgid === this.orgid) {
+			// 	return new Promise(function(resolve) {
+			// 		resolve();
+			// 	});
+			// }
+
 			return Promise.all([
-				that.loadClients(orgid),
-				that.loadAPIGKs(orgid),
-				that.loadRequests(orgid)
+				that.loadClients(),
+				that.loadAPIGKs(),
+				that.loadRequests()
 			]).then(function() {
 				return that.processClientRequests()
 			}).then(function() {
@@ -56,18 +65,18 @@ define(function(require, exports, module) {
 
 
 
-		"getClientRequests": function(orgid) {
-			if  (orgid === null) {
+		"getClientRequests": function() {
+			if  (this.orgid === null) {
 				return this.feideconnect.apigkClientRequests();
 			}
-			return this.feideconnect.apigkClientRequestsByOrg(orgid);
+			return this.feideconnect.apigkClientRequestsByOrg(this.orgid);
 		},
 
 
-		"loadRequests": function(orgid) {
+		"loadRequests": function() {
 
 			var that = this;
-			return this.getClientRequests(orgid).
+			return this.getClientRequests(this.orgid).
 				then(function(clients) {
 					// console.log("DATA CLIENT REQUESTS...", clients);
 
@@ -126,14 +135,14 @@ define(function(require, exports, module) {
 		},
 
 
-		"loadClients": function(orgid) {
+		"loadClients": function() {
 			var that = this;
-			return this.feideconnect.clientsByOrg(orgid)
+			return this.feideconnect.clientsByOrg(this.orgid)
 				.then(function(clients) {
 					that.clients = {};
 					for (var i = 0; i < clients.length; i++) {
 
-						if (that.filterOutOrgEntries && clients[i].organization !== null && orgid === null) {
+						if (that.filterOutOrgEntries && clients[i].organization !== null && that.orgid === null) {
 							continue;
 						}
 						that.clients[clients[i].id] = new Client(clients[i]);
@@ -142,9 +151,9 @@ define(function(require, exports, module) {
 				});
 		},
 
-		"loadAPIGKs": function(orgid) {
+		"loadAPIGKs": function() {
 			var that = this;
-			return this.feideconnect.apigkListByOrg(orgid)
+			return this.feideconnect.apigkListByOrg(this.orgid)
 				.then(function(apigks) {
 					that.apigks = {};
 					for (var i = 0; i < apigks.length; i++) {

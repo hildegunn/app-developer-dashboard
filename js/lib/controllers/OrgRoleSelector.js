@@ -43,6 +43,8 @@ define(function(require, exports, module) {
 				// "fc:org:sigmund": "Sigmund AS"
 			};
 
+			this.setOrg(this.currentRole, false);
+
 			return that.feideconnect.vootGroupsList()
 				.then(function(groups) {
 					// console.error("Groups", groups);
@@ -62,26 +64,61 @@ define(function(require, exports, module) {
 		},
 
 		"getOrg": function() {
-			if (this.currentRole === '_') { return null; }
+			// if (this.currentRole === '_') { return null; }
 			// console.error("Get role is not _ but [" + this.currentRole + "]");
 			return this.currentRole;
 		},
 
+		"getOrgIdentifiers": function() {
+
+			var keys = [];
+			for(var key in this.roles) {
+				keys.push(key);
+			}
+			return keys;
+		},
 
 
-		"getOrgInfo": function() {
-			if (this.currentRole === '_') { return null; }
+		"getOrgInfo": function(orgid) {
+			if (orgid === '_') { return null; }
 
 			var c = this.feideconnect.getConfig();
 			// console.error("Config was", c);
 
 			var orgInfo = {
-				"id": this.currentRole,
-				"displayName": this.roles[this.currentRole],
-				"logoURL": c.apis.core + '/orgs/' + this.currentRole + '/logo'
+				"id": orgid,
+				"displayName": this.roles[orgid],
+				"logoURL": c.apis.core + '/orgs/' + orgid + '/logo'
 			};
 
 			return orgInfo;
+		},
+
+		"setOrg": function(orgid, notify) {
+
+			notify = (notify !== false);
+
+			var orgidraw = (orgid === null ? "_" : orgid);
+			var toBroadcast = (orgid === '_' ? null : orgid);
+
+			var p = this.el.find('.orgSelector');
+			p.children().removeClass("active");
+			p.children().each(function(i, item) {
+				// console.error("PROCESSING ", item);
+				if ($(item).data("orgid") === orgidraw) {
+					$(item).addClass("active");
+				} else {
+					$(item).removeClass("active");
+				}
+			});
+
+			if (this.currentRole !== orgidraw) {
+				this.currentRole = orgid;
+				if (notify) {
+					this.emit("orgRoleSelected", orgidraw);	
+				}
+			}
+
 		},
 
 		"actSelect": function(e) {
@@ -89,18 +126,19 @@ define(function(require, exports, module) {
 
 			var ct = $(e.currentTarget);
 			var orgid = ct.closest("li").data("orgid");
-			ct.closest("ul").children().removeClass("active");
-			ct.closest("li").addClass("active");
-			// console.error("Selected", orgid);
+			// ct.closest("ul").children().removeClass("active");
+			// ct.closest("li").addClass("active");
 
-			if (this.currentRole !== orgid) {
-				this.currentRole = orgid;
-				var toBroadcast = (orgid === '_' ? null : orgid);
-				this.emit("orgRoleSelected", toBroadcast);
-			}
+			this.setOrg(orgid, true);
 
 		},
 
+		"hide": function() {
+			this.el.hide();
+		},
+		"show": function() {
+			this.el.show();
+		},
 
 
 		"draw": function() {

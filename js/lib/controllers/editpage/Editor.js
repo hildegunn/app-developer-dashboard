@@ -76,7 +76,7 @@ define(function(require, exports, module) {
 			// console.log("seleted tab ", id);
 
 			this.currentTab = id;
-			this.app.setHash('/' + this.editor + '/' + this.current.id + '/edit/' + id);
+			// this.app.setHash('/' + this.editor + '/' + this.current.id + '/edit/' + id);
 
 			this.el.find(".tabselector li").each(function(i, el) {
 				if ($(el).data('tabid') === id) {

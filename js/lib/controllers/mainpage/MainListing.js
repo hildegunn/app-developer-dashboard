@@ -60,14 +60,10 @@ define(function(require, exports, module) {
 			});
 			this.apigkcreate.initLoad();
 
-			this.el.on("click", "#registerNewClient", function() {
-				var orgid = that.app.getOrg();
-				that.clientcreate.setOrg(orgid);
+			this.el.on("click", ".registerNewClient", function() {
 				that.clientcreate.activate();
 			});
-			this.el.on("click", "#registerNewAPIGK", function() {
-				var orgid = that.app.getOrg();
-				that.apigkcreate.setOrg(orgid);
+			this.el.on("click", ".registerNewAPIGK", function() {
 				that.apigkcreate.activate();
 			});
 
@@ -173,8 +169,7 @@ define(function(require, exports, module) {
 
 		"initLoad": function() {
 
-			this.app.orgRoleSelector.onLoaded()
-				.then(this.proxy("draw", true))
+			this.draw(true)
 				.then(this.proxy("_initLoaded"));
 				
 		},

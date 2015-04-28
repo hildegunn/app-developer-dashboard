@@ -85,23 +85,7 @@ define(function(require, exports, module) {
 
 		},
 
-		"getClientRequests": function() {
 
-			var that = this;
-			var main = this.app.mainlisting;
-
-			return main.onLoaded()
-				.then(function() {
-					var orgid = main.orgRoleSelector.getOrg();
-
-					if  (orgid === null) {
-						return that.feideconnect.apigkClientRequests();
-					}
-					return that.feideconnect.apigkClientRequestsByOrg(orgid);
-
-				});
-
-		},
 
 
 		"edit": function(item, setTab) {
@@ -122,7 +106,7 @@ define(function(require, exports, module) {
 			// that.feideconnect.clientsByScope(this.current.getBasicScope()).
 			// 	then(function(clients) {
 
-			that.getClientRequests()
+			that.app.getClientRequests()
 				.then(function(clients) {
 
 					var i, nc, cv;
