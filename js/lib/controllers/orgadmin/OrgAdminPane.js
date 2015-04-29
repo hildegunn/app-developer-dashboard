@@ -10,70 +10,133 @@ define(function(require, exports, module) {
 		// APIGKCreate = require('../createwidgets/APIGKCreate'),
 		EventEmitter = require('../../EventEmitter'),
 		// OrgRoleSelector = require('./OrgRoleSelector'),
-		TemplateEngine = require('./TemplateEngine'),
+		TemplateEngine = require('../../TemplateEngine'),
 		utils = require('../../utils'),
 		$ = require('jquery')
 		;
 
 	var 
-		template = require('text!templates/OrgAdminPane.html')
+		template = require('text!templates/OrgAdmin.html')
 		;
 
 	/*
 	 * This controller controls 
 	 */
 	var OrgAdminPane = Pane.extend({
-		"init": function(feideconnect) {
+		"init": function(feideconnect, orgapp, publicClientPool, orgAdminClients) {
 
 			var that = this;
 			this.feideconnect = feideconnect;
+			this.orgapp = orgapp;
+			this.publicClientPool = publicClientPool;
+			this.orgAdminClients = orgAdminClients;
 
 			this._super();
 
-			this.dict = new Dictionary();
+			this.tmp = new TemplateEngine(template);
 
-			// this.ebind("click", ".clientEntry", "selectedClient");
-			// this.ebind("click", ".apigkEntry", "selectedAPIGK");
+			this.ebind("click", ".actSetMandatory", "actSetMandatory");
+			this.ebind("click", ".actRemoveMandatory", "actRemoveMandatory");
 
+
+		},
+
+
+		"process": function() {
+
+
+			var mand = this.orgAdminClients.getClients();
+			var mandIndex = {};
+			for(var i = 0; i < mand.length; i++) {
+				mandIndex[mand[i].id] = true;
+			}
+
+
+			this.clients = this.publicClientPool.getClients();
+			for(var key in this.clients) {
+				this.clients[key].mandatory = mandIndex.hasOwnProperty(key);
+			}
+
+
+
+			// this.clients = this.publicClientPool.getClients();
+			// var mand = this.orgAdminClients.getClients();
+			// for(var i = 0; i < mand.length; i++) {
+			// 	if (this.clients.hasOwnProperty(mand[i].id)) {
+			// 		this.clients[mand[i].id].mandatory = true;
+			// 	} else {
+			// 		console.error("Cannot find a mandatory client in public list.");
+			// 	}
+			// }
+
+		},
+
+		"actSetMandatory": function(e) {
+			e.preventDefault();
+			var that = this;
+			var clientid = $(e.currentTarget).closest(".clientEntry").data("clientid");
+			return this.feideconnect.setMandatoryClient(this.orgapp.orgid, clientid)
+				.then(function() {
+					return that.orgAdminClients.load();
+				})
+				.then(this.proxy("process"))
+				.then(this.proxy("draw"));
+
+		},
+		"actRemoveMandatory": function(e) {
+			e.preventDefault();
+			var that = this;
+			var clientid = $(e.currentTarget).closest(".clientEntry").data("clientid");
+			return this.feideconnect.removeMandatoryClient(this.orgapp.orgid, clientid)
+				.then(function() {
+					return that.orgAdminClients.load();
+				})
+				.then(this.proxy("process"))
+				.then(this.proxy("draw"));
 		},
 
 		"initLoad": function() {
 
-			this.orgRoleSelector.onLoaded()
-				.then(this.proxy("draw", true))
-				.then(this.proxy("_initLoaded"));
-				
-		},
-
-		
-		"draw": function(act) {
 			var that = this;
 
-			return new Promise(function(resolve, reject) {
+			return Promise.all([
+				that.publicClientPool.onLoaded(),
+				that.orgAdminClients.onLoaded()
+			])
+				.then(this.proxy("process"))
+				.then(function() {
+					return that.draw();
+				})
+				.then(this.proxy("_initLoaded"));
 
-				var view = {
-					"_": that.dict.get(),
-					"showHeader": false
-				};
-				dust.render("mainlisting", view, function(err, out) {
 
-					// that.el.children().detach();
-					// that.el.append(out);
-					// that.el.find('#listingClients').append(that.elClients);
-					// that.el.find('#listingAPIGKs').append(that.elAPIGKs);
-					// that.el.find('#orgSelector').append(that.elOrgSelector);
+		},
 
-					// that.elClientsAttached = true;
-					// that.elAPIGKsAttached = true;
-					// that.templateLoaded = true;
+		"draw": function() {
+			var that = this;
 
-				});
-		
-				if (act) {
-					that.activate();
-				}
+			var clientview = [];
+			for(var key in this.clients) {
+				var x = this.clients[key].getView();
+				x.mandatory = !!this.clients[key].mandatory;
+				clientview.push(x);
+			}
 
+			clientview.sort(function(a,b) {
+
+				if (a.madatory === b.mandatory) {return 0;}
+				if (a.mandatory) { return -1;}
+				if (b.mandatory) { return 1;}
 			});
+
+
+			var view = {
+				"_config": that.feideconnect.getConfig(),
+				"clients": clientview
+			};
+			// console.error("View is", view);
+			this.el.children().detach();
+			return this.tmp.render(this.el, view);
 
 		}
 	}).extend(EventEmitter);

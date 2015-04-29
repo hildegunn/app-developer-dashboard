@@ -10,6 +10,9 @@ define(function (require, exports, module) {
 		APIGKEditor = require('./controllers/editpage/APIGKEditor'),
 		MainListing = require('./controllers/mainpage/MainListing'),
 
+		OrgAdminPane = require('./controllers/orgadmin/OrgAdminPane'),
+		OrgAdminClients = require('./models/OrgAdminClients'),
+
 		ClientPool = require('./models/ClientPool'),
 		Client = require('./models/Client'),
 		APIGK = require('./models/APIGK'),
@@ -34,9 +37,10 @@ define(function (require, exports, module) {
 
 	var OrgApp = Pane.extend({
 		
-		"init": function(feideconnect, app, publicapis, orgid) {
+		"init": function(feideconnect, app, publicClientPool, publicapis, orgid) {
 			var that = this;
 
+			this.publicClientPool = publicClientPool;
 			this.publicapis = publicapis;
 			this.feideconnect = feideconnect;
 			this.app = app;
@@ -44,16 +48,44 @@ define(function (require, exports, module) {
 
 			this._super();
 
-			this.pc = new PaneController(this.el);
-			this.mainlisting = new MainListing(this.feideconnect, this);
-			this.pc.add(this.mainlisting);
 
-			this.mainlisting.initLoad();
 
 
 			var orgid2 = (orgid === '_' ? null : orgid);
 
 			this.clientpool = new ClientPool(this.feideconnect, orgid2);
+
+
+
+			this.orgAdminClients = null;
+			this.simpleOrgAdminView = null;
+			this.orgAdminView = null;
+			if (orgid2 !== null) {
+				this.orgAdminClients = new OrgAdminClients(this.feideconnect, orgid2);
+				this.orgAdminClients.initLoad();
+
+
+				this.orgAdminView = new OrgAdminPane(this.feideconnect, this, this.publicClientPool, this.orgAdminClients);
+				that.orgAdminView.initLoad();
+
+
+				// this.simpleOrgAdminView = new SimpleOrgAdminController(this.orgAdminClients);
+
+
+			}
+
+
+
+			this.pc = new PaneController(this.el);
+			this.mainlisting = new MainListing(this.feideconnect, this, this.orgAdminClients);
+			this.pc.add(this.mainlisting);
+
+			if (this.orgAdminView !== null) {
+				this.pc.add(this.orgAdminView);
+			}
+
+
+
 			this.clientpool.on('clientChange', function(clients) {
 				that.mainlisting.updateClients(clients);
 			});
@@ -62,6 +94,18 @@ define(function (require, exports, module) {
 				that.mainlisting.updateAPIGKs(apigks);
 			});
 			that.clientpool.initLoad();
+
+
+
+			this.mainlisting.on("manageMandatory", function() {
+				// console.error("manageMandatory", that.orgid);
+				if (that.orgAdminView !== null) {
+					
+					that.actMandatory();
+					// that.orgAdminView.activate();
+				}
+			});
+			this.mainlisting.initLoad();
 
 
 
@@ -194,6 +238,10 @@ define(function (require, exports, module) {
 			this.mainlisting.activate();
 		},
 
+		"actMandatory": function() {
+			this.app.setHash('/' + this.orgid + '/mandatory');
+			this.orgAdminView.activate();
+		},
 
 		"getOrgInfo": function() {
 			// console.error("Looking up getOrgInfo for " + this.orgid);

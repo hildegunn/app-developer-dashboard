@@ -10,6 +10,9 @@ define(function(require, exports, module) {
 		APIGKCreate = require('../createwidgets/APIGKCreate'),
 		EventEmitter = require('../../EventEmitter'),
 
+		SimpleOrgAdminController = require('../orgadmin/SimpleOrgAdminController'),
+
+
 		utils = require('../../utils'),
 		$ = require('jquery')
 		;
@@ -25,11 +28,12 @@ define(function(require, exports, module) {
 	 * This controller controls 
 	 */
 	var MainListing = Pane.extend({
-		"init": function(feideconnect, app) {
+		"init": function(feideconnect, app, orgAdminClients) {
 
 			var that = this;
 			this.feideconnect = feideconnect;
 			this.app = app;
+			this.orgAdminClients = orgAdminClients;
 
 			this._super();
 
@@ -46,6 +50,22 @@ define(function(require, exports, module) {
 			this.templateLoaded = false;
 			this.elClientsAttached = false;
 			this.elAPIGKsAttached = false;
+
+
+			this.simpleOrgAdminView = null;
+			if (orgAdminClients !== null) {
+				this.simpleOrgAdminView = new SimpleOrgAdminController(this.feideconnect, this.orgAdminClients);
+				this.simpleOrgAdminView.initLoad();
+
+				this.simpleOrgAdminView.on("manageMandatory", function() {
+					that.emit("manageMandatory");
+				});
+
+
+			}
+
+
+
 
 
 			this.clientcreate = new ClientCreate(this.app);
@@ -190,6 +210,11 @@ define(function(require, exports, module) {
 					that.el.append(out);
 					that.el.find('#listingClients').append(that.elClients);
 					that.el.find('#listingAPIGKs').append(that.elAPIGKs);
+
+					if (that.simpleOrgAdminView !== null) {
+						that.el.find("#simpleOrgAdminView").show().append(that.simpleOrgAdminView.el);	
+					}
+					
 
 
 					that.elClientsAttached = true;

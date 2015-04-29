@@ -4,7 +4,7 @@ define(function(require, exports, module) {
 
 	var 
 
-		Class = require('../class'),
+		Controller = require('../controllers/Controller'),
 		EventEmitter = require('../EventEmitter'),
 
 		Client = require('./Client'),
@@ -12,35 +12,45 @@ define(function(require, exports, module) {
 		;
 
 
-	var PublicClientPool = Class.extend({
+	var PublicClientPool = Controller.extend({
 		"init": function(feideconnect) {
 
 			var that = this;
 			this.feideconnect = feideconnect;
 
-			this.apigks = {};
-			this.apigksLoaded = false;
+			this.clients = {};
 
-			this.feideconnect.clientsPublicList(function(apigks) {
+			this._super();
 
-				// console.log("Loaded public set of apis", apigks);
-				var i;
-				for (i = 0; i < apigks.length; i++) {
-					that.apigks[apigks[i].id] = new APIGK(apigks[i]);
-				}
-				if (!that.apigksLoaded) {that.emit("ready", that.apigks);}
-				that.apigksLoaded = true;
-				that.emit('apigkChange', that.apigks);
+			this.initLoad();
 
-			});
+		},
+
+		"initLoad": function() {
+			this.load()
+				.then(this.proxy("_initLoaded"));
+
+		},
+
+		"load": function() {
+			var that = this;
+			return this.feideconnect.clientsPublicList()
+				.then(function(clients) {
+					var i;
+					that.clients = {};
+					for (i = 0; i < clients.length; i++) {
+						that.clients[clients[i].id] = new Client(clients[i]);
+					}
+					that.emit('clientsChange', that.clients);
+				});
 
 		},
 
 		"getView": function() {
 
 			var items = [];
-			for(var key in this.apigks) {
-				var x = this.apigks[key];
+			for(var key in this.clients) {
+				var x = this.clients[key];
 				x.id = key;
 				items.push(x.getView());
 			}
@@ -48,26 +58,21 @@ define(function(require, exports, module) {
 
 		},
 
-
-		"ready": function(callback) {
-			if (this.apigksLoaded) {
-				callback(this.apigks);
-			} else {
-				this.on("ready", callback);
-			}
-		},
-		"setAPIGK": function(apigk) {
+		"setClient": function(apigk) {
 			this.apigks[apigk.id] = apigk;
-			this.emit("apigkChange", this.apigks);
+			this.emit("clientsChange", this.apigks);
 		},
-		"getAPIGK": function(id) {
-			if (this.apigks.hasOwnProperty(id)) {return this.apigks[id];}
+		"getClients": function() {
+			return this.clients;
+		},
+		"getClient": function(id) {
+			if (this.apigks.hasOwnProperty(id)) { return this.apigks[id]; }
 			return null;
 		},
-		"removeAPIGK": function(id) {
-			delete this.apigks[id];
+		"removeClient": function(id) {
+			delete this.clients[id];
 			// console.error("DELETE APIGK", id);
-			this.emit("apigkChange", this.apigks);
+			this.emit("clientsChange", this.apigks);
 		}
 
 	}).extend(EventEmitter);

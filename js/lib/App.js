@@ -13,7 +13,9 @@ define(function (require, exports, module) {
 		OrgApp = require('./OrgApp'),
 
 		PublicAPIPool = require('./models/PublicAPIPool'),
+		PublicClientPool = require('./models/PublicClientPool'),
 		ClientPool = require('./models/ClientPool'),
+
 		Client = require('./models/Client'),
 		APIGK = require('./models/APIGK'),
 		PaneController = require('./controllers/PaneController'),
@@ -82,14 +84,16 @@ define(function (require, exports, module) {
 
 			this.initLoad();	
 
-			this.setupRoute(/^\/([a-zA-Z0-9_\-:]+)?$/, "routeMainlisting");
-			this.setupRoute(/^\/([a-zA-Z0-9_\-:]+)\/clients\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditClient");
-			this.setupRoute(/^\/([a-zA-Z0-9_\-:]+)\/apigk\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditAPIGK");
+			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)?$/, "routeMainlisting");
+			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/mandatory$/, "routeMandatory");
+			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/clients\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditClient");
+			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/apigk\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditAPIGK");
 			this.setupRoute(/^\/clients\/([a-zA-Z0-9_\-:]+)$/, "viewclient");
 			this.setupRoute(/^\/new$/, "newGroup");
 
 
 			this.publicapis = new PublicAPIPool(this.feideconnect);
+			this.publicClientPool = new PublicClientPool(this.feideconnect);
 
 
 			$("#header").on("click", ".navbar-brand", function(e) {
@@ -183,7 +187,7 @@ define(function (require, exports, module) {
 						that.orgRoleSelector.getOrgIdentifiers().map(function(orgid) {
 
 							// console.log("Setting up a new orgapp for " + orgid);
-							that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.publicapis, orgid);
+							that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.publicClientPool, that.publicapis, orgid);
 							that.pc.add(that.orgApps[orgid]);
 						})
 					);
@@ -310,6 +314,27 @@ define(function (require, exports, module) {
 
 		},
 
+		"routeMandatory": function(orgid) {
+
+			var that = this;
+			console.error("Setting org to be ", orgid);
+			this.orgRoleSelector.setOrg(orgid, false);
+			this.orgRoleSelector.show();
+
+			this.feideconnect.authenticated()
+				.then(function() {
+					return that.getOrgApp(orgid)
+				})
+				.then(function(orgApp) {
+					orgApp.actMandatory();
+					orgApp.activate();
+				})
+				.catch(function(err) {
+					console.error("err", err);
+					that.setErrorMessage("Error loading API Gatekeeper", "danger", err);
+				});
+
+		},
 
 		"routeMainlisting": function(orgid) {
 
