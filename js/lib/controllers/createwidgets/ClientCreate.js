@@ -61,7 +61,9 @@ define(function(require, exports, module) {
 			$(this.el).find("#newClientName").focus();
 		},
 
-		"submit": function() {
+		"submit": function(e) {
+
+			e.preventDefault();
 
 			var obj = {};
 

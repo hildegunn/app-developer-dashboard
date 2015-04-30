@@ -79,6 +79,7 @@ define(function(require) {
 			var view = item.getView(this.feideconnect);
 
 
+
 			var fcc = this.feideconnect.getConfig();
 			var endpoint = fcc.apis.core + '/clientadm/scopes/';
 

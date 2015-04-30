@@ -115,8 +115,12 @@ define(function (require, exports, module) {
 				that.feideconnect.clientsRegister(obj)
 					.then(function(data) {
 						var client = new Client(data);
+
 						that.clientpool.setClient(client);
-						that.clienteditor.edit(client, 'tabBasic');
+
+						that.clienteditor.edit(client, 'tabBasic');	
+
+						
 						that.activate();
 						that.app.orgRoleSelector.hide();
 						that.app.setHash('/' + that.orgid + '/clients/' + client.id + '/edit/tabBasic');
@@ -134,6 +138,7 @@ define(function (require, exports, module) {
 					.then(function(data) {
 						var apigk = new APIGK(data);
 						that.clientpool.setAPIGK(apigk);
+
 						that.apigkeditor.edit(apigk, 'tabBasic');
 						that.activate();
 						that.app.orgRoleSelector.hide();

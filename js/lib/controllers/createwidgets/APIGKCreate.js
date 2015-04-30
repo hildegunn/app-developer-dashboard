@@ -88,7 +88,7 @@ define(function(require, exports, module) {
 		},		
 
 
-		"submit": function() {
+		"submit": function(e) {
 
 			/*
 			CREATE TABLE feideconnect.apigk (
@@ -110,6 +110,7 @@ define(function(require, exports, module) {
 
 
 
+			e.preventDefault();
 			var obj = {};
 
 			obj.id = $(this.el).find("#newAPIid").val();
