@@ -9,31 +9,73 @@
 		</div>
 		<div class="media-body">
 
-		<div class="pull-right">
+		
+		<div class="row" style="width: 100%">
+			
+			<div class="col-md-5">
 
-			{?mandatory}
-				<span class="label label-success">Mandatory</span>
-			{:else}
-				<span class="label label-default">User controlled</span>
-			{/mandatory}
+				<h4 class="list-group-item-heading">{name}</h4>
+				<p class="list-group-item-text" style="font-size: 80%" ><i class="glyphicon glyphicon-chevron-right"></i> {id}</p>
+				<p class="list-group-item-text">{descr}</p>
 
-			{?mandatory}
-				<button class="btn btn-sm btn-warning actRemoveMandatory" style="margin-left: 2em"><i class="fa fa-times"></i> Remove mandatory</button>
-			{:else}
-				<button class="btn btn-sm btn-success actSetMandatory" style="margin-left: 2em"><i class="fa fa-check"></i> Set mandatory</button>
-				
-			{/mandatory}
-			<!-- <button class="btn btn-sm" style="margin-left: 2em"><i class="fa fa-list-ul"></i> Review</button> -->
+			</div>
+			<div class="col-md-2" style="text-align: center">
+
+
+				{?mandatory}
+					<span class="label label-success">Mandatory</span>
+				{:else}
+					<span class="label label-default">User controlled</span>
+				{/mandatory}
+
+
+			</div>
+			<div class="col-md-3">
+
+				{?trustOwner}
+				{#owner}
+					
+					<!--<p></p>
+					<p>{id}</p>-->
+					<p>
+						<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.auth}/user/media/{id}"> &nbsp;&nbsp;
+						{name}
+					</p>
+
+				{/owner}
+				{/trustOwner}
+
+				{?trustOrg}
+				{#organization}
+					<p>
+						<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/orgs/{id}/logo"> &nbsp;&nbsp;
+						{name}
+					</p>
+				{/organization}
+				{/trustOrg}
+
+
+			</div>
+			<div class="col-md-2" style="text-align: right">
+
+
+
+				{?mandatory}
+					<button class="btn btn-sm btn-warning actRemoveMandatory" style="margin-left: 2em"><i class="fa fa-times"></i> Remove mandatory</button>
+				{:else}
+					<button class="btn btn-sm btn-success actSetMandatory" style="margin-left: 2em"><i class="fa fa-check"></i> Set mandatory</button>
+					
+				{/mandatory}
+				<!-- <button class="btn btn-sm" style="margin-left: 2em"><i class="fa fa-list-ul"></i> Review</button> -->
+
+			</div>
+
+
+		</div>
 		</div>
 			
 
 
-
-			<!-- <p class="pull-right" style="color: #666; font-size: 82%">Updated {updatedAgo}</p> -->
-			<h4 class="list-group-item-heading">{name}</h4>
-			<p class="list-group-item-text" style="font-size: 80%" ><i class="glyphicon glyphicon-chevron-right"></i> {id}</p>
-			<p class="list-group-item-text">{descr}</p>
-		</div>
 	</div>
 {:else}
 	<p>No clients are currently registered.</p>

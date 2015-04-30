@@ -30,6 +30,15 @@ define(function(require, exports, module) {
 				res.updatedH = res.updated.format('D. MMM YYYY');
 			}
 
+			if (this.organization && this.organization !== null) {
+				res.trustOrg = true;
+			} else if (this.owner && this.owner !== null) {
+				res.trustOwner = true;
+			}
+
+
+
+
 			return res;			
 		},
 
