@@ -187,7 +187,7 @@ define(function (require, exports, module) {
 						that.orgRoleSelector.getOrgIdentifiers().map(function(orgid) {
 
 							// console.log("Setting up a new orgapp for " + orgid);
-							that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.publicClientPool, that.publicapis, orgid);
+							that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid));
 							that.pc.add(that.orgApps[orgid]);
 						})
 					);
@@ -317,7 +317,7 @@ define(function (require, exports, module) {
 		"routeMandatory": function(orgid) {
 
 			var that = this;
-			console.error("Setting org to be ", orgid);
+			// console.error("Setting org to be ", orgid);
 			this.orgRoleSelector.setOrg(orgid, false);
 			this.orgRoleSelector.show();
 

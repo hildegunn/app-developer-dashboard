@@ -37,40 +37,37 @@ define(function (require, exports, module) {
 
 	var OrgApp = Pane.extend({
 		
-		"init": function(feideconnect, app, publicClientPool, publicapis, orgid) {
+		"init": function(feideconnect, app, publicClientPool, publicapis, role) {
 			var that = this;
 
 			this.publicClientPool = publicClientPool;
 			this.publicapis = publicapis;
 			this.feideconnect = feideconnect;
 			this.app = app;
-			this.orgid = orgid;
+			this.role = role;
+
 
 			this._super();
 
 
+			this.orgid = this.role.getID();
+			var orgid2 = (this.role.getID() === '_' ? null : this.role.getID());
 
-
-			var orgid2 = (orgid === '_' ? null : orgid);
+			// console.error("OrgApp initaite3d", role, this.orgid, orgid2)
 
 			this.clientpool = new ClientPool(this.feideconnect, orgid2);
-
 
 
 			this.orgAdminClients = null;
 			this.simpleOrgAdminView = null;
 			this.orgAdminView = null;
-			if (orgid2 !== null) {
+			if (this.role.isOrgType("home_organization")) {
 				this.orgAdminClients = new OrgAdminClients(this.feideconnect, orgid2);
 				this.orgAdminClients.initLoad();
 
 
 				this.orgAdminView = new OrgAdminPane(this.feideconnect, this, this.publicClientPool, this.orgAdminClients);
 				that.orgAdminView.initLoad();
-
-
-				// this.simpleOrgAdminView = new SimpleOrgAdminController(this.orgAdminClients);
-
 
 			}
 
@@ -244,7 +241,7 @@ define(function (require, exports, module) {
 		},
 
 		"getOrgInfo": function() {
-			// console.error("Looking up getOrgInfo for " + this.orgid);
+			// console.error("Looking up getOrgInfo for " + this.orgid, this.app.orgRoleSelector.getOrgInfo(this.orgid));
 			return this.app.orgRoleSelector.getOrgInfo(this.orgid);
 
 		},

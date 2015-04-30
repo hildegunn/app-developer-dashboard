@@ -5,15 +5,72 @@ define(function(require, exports, module) {
 		$ = require('jquery'),
 		Controller = require('./Controller'),
 		dust = require('dust'),
+
+		Model = require('../models/Model'),
+		Group = require('../models/Group'),
 		EventEmitter = require('../EventEmitter')
+
+
 		
 		;
 
 	var template = require('text!templates/OrgRoleSelector.html');
 
 
+	var GroupOption = Model.extend({
+
+		"isOrgType": function(type) {
+
+			if (!this.group) {return false; }
+			if (!this.group.orgType) {return false; }
+			for(var i = 0; i < this.group.orgType.length; i++) {
+				if (this.group.orgType[i] === type) {
+					return true;
+				}
+			}
+			return false;
+
+		},
+
+		"getID": function() {
+			if (this.id) { return this.id; }
+			if (this.group && this.group.org) {return this.group.org; }
+			throw new Error("Could not get identifier for this groupoption.");
+		},
+
+		"getTitle": function() {
+			if (this.title) {return this.title; }
+			if (this.group && this.group.orgName) { return this.group.orgName; }
+			return 'na';
+		},
+
+		"getView": function() {
+			var res = this._super();
+
+			if (this.id === '_') {
+				res.icon = 'fa fa-user';
+			} else if(this.isOrgType("home_organization")) {
+				res.icon = 'fa fa-home';
+			} else if(this.isOrgType("service_provider")) {
+				res.icon = 'fa fa-suitcase';
+			} else {
+				res.icon = 'fa fa-circle-o';
+			}
+
+			if (this.group) {
+				res.group = this.group.getView();
+				res.id = this.getID();
+				res.title = this.group.orgName;
+			}
+			return res;
+		}
+		
+	});
+
+
 
 	var OrgRoleSelector = Controller.extend({
+
 		"init": function(el, feideconnect) {
 
 			var that = this;
@@ -30,37 +87,44 @@ define(function(require, exports, module) {
 
 			this.ebind("click", ".orgSelector a", "actSelect");
 
-
 		},
-
 
 		"initLoad": function() {
 
 			var that = this;
-			that.roles = {
-				"_" : "Personal",
-				// "fc:org:uninett.no": "UNINETT AS",
-				// "fc:org:sigmund": "Sigmund AS"
-			};
+			that.roles = {};
+			that.roles._ = new GroupOption({"id": "_", "title": "Personal"});
 
 			this.setOrg(this.currentRole, false);
 
 			return that.feideconnect.vootGroupsList()
 				.then(function(groups) {
-					// console.error("Groups", groups);
 
 					for(var i = 0; i < groups.length; i++) {
-						if (groups[i].type !== 'fc:orgadmin') {continue; }
-						if (groups[i].membership.basic !== 'admin') {continue; }
 
+						var g = new Group(groups[i]);
+
+						// Only use group memberships where a user is admin in an orgadmin group.
+						if (!g.isType("fc:orgadmin")) { continue; }
+						if (!g.isMemberType("admin")) { continue; }
+
+						// console.error("GROUP ", g);
 						that.enabled = true;
-						that.roles[groups[i].org] = groups[i].orgName;
+						that.roles[groups[i].org] = new GroupOption({"group": g});
 					}
 
 				})
 				.then(this.proxy("draw"))
 				.then(that.proxy("_initLoaded"));
 
+		},
+
+		"getRole": function(orgid) {
+			// console.error("Getting role for ", orgid, this.roles[orgid]);
+			return this.roles[orgid];
+		},
+		"getCurrentRole": function(orgid) {
+			return this.getRole(this.currentRole);
 		},
 
 		"getOrg": function() {
@@ -85,9 +149,10 @@ define(function(require, exports, module) {
 			var c = this.feideconnect.getConfig();
 			// console.error("Config was", c);
 
+			// console.log("Getting orginfo for " + orgid, this.roles);
 			var orgInfo = {
 				"id": orgid,
-				"displayName": this.roles[orgid],
+				"displayName": this.roles[orgid].getTitle(),
 				"logoURL": c.apis.core + '/orgs/' + orgid + '/logo'
 			};
 
@@ -104,7 +169,7 @@ define(function(require, exports, module) {
 			var p = this.el.find('.orgSelector');
 			p.children().removeClass("active");
 			p.children().each(function(i, item) {
-				// console.error("PROCESSING ", item);
+
 				if ($(item).data("orgid") === orgidraw) {
 					$(item).addClass("active");
 				} else {
@@ -126,8 +191,8 @@ define(function(require, exports, module) {
 
 			var ct = $(e.currentTarget);
 			var orgid = ct.closest("li").data("orgid");
-			// ct.closest("ul").children().removeClass("active");
-			// ct.closest("li").addClass("active");
+
+			// console.error("SetOrg", orgid);
 
 			this.setOrg(orgid, true);
 
@@ -136,6 +201,7 @@ define(function(require, exports, module) {
 		"hide": function() {
 			this.el.hide();
 		},
+
 		"show": function() {
 			this.el.show();
 		},
@@ -150,11 +216,13 @@ define(function(require, exports, module) {
 
 
 			for(var key in this.roles) {
-				var re = {
-					"id": key,
-					"title": this.roles[key],
-					"classes": ''
-				};
+				// var re = {
+				// 	"id": key,
+				// 	"title": this.roles[key],
+				// 	"classes": ''
+				// };
+				var re = this.roles[key].getView();
+				re.classes = [];
 				if (this.currentRole === key) {
 					re.classes = 'active';
 				}
@@ -162,8 +230,8 @@ define(function(require, exports, module) {
 			}
 
 			if (!this.enabled) {return;}
-
 			// console.error("View s ", view);
+
 			return new Promise(function(resolve, reject) {
 				dust.render("OrgRoleSelector", view, function(err, out) {
 					if (err) {return reject(err);}
