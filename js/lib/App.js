@@ -118,7 +118,8 @@ define(function (require, exports, module) {
 			this.el.on("click", ".login", function() {
 				that.feideconnect.authenticate();
 			});
-			this.el.on("click", "#logout", function() {
+			this.el.on("click", "#logout", function(e) {
+				e.preventDefault();
 				that.feideconnect.logout();
 				setTimeout(function() {
 
