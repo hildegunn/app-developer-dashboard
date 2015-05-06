@@ -15,11 +15,15 @@ requirejs.config({
 		"dust"      : '/bower_components/dustjs-linkedin/dist/dust-full.min',
 		"class"     : "class",
 		"jquery"	: "/bower_components/jquery/dist/jquery.min",
-		"dict"		: "/dictionaries/dictionary.en.json"
+		"dict"		: "/dictionaries/dictionary.en.json",
+		"bootstrap" : "/bower_components/bootstrap/dist/js/bootstrap.min"
 	},
 	shim: {
 		"dust": {
 			"exports": "dust"
+		},
+		"bootstrap": {
+			"deps": ["jquery"]
 		}
 	}
 });

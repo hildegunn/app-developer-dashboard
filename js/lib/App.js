@@ -28,7 +28,8 @@ define(function (require, exports, module) {
 	var tmpHeader = require('text!templates/header.html');
 	var tmpFooter = require('text!templates/footer.html');
 
-	require('../../bower_components/bootstrap/dist/js/bootstrap.min.js');
+	// require('../../bower_components/bootstrap/dist/js/bootstrap.min.js');
+	require("bootstrap");
 
 	/**
 	 * Here is what happens when the page loads:

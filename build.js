@@ -7,11 +7,15 @@
 		"dust"      : '../bower_components/dustjs-linkedin/dist/dust-full.min',
 		"class"     : "lib/class",
 		"jquery"	: "../bower_components/jquery/dist/jquery.min",
-		"dict"		: "_"
+		"dict"		: "_",
+		"bootstrap" : "../bower_components/bootstrap/dist/js/bootstrap.min"
 	},
 	shim: {
 		"dust": {
 			"exports": "dust"
+		},
+		"bootstrap": {
+			"deps": ["jquery"]
 		}
 	},
 	name: "../bower_components/almond/almond",
