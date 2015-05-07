@@ -65,7 +65,7 @@ define(function(require, exports, module) {
 					that.emit("saved", that.current);
 				})
 				.catch(function(err) {
-					that.app.setErrorMessage("Error uploading logo", "danger", err);
+					that.app.app.setErrorMessage("Error uploading logo", "danger", err);
 				});
 		},
 
@@ -220,7 +220,7 @@ define(function(require, exports, module) {
 				// that.edit(x);
 				// that.emit("saved", x);
 			}).catch(function(err) {
-				that.app.setErrorMessage("Error authorizing client scopes", "danger", err);
+				that.app.app.setErrorMessage("Error authorizing client scopes", "danger", err);
 			});
 
 

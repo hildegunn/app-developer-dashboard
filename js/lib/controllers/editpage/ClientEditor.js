@@ -54,7 +54,7 @@ define(function(require) {
 					that.el.find('.itemlogo').attr("src", url);
 				})
 				.catch(function(err) {
-					that.app.setErrorMessage("Error uploading logo", "danger", err);
+					that.app.app.setErrorMessage("Error uploading logo", "danger", err);
 				});
 		},
 
@@ -263,7 +263,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.app.setErrorMessage("Error adding scope", "danger", err);
 				});
 
 			// console.log("trying to actScopeAdd ", scopeid);
@@ -286,7 +286,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.setErrorMessage("Error removing scope", "danger", err);
+					that.app.app.setErrorMessage("Error removing scope", "danger", err);
 				});
 
 		},
