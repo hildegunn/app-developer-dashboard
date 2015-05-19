@@ -139,13 +139,19 @@ define(function (require, exports, module) {
 				that.onLoaded()
 					.then(function() {
 
+						
+
+						var _config = that.feideconnect.getConfig();
+						var profilephoto = _config.apis.auth + '/user/media/' + user.profilephoto;
+						// console.error("Profile url iu s", profilephoto);
+
 						if (authenticated) {
 
 							$("body").addClass("stateLoggedIn");
 							$("body").removeClass("stateLoggedOut");
 
 							$("#username").empty().text(user.name);
-							$("#profilephoto").html('<img style="margin-top: -28px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" src="https://auth.dev.feideconnect.no/user/media/' + user.profilephoto + '" alt="Profile photo" />');
+							$("#profilephoto").html('<img style="margin-top: -28px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" src="' + profilephoto + '" alt="Profile photo" />');
 
 							$(".loader-hideOnLoad").hide();
 							$(".loader-showOnLoad").show();
@@ -231,7 +237,8 @@ define(function (require, exports, module) {
 			var that = this;
 
 			var view = {
-				"_": that.dict.get()
+				"_": that.dict.get(),
+				"_config": that.feideconnect.getConfig()
 			};
 
 			return Promise.all([
@@ -350,11 +357,14 @@ define(function (require, exports, module) {
 
 			this.feideconnect.authenticated()
 				.then(function() {
+					console.error("About to wait for " + orgid);
 					return that.getOrgApp(orgid)
 				})
 				.then(function(orgApp) {
+					console.error("Ready ", orgApp);
 					orgApp.actMainlisting();
 					orgApp.activate();
+					// console.error("Route mainlisting, for this orgapp: ", orgApp);ch
 				})
 				.catch(function(err) {
 					console.error("err", err);
