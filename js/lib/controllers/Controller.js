@@ -49,7 +49,7 @@ define(function(require, exports, module) {
 				for(i = 0; i < this.onLoadedCallbacks.length; i++) {
 					this.onLoadedCallbacks[i](this);
 				}
-				this.onLoadedCallbacks = null;
+				this.onLoadedCallbacks = [];
 			}
 		},
 		"initLoad": function() {
