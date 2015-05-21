@@ -22,7 +22,7 @@ define(function(require, exports, module) {
 			if (!this.routes) {
 				this.routes = [];
 			}
-			this.routingEnabled = true;
+			this.routingEnabled = false;
 			$(window).bind('hashchange', $.proxy(this.route, this));
 			$(window).bind('load', function() {
 				// console.log("====> onload");
@@ -35,10 +35,14 @@ define(function(require, exports, module) {
 			this.routes.push([match, func]);
 		},
 
-		"route": function() {
+		"route": function(enable) {
 			
+			if (enable === true) {
+				this.routingEnabled = true;
+			}
+
 			if (!this.routingEnabled) {return;}
-			// console.log("Routing continue", this.routingEnabled);
+			console.log("Routing continue", this.routingEnabled);
 
 			var hash = window.location.hash;
 			

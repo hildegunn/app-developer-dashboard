@@ -60,9 +60,12 @@ define(function (require, exports, module) {
 			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector, this.feideconnect);
 			this.orgRoleSelector.initLoad();
 
+			
+
 			this.orgRoleSelector.on("orgRoleSelected", function(orgid) {
 				that.onLoaded()
 					.then(function() {
+
 						if (that.orgApps[orgid]) {
 							that.orgApps[orgid].actMainlisting();
 							that.orgApps[orgid].activate();
@@ -83,7 +86,6 @@ define(function (require, exports, module) {
 
 			this.orgApps = {};
 
-			this.initLoad();	
 
 			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)?$/, "routeMainlisting");
 			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/mandatory$/, "routeMandatory");
@@ -172,6 +174,9 @@ define(function (require, exports, module) {
 			});
 
 
+			this.initLoad();	
+
+
 		},
 
 
@@ -179,8 +184,13 @@ define(function (require, exports, module) {
 		"initLoad": function() {
 			var that = this;
 
+
 			// Draw template..
 			return this.draw()
+
+				.then(function() {
+					return that.feideconnect.authenticated()
+				})
 
 				// Wait for orgRoleSelector to be loaded.
 				.then(function() {
@@ -204,9 +214,8 @@ define(function (require, exports, module) {
 				// Then activate one of them
 				.then(function() {
 					that.orgApps._.activate();
-
 					// now route.
-					that.route();
+					that.route(true);
 				})
 				.then(this.proxy("_initLoaded"));
 				
@@ -216,7 +225,7 @@ define(function (require, exports, module) {
 		"getOrgApp": function(orgid) {
 
 			if (!this.orgApps.hasOwnProperty(orgid)) {
-				return new Error("Could not find org app for " + orgid);
+				throw new Error("Could not find org app for " + orgid);
 			}
 
 			var orgApp = this.orgApps[orgid];
@@ -340,7 +349,7 @@ define(function (require, exports, module) {
 				})
 				.catch(function(err) {
 					console.error("err", err);
-					that.setErrorMessage("Error loading API Gatekeeper", "danger", err);
+					that.setErrorMessage("Error loading Mandatory view", "danger", err);
 				});
 
 		},
@@ -357,18 +366,16 @@ define(function (require, exports, module) {
 
 			this.feideconnect.authenticated()
 				.then(function() {
-					console.error("About to wait for " + orgid);
 					return that.getOrgApp(orgid)
 				})
 				.then(function(orgApp) {
-					console.error("Ready ", orgApp);
 					orgApp.actMainlisting();
 					orgApp.activate();
 					// console.error("Route mainlisting, for this orgapp: ", orgApp);ch
 				})
 				.catch(function(err) {
 					console.error("err", err);
-					that.setErrorMessage("Error loading API Gatekeeper", "danger", err);
+					that.setErrorMessage("Error loading Mainlisting", "danger", err);
 				});
 
 		}

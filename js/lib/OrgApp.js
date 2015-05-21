@@ -208,7 +208,18 @@ define(function (require, exports, module) {
 
 		"initLoad": function() {
 
+
+
+
 			return this.draw()
+				// .then(function() {
+				// 	return new Promise(function(resolve, reject) {
+				// 		setTimeout(function() {
+				// 			console.error("RESOLVED");
+				// 			resolve();
+				// 		}, 3000);
+				// 	});
+				// })
 				.then(this.proxy("_initLoaded"));
 				
 		},
