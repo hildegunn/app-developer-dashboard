@@ -16,7 +16,8 @@ requirejs.config({
 		"class"     : "class",
 		"jquery"	: "/bower_components/jquery/dist/jquery.min",
 		"dict"		: "/dictionaries/dictionary.en.json",
-		"bootstrap" : "/bower_components/bootstrap/dist/js/bootstrap.min"
+		"bootstrap" : "/bower_components/bootstrap/dist/js/bootstrap.min",
+		"es6-promise": "/bower_components/es6-promise/promise"
 	},
 	shim: {
 		"dust": {

@@ -8,7 +8,8 @@
 		"class"     : "lib/class",
 		"jquery"	: "../bower_components/jquery/dist/jquery.min",
 		"dict"		: "_",
-		"bootstrap" : "../bower_components/bootstrap/dist/js/bootstrap.min"
+		"bootstrap" : "../bower_components/bootstrap/dist/js/bootstrap.min",
+		"es6-promise": "../bower_components/es6-promise/promise"
 	},
 	shim: {
 		"dust": {
