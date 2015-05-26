@@ -72,7 +72,7 @@ define(function(require, exports, module) {
 			var that = this;
 			var args = Array.prototype.splice.call(arguments, 1);
 			return function() {
-				that[func].apply(that, args);
+				return that[func].apply(that, args);
 			};
 		}
 	});
