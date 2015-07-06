@@ -124,14 +124,11 @@ define(function (require, exports, module) {
 			this.el.on("click", "#logout", function(e) {
 				e.preventDefault();
 				that.feideconnect.logout();
-				setTimeout(function() {
 
-					var c = that.feideconnect.getConfig();
-					var url = c.apis.auth + '/logout';
-					// console.error("Redirect to " + url);
-					window.location = url;
+				var c = that.feideconnect.getConfig();
+				var url = c.apis.auth + '/logout';
+				window.location = url;
 
-				}, 200);
 			});
 
 
