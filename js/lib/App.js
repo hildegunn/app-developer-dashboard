@@ -102,7 +102,7 @@ define(function (require, exports, module) {
 			$("#header").on("click", ".navbar-brand", function(e) {
 				e.preventDefault();
 
-				that.feideconnect.authenticated()
+				that.feideconnect.onAuthenticated()
 					.then(function() {
 						return that.getOrgApp(that.orgRoleSelector.getOrg())
 					})
@@ -136,7 +136,7 @@ define(function (require, exports, module) {
 
 
 
-			this.feideconnect.onStateChange(function(authenticated, user) {
+			this.feideconnect.on("stateChange", function(authenticated, user) {
 
 				that.onLoaded()
 					.then(function() {
@@ -189,7 +189,7 @@ define(function (require, exports, module) {
 			return this.draw()
 
 				.then(function() {
-					return that.feideconnect.authenticated()
+					return that.feideconnect.onAuthenticated()
 				})
 
 				// Wait for orgRoleSelector to be loaded.
@@ -298,7 +298,7 @@ define(function (require, exports, module) {
 
 		"routeEditClient": function(orgid, clientid, tabid) {
 			var that = this;
-			this.feideconnect.authenticated()
+			this.feideconnect.onAuthenticated()
 				.then(function() {
 					return that.getOrgApp(orgid)
 				})
@@ -315,7 +315,7 @@ define(function (require, exports, module) {
 		},
 		"routeEditAPIGK": function(orgid, apigkid, tabid) {
 			var that = this;
-			this.feideconnect.authenticated()
+			this.feideconnect.onAuthenticated()
 				.then(function() {
 					return that.getOrgApp(orgid)
 				})
@@ -339,7 +339,7 @@ define(function (require, exports, module) {
 			this.orgRoleSelector.setOrg(orgid, false);
 			this.orgRoleSelector.show();
 
-			this.feideconnect.authenticated()
+			this.feideconnect.onAuthenticated()
 				.then(function() {
 					return that.getOrgApp(orgid)
 				})
@@ -364,7 +364,7 @@ define(function (require, exports, module) {
 			this.orgRoleSelector.setOrg(orgid, false);
 			this.orgRoleSelector.show();
 
-			this.feideconnect.authenticated()
+			this.feideconnect.onAuthenticated()
 				.then(function() {
 					return that.getOrgApp(orgid)
 				})
