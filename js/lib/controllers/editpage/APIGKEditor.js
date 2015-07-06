@@ -31,12 +31,15 @@ define(function(require, exports, module) {
 			this.scopedefbuilder = new ScopeDefBuilder(this.feideconnect);
 			this.scopedefbuilder.on("save", function(obj) {
 
-				// console.log("About to save: ", obj);
-				that.feideconnect.apigkUpdate(obj, function(savedClient) {
-					var x = new APIGK(savedClient);
-					that.edit(x);
-					that.emit("saved", x);
-				});
+				that.feideconnect.apigkUpdate(obj)
+					.then(function(savedObject) {
+						var x = new APIGK(savedObject);
+						that.edit(x);
+						that.emit("saved", x);
+					})
+					.catch(function(err) {
+						that.app.app.setErrorMessage("Error saving API Gatekeeper", "danger", err);
+					});
 
 			});
 
@@ -78,10 +81,6 @@ define(function(require, exports, module) {
 			} else {
 				this.el.find(".queuecount").hide();
 			}
-
-			
-
-
 
 		},
 
@@ -208,31 +207,23 @@ define(function(require, exports, module) {
 				}
 			}
 
-			// console.error("ABOUT TOP UPDATE AUTHORIZATION", authorizeScopes.scopes_add, authorizeScopes.scopes_remove);
-			// return;
 
-
-			this.feideconnect.clientsAuthorizeAPIGKscopes(clientid, authorizeScopes, function(savedClient) {
-				var x = new Client(savedClient);
-				that.clients[clientid] = x;
-				that.edit(that.current);
-
-				// that.edit(x);
-				// that.emit("saved", x);
-			}).catch(function(err) {
-				that.app.app.setErrorMessage("Error authorizing client scopes", "danger", err);
-			});
-
-
-			// console.error("Update authoizations for ", clientid, authorizeScopes);
-
+			this.feideconnect.clientsAuthorizeAPIGKscopes(clientid, authorizeScopes)
+				.then(function(savedObject) {
+					var x = new Client(savedObject);
+					that.clients[clientid] = x;
+					that.edit(that.current);
+				})
+				.catch(function(err) {
+					that.app.app.setErrorMessage("Error authorize API scopes", "danger", err);
+				});
 
 		},
 
 		"actSaveChanges": function(e) {
 			e.preventDefault();
 
-
+			var that = this;
 			var obj = {
 				"id": this.current.id
 			};
@@ -243,15 +234,17 @@ define(function(require, exports, module) {
 			// obj.scopedef = {};
 			// obj.trust = {};
 
-			// console.log("About to save changes to apigk", obj);
 
 
-			var that = this;
-			this.feideconnect.apigkUpdate(obj, function(savedClient) {
-				var x = new APIGK(savedClient);
-				that.edit(x);
-				that.emit("saved", x);
-			});
+			that.feideconnect.apigkUpdate(obj)
+				.then(function(savedObject) {
+					var x = new APIGK(savedObject);
+					that.edit(x);
+					that.emit("saved", x);
+				})
+				.catch(function(err) {
+					that.app.app.setErrorMessage("Error saving API Gatekeeper", "danger", err);
+				});
 
 		},
 		"actDelete": function(e) {

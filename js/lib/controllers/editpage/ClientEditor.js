@@ -199,13 +199,15 @@ define(function(require) {
 			obj.id = fullobj.id;
 			obj.scopes_requested = fullobj.scopes_requested;
 
-			this.feideconnect.clientsUpdate(obj, function(savedClient) {
-				var x = new Client(savedClient);
-				that.edit(x);
-				that.emit("saved", x);
-			});
-
-			// console.log("trying to actAPIadd ", newscopes);
+			this.feideconnect.clientsUpdate(obj)
+				.then(function(savedClient) {
+					var x = new Client(savedClient);
+					that.edit(x);
+					that.emit("saved", x);
+				})
+				.catch(function(err) {
+					that.app.app.setErrorMessage("Error adding scope", "danger", err);
+				});
 
 		},
 
@@ -238,11 +240,16 @@ define(function(require) {
 			obj.id = fullobj.id;
 			obj.scopes_requested = fullobj.scopes_requested;
 
-			this.feideconnect.clientsUpdate(obj, function(savedClient) {
-				var x = new Client(savedClient);
-				that.edit(x);
-				that.emit("saved", x);
-			});
+			this.feideconnect.clientsUpdate(obj)
+				.then(function(savedClient) {
+					var x = new Client(savedClient);
+					that.edit(x);
+					that.emit("saved", x);
+				})
+				.catch(function(err) {
+					that.app.app.setErrorMessage("Error adding scope", "danger", err);
+				});
+
 
 
 		},
@@ -314,13 +321,16 @@ define(function(require) {
 			this.current.redirect_uri = redirectURIs;
 
 			obj = this.current.getStorable();
-			// console.error("Get storable", obj);
 
-			this.feideconnect.clientsUpdate(obj, function(savedClient) {
-				var x = new Client(savedClient);
-				that.edit(x);
-				that.emit("saved", x);
-			});
+			this.feideconnect.clientsUpdate(obj)
+				.then(function(savedClient) {
+					var x = new Client(savedClient);
+					that.edit(x);
+					that.emit("saved", x);
+				})
+				.catch(function(err) {
+					that.app.app.setErrorMessage("Error adding scope", "danger", err);
+				});
 
 		},
 
