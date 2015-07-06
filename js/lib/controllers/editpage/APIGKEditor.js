@@ -94,7 +94,7 @@ define(function(require, exports, module) {
 			this.current = item;
 
 			var view = item.getView(this.feideconnect);
-			// console.log("About to pass on view", view);
+			// console.error("About to pass on view", view);
 			this.scopedefbuilder.setAPIGK(item);
 			
 			if (this.feideconnect) {

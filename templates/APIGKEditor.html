@@ -175,7 +175,22 @@
 									</ul>
 								</p>
 								<p class="list-group-item-text">Created {createdAgo}. Updated {updatedAgo}.</p>
-								<p class="list-group-item-text">Client owner: {owner}</p>
+
+
+								{#owner}
+									<!-- <p class="list-group-item-text">Client owner</p> -->
+									
+									<div class="media" style="margin-top: .5em; margin-bottom: .3em">
+										<div class="media-left">
+											<img style="margin-right: 20px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" 
+												src="{_config.apis.core}/userinfo/v1/user/media/{id}" >
+										</div>
+										<div class="media-body">
+										<p>{name}<br /><strong>client owner</strong></p>
+										</div>
+									</div>
+
+								{/owner}
 
 								<p class="list-group-item-text" style="margin-top: 15px">Authorized scopes &nbsp;
 								
@@ -402,7 +417,21 @@
 									</ul>
 								</p>
 								<p class="list-group-item-text">Created {createdAgo}. Updated {updatedAgo}.</p>
-								<p class="list-group-item-text">Client owner: {owner}</p>
+
+								{#owner}
+									<!-- <p class="list-group-item-text">Client owner</p> -->
+									
+									<div class="media" style="margin-top: .5em; margin-bottom: .3em">
+										<div class="media-left">
+											<img style="margin-right: 20px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" 
+												src="{_config.apis.core}/userinfo/v1/user/media/{id}" >
+										</div>
+										<div class="media-body">
+										<p>{name}<br /><strong>client owner</strong></p>
+										</div>
+									</div>
+
+								{/owner}
 
 								<p class="list-group-item-text" style="margin-top: 15px">Authorized scopes &nbsp;
 								
@@ -581,7 +610,6 @@
 				<div><button class="btn btn-lg btn-danger actDelete">
 					<i class="glyphicon glyphicon-warning-sign"></i> 
 					Delete this API gatekeeper, I know what I am doing</button></div>
-
 
 			</div>
 
