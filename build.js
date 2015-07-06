@@ -21,5 +21,6 @@
 	},
 	name: "../bower_components/almond/almond",
 	include: "main",
+	insertRequire: ["main"],
 	out: "dist/app.min.js"
 })
