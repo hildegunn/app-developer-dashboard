@@ -63,7 +63,8 @@ define(function(require, exports, module) {
 			var that = this;
 			this.feideconnect.apigkUpdateLogo(that.current.id, data)
 				.then(function() {
-					var url = "http://api.dev.feideconnect.no:6543/apigkadm/apigks/" + that.current.id + "/logo?r=" + utils.guid();
+					var _config = that.feideconnect.getConfig();
+					var url = _config.apis.core + "/apigkadm/apigks/" + that.current.id + "/logo?r=" + utils.guid();
 					that.el.find('.itemlogo').attr("src", url);
 					that.emit("saved", that.current);
 				})
