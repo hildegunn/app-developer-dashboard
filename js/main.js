@@ -29,6 +29,13 @@ requirejs.config({
 	}
 });
 
+// Configure 
+if (!window.console) {
+	window.console = {
+		"log": function() {},
+		"error": function() {},
+	}
+}
 
 define(function(require, exports, module) {
 
