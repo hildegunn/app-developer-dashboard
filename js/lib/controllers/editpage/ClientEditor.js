@@ -7,6 +7,8 @@ define(function(require) {
 		Editor = require('./Editor'),
 		utils = require('../../utils'),
 		StringSet = require('../../StringSet'),
+
+		AuthProviderSelector = require('../AuthProviderSelector'),
 		$ = require('jquery')
 		;
 
@@ -16,9 +18,12 @@ define(function(require) {
 	var ClientEditor = Editor.extend({
 		"init": function(app, feideconnect, publicapis) {
 			
+
 			this.editor = "clients";
 			this.publicapis = publicapis;
 			this._super(app, feideconnect);
+
+			
 
 			var x = dust.compile(clientTemplate, "clienteditor");
 			dust.loadSource(x);
@@ -47,6 +52,7 @@ define(function(require) {
 
 		"logoUploaded": function(data) {
 			var that = this;
+			console.log("About to upload image", this.current.id, data);
 			that.feideconnect.clientsUpdateLogo(this.current.id, data)
 				.then(function() {
 					var _config = that.feideconnect.getConfig();
@@ -54,7 +60,8 @@ define(function(require) {
 					that.el.find('.itemlogo').attr("src", url);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error uploading logo", "danger", err);
+					console.error(err);
+					that.app.setErrorMessage("Error uploading logo", "danger", err);
 				});
 		},
 
@@ -77,8 +84,6 @@ define(function(require) {
 			this.current = item;
 
 			var view = item.getView(this.feideconnect);
-
-
 
 			var fcc = this.feideconnect.getConfig();
 			var endpoint = fcc.apis.core + '/clientadm/scopes/';
@@ -152,6 +157,12 @@ define(function(require) {
 						}
 						that.el.empty().append(out);
 						that.selectTab(tab);
+						var mockupdata = ['feide|all', 'social|all'];
+						console.error("ITem is ", that.current);
+						that.aps = new AuthProviderSelector(that.el.find('.authproviders'), that.app.providerdata, that.current.authproviders);
+						that.aps.on('save', function(providers) {
+							that.actUpdateAuthProviders(providers);
+						})
 
 					});
 
@@ -168,6 +179,31 @@ define(function(require) {
 
 
 		},
+
+		"actUpdateAuthProviders": function(providers) {
+
+			var that = this;
+			var fullobj = this.current.getStorable();
+			var obj = {};
+			obj.id = fullobj.id;
+			obj.authproviders = providers;
+
+
+			this.feideconnect.clientsUpdate(obj)
+				.then(function(savedClient) {
+					var x = new Client(savedClient);
+
+					that.edit(x);
+					that.emit("saved", x);
+
+					that.app.setErrorMessage("Successfully updated list of authentication providers", "success");
+				})
+				.catch(function(err) {
+					that.app.setErrorMessage("Error adding scope", "danger", err);
+				});
+
+		},
+
 
 		"actAPIadd": function(e) {
 
@@ -199,14 +235,16 @@ define(function(require) {
 			obj.id = fullobj.id;
 			obj.scopes_requested = fullobj.scopes_requested;
 
+
 			this.feideconnect.clientsUpdate(obj)
 				.then(function(savedClient) {
 					var x = new Client(savedClient);
+
 					that.edit(x);
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.setErrorMessage("Error adding scope", "danger", err);
 				});
 
 		},
@@ -247,7 +285,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.setErrorMessage("Error adding scope", "danger", err);
 				});
 
 
@@ -270,7 +308,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.setErrorMessage("Error adding scope", "danger", err);
 				});
 
 			// console.log("trying to actScopeAdd ", scopeid);
@@ -293,7 +331,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error removing scope", "danger", err);
+					that.app.setErrorMessage("Error removing scope", "danger", err);
 				});
 
 		},
@@ -321,6 +359,7 @@ define(function(require) {
 			this.current.redirect_uri = redirectURIs;
 
 			obj = this.current.getStorable();
+			obj.authproviders = [];
 
 			this.feideconnect.clientsUpdate(obj)
 				.then(function(savedClient) {
@@ -329,7 +368,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.setErrorMessage("Error adding scope", "danger", err);
 				});
 
 		},

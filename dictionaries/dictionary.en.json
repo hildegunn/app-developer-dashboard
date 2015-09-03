@@ -8,12 +8,9 @@
 	"myfc": "My Feide Connect",
 	"mygroups": "My Groups",
 
-
-
-
-	"registerinfo": "Register and manage your clients and API gatekeepers",
-	"clients": "Clients",
-	"clientsnew": "Register new client",
+	"registerinfo": "Register and manage your applications and API gatekeepers",
+	"clients": "Applications",
+	"clientsnew": "Register new application",
 	"apigks": "API Gatekeepers",
 	"apigksnew": "Register new API Gatekeeper",
 
@@ -22,9 +19,8 @@
 	"reportissues": "report issues",
 	"isexperimental": "This service is experimental",
 
-
-	"createclientintro": "You are about to create a client to access the Feide Connect platform.",
-	"createclientname": "Give your client application a short desriptive name, and a longer descriptive text to explain what your application does.",
+	"createclientintro": "You are about to create a application to access the Feide Connect platform.",
+	"createclientname": "Give your application application a short desriptive name, and a longer descriptive text to explain what your application does.",
 
 	"createapigkintro": "You are about to register a new API to be accessed through the Feide Connect platform.",
 
@@ -35,8 +31,6 @@
 	"required": "Required",
 	"available": "Available",
 	"checking": "Checking",
-
-
 
 	"cancel": "Cancel"
 }

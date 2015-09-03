@@ -16,6 +16,8 @@ define(function (require, exports, module) {
 		PublicClientPool = require('./models/PublicClientPool'),
 		ClientPool = require('./models/ClientPool'),
 
+		ProviderData = require('./controllers/ProviderData'),
+
 		Client = require('./models/Client'),
 		APIGK = require('./models/APIGK'),
 		PaneController = require('./controllers/PaneController'),
@@ -56,11 +58,12 @@ define(function (require, exports, module) {
 			this.tmpFooter = new TemplateEngine(tmpFooter);
 
 
+			this.providerdata = new ProviderData();
+
 			this.elOrgSelector = $("<div></div>");
 			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector, this.feideconnect);
 			this.orgRoleSelector.initLoad();
 
-			
 
 			this.orgRoleSelector.on("orgRoleSelected", function(orgid) {
 				that.onLoaded()
@@ -79,8 +82,12 @@ define(function (require, exports, module) {
 					});
 			});
 
+
 			// Call contructor of the AppController(). Takes no parameters.
-			this._super();
+			this._super(undefined, false);
+
+
+
 
 			this.pc = new PaneController(this.el.find('#panecontainer'));
 
@@ -170,10 +177,9 @@ define(function (require, exports, module) {
 
 			});
 
-
 			this.initLoad();	
 
-
+	
 		},
 
 
@@ -197,11 +203,10 @@ define(function (require, exports, module) {
 				// Then setup all the orgApps.
 				.then(function() {
 
-
 					return Promise.all(
 						that.orgRoleSelector.getOrgIdentifiers().map(function(orgid) {
 
-							// console.log("Setting up a new orgapp for " + orgid);
+							// console.error(" ››› Setting up a new orgapp for " + orgid);
 							that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid));
 							that.pc.add(that.orgApps[orgid]);
 						})
@@ -360,6 +365,9 @@ define(function (require, exports, module) {
 			}
 			this.orgRoleSelector.setOrg(orgid, false);
 			this.orgRoleSelector.show();
+
+
+
 
 			this.feideconnect.onAuthenticated()
 				.then(function() {

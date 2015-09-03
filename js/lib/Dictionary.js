@@ -5,8 +5,6 @@ define(function(require, exports, module) {
 		Class = require('./class'),
 		dict = require('text!dict');
 
-
-
 	var parsed = null;
 
 	var Dictionary = Class.extend({
