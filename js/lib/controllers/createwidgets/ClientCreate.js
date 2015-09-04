@@ -73,6 +73,7 @@ define(function(require, exports, module) {
 			obj.redirect_uri = [$(this.el).find("#newClientRedirectURI").val()];
 			obj.scopes_requested = ["userinfo"];
 			obj.client_secret = utils.guid();
+			obj.authproviders = ['feide|all', 'other|feidetest', 'other|idporten', 'other|openidp', 'social|all'];
 
 			if (this.app.orgid !== "_") {
 				obj.organization = this.app.orgid;	
