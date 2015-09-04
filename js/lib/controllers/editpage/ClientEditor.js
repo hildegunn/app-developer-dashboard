@@ -158,7 +158,7 @@ define(function(require) {
 						that.el.empty().append(out);
 						that.selectTab(tab);
 						var mockupdata = ['feide|all', 'social|all'];
-						console.error("ITem is ", that.current);
+						// console.error("ITem is ", that.current);
 						that.aps = new AuthProviderSelector(that.el.find('.authproviders'), that.app.providerdata, that.current.authproviders);
 						that.aps.on('save', function(providers) {
 							that.actUpdateAuthProviders(providers);

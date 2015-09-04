@@ -114,24 +114,24 @@ define(function(require, exports, module) {
 				var val = e.data('val');
 				props[val] = s;
 			});
+
+			var xfunc = function(i, item) {
+				var e = $(item);
+				var ep = e.closest('.providerentry');
+				// console.log("Found list entry ", key, ep.data('id'));	
+				if (e.prop("checked")) {
+					// console.log("Found list entry ", key, ep.data('id'));	
+					listselections[key].push(ep.data('id'));
+				}
+				
+			};
 			
 			for(var key in listselections) {
-
-				this.el.find('.' + key +  ' .providerentry input').each(function(i, item) {
-					var e = $(item);
-					var ep = e.closest('.providerentry');
-					// console.log("Found list entry ", key, ep.data('id'));	
-					if (e.prop("checked")) {
-						console.log("Found list entry ", key, ep.data('id'));	
-						listselections[key].push(ep.data('id'));
-					}
-					
-				});
-
+				this.el.find('.' + key +  ' .providerentry input').each(xfunc);
 			}
 
 
-			if (props['all']) {
+			if (props.all) {
 				providers.push('all');
 				this.el.find('.pgroupall').hide();
 			} else {
@@ -208,7 +208,7 @@ define(function(require, exports, module) {
 		"initLoad": function() {
 
 			var that = this;			
-		 	console.error("Loading AuthProviderSelector");
+		 	// console.error("Loading AuthProviderSelector");
 
 		 	// console.log((new Error()).stack);
 
@@ -287,7 +287,7 @@ define(function(require, exports, module) {
 			};
 			var item, txtitem;
 
-			console.error("Ready.", this.providerdata.extra, this.providerdata.orgs);
+			// console.error("Ready.", this.providerdata.extra, this.providerdata.orgs);
 
 			this.providerdata.orgs.sort(function(a, b) {
 				var xa = (that.hasItem('feide|realm|' + a.id) ? 1 : 0);
@@ -306,7 +306,7 @@ define(function(require, exports, module) {
 				}
 				
 			}
-			console.error("This is what we got: ", txt);
+			// console.error("This is what we got: ", txt);
 
 			this.el.find(".orglistgo").empty().append(txt.go);
 			this.el.find(".orglistvgs").empty().append(txt.vgs);
