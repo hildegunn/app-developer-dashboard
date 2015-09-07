@@ -11,6 +11,7 @@
 		<ul class="nav nav-pills nav-stacked tabselector" style="text-align:right">
 			<li role="presentation" data-tabid="tabBasic" class=""><a href="#">Basic info</a></li>
 			<li role="presentation" data-tabid="tabTrust" class=""><a href="#">Trust</a></li>
+			<li role="presentation" data-tabid="tabAccess" class=""><a href="#">Access info</a></li>
 			<li role="presentation" data-tabid="tabScopes" class=""><a href="#">Scopes</a></li>
 			<li role="presentation" data-tabid="tabRequests" class="">
 				<a href="#"><span class="label label-danger queuecount pull-left"></span> Requests</a></li>
@@ -97,6 +98,8 @@
 
 
 
+
+
 		<div id="tabTrust">
 
 			<div class="row" style="">
@@ -125,6 +128,53 @@
 			</div>
 
 		</div>
+
+
+
+		<div id="tabAccess">
+
+			<div class="row" style="">
+
+				<div class="col-sm-12">
+
+					<p>Your API may be accessed on this API Gatekeeper base URL:</p>
+
+					<p><code>https://{id}.gk.feideconnect.no</code></p>
+					
+
+					<p>OAuth protected API requests that are sent to in example </p>
+
+					<p><code>https://{id}.gk.feideconnect.no/foo/bar</code>, like this:</p>
+
+<pre><code class="language-http">
+GET /foo/bar HTTP/1.1{~n}
+Host: {id}.gk.feideconnect.no{~n}
+Authorization: Bearer a005656a-8510-4d34-8897-f10638bb7b05
+</code></pre>	
+
+		<p>is forwarded to your API, <code>{endpoints[0]}/foo/bar</code>, like this:</p>
+
+<pre><code class="language-http">
+GET /foo/bar HTTP/1.1{~n}
+Authorization: Basic XXXXXXXX{~n}
+X_FEIDECONNECT_CLIENTID: 42b0c02e-0dda-4882-9da0-882a4b1abad6{~n}
+X_FEIDECONNECT_USERID: 76a7a061-3c55-430d-8ee0-6f82ec42501f{~n}
+X_FEIDECONNECT_USERID_SEC: feide:xxxx@uninett.no
+</code></pre>		
+
+
+
+
+					<p><code>https://{id}.gk.feideconnect.no</code></p>
+
+
+				</div>
+
+			</div>
+
+		</div>
+
+
 
 		<div id="tabScopes"  style="" class="row">
 
