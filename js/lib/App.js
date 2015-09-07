@@ -148,7 +148,7 @@ define(function (require, exports, module) {
 						
 
 						var _config = that.feideconnect.getConfig();
-						var profilephoto = _config.apis.auth + '/user/media/' + user.profilephoto;
+						var profilephoto = _config.apis.core + '/userinfo/v1/user/media/' + user.profilephoto;
 						// console.error("Profile url iu s", profilephoto);
 
 						if (authenticated) {
