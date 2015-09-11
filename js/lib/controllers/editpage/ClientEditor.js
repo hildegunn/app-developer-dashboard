@@ -36,8 +36,11 @@ define(function(require) {
 			this.ebind("click", ".actAPIScopeUpdate", "actAPIScopeUpdate");
 			this.ebind("click", ".actRemoveRedirectURI", "actRemoveRedirectURI");
 			this.ebind("click", ".actAddRedirectURI", "actAddRedirectURI");
+
+			this.ebind("click", ".apiEntry", "actScopeUpdate");
 		
 		},
+
 
 		"actRemoveRedirectURI": function(e) {
 			e.preventDefault();
@@ -254,7 +257,6 @@ define(function(require) {
 			e.preventDefault();
 
 			var that = this;
-
 			var container = $(e.currentTarget).closest(".apiEntry");
 
 			var scopes = {};
@@ -278,6 +280,9 @@ define(function(require) {
 			obj.id = fullobj.id;
 			obj.scopes_requested = fullobj.scopes_requested;
 
+
+			// console.error("Scope update", obj); return;
+
 			this.feideconnect.clientsUpdate(obj)
 				.then(function(savedClient) {
 					var x = new Client(savedClient);
@@ -291,6 +296,32 @@ define(function(require) {
 
 
 		},
+
+
+		"autoadjustScopes": function(container, type, set) {
+			container.find("input:checkbox").each(function(i, item) {
+				var itemtype = $(item).data("scopetype");
+				if (itemtype === type) {
+					$(item).prop("checked", set);
+				}
+			});
+		},
+
+
+		"actScopeUpdate": function(e) {
+			var container = $(e.currentTarget);
+			var input = $(e.target);
+			var isChecked = input.prop("checked");
+			var type = input.data("scopetype");
+
+			if (type === "main" && !isChecked) {
+				this.autoadjustScopes(container, "sub", false);
+			} else if (type === "sub" && isChecked) {
+				this.autoadjustScopes(container, "main", true);
+			}
+
+		},
+
 
 		"actScopeAdd": function(e) {
 			e.preventDefault();
