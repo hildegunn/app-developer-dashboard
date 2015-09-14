@@ -33,11 +33,16 @@ define(function(require, exports, module) {
 			this._super(el, true);
 
 			this.el.on("click", ".providerentry", function(e) {
-				e.preventDefault(); e.stopPropagation();
+				e.stopPropagation();
 				var t = $(e.currentTarget);
+				var t2 = $(e.target);
+				if (t2.prop("tagName") === 'INPUT') {
+					return;
+				}
+
+				e.preventDefault(); 
 				var ti = t.find('input');
 				ti.prop('checked', !ti.prop('checked'));
-				console.log("Klikk yeah!");
 
 			});
 			this.el.on("change", "input.selectgroup", function(e) {
@@ -45,7 +50,7 @@ define(function(require, exports, module) {
 				var t = $(e.currentTarget);
 				// var ti = t.find('input');
 				// ti.prop('checked', !ti.prop('checked'));
-				console.log("Changed input group!");
+				// console.log("Changed input group!");
 				that.updateDataFromInputControls();
 			});
 
@@ -54,7 +59,7 @@ define(function(require, exports, module) {
 				// var t = $(e.currentTarget);
 				// var ti = t.find('input');
 				// ti.prop('checked', !ti.prop('checked'));
-				console.log("SAVE CHANGES!");
+				// console.log("SAVE CHANGES!");
 				that.updateDataFromInputControls();
 				that.emit("save", that.selectedProviders);
 			});
@@ -212,7 +217,7 @@ define(function(require, exports, module) {
 
 		 	// console.log((new Error()).stack);
 
-		 	console.log("Provciderdata is ", this.providerdata);
+		 	// console.log("Provciderdata is ", this.providerdata);
 
 			return this.providerdata.onLoaded()
 				.then(this.proxy("draw"))

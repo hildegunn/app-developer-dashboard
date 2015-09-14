@@ -38,6 +38,7 @@ define(function(require) {
 			this.ebind("click", ".actAddRedirectURI", "actAddRedirectURI");
 
 			this.ebind("click", ".apiEntry", "actScopeUpdate");
+
 		
 		},
 
