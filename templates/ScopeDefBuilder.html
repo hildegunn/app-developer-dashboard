@@ -17,7 +17,17 @@
 
 		<table style="font-size: 85%" class="table table-striped">
 
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Scope</th>
+					<th>API Owner policy</th>
+					<th>Org policy</th>
+				</tr>
+
+			</thead>
 			<tbody>
+
 				<tr>
 					<td>{existing.scopedef.title}</td>
 					<td style="font-size: 90%"><code>gk_{existing.id}</code></td>
@@ -32,6 +42,17 @@
 								<i class="fa fa-check-square-o"></i>&nbsp;
 								Moderate</span>
 						{/existing.scopedef.policy.auto}
+					</td>
+					<td>
+						{#existing.scopedef.policy.orgadmin.moderate}
+							<span class="label label-danger">
+								<i class="fa fa-check-square-o"></i>&nbsp;
+								Moderate</span>
+						{:else}
+							<span class="label label-success">
+								<i class="fa fa-check"></i>&nbsp;
+								Accept</span>
+						{/existing.scopedef.policy.orgadmin.moderate}
 					</td>
 				</tr>
 
@@ -51,6 +72,18 @@
 									<i class="fa fa-check-square-o"></i>&nbsp;
 									Moderate</span>
 							{/policy.auto}
+						</td>
+						<td>
+							{#policy.orgadmin.moderate}
+								<span class="label label-danger">
+									<i class="fa fa-check-square-o"></i>&nbsp;
+									Moderate</span>
+							{:else}
+								<span class="label label-success">
+									<i class="fa fa-check"></i>&nbsp;
+									Accept</span>
+
+							{/policy.orgadmin.moderate}
 						</td>
 					</tr>
 
@@ -79,7 +112,7 @@
 
 
 
-		<div class="panel panel-primary">
+		<div class="panel panel-primary sectBasicScope">
 			<div class="panel-heading">
 				<h3 class="panel-title">Primary scope</h3>
 			</div>
@@ -104,7 +137,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="basicPolicy" class="col-sm-3 control-label">Accept policy </label>
+						<label for="basicPolicy" class="col-sm-3 control-label">API Owner Accept policy </label>
 
 						<div class="checkbox col-sm-9">
 							<label><input id="basicPolicy" type="checkbox"
@@ -114,6 +147,28 @@
 								> Auto-accept</label>
 
 							<p style="font-size: 90%">If auto-accept is not enabled, you will have to manually moderate and explicitly accept all new access requests from clients.</p>
+						</div>
+
+					</div>
+
+					<div class="form-group">
+						<label for="basicOrgAdminPolicy" class="col-sm-3 control-label">Organization Accept Policy </label>
+
+						<div class="checkbox col-sm-9">
+
+							<label><input id="basicOrgAdminPolicy" type="checkbox"
+									{^updated.scopedef.policy.orgadmin.moderate}
+										checked="checked"
+									{/updated.scopedef.policy.orgadmin.moderate}
+								> Auto-accept</label>
+
+							<div class="orgadmintarget" style="margin: 10px 14px 14px 14px"><p>Target organizations: </p>
+								<p><button class="btn btn-xs btn-warning actorgadmintarget"><i class="fa fa-list-ul"></i> Select …</button>
+									<span class="shortorglist"  style="font-weight: bold; margin-left: 2em">0</span> selected 
+								</p>
+							</div>
+
+							<p style="font-size: 90%">If auto-accept is not enabled, administrators from the users institution will have to moderate access before any of their users gain access through this client.</p>
 						</div>
 
 					</div>
@@ -160,14 +215,34 @@
 						</div>
 
 						<div class="form-group">
-							<label for="{id}_scopePolicy" class="col-sm-3 control-label">Accept policy </label>
+							<label for="{id}_scopePolicy" class="col-sm-6 control-label">API Owner Accept policy </label>
 
-							<div class="checkbox col-sm-9">
+							<div class="checkbox col-sm-6">
 								<label><input id="{id}_scopePolicy" class="scopePolicy"
 									{#policy.auto}
 										checked="checked"
 									{/policy.auto}
 									type="checkbox"> Auto-accept</label>
+
+							</div>
+
+						</div>
+
+						<div class="form-group">
+							<label for="{id}_scopePolicyOrgAdmin" class="col-sm-6 control-label">Organization Accept Policy </label>
+
+							<div class="checkbox col-sm-6">
+								<label><input id="{id}_scopePolicyOrgAdmin" class="scopePolicyOrgAdmin"
+									{^policy.orgadmin.moderate}
+										checked="checked"
+									{/policy.orgadmin.moderate}
+									type="checkbox"> Auto-accept</label>
+
+								<div class="orgadmintarget" style="margin: 10px 14px 14px 14px"><p>Target organizations: </p>
+									<p><button class="btn btn-xs btn-warning actorgadmintarget"><i class="fa fa-list-ul"></i> Select …</button>
+										<span class="shortorglist"  style="font-weight: bold; margin-left: 2em">0</span> selected 
+									</p>
+								</div>
 
 							</div>
 

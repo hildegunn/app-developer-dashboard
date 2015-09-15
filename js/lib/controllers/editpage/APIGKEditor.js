@@ -28,7 +28,7 @@ define(function(require, exports, module) {
 
 			this.clients = {};
 
-			this.scopedefbuilder = new ScopeDefBuilder(this.feideconnect);
+			this.scopedefbuilder = new ScopeDefBuilder(this.feideconnect, app.app);
 			this.scopedefbuilder.on("save", function(obj) {
 
 				that.feideconnect.apigkUpdate(obj)

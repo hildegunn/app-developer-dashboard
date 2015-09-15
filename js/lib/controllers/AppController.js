@@ -12,13 +12,10 @@ define(function(require, exports, module) {
 	var AppController = Controller.extend({
 
 		"init": function() {
-			
-			// console.log("initiator (AppController)");
 
 			this._super($("body"));
 
 			// Routing
-			
 			if (!this.routes) {
 				this.routes = [];
 			}
@@ -42,7 +39,6 @@ define(function(require, exports, module) {
 			}
 
 			if (!this.routingEnabled) {return;}
-			console.log("Routing continue", this.routingEnabled);
 
 			var hash = window.location.hash;
 			
@@ -67,13 +63,10 @@ define(function(require, exports, module) {
 
 			}
 
-			// console.error("no match found for this route");
-
 		},
 
 		"setHash": function(hash) {
 
-			// console.log("Set hash", hash);
 			this.routingEnabled = false;
 			var that = this;
 

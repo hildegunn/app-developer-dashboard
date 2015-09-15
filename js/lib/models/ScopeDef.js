@@ -12,11 +12,32 @@ define(function(require, exports, module) {
 
 			this.title = "Basic access";
 			this.subscopes = {};
-			this.policy = {"auto": false};
+			this.policy = {
+				"auto": false,
+				"orgadmin": {
+					"moderate": false
+				}
+			};
 
 			this._super(props);
 
 		},
+
+		"getOrgList": function() {
+
+			if (this.policy.orgadmin && this.policy.orgadmin.target) {
+				return this.policy.orgadmin.target;
+			}
+			if (this.subscopes) {
+				for(var key in this.subscopes) {
+					if (this.subscopes[key].policy.orgadmin && this.subscopes[key].policy.orgadmin.target) {
+						return this.subscopes[key].policy.orgadmin.target;
+					}
+				}	
+			}
+			return [];
+		},
+			
 		"addEmptySubScope": function() {
 
 			var i = 1;
@@ -29,7 +50,12 @@ define(function(require, exports, module) {
 			this.subscopes[scope] = {
 				"title": "",
 				"descr": "",
-				"policy": {"auto": false}
+				"policy": {
+					"auto": false,
+					"orgadmin": {
+						"moderate": false
+					}
+				}
 			};
 
 		},

@@ -56,7 +56,7 @@ define(function(require) {
 
 		"logoUploaded": function(data) {
 			var that = this;
-			console.log("About to upload image", this.current.id, data);
+			// console.log("About to upload image", this.current.id, data);
 			that.feideconnect.clientsUpdateLogo(this.current.id, data)
 				.then(function() {
 					var _config = that.feideconnect.getConfig();
@@ -64,7 +64,7 @@ define(function(require) {
 					that.el.find('.itemlogo').attr("src", url);
 				})
 				.catch(function(err) {
-					console.error(err);
+					// console.error(err);
 					that.app.setErrorMessage("Error uploading logo", "danger", err);
 				});
 		},

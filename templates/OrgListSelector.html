@@ -1,0 +1,50 @@
+<div class="modal fade" >
+  <div class="modal-dialog" style="width: 80%">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Select a set of organizations</h4>
+      </div>
+
+      <div class="modal-body">
+
+		<p>Select a set of organizations from where users should be able to access this API through clients. An administrator on an institution will need to moderate / accept each new client in order to .</p>
+
+			<form class="registerform" role="form">  
+
+				<div class="row">
+
+					{#columns}
+					<div class="col-md-3">
+						<div class="list-group">
+						{#orgs}
+							<a href="#" data-id="{id}" class="list-group-item providerentry {#selected}active{/selected}" >
+								<div class="pull-left">
+									<input type="checkbox" {#selected}checked="checked"{/selected} />
+								</div>
+								<div style="margin-left: 24px" class="media">
+									<div class="media-left media-middle">
+										<img class="media-object" style="width: 32px; height: 32px" 
+										src="https://api.feideconnect.no/orgs/fc:org:{id}/logo" alt="...">
+									</div>
+									<div class="media-body"><p>{title}</p></div>
+								</div>
+							</a>
+						{/orgs}
+						</div>
+					</div>
+					{/columns}
+
+				</div>
+
+			</form>
+
+      </div>
+      <div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">{_.cancel}</a>
+		<a href="#" class="actSaveChanges btn btn-primary">Set organizations</a>
+      </div>
+    </div>
+  </div>
+</div>
