@@ -488,32 +488,22 @@
 									<table style="font-size: 85%" class="table table-striped">
 										<thead>
 											<tr>
-												
+												<td>&nbsp;</td>
+												<td>Status</td>
 												<td>Scope name</td>
 												<td>Scope</td>
 												<td>Policy</td>
-												<td>Status</td>
-												<td>Update</td>
+
 											</tr>
 
 										</thead>
 										<tbody>
 											<tr>
-												<td>{title}</td>
-												<td style="font-size: 90%"><code>gk_{id}</code></td>
+
 
 												<td>
-													{#policy.auto}
-														<span class="label label-success">
-															<i class="fa fa-check"></i>&nbsp;
-															Accept</span>
-													{:else}
-														<span class="label label-danger">
-															<i class="fa fa-check-square-o"></i>&nbsp;
-															Moderate</span>
-													{/policy.auto}
+													<input class="authscope" data-scopetype="main" data-scopemoderate="gk_{id}" type="checkbox" checked="checked" /> 
 												</td>
-
 
 												<td>
 
@@ -533,14 +523,25 @@
 
 												</td>
 
+												<td>{title}</td>
+												<td style="font-size: 90%"><code>gk_{id}</code></td>
 
 												<td>
-
-													<input class="authscope" data-scopetype="main" data-scopemoderate="gk_{id}" type="checkbox" checked="checked" /> 
-
-
-
+													{#policy.auto}
+														<span class="label label-success">
+															<i class="fa fa-check"></i>&nbsp;
+															Accept</span>
+													{:else}
+														<span class="label label-danger">
+															<i class="fa fa-check-square-o"></i>&nbsp;
+															Moderate</span>
+													{/policy.auto}
 												</td>
+
+
+
+
+
 
 
 											</tr>
@@ -549,19 +550,17 @@
 
 												<tr>
 
-													<td>{title}</td>
-													<td style="font-size: 90%"><code>gk_{id}_{scope}</code></td>
 
-													<td>
-														{#policy.auto}
-															<span class="label label-success">
-																<i class="fa fa-check"></i>&nbsp;
-																Accept</span>
+													<td style="padding-left: 12px">
+
+														{?status.checked}
+															<input class="authscope" type="checkbox" data-scopetype="sub" data-scopemoderate="gk_{id}_{scope}" checked="checked" /> 
 														{:else}
-															<span class="label label-danger">
-																<i class="fa fa-check-square-o"></i>&nbsp;
-																Moderate</span>
-														{/policy.auto}
+
+															<input class="authscope" type="checkbox" data-scopetype="sub" data-scopemoderate="gk_{id}_{scope}" /> 
+														{/status.checked}
+
+
 													</td>
 													<td>
 
@@ -579,17 +578,23 @@
 
 
 													</td>
+
+													<td>{title}</td>
+													<td style="font-size: 90%"><code>gk_{id}_{scope}</code></td>
+
 													<td>
-
-														{?status.checked}
-															<input class="authscope" type="checkbox" data-scopetype="sub" data-scopemoderate="gk_{id}_{scope}" checked="checked" /> 
+														{#policy.auto}
+															<span class="label label-success">
+																<i class="fa fa-check"></i>&nbsp;
+																Accept</span>
 														{:else}
-
-															<input class="authscope" type="checkbox" data-scopetype="sub" data-scopemoderate="gk_{id}_{scope}" /> 
-														{/status.checked}
-
-
+															<span class="label label-danger">
+																<i class="fa fa-check-square-o"></i>&nbsp;
+																Moderate</span>
+														{/policy.auto}
 													</td>
+
+
 												</tr>
 
 											{:else}
@@ -607,7 +612,7 @@
 
 								<p class="">
 
-									<button class="btn btn-sm btn-primary actAPIScopeUpdate pull-right">
+									<button class="btn btn-sm btn-primary actAPIScopeUpdate ">
 										<!-- <i class="glyphicon glyphicon-chevron-up"></i>&nbsp; -->
 										Save changes</button>
 
