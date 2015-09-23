@@ -34,7 +34,6 @@ define(function(require, exports, module) {
 
 		"searchMatch": function(term) {
 			var re = new RegExp(term);
-			console.error("Performing a search match for " + term, this.name, this.descr);
 			if (this.name && this.name.toLowerCase().match(re)) {
 				return true;
 			}
