@@ -10,8 +10,7 @@ define(function(require) {
 		TemplateEngine = require('../../TemplateEngine'),
 		AuthProviderSelector = require('../AuthProviderSelector'),
 		Waiter = require('../../Waiter'),
-		$ = require('jquery'),
-		utils = require('../../utils')
+		$ = require('jquery')
 		;
 
 
