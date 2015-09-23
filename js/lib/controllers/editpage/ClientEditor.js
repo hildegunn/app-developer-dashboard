@@ -54,8 +54,6 @@ define(function(require) {
     		this.el.on("propertychange change click keyup input paste", '#apisearch', function() {
 				var st = utils.normalizeST($("#apisearch").val());
 
-				console.error("SEEARCH ‹" + st + "›");
-
 				if (st !== that.searchTerm) {
 					that.searchTerm = st;
 					if (st === null) {
@@ -79,7 +77,7 @@ define(function(require) {
 				var itemx = $(e.target);
 
 				if(itemx.closest("div.extendedinfo").length !== 0) {
-					console.error("Ignore");
+					// console.error("Ignore");
 					return;
 				}
 
@@ -262,7 +260,7 @@ define(function(require) {
 
 			}
 
-			console.error("Client editor view is ", view);
+			// console.error("Client editor view is ", view);
 			
 			this.el.children().detach();
 			return this.template.render(this.el, view)
@@ -295,7 +293,6 @@ define(function(require) {
 
 
 		"doSearch": function(term) {
-			console.error("Do search");
 			return this.drawAPIs();
 		},
 		
@@ -311,7 +308,6 @@ define(function(require) {
 			}
 
 			var apis = this.publicapis.apigks;
-
 			var apiids = this.current.getAPIscopes();
 			var clientAPIkeys = new StringSet(apiids);
 
@@ -329,7 +325,7 @@ define(function(require) {
 					view.apis.push(apis[key].getView());
 				}
 			}
-			// console.error("VIEW", view);
+			
 			return this.apipublictemplate.render(this.el.find("#publicapicontainer").empty(), view);
 
 			
