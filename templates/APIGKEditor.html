@@ -48,9 +48,16 @@
 					</div>
 
 					<div class="form-group">
-						<label for="apidescr">Description</label>
-						<textarea class="form-control" id="apidescr" rows="3">{descr}</textarea>
+						<label for="descr">Description for end-users</label>
+						<textarea class="form-control" id="descr" rows="3">{descr}</textarea>
 					</div>
+
+
+					<div class="form-group">
+						<label for="descr">Description for system administrators and developers</label>
+						<textarea class="form-control" id="descrdev" rows="5">{descrdev}</textarea>
+					</div>
+
 
 					<div class="form-group">
 						<label for="endpoint">API Endpoint</label>
@@ -65,6 +72,22 @@
 						</div>
 
 					</div>
+
+
+
+					<div class="form-group">
+						<label for="urlprivacy">Privacy Policy URL</label>
+						<input class="form-control" id="urlprivacy" placeholder="http://">{urlprivacy}</textarea>
+					</div>
+
+					<div class="form-group">
+						<label for="urldocs">API Documentation</label>
+						<input class="form-control" id="urldocs" placeholder="http://">{urldocs}</textarea>
+					</div>
+
+
+
+
 
 					<p><button class="btn btn-success actSaveChanges" class="">
 						<i class="glyphicon glyphicon-ok"></i> Save changes</button></p>

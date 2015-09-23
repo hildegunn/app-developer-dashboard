@@ -47,9 +47,16 @@
 					</div>
 
 					<div class="form-group">
-						<label for="descr">Description</label>
+						<label for="descr">Description for end-users</label>
 						<textarea class="form-control" id="descr" rows="3">{descr}</textarea>
 					</div>
+
+
+					<div class="form-group">
+						<label for="descr">Description for system administrators</label>
+						<textarea class="form-control" id="descrdev" rows="5">{descrdev}</textarea>
+					</div>
+
 
 					<div class="form-group">
 						<label for="">Redirect URI</label>
@@ -82,13 +89,32 @@
 							{/redirect_uri}
 						</div>
 
-
 						<div class="clearfix"></div>
 						<div class="pull-right" style="margin-top: 3px; margin-right: 4px">
 							<button class="btn btn-default actAddRedirectURI"><i class="fa fa-plus"></i></button>
 						</div>
 
 
+					</div>
+
+					<div class="form-group">
+						<label for="urlprivacy">Privacy Policy URL</label>
+						<input class="form-control" id="urlprivacy" placeholder="http://">{urlprivacy}</textarea>
+					</div>
+
+					<div class="form-group">
+						<label for="urlhomepage">Service homepage</label>
+						<input class="form-control" id="urlhomepage" placeholder="http://">{urlhomepage}</textarea>
+					</div>
+
+					<div class="form-group">
+						<label for="urllogin">Service Login URL</label>
+						<input class="form-control" id="urllogin" placeholder="http://">{urllogin}</textarea>
+					</div>
+
+					<div class="form-group">
+						<label for="urlsupport">End-user support URL</label>
+						<input class="form-control" id="urlsupport" placeholder="http://">{urlsupport}</textarea>
 					</div>
 
 					<p><button class="btn btn-success actSaveChanges" class="">

@@ -17,9 +17,6 @@ define(function(require, exports, module) {
 
 
 
-
-
-
 	var APIGK = Model.extend({
 		"init": function(props) {
 
