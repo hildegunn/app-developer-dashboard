@@ -42,6 +42,23 @@ define(function(require, exports, module) {
 			return res;			
 		},
 
+
+		"getAPIAuthView": function() {
+			var view = [];
+			// console.error("this.scopeauthorizations", this);
+			if (this.hasOwnProperty("scopeauthorizations")) {
+
+				for(var key in this.scopeauthorizations) {
+					var x = {};
+					x.scope = key;
+					x.authorized = this.scopeauthorizations[key];
+					view.push(x);
+				}
+			}
+
+			return view;
+		},
+
 		"getAPIGKview": function(apigk) {
 
 			var that = this;

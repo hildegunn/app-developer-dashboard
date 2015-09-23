@@ -11,7 +11,9 @@ define(function (require, exports, module) {
 		MainListing = require('./controllers/mainpage/MainListing'),
 
 		OrgAdminPane = require('./controllers/orgadmin/OrgAdminPane'),
+		OrgAdminAPIAuthorizationPane = require('./controllers/orgadmin/OrgAdminAPIAuthorizationPane'),
 		OrgAdminClients = require('./models/OrgAdminClients'),
+		OrgAdminAPIs = require('./models/OrgAdminAPIs'),
 
 		ClientPool = require('./models/ClientPool'),
 		Client = require('./models/Client'),
@@ -59,26 +61,37 @@ define(function (require, exports, module) {
 
 
 			this.orgAdminClients = null;
-			this.simpleOrgAdminView = null;
 			this.orgAdminView = null;
+			this.orgAdminAPIs = null;
+			this.orgAdminAPIAuthorization = null;
+
 			if (this.role.isOrgType("home_organization")) {
+
 				this.orgAdminClients = new OrgAdminClients(this.feideconnect, orgid2);
 				this.orgAdminClients.initLoad();
 
-
 				this.orgAdminView = new OrgAdminPane(this.feideconnect, this, this.publicClientPool, this.orgAdminClients);
-				that.orgAdminView.initLoad();
+				this.orgAdminView.initLoad();
+
+				this.orgAdminAPIs = new OrgAdminAPIs(this.feideconnect, orgid2);
+				this.orgAdminAPIs.initLoad();
+
+				this.orgAdminAPIAuthorization = new OrgAdminAPIAuthorizationPane(this.feideconnect, this, this.orgAdminAPIs, this.publicapis); // , this.publicClientPool, this.orgAdminClients);
+				this.orgAdminAPIAuthorization.initLoad();
 
 			}
 
 
 
 			this.pc = new PaneController(this.el);
-			this.mainlisting = new MainListing(this.feideconnect, this, this.orgAdminClients);
+			this.mainlisting = new MainListing(this.feideconnect, this, this.orgAdminClients, this.orgAdminAPIs);
 			this.pc.add(this.mainlisting);
 
 			if (this.orgAdminView !== null) {
 				this.pc.add(this.orgAdminView);
+			}
+			if (this.orgAdminAPIAuthorization !== null) {
+				this.pc.add(this.orgAdminAPIAuthorization);
 			}
 
 
@@ -95,13 +108,17 @@ define(function (require, exports, module) {
 
 
 			this.mainlisting.on("manageMandatory", function() {
-				// console.error("manageMandatory", that.orgid);
 				if (that.orgAdminView !== null) {
-					
 					that.actMandatory();
-					// that.orgAdminView.activate();
 				}
 			});
+
+			this.mainlisting.on("manageAPIAuth", function() {
+				if (that.orgAdminAPIAuthorization !== null) {
+					that.actAPIAuth();
+				}
+			});
+
 			this.mainlisting.initLoad();
 
 
@@ -254,6 +271,11 @@ define(function (require, exports, module) {
 		"actMandatory": function() {
 			this.app.setHash('/' + this.orgid + '/mandatory');
 			this.orgAdminView.activate();
+		},
+
+		"actAPIAuth": function() {
+			this.app.setHash('/' + this.orgid + '/apiauthorization');
+			this.orgAdminAPIAuthorization.activate();
 		},
 
 		"getOrgInfo": function() {

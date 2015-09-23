@@ -6,34 +6,36 @@ define(function(require, exports, module) {
 
 		Class = require('../class'),
 		EventEmitter = require('../EventEmitter'),
-
-		Client = require('./Client'),
+		Controller = require('../controllers/Controller'),
 		APIGK = require('./APIGK')
 		;
 
 
-	var PublicAPIPool = Class.extend({
+	var PublicAPIPool = Controller.extend({
 		"init": function(feideconnect) {
-
 			var that = this;
 			this.feideconnect = feideconnect;
-
 			this.apigks = {};
-			this.apigksLoaded = false;
 
-			this.feideconnect.apigkPublicList(function(apigks) {
+			this._super(undefined, true);
+		},
 
-				// console.log("Loaded public set of apis", apigks);
-				var i;
-				for (i = 0; i < apigks.length; i++) {
-					that.apigks[apigks[i].id] = new APIGK(apigks[i]);
-				}
-				if (!that.apigksLoaded) {that.emit("ready", that.apigks);}
-				that.apigksLoaded = true;
-				that.emit('apigkChange', that.apigks);
+		"initLoad": function() {
+			return this.load()
+				.then(this.proxy("_initLoaded"));
+		},
 
-			});
+		"load": function() {
+			var that = this;
 
+			return that.feideconnect.apigkPublicList()
+				.then(function(apigks) {
+					var i;
+					for (i = 0; i < apigks.length; i++) {
+						that.apigks[apigks[i].id] = new APIGK(apigks[i]);
+					}
+					that.emit('apigkChange', that.apigks);
+				});
 		},
 
 		"getView": function() {
@@ -45,17 +47,13 @@ define(function(require, exports, module) {
 				items.push(x.getView());
 			}
 			return items;
-
 		},
 
 
 		"ready": function(callback) {
-			if (this.apigksLoaded) {
-				callback(this.apigks);
-			} else {
-				this.on("ready", callback);
-			}
+			throw new Error("Ready() deprecated");
 		},
+
 		"setAPIGK": function(apigk) {
 			this.apigks[apigk.id] = apigk;
 			this.emit("apigkChange", this.apigks);
@@ -66,7 +64,6 @@ define(function(require, exports, module) {
 		},
 		"removeAPIGK": function(id) {
 			delete this.apigks[id];
-			// console.error("DELETE APIGK", id);
 			this.emit("apigkChange", this.apigks);
 		}
 

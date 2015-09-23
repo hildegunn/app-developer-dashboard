@@ -12,7 +12,7 @@ define(function(require, exports, module) {
 		;
 
 
-	var OrgAdminClients = Controller.extend({
+	var OrgAdminAPIs = Controller.extend({
 		"init": function(feideconnect, orgid) {
 
 			var that = this;
@@ -20,27 +20,26 @@ define(function(require, exports, module) {
 			this.feideconnect = feideconnect;
 			this.orgid = orgid;
 
-			this.clients = [];
-			
-			this._super();
+			this.realm = orgid.substring(7);
 
+			this.clients = [];
+			this._super();
 		},
 
 		"initLoad": function() {
 			return this.load()
 				.then(this.proxy("_initLoaded"));
-
 		},
 
 		"getClients": function() {
 			return this.clients;
 		},
 
+
 		"load": function() {
 			var that = this;
-			return this.feideconnect.getMandatoryClients(this.orgid)
+			return this.feideconnect.getOrgTargetedAPIs(this.realm)
 				.then(function(clients) {
-
 					that.clients = [];
 					for (var i = 0; i < clients.length; i++) {
 						that.clients.push(new Client(clients[i]));
@@ -51,8 +50,8 @@ define(function(require, exports, module) {
 
 
 	}).extend(EventEmitter);
-	OrgAdminClients._CLASSNAME = 'OrgAdminClients';
-	return OrgAdminClients;
+
+	return OrgAdminAPIs;
 
 
 

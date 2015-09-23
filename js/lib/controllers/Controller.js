@@ -12,7 +12,7 @@ define(function(require, exports, module) {
 		"init": function(el, load) {
 			this.el = el || this.el || $('<div class=""></div>');
 
-			this._loaderTimeout = 5000;
+			this._loaderTimeout = 8000;
 			
 			this.onLoadedCallbacks = [];
 			this.isLoaded = false;
@@ -28,6 +28,7 @@ define(function(require, exports, module) {
 			var that = this;
 			if (this.isLoaded) {
 				return new Promise(function(resolve, reject) {
+					// console.error("Already loaded, returning a empty PROMISE");
 					resolve(that);
 				});
 			}

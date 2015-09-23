@@ -40,6 +40,37 @@ define(function(require) {
 			this.ebind("click", ".apiEntry", "actScopeUpdate");
 
 		
+			this.initLoad();
+		},
+
+		"initLoad": function() {
+
+			return Promise.all([
+					this.loadScopeDef(),
+					this.publicapis.onLoaded()
+				])
+				.then(this.proxy("_initLoaded"));
+
+		},
+
+
+		"loadScopeDef": function() {
+
+			var fcc = this.feideconnect.getConfig();
+			var endpoint = fcc.apis.core + '/clientadm/scopes/';
+			var that = this;
+
+			return new Promise(function(resolve, reject) {
+
+				$.getJSON(endpoint, function(scopePolicy) {
+					// console.error("Scopedef is", scopePolicy);
+					that.scopePolicy = scopePolicy;
+					resolve();
+				});
+
+			});
+
+
 		},
 
 
@@ -74,6 +105,8 @@ define(function(require) {
 
 			var apis = this.publicapis.apigks;
 			$("#apigklisting").empty();
+
+			// console.error("API GK LIsting", apis);
 			for(var key in apis) {
 				if (apis.hasOwnProperty(key)) {
 					$("#apigklisting").append('<div>' + apis + '</div>');	
@@ -89,96 +122,83 @@ define(function(require) {
 
 			var view = item.getView(this.feideconnect);
 
-			var fcc = this.feideconnect.getConfig();
-			var endpoint = fcc.apis.core + '/clientadm/scopes/';
 
-			$.getJSON(endpoint, function(scopePolicy) {
-				// console.error("Scopedef is", scopePolicy);
+			var scopes = item.getScopes(this.scopePolicy);
 
-				var scopes = item.getScopes(scopePolicy);
+			if (that.feideconnect) {
+				$.extend(view, {
+					"_config": that.feideconnect.getConfig(),
+					"scopelist": scopes
+				});
+			}
 
-				if (that.feideconnect) {
-					$.extend(view, {
-						"_config": that.feideconnect.getConfig(),
-						"scopelist": scopes
-					});
+			var apiids = item.getAPIscopes();
+			var clientAPIkeys = new StringSet(apiids);
+			var apis = this.publicapis.apigks;
+
+			console.error("")
+
+			var myapis = [], api, i;
+
+			for(i = 0; i < apiids.length; i++) {
+				api = that.publicapis.getAPIGK(apiids[i]);
+				if (api !== null) {
+					myapis.push(api);
+				}
+			}
+
+			var aapiview;
+			view.authorizedAPIs = [];
+			view.requestedAPIs = [];
+
+			// console.error("APIS", apis);
+
+			view.apis = [];
+			for(var key in apis) {
+				if (apis.hasOwnProperty(key)) {
+					// console.log("About to process ", apis[key].name, clientAPIkeys.has(apis[key].id));
+					if (clientAPIkeys.has(apis[key].id)) {continue;}
+					view.apis.push(apis[key].getView());
+				}
+			}
+
+			for(i = 0; i < myapis.length; i++) {
+
+				// if (new Client()  instanceof Client.prototype) {
+				// 	throw new Error("Cannot getClientView without providing a valid Client object.");
+				// }
+
+				aapiview = myapis[i].getClientView(that.current);
+				if (aapiview.sd.authz) {
+					view.authorizedAPIs.push(aapiview);
+				} 
+				if (aapiview.sd.req) {
+					view.requestedAPIs.push(aapiview);
 				}
 
-				var apiids = item.getAPIscopes();
-				var clientAPIkeys = new StringSet(apiids);
+			}
 
+			console.error("Client editor view is ", view);
+			
 
-				that.publicapis.ready(function(apis) {
+			dust.render("clienteditor", view, function(err, out) {
 
-					var myapis = [], api, i;
-
-					for(i = 0; i < apiids.length; i++) {
-						api = that.publicapis.getAPIGK(apiids[i]);
-						if (api !== null) {
-							myapis.push(api);
-						}
-					}
-
-					var aapiview;
-					view.authorizedAPIs = [];
-					view.requestedAPIs = [];
-
-					// console.error("APIS", apis);
-
-					view.apis = [];
-					for(var key in apis) {
-						if (apis.hasOwnProperty(key)) {
-							// console.log("About to process ", apis[key].name, clientAPIkeys.has(apis[key].id));
-							if (clientAPIkeys.has(apis[key].id)) {continue;}
-							view.apis.push(apis[key].getView());
-						}
-					}
-
-					for(i = 0; i < myapis.length; i++) {
-
-						// if (new Client()  instanceof Client.prototype) {
-						// 	throw new Error("Cannot getClientView without providing a valid Client object.");
-						// }
-
-						aapiview = myapis[i].getClientView(that.current);
-						if (aapiview.sd.authz) {
-							view.authorizedAPIs.push(aapiview);
-						} 
-						if (aapiview.sd.req) {
-							view.requestedAPIs.push(aapiview);
-						}
-
-					}
-
-					// console.error("View is ", view);
-					
-
-					dust.render("clienteditor", view, function(err, out) {
-
-						var tab = that.currentTab;
-						if (setTab) {
-							tab = setTab;
-						}
-						that.el.empty().append(out);
-						that.selectTab(tab);
-						var mockupdata = ['feide|all', 'social|all'];
-						// console.error("ITem is ", that.current);
-						that.aps = new AuthProviderSelector(that.el.find('.authproviders'), that.app.providerdata, that.current.authproviders);
-						that.aps.on('save', function(providers) {
-							that.actUpdateAuthProviders(providers);
-						})
-
-					});
-
-					that.activate();
-
-				});
-				
-
+				var tab = that.currentTab;
+				if (setTab) {
+					tab = setTab;
+				}
+				that.el.empty().append(out);
+				that.selectTab(tab);
+				var mockupdata = ['feide|all', 'social|all'];
+				// console.error("ITem is ", that.current);
+				that.aps = new AuthProviderSelector(that.el.find('.authproviders'), that.app.providerdata, that.current.authproviders);
+				that.aps.on('save', function(providers) {
+					that.actUpdateAuthProviders(providers);
+				})
 
 			});
 
-
+			that.activate();
 
 
 

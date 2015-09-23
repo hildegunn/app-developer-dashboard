@@ -19,6 +19,13 @@ define(function(require, exports, module) {
 		template = require('text!templates/OrgAdmin.html')
 		;
 
+
+	var clientsort = function(a,b) {
+		if (a.madatory === b.mandatory) {return 0;}
+		if (a.mandatory) { return -1;}
+		if (b.mandatory) { return 1;}
+	};
+
 	/*
 	 * This controller controls 
 	 */
@@ -38,7 +45,6 @@ define(function(require, exports, module) {
 			this.ebind("click", ".actSetMandatory", "actSetMandatory");
 			this.ebind("click", ".actRemoveMandatory", "actRemoveMandatory");
 
-
 		},
 
 
@@ -56,8 +62,6 @@ define(function(require, exports, module) {
 			for(var key in this.clients) {
 				this.clients[key].mandatory = mandIndex.hasOwnProperty(key);
 			}
-
-
 
 			// this.clients = this.publicClientPool.getClients();
 			// var mand = this.orgAdminClients.getClients();
@@ -122,12 +126,7 @@ define(function(require, exports, module) {
 				clientview.push(x);
 			}
 
-			clientview.sort(function(a,b) {
-
-				if (a.madatory === b.mandatory) {return 0;}
-				if (a.mandatory) { return -1;}
-				if (b.mandatory) { return 1;}
-			});
+			clientview.sort(clientsort);
 
 
 			var view = {

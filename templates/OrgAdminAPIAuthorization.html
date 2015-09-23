@@ -1,0 +1,144 @@
+
+
+
+<div style="margin-top: 1em">
+	<p>Below is listed all clients that requests access to one or more API scopes that needs to be moderated by you or another administrator at your organizations, in order for your users to be able to use that client with the requested APIs.</p>	
+
+
+</div>
+
+
+<div style="text-align: right">
+	<button class="btn btn-primary btn-lg actSaveChanges">Save changes</button>
+</div>
+
+
+<div class="listingMandAPIAuthz list-group" style="margin-top: 1em">
+
+{#clients}
+	<div  class="list-group-item media clientEntry">
+
+
+		{#client}
+
+			<div class="row">				
+				<div class="col-md-7">
+
+					<div class="media-left">
+						<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/clientadm/clients/{id}/logo" alt="Client logo">
+					</div>
+					<div class="media-body">
+
+						<h4 class="list-group-item-heading">{name}</h4>
+						<p class="list-group-item-text" style="font-size: 80%" ><i class="glyphicon glyphicon-chevron-right"></i> {id}</p>
+						<p class="list-group-item-text">{descr}</p>
+
+					</div>
+
+				</div>
+
+				<div class="col-md-5">
+
+					{?trustOwner}
+						{#owner}
+							
+							<!--<p></p>
+							<p>{id}</p>-->
+							<p>
+								<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.auth}/user/media/{id}"> &nbsp;&nbsp;
+								{name}
+							</p>
+
+						{/owner}
+					{/trustOwner}
+
+					{?trustOrg}
+						{#organization}
+							<p>
+								<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/orgs/{id}/logo"> &nbsp;&nbsp;
+								{name}
+							</p>
+						{/organization}
+					{/trustOrg}
+
+
+				</div>
+
+
+			</div>
+
+
+		{/client}
+
+		{#apis}
+			<div class="row">
+				<div class="col-md-6 col-md-offset-1">
+
+					<div class="media">
+						<div class="media-left">
+							<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/apigkadm/apigks/{id}/logo" alt="Logo of 3rd party API">
+						</div>
+						<div class="media-body">
+
+							<!-- <div class="pull-right"><code class="">gk_{id}</code></div> -->
+							<h4 class="list-group-item-heading">{name}</h4>
+							<p class="list-group-item-text">{descr}</p>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-5">
+					{#owner}
+						<p>
+							<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.auth}/user/media/{id}"> &nbsp;&nbsp;
+							{name}
+						</p>
+					{/owner}
+				</div>
+			</div>
+
+			{#scopeauths}
+				<div class="row" style="border-top: 1px solid #eee">
+					<div class="col-md-6 col-md-offset-2">
+						<h4>{scope.title}</h4>
+						<p>{scope.descr}</p>
+					</div>
+					<div class="col-md-2">
+						<p>
+							{?authorized}
+								<span class="label label-success">Accepted</span>
+							{:else}
+								<span class="label label-danger">Not accepted</span>
+							{/authorized}
+						</p>
+					</div>
+					<div class="col-md-2 ">
+						<div class="checkbox" style="margin:0px; padding:0px">
+						<label>
+							<input type="checkbox" class="scopeauthentry" data-clientid="{client.id}" data-scopeid="{scope.id}" {?authorized}checked="checked"{/authorized}> Accept
+						</label>
+						</div>
+					</div>
+				</div>
+				<p>{scope.scope}</p>
+			{/scopeauths}
+
+
+		{/apis}
+
+
+
+	</div>
+
+
+
+	
+{:else}
+	<p>No clients are currently registered.</p>
+{/clients}
+</div>
+
+
+<pre style="font-size: 85%" id="xdebug"></pre>
+

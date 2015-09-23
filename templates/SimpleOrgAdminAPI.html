@@ -1,0 +1,27 @@
+
+
+<h4>API Authorizations</h4>
+
+
+<button class="btn btn-primary pull-right actManageAPIAuth"><i class="fa fa-list-ul"></i> Manage API Authorizations</button>
+
+{?hasClients}
+
+	<p>A number of clients has access to or requested APIs which is moderated by the administrator of this organization, such as 
+
+	{#clients}
+		<strong>{name}</strong>, 
+	{/clients}
+
+	{?hasMore}
+		and {rest} more.
+	{/hasMore}
+
+	</p>
+
+{:else}
+
+	<p>This organization has listed no mandatory applications</p>
+
+{/hasClients}
+

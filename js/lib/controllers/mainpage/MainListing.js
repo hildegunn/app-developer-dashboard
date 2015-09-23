@@ -11,6 +11,7 @@ define(function(require, exports, module) {
 		EventEmitter = require('../../EventEmitter'),
 
 		SimpleOrgAdminController = require('../orgadmin/SimpleOrgAdminController'),
+		SimpleOrgAdminAPIAuth = require('../orgadmin/SimpleOrgAdminAPIAuth'),
 
 
 		utils = require('../../utils'),
@@ -28,12 +29,13 @@ define(function(require, exports, module) {
 	 * This controller controls 
 	 */
 	var MainListing = Pane.extend({
-		"init": function(feideconnect, app, orgAdminClients) {
+		"init": function(feideconnect, app, orgAdminClients, orgAdminAPIs) {
 
 			var that = this;
 			this.feideconnect = feideconnect;
 			this.app = app;
 			this.orgAdminClients = orgAdminClients;
+			this.orgAdminAPIs = orgAdminAPIs;
 
 			this._super();
 
@@ -53,7 +55,10 @@ define(function(require, exports, module) {
 
 
 			this.simpleOrgAdminView = null;
+			this.simpleOrgAdminAPI = null;
+
 			if (orgAdminClients !== null) {
+
 				this.simpleOrgAdminView = new SimpleOrgAdminController(this.feideconnect, this.orgAdminClients);
 				this.simpleOrgAdminView.initLoad();
 
@@ -61,11 +66,18 @@ define(function(require, exports, module) {
 					that.emit("manageMandatory");
 				});
 
-
 			}
 
+			if (orgAdminAPIs !== null) {
+				this.simpleOrgAdminAPI = new SimpleOrgAdminAPIAuth(this.feideconnect, this.orgAdminAPIs);
+				this.simpleOrgAdminAPI.initLoad();
 
 
+				this.simpleOrgAdminAPI.on("manageAPIAuth", function() {
+					that.emit("manageAPIAuth");
+				});
+
+			}
 
 
 			this.clientcreate = new ClientCreate(this.app);
@@ -212,10 +224,11 @@ define(function(require, exports, module) {
 					that.el.find('#listingAPIGKs').append(that.elAPIGKs);
 
 					if (that.simpleOrgAdminView !== null) {
-						that.el.find("#simpleOrgAdminView").show().append(that.simpleOrgAdminView.el);	
+						that.el.find(".simpleOrgAdminView").show().append(that.simpleOrgAdminView.el);
 					}
-					
-
+					if  (that.simpleOrgAdminAPI !== null) {
+						that.el.find(".simpleOrgAdminAPI").show().append(that.simpleOrgAdminAPI.el);
+					}
 
 					that.elClientsAttached = true;
 					that.elAPIGKsAttached = true;

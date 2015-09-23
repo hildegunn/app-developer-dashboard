@@ -59,6 +59,38 @@ define(function(require, exports, module) {
 			};
 
 		},
+
+		"getBasicScopeDescr": function() {
+			var x = {
+				"title": this.title
+			};
+			if (this.descr) {
+				x.descr = this.descr;
+			}
+			return x;
+		},
+
+		"getSubScopeDescr": function(subscope) {
+			var x = {};
+			if (this.subscopes && this.subscopes[subscope]) {
+				x.title = this.subscopes[subscope].title;
+				x.descr = this.subscopes[subscope].descr;
+				return x;
+			}
+			return null;
+		},
+
+		"getScopeDescr": function(scope) {
+
+			if (scope.isBasic) {
+				return this.getBasicScopeDescr();
+			}
+			if (scope.subscope) {
+				return this.getSubScopeDescr(scope.subscope);
+			}
+			return null;
+		},
+
 		"getView": function() {
 			var res = this._super();
 

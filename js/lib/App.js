@@ -96,6 +96,7 @@ define(function (require, exports, module) {
 
 			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)?$/, "routeMainlisting");
 			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/mandatory$/, "routeMandatory");
+			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/apiauthorization$/, "routeAPIAuthorization");
 			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/clients\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditClient");
 			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/apigk\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditAPIGK");
 			this.setupRoute(/^\/clients\/([a-zA-Z0-9_\-:]+)$/, "viewclient");
@@ -205,7 +206,6 @@ define(function (require, exports, module) {
 
 					return Promise.all(
 						that.orgRoleSelector.getOrgIdentifiers().map(function(orgid) {
-
 							// console.error(" ››› Setting up a new orgapp for " + orgid);
 							that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid));
 							that.pc.add(that.orgApps[orgid]);
@@ -354,6 +354,26 @@ define(function (require, exports, module) {
 					that.setErrorMessage("Error loading Mandatory view", "danger", err);
 				});
 
+		},
+
+		"routeAPIAuthorization": function(orgid) {
+			var that = this;
+			// console.error("Setting org to be ", orgid);
+			this.orgRoleSelector.setOrg(orgid, false);
+			this.orgRoleSelector.show();
+
+			this.feideconnect.onAuthenticated()
+				.then(function() {
+					return that.getOrgApp(orgid)
+				})
+				.then(function(orgApp) {
+					orgApp.actAPIAuth();
+					orgApp.activate();
+				})
+				.catch(function(err) {
+					console.error("err", err);
+					that.setErrorMessage("Error loading Mandatory view", "danger", err);
+				});
 		},
 
 		"routeMainlisting": function(orgid) {

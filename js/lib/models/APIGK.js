@@ -16,6 +16,10 @@ define(function(require, exports, module) {
 	}
 
 
+
+
+
+
 	var APIGK = Model.extend({
 		"init": function(props) {
 
@@ -32,6 +36,28 @@ define(function(require, exports, module) {
 				this.clientRequestCounter = 0;
 			}
 			this.clientRequestCounter++;
+		},
+
+		/**
+		 * This view is used in orgadmin, when you feed a set of scopes, and wheter each of them is either 
+		 * authorized or not.
+		 */
+		"getOrgAdminView": function(scopes) {
+
+			var view = this.getView();
+
+			var that = this;
+			view.scopeauths = scopes.map(function(x) {
+				var xv = {
+					"authorized": x.authorized,
+					"scope": that.scopedef.getScopeDescr(x.scope)
+				};
+				xv.scope.id = x.scope.scope;
+				return xv;
+			});
+
+			return view;
+
 		},
 
 		"getView": function() {
@@ -54,6 +80,15 @@ define(function(require, exports, module) {
 			} else {
 				res.scopedef = [];
 			}
+
+			if (this.organization && this.organization !== null) {
+				res.trustOrg = true;
+			} else if (this.owner && this.owner !== null) {
+				res.trustOwner = true;
+			}
+
+
+
 
 			res.clientRequests = 0;
 			res.hasClientRequests = false;
