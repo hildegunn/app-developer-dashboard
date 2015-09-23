@@ -223,11 +223,7 @@
 				<div class="pgroupall">
 					
 
-
-
 					<div class="row" style="margin-top: 2em">
-
-
 
 						<div class="col-sm-6">
 							<h3>Diverse autentiseringskilder</h3>
@@ -246,6 +242,7 @@
 							<div class="sociallist"></div>
 
 						</div>
+
 					</div>
 
 
@@ -376,13 +373,12 @@
 							<p class="list-group-item-text">{descr}</p>
 
 							<div class="" style="margin-top: .3em; margin-bottom: 0px">
-									<button class="btn btn-xs btn-default actScopeRemove">
-										<i class="glyphicon glyphicon-remove"></i>
-										Remove scope 
-										</button>
+								<button class="btn btn-xs btn-default actScopeRemove">
+									<i class="glyphicon glyphicon-remove"></i>
+									Remove scope 
+									</button>
 							</div>
 							<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
-
 						</div>
 					{:else}
 						<p>No requested scopes</p>
@@ -396,6 +392,9 @@
 			<div class="col-sm-6">
 
 				<h3>Available scopes</h3>
+
+
+
 
 				<div class="list-group">
 					{#scopelist.available}
@@ -435,514 +434,22 @@
 		<div id="tabAPI"  style="" class="row">
 
 
+			<div class="col-sm-12">
 
 
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist" id="apilisttabs" >
+					<li role="presentation" class="active"><a href="#apilistaccepted" aria-controls="apilistaccepted" role="tab" data-toggle="tab">Accepted APIs</a></li>
+					<li role="presentation"><a href="#apilistrequested" aria-controls="apilistrequested" role="tab" data-toggle="tab">Requested APIs</a></li>
+					<li role="presentation"><a href="#apilistavailable" aria-controls="apilistavailable" role="tab" data-toggle="tab">Available APIs</a></li>
+				</ul>
 
-			<div class="col-sm-6">
-
-				<h3>Accepted APIs</h3>
-
-				<div class="list-group">
-
-
-
-
-					{#authorizedAPIs}
-						<div class="list-group-item apiEntry" data-apigkid="{id}">
-
-							<div class="media">
-								
-								<div class="media-left">
-									<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/apigkadm/apigks/{id}/logo" alt="Logo of 3rd party API">
-								</div>
-								<div class="media-body">
-
-									<!-- <div class="pull-right"><code class="">gk_{id}</code></div> -->
-									<h4 class="list-group-item-heading">{name}</h4>
-									<p class="list-group-item-text">{descr}</p>
-
-									{#owner}
-										<div class="pull-right" style="color: #999; clear: right">
-											
-											<p>
-											 <i class="fa fa-user"></i> &nbsp;
-												 {name}
-												<img class="" style="margin-top: -6px; margin-left: 10px; margin-bottom: 5px; margin-right: 5px max-height: 32px; max-width: 32px; border: 0px solid #b6b6b6; border-radius: 16px; box-shadow: 1px 1px 2px #aaa;" 
-													src="{_config.apis.auth}/user/media/{id}" 
-													alt="Profile photo" />
-
-												
-
-											</p>
-										</div>
-									{/owner}
-
-
-								</div>
-
-							</div>
-
-
-								{#scopedef}
-
-									<table style="font-size: 85%" class="table table-striped">
-										<thead>
-											<tr>
-												<td>&nbsp;</td>
-												<td>Status</td>
-												<td>Scope name</td>
-												<td>Scope</td>
-												<td>Policy</td>
-
-											</tr>
-
-										</thead>
-										<tbody>
-											<tr>
-
-
-												<td>
-													<input class="authscope" data-scopetype="main" data-scopemoderate="gk_{id}" type="checkbox" checked="checked" /> 
-												</td>
-
-												<td>
-
-													{#sd.authz}
-														<span class="label label-success">
-															<i class="fa fa-check"></i>&nbsp;
-															Accepted</span>
-													{:else}
-
-														{#sd.req}
-															<span class="label label-danger">
-																<i class="fa fa-check-square-o"></i>&nbsp;
-																Requested</span>
-														{/sd.req}
-
-													{/sd.authz}
-
-												</td>
-
-												<td>{title}</td>
-												<td style="font-size: 90%"><code>gk_{id}</code></td>
-
-												<td>
-													{#policy.auto}
-														<span class="label label-success">
-															<i class="fa fa-check"></i>&nbsp;
-															Accept</span>
-													{:else}
-														<span class="label label-danger">
-															<i class="fa fa-check-square-o"></i>&nbsp;
-															Moderate</span>
-													{/policy.auto}
-												</td>
-
-
-
-
-
-
-
-											</tr>
-
-											{#subscopes}
-
-												<tr>
-
-
-													<td style="padding-left: 12px">
-
-														{?status.checked}
-															<input class="authscope" type="checkbox" data-scopetype="sub" data-scopemoderate="gk_{id}_{scope}" checked="checked" /> 
-														{:else}
-
-															<input class="authscope" type="checkbox" data-scopetype="sub" data-scopemoderate="gk_{id}_{scope}" /> 
-														{/status.checked}
-
-
-													</td>
-													<td>
-
-														{?status.accepted}
-															<span class="label label-success">
-																<i class="fa fa-check"></i>&nbsp;
-																Accepted</span>
-														{/status.accepted}
-
-														{?status.requested}
-															<span class="label label-danger">
-																<i class="fa fa-check-square-o"></i>&nbsp;
-																Requested</span>
-														{/status.requested}
-
-
-													</td>
-
-													<td>{title}</td>
-													<td style="font-size: 90%"><code>gk_{id}_{scope}</code></td>
-
-													<td>
-														{#policy.auto}
-															<span class="label label-success">
-																<i class="fa fa-check"></i>&nbsp;
-																Accept</span>
-														{:else}
-															<span class="label label-danger">
-																<i class="fa fa-check-square-o"></i>&nbsp;
-																Moderate</span>
-														{/policy.auto}
-													</td>
-
-
-												</tr>
-
-											{:else}
-												<tr><td colspan="5">No subscopes</td></tr>
-											{/subscopes}
-
-
-										</thead>
-
-									</table>
-
-								{/scopedef}
-
-
-
-								<p class="">
-
-									<button class="btn btn-sm btn-primary actAPIScopeUpdate ">
-										<!-- <i class="glyphicon glyphicon-chevron-up"></i>&nbsp; -->
-										Save changes</button>
-
-								</p>
-
-
-								<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
-
-
-
-						</div>
-					{:else}
-						<p>No third party APIs authorized</p>
-					{/authorizedAPIs}
-
-
-
-				</div>
-
-
-				<h3 style="margin-top: 1.5em">Requested API access</h3>
-
-
-
-
-
-
-					{#requestedAPIs}
-						<div class="list-group-item apiEntry" data-apigkid="{id}">
-
-							<div class="media">
-								
-								<div class="media-left">
-									<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/apigkadm/apigks/{id}/logo" alt="Logo of 3rd party API">
-								</div>
-								<div class="media-body">
-
-									<!-- <div class="pull-right"><code class="">gk_{id}</code></div> -->
-									<h4 class="list-group-item-heading">{name}</h4>
-									<p class="list-group-item-text">{descr}</p>
-
-								{#owner}
-									<div class="pull-right" style="color: #999; clear: right">
-										
-										<p>
-										 <i class="fa fa-user"></i> &nbsp;
-											 {name}
-											<img class="" style="margin-top: -6px; margin-left: 10px; margin-bottom: 5px; margin-right: 5px max-height: 32px; max-width: 32px; border: 0px solid #b6b6b6; border-radius: 16px; box-shadow: 1px 1px 2px #aaa;" 
-												src="{_config.apis.auth}/user/media/{id}" 
-												alt="Profile photo" />
-
-										</p>
-									</div>
-								{/owner}
-
-
-								</div>
-
-							</div>
-
-
-								{#scopedef}
-
-									<table style="font-size: 85%" class="table table-striped">
-										<thead>
-											<tr>
-												
-												<td>Scope name</td>
-												<td>Scope</td>
-												<td>Policy</td>
-												<td>Status</td>
-												<td>Update</td>
-											</tr>
-
-										</thead>
-										<tbody>
-											<tr>
-												<td>{title}</td>
-												<td style="font-size: 90%"><code>gk_{id}</code></td>
-
-												<td>
-													{#policy.auto}
-														<span class="label label-success">
-															<i class="fa fa-check"></i>&nbsp;
-															Accept</span>
-													{:else}
-														<span class="label label-danger">
-															<i class="fa fa-check-square-o"></i>&nbsp;
-															Moderate</span>
-													{/policy.auto}
-												</td>
-
-
-												<td>
-
-													{#sd.authz}
-														<span class="label label-success">
-															<i class="fa fa-check"></i>&nbsp;
-															Accepted</span>
-													{:else}
-
-														{#sd.req}
-															<span class="label label-danger">
-																<i class="fa fa-check-square-o"></i>&nbsp;
-																Requested</span>
-														{/sd.req}
-
-													{/sd.authz}
-
-												</td>
-
-
-												<td>
-
-													<input class="authscope" data-scopemoderate="gk_{id}" type="checkbox" checked="checked" /> 
-
-												</td>
-
-
-											</tr>
-
-											{#subscopes}
-
-												<tr>
-
-													<td>{title}</td>
-													<td style="font-size: 90%"><code>gk_{id}_{scope}</code></td>
-
-													<td>
-
-														{#policy.auto}
-															<span class="label label-success">
-																<i class="fa fa-check"></i>&nbsp;
-																Accept</span>
-														{:else}
-															<span class="label label-danger">
-																<i class="fa fa-check-square-o"></i>&nbsp;
-																Moderate</span>
-														{/policy.auto}
-
-													</td>
-													<td>
-
-														{?status.accepted}
-															<span class="label label-success">
-																<i class="fa fa-check"></i>&nbsp;
-																Accepted</span>
-														{/status.accepted}
-
-														{?status.requested}
-															<span class="label label-danger">
-																<i class="fa fa-check-square-o"></i>&nbsp;
-																Requested</span>
-														{/status.requested}
-
-													</td>
-													<td>
-
-														{?status.checked}
-															<input class="authscope" type="checkbox" data-scopemoderate="gk_{id}_{scope}" checked="checked" /> 
-														{:else}
-
-															<input class="authscope" type="checkbox" data-scopemoderate="gk_{id}_{scope}" /> 
-														{/status.checked}
-
-
-													</td>
-												</tr>
-
-											{:else}
-												<tr><td colspan="5">No subscopes</td></tr>
-											{/subscopes}
-
-
-										</thead>
-
-									</table>
-
-								{/scopedef}
-
-
-
-								<p class="">
-
-									<button class="btn btn-sm btn-primary actAPIScopeUpdate pull-right">
-										<!-- <i class="glyphicon glyphicon-chevron-up"></i>&nbsp; -->
-										Save changes</button>
-
-								</p>
-
-
-								<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
-
-
-
-						</div>
-					{:else}
-						<p>No third party APIs requested</p>
-					{/requestedAPIs}
-
-
-
-
-
-
-
-
-
-
+				{> apilisting /}
 
 			</div>
 
 
 
-			<div class="col-sm-6">
-
-
-
-				<h3>Third party APIs</h3>
-
-				<div class="list-group">
-					{#apis}
-						<div class="list-group-item apiEntry media" data-apigkid="{id}">
-
-							<div class="media-left">
-								<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/apigkadm/apigks/{id}/logo" alt="Logo of 3rd party API">
-							</div>
-							<div class="media-body">
-
-								<!-- <div class="pull-right"><code class="">gk_{id}</code></div> -->
-								<h4 class="list-group-item-heading">{name}</h4>
-								<p class="list-group-item-text">{descr}</p>
-
-
-								{#scopedef}
-
-									<table style="font-size: 85%" class="table table-striped">
-										<tbody>
-											<tr>
-												<td><input type="checkbox" checked="checked" disabled="disabled" /></td>
-												<td>{title}</td>
-												<td style="font-size: 90%"><code>gk_{id}</code></td>
-
-												<td>
-													{#policy.auto}
-														<span class="label label-success">
-															<i class="fa fa-check"></i>&nbsp;
-															Accept</span>
-													{:else}
-														<span class="label label-danger">
-															<i class="fa fa-check-square-o"></i>&nbsp;
-															Moderate</span>
-													{/policy.auto}
-												</td>
-											</tr>
-
-											{#subscopes}
-
-												<tr>
-													<td><input type="checkbox" class="subScopeSelection" name="gk_{id}_{scope}" /></td>
-													<td>{title}</td>
-													<td style="font-size: 90%"><code>gk_{id}_{scope}</code></td>
-
-													<td>
-														{#policy.auto}
-															<span class="label label-success">
-																<i class="fa fa-check"></i>&nbsp;
-																Accept</span>
-														{:else}
-															<span class="label label-danger">
-																<i class="fa fa-check-square-o"></i>&nbsp;
-																Moderate</span>
-														{/policy.auto}
-													</td>
-												</tr>
-
-											{:else}
-												<tr><td colspan="4">No subscopes</td></tr>
-											{/subscopes}
-
-
-										</thead>
-
-									</table>
-
-								{/scopedef}
-
-
-
-								<p style="margin-top: .3em; margin-bottom: 0px">
-									{?scopedef.policy.auto}
-										<button class="btn btn-sm btn-primary actAPIadd">
-											<i class="glyphicon glyphicon-chevron-left"></i>
-											Add access</button>
-									{/scopedef.policy.auto}
-									{^scopedef.policy.auto}
-										<button class="btn btn-sm btn-warning actAPIadd">
-											<i class="glyphicon glyphicon-chevron-left"></i>
-											Request access</button>
-									{/scopedef.policy.auto}
-								</p>
-
-								{#owner}
-									<div class="pull-right" style="color: #999">
-										
-										<p>
-										 <i class="fa fa-user"></i> &nbsp;
-											 {name}
-											<img class="" style="margin-top: -6px; margin-left: 10px; margin-bottom: 5px; margin-right: 5px max-height: 32px; max-width: 32px; border: 0px solid #b6b6b6; border-radius: 16px; box-shadow: 1px 1px 2px #aaa;" 
-												src="{_config.apis.auth}/user/media/{id}" 
-												alt="Profile photo" />
-
-										</p>
-									</div>
-								{/owner}
-
-								<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
-
-
-							</div>
-
-
-
-						</div>
-					{:else}
-						<p>No third party APIs available</p>
-					{/apis}
-				</div>
-
-			</div>
 
 		</div>
 
@@ -962,6 +469,9 @@
 
 			</div>
 		</div>
+
+
+
 
 
 		<div id="tabDelete"  style="" class="row">

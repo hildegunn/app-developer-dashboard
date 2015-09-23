@@ -1,0 +1,482 @@
+
+<div id="apilisttabcontent" class="apilist-tab-content">
+	<div role="tabpanel" style="" class="tab-pane" id="apilistaccepted">
+
+
+
+		<div class="list-group">
+		{#authorizedAPIs}
+			<div class="list-group-item apiEntry" data-apigkid="{id}">
+
+
+				<div class="row">
+					
+					<div class="col-md-8">
+						<div class="media">
+							
+							<div class="media-left">
+								<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/apigkadm/apigks/{id}/logo" alt="Logo of 3rd party API">
+							</div>
+							<div class="media-body">
+
+								<h4 class="list-group-item-heading">{name}</h4>
+								<p class="list-group-item-text">{descr}</p>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						
+						{?apigktrustOwner}
+							{#owner}
+								
+								<div class="media">
+									<div class="media-left">
+										<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.auth}/user/media/{id}">
+									</div>
+									<div class="media-body">
+										<p>{name}
+										</p>
+									</div>
+								</div>
+							{/owner}
+						{/apigktrustOwner}
+
+						{?apigktrustOrg}
+							{#organization}
+								<div class="media">
+									<div class="media-left">
+										<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/orgs/{id}/logo">
+									</div>
+									<div class="media-body">
+										<p>{name}
+										</p>
+									</div>
+								</div>
+							{/organization}
+						{/apigktrustOrg}
+					</div>
+
+				</div><!-- end row -->
+
+
+
+
+
+
+				{#scopedef}
+
+					<table style="font-size: 85%; margin-top: 1em" class="table table-striped">
+						<thead>
+							<tr>
+								<td>&nbsp;</td>
+								<td>Status</td>
+								<td>Scope name</td>
+								<td>Scope</td>
+								<td>Policy</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+
+
+								<td>
+									<input class="authscope" data-scopetype="main" data-scopemoderate="gk_{id}" type="checkbox" checked="checked" /> 
+								</td>
+
+								<td>
+
+									{#sd.authz}
+										<span class="label label-success">
+											<i class="fa fa-check"></i>&nbsp;
+											Accepted</span>
+									{:else}
+
+										{#sd.req}
+											<span class="label label-danger">
+												<i class="fa fa-check-square-o"></i>&nbsp;
+												Requested</span>
+										{/sd.req}
+
+									{/sd.authz}
+
+								</td>
+
+								<td>{title}</td>
+								<td style="font-size: 90%"><code>gk_{id}</code></td>
+
+								<td>
+									{#policy.auto}
+										<span class="label label-success">
+											<i class="fa fa-check"></i>&nbsp;
+											Accept</span>
+									{:else}
+										<span class="label label-danger">
+											<i class="fa fa-check-square-o"></i>&nbsp;
+											Moderate</span>
+									{/policy.auto}
+								</td>
+
+
+
+
+
+
+
+							</tr>
+
+							{#subscopes}
+
+								<tr>
+
+
+									<td style="padding-left: 12px">
+
+										{?status.checked}
+											<input class="authscope" type="checkbox" data-scopetype="sub" data-scopemoderate="gk_{id}_{scope}" checked="checked" /> 
+										{:else}
+
+											<input class="authscope" type="checkbox" data-scopetype="sub" data-scopemoderate="gk_{id}_{scope}" /> 
+										{/status.checked}
+
+
+									</td>
+									<td>
+
+										{?status.accepted}
+											<span class="label label-success">
+												<i class="fa fa-check"></i>&nbsp;
+												Accepted</span>
+										{/status.accepted}
+
+										{?status.requested}
+											<span class="label label-danger">
+												<i class="fa fa-check-square-o"></i>&nbsp;
+												Requested</span>
+										{/status.requested}
+
+
+									</td>
+
+									<td>{title}</td>
+									<td style="font-size: 90%"><code>gk_{id}_{scope}</code></td>
+
+									<td>
+										{#policy.auto}
+											<span class="label label-success">
+												<i class="fa fa-check"></i>&nbsp;
+												Accept</span>
+										{:else}
+											<span class="label label-danger">
+												<i class="fa fa-check-square-o"></i>&nbsp;
+												Moderate</span>
+										{/policy.auto}
+									</td>
+
+
+								</tr>
+
+							{:else}
+								<tr><td colspan="5">No subscopes</td></tr>
+							{/subscopes}
+
+
+						</thead>
+
+					</table>
+
+				{/scopedef}
+
+
+
+				<p class="">
+
+					<button class="btn btn-sm btn-primary actAPIScopeUpdate ">
+						<!-- <i class="glyphicon glyphicon-chevron-up"></i>&nbsp; -->
+						Save changes</button>
+
+				</p>
+
+
+				<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
+
+
+
+			</div>
+		{:else}
+			<p>No third party APIs authorized</p>
+		{/authorizedAPIs}
+		</div>
+
+
+
+	</div>
+
+
+
+
+
+
+
+	<div role="tabpanel" style="display: none" class="tab-pane" id="apilistrequested">
+
+
+
+		<div class="list-group">
+
+		{#requestedAPIs}
+			<div class="list-group-item apiEntry" data-apigkid="{id}">
+
+
+				<div class="row">
+					
+					<div class="col-md-8">
+						<div class="media">
+							
+							<div class="media-left">
+								<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/apigkadm/apigks/{id}/logo" alt="Logo of 3rd party API">
+							</div>
+							<div class="media-body">
+
+								<h4 class="list-group-item-heading">{name}</h4>
+								<p class="list-group-item-text">{descr}</p>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						
+						{?apigktrustOwner}
+							{#owner}
+								
+								<div class="media">
+									<div class="media-left">
+										<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.auth}/user/media/{id}">
+									</div>
+									<div class="media-body">
+										<p>{name}
+										</p>
+									</div>
+								</div>
+							{/owner}
+						{/apigktrustOwner}
+
+						{?apigktrustOrg}
+							{#organization}
+								<div class="media">
+									<div class="media-left">
+										<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/orgs/{id}/logo">
+									</div>
+									<div class="media-body">
+										<p>{name}
+										</p>
+									</div>
+								</div>
+							{/organization}
+						{/apigktrustOrg}
+					</div>
+
+				</div><!-- end row -->
+
+
+
+
+
+
+
+				{#scopedef}
+
+					<table style="font-size: 85%" class="table table-striped">
+						<thead>
+							<tr>
+								<td colspan="2">Update status</td>
+								<td>Scope name</td>
+								<td>Scope</td>
+								<td>Policy</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+
+
+								<td>
+									<input class="authscope" data-scopetype="main" data-scopemoderate="gk_{id}" type="checkbox" checked="checked" /> 
+								</td>
+
+
+								<td>
+
+									{#sd.authz}
+										<span class="label label-success">
+											<i class="fa fa-check"></i>&nbsp;
+											Accepted</span>
+									{:else}
+
+										{#sd.req}
+											<span class="label label-danger">
+												<i class="fa fa-check-square-o"></i>&nbsp;
+												Requested</span>
+										{/sd.req}
+
+									{/sd.authz}
+
+								</td>
+
+								<td>{title}</td>
+								<td style="font-size: 90%"><code>gk_{id}</code></td>
+
+								<td>
+									{#policy.auto}
+										<span class="label label-success">
+											<i class="fa fa-check"></i>&nbsp;
+											Accept</span>
+									{:else}
+										<span class="label label-danger">
+											<i class="fa fa-check-square-o"></i>&nbsp;
+											Moderate</span>
+									{/policy.auto}
+								</td>
+
+
+
+
+
+
+							</tr>
+
+							{#subscopes}
+
+								<tr>
+
+
+									<td style="padding-left: 12px">
+
+
+										{?status.checked}
+											<input class="authscope" type="checkbox" data-scopetype="sub" data-scopemoderate="gk_{id}_{scope}" checked="checked" /> 
+										{:else}
+
+											<input class="authscope" type="checkbox" data-scopetype="sub" data-scopemoderate="gk_{id}_{scope}" /> 
+										{/status.checked}
+
+
+
+									</td>
+									<td>
+
+										{?status.accepted}
+											<span class="label label-success">
+												<i class="fa fa-check"></i>&nbsp;
+												Accepted</span>
+										{/status.accepted}
+
+										{?status.requested}
+											<span class="label label-danger">
+												<i class="fa fa-check-square-o"></i>&nbsp;
+												Requested</span>
+										{/status.requested}
+
+									</td>
+
+									<td>{title}</td>
+									<td style="font-size: 90%"><code>gk_{id}_{scope}</code></td>
+
+									<td>
+
+										{#policy.auto}
+											<span class="label label-success">
+												<i class="fa fa-check"></i>&nbsp;
+												Accept</span>
+										{:else}
+											<span class="label label-danger">
+												<i class="fa fa-check-square-o"></i>&nbsp;
+												Moderate</span>
+										{/policy.auto}
+
+									</td>
+
+
+								</tr>
+
+							{:else}
+								<tr><td colspan="5">No subscopes</td></tr>
+							{/subscopes}
+
+
+						</thead>
+
+					</table>
+
+				{/scopedef}
+
+
+
+				<p class="">
+
+					<button class="btn btn-sm btn-primary actAPIScopeUpdate pull-right">
+						<!-- <i class="glyphicon glyphicon-chevron-up"></i>&nbsp; -->
+						Save changes</button>
+
+				</p>
+
+
+				<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
+
+
+
+			</div>
+
+		{:else}
+			<p>No third party APIs requested</p>
+		{/requestedAPIs}
+		</div>
+
+
+	</div>
+
+
+
+
+
+
+
+
+
+<!-- Available APIS -->
+
+
+	<div role="tabpanel" style="display: none" class="tab-pane" id="apilistavailable">
+
+
+		<div class="row">
+			<div class="col-md-6">
+				<input type="text" id="apisearch" class="form-control" placeholder="Search for an API">
+			</div>
+			<div class="col-md-6 well">
+				<p style="margin:0px; font-size: 130%" >Filter APIs by provider</p>
+				<ul id="apilistfilterprovider" class="nav nav-pills">
+					<li role="presentation" class="active"><a href="#">Show all</a></li>
+					<li role="presentation" class="disabled"><a href="#">UNINETT</a></li>
+					<li role="presentation" class="disabled"><a href="#">FSAT</a></li>
+				</ul>
+			</div>
+			
+		</div>
+
+
+		<div>
+		</div>
+
+		<div>
+		</div>
+
+		<div style="margin-top: 2em" id="publicapicontainer" class="list-group">
+		</div>
+
+
+
+
+	</div>
+</div>

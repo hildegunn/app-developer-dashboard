@@ -5,18 +5,16 @@ define(function(require, exports, module) {
 		Class = require('./class'),
 		Dictionary = require('./Dictionary'),
 		utils  = require('./utils'),
-
 		dust = require('dust');
-
-
-
-	var parsed = null;
 
 	var TemplateEngine = Class.extend({
 		"init": function(template) {
 			this.index = utils.guid();
 			// console.log("Template got index " + this.index);
 			dust.loadSource(dust.compile(template, this.index));
+		},
+		"loadPartial": function(id, template) {
+			dust.loadSource(dust.compile(template, id));
 		},
 		"getIndex": function() {
 			return this.index;

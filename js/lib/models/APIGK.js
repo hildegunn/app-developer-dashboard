@@ -31,6 +31,19 @@ define(function(require, exports, module) {
 			this._super(props);
 		},
 
+
+		"searchMatch": function(term) {
+			var re = new RegExp(term);
+			console.error("Performing a search match for " + term, this.name, this.descr);
+			if (this.name && this.name.toLowerCase().match(re)) {
+				return true;
+			}
+			if (this.descr && this.descr.toLowerCase().match(re)) {
+				return true;
+			}
+			return false;
+		},
+
 		"increaseClientRequestCounter": function() {
 			if  (!this.clientRequestCounter) {
 				this.clientRequestCounter = 0;
@@ -60,6 +73,8 @@ define(function(require, exports, module) {
 
 		},
 
+
+
 		"getView": function() {
 			var res = this._super();
 
@@ -83,8 +98,10 @@ define(function(require, exports, module) {
 
 			if (this.organization && this.organization !== null) {
 				res.trustOrg = true;
+				res.apigktrustOrg = true;
 			} else if (this.owner && this.owner !== null) {
 				res.trustOwner = true;
+				res.apigktrustOwner = true;
 			}
 
 

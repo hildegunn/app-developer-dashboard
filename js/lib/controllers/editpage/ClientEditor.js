@@ -2,32 +2,37 @@ define(function(require) {
 	"use strict";	
 
 	var 
-		dust = require('dust'),
 		Client = require('../../models/Client'),
 		Editor = require('./Editor'),
 		utils = require('../../utils'),
 		StringSet = require('../../StringSet'),
 
+		TemplateEngine = require('../../TemplateEngine'),
 		AuthProviderSelector = require('../AuthProviderSelector'),
-		$ = require('jquery')
+		Waiter = require('../../Waiter'),
+		$ = require('jquery'),
+		utils = require('../../utils')
 		;
 
 
 	var clientTemplate = require('text!templates/ClientEditor.html');
+	var apilistingTemplate = require('text!templates/partials/APIListing.html');
+	var publicAPIListingTemplate = require('text!templates/partials/APIListingPublic.html');
 
 	var ClientEditor = Editor.extend({
 		"init": function(app, feideconnect, publicapis) {
 			
-
+			var that = this;
 			this.editor = "clients";
 			this.publicapis = publicapis;
 			this._super(app, feideconnect);
 
+			this.template = new TemplateEngine(clientTemplate);
+			this.template.loadPartial("apilisting", apilistingTemplate);
+			// this.template.loadPartial("apilistingpublic", publicAPIListingTemplate);
+
+			this.apipublictemplate = new TemplateEngine(publicAPIListingTemplate);
 			
-
-			var x = dust.compile(clientTemplate, "clienteditor");
-			dust.loadSource(x);
-
 			this.ebind("click", ".actSaveChanges", "actSaveChanges");
 			this.ebind("click", ".actScopeAdd", "actScopeAdd");
 			this.ebind("click", ".actScopeRemove", "actScopeRemove");
@@ -36,12 +41,91 @@ define(function(require) {
 			this.ebind("click", ".actAPIScopeUpdate", "actAPIScopeUpdate");
 			this.ebind("click", ".actRemoveRedirectURI", "actRemoveRedirectURI");
 			this.ebind("click", ".actAddRedirectURI", "actAddRedirectURI");
-
 			this.ebind("click", ".apiEntry", "actScopeUpdate");
 
+
+
+
+    		this.searchWaiter = new Waiter(function(x) {
+    			that.doSearch(x);
+    		});
+
+    		that.searchTerm = '';
+    		this.el.on("propertychange change click keyup input paste", '#apisearch', function() {
+				var st = utils.normalizeST($("#apisearch").val());
+
+				console.error("SEEARCH ‹" + st + "›");
+
+				if (st !== that.searchTerm) {
+					that.searchTerm = st;
+					if (st === null) {
+						that.searchWaiter.ping();
+					} else if (utils.stok(st)) {
+						that.searchWaiter.ping();
+					}
+				}
+			});
+
+
+
+
+			this.el.on('click', "#apilistfilterprovider a", function(e) {
+				e.preventDefault();
+			});
+
+
+			this.el.on('click', '#apilistavailable .apiEntry', function(e) {
+
+				var itemx = $(e.target);
+
+				if(itemx.closest("div.extendedinfo").length !== 0) {
+					console.error("Ignore");
+					return;
+				}
+
+
+				e.preventDefault();
+				var item = $(e.currentTarget);
+
+				console.log("ITEM", itemx);
+
+				var wasOpen = item.hasClass("opened");
+
+				that.el.find('#apilistavailable .apiEntry').removeClass("opened");
+				if (!wasOpen) {
+					item.addClass("opened");
+				}
+				
+			});
+
+
+
+			/*
+			 * Handle tabs under 3rd party APIs.
+			 */
+			this.el.on('click', '#apilisttabs a', function (e) {
+				e.preventDefault()
+				var x = $(e.currentTarget);
+				var href = x.attr("href");
+
+				that.el.find("#apilisttabs > li").removeClass("active");
+				x.addClass("active");
+
+				that.el.find("#apilisttabcontent > div").hide();
+				that.el.find(href).show();
+
+				if (href === '#apilistavailable') {
+					setTimeout(function() {
+						$("#apisearch").focus();
+					}, 100);
+				}
+
+			});
 		
 			this.initLoad();
 		},
+
+
 
 		"initLoad": function() {
 
@@ -100,13 +184,13 @@ define(function(require) {
 				});
 		},
 
+
 		"showPublicAPIs": function() {
 
 
 			var apis = this.publicapis.apigks;
 			$("#apigklisting").empty();
 
-			// console.error("API GK LIsting", apis);
 			for(var key in apis) {
 				if (apis.hasOwnProperty(key)) {
 					$("#apigklisting").append('<div>' + apis + '</div>');	
@@ -136,7 +220,7 @@ define(function(require) {
 			var clientAPIkeys = new StringSet(apiids);
 			var apis = this.publicapis.apigks;
 
-			console.error("")
+			// console.error("")
 
 			var myapis = [], api, i;
 
@@ -180,28 +264,75 @@ define(function(require) {
 
 			console.error("Client editor view is ", view);
 			
+			this.el.children().detach();
+			return this.template.render(this.el, view)
+				.then(this.proxy("drawAPIs"))
+				.then(function() {
 
-			dust.render("clienteditor", view, function(err, out) {
+					var tab = that.currentTab;
+					if (setTab) {
+						tab = setTab;
+					}
+					that.selectTab(tab);
+					var mockupdata = ['feide|all', 'social|all'];
+					// console.error("ITem is ", that.current);
+					that.aps = new AuthProviderSelector(that.el.find('.authproviders'), that.app.providerdata, that.current.authproviders);
+					that.aps.on('save', function(providers) {
+						that.actUpdateAuthProviders(providers);
+					});
 
-				var tab = that.currentTab;
-				if (setTab) {
-					tab = setTab;
-				}
-				that.el.empty().append(out);
-				that.selectTab(tab);
-				var mockupdata = ['feide|all', 'social|all'];
-				// console.error("ITem is ", that.current);
-				that.aps = new AuthProviderSelector(that.el.find('.authproviders'), that.app.providerdata, that.current.authproviders);
-				that.aps.on('save', function(providers) {
-					that.actUpdateAuthProviders(providers);
+					that.activate();
+
 				})
-
-			});
-
-			that.activate();
-
+				.catch(function(err) {
+					that.app.setErrorMessage("Error loading client editor", "danger", err);
+				});
 
 
+		},
+
+
+
+
+		"doSearch": function(term) {
+			console.error("Do search");
+			return this.drawAPIs();
+		},
+		
+
+		"drawAPIs": function() {
+			
+			var that = this;
+			var view = {"apis": []};
+			if (this.feideconnect) {
+				$.extend(view, {
+					"_config": that.feideconnect.getConfig()
+				});
+			}
+
+			var apis = this.publicapis.apigks;
+
+			var apiids = this.current.getAPIscopes();
+			var clientAPIkeys = new StringSet(apiids);
+
+			for(var key in apis) {
+				if (apis.hasOwnProperty(key)) {
+					// console.log("About to process ", apis[key].name, clientAPIkeys.has(apis[key].id));
+					if (clientAPIkeys.has(apis[key].id)) {continue;}
+
+					if (this.searchTerm !== null) {
+						if (!apis[key].searchMatch(this.searchTerm)) {
+							continue;
+						}
+					}
+
+					view.apis.push(apis[key].getView());
+				}
+			}
+			// console.error("VIEW", view);
+			return this.apipublictemplate.render(this.el.find("#publicapicontainer").empty(), view);
+
+			
 		},
 
 		"actUpdateAuthProviders": function(providers) {
