@@ -47,6 +47,51 @@ define(function(require, exports, module) {
 			this.clientRequestCounter++;
 		},
 
+
+		"getView": function() {
+			var res = this._super();
+
+			if (this.created) {
+				res.created = parseDate(this.created);
+				res.createdAgo = res.created.fromNow();
+				res.createdH = res.created.format('D. MMM YYYY');
+			}
+
+			if  (this.updated) {
+				res.updated = parseDate(this.updated);
+				res.updatedAgo = res.updated.fromNow();
+				res.updatedH = res.updated.format('D. MMM YYYY');
+			}
+
+			if (this.scopedef) {
+				res.scopedef = this.scopedef.getView();
+			} else {
+				res.scopedef = [];
+			}
+
+			if (this.organization && this.organization !== null) {
+				// res.trustOrg = true;
+				res.apigktrustOrg = true;
+			} else if (this.owner && this.owner !== null) {
+				// res.trustOwner = true;
+				res.apigktrustOwner = true;
+			}
+
+
+
+
+			res.clientRequests = 0;
+			res.hasClientRequests = false;
+			if (this.clientRequestCounter && this.clientRequestCounter > 0) {
+				res.clientRequests = this.clientRequestCounter;
+				res.hasClientRequests = true;
+			}
+
+			return res;			
+		},
+
+
+
 		/**
 		 * This view is used in orgadmin, when you feed a set of scopes, and wheter each of them is either 
 		 * authorized or not.
@@ -71,47 +116,84 @@ define(function(require, exports, module) {
 
 
 
-		"getView": function() {
-			var res = this._super();
+		"getOrgTargetedScopes": function(scopes) {
+			var list = [];
 
-			if (this.created) {
-				res.created = parseDate(this.created);
-				res.createdAgo = res.created.fromNow();
-				res.createdH = res.created.format('D. MMM YYYY');
+			for (var i = 0; i < scopes.length; i++) {
+				if (!scopes[i].belongsTo(this)) {
+					// console.error("Skipping scope because it does not belong to " + this.id, scopes[i]);
+					continue;
+				}
+				if (!this.scopedef.isScopeOrgAdmin(scopes[i])) {
+					// console.error("Skipping scope because it is not orgadmin scope ", scopes[i]);
+					continue;
+				}
+				list.push(scopes[i]);
 			}
 
-			if  (this.updated) {
-				res.updated = parseDate(this.updated);
-				res.updatedAgo = res.updated.fromNow();
-				res.updatedH = res.updated.format('D. MMM YYYY');
-			}
+			return list;
 
-			if (this.scopedef) {
-				res.scopedef = this.scopedef.getView();
-			} else {
-				res.scopedef = [];
-			}
-
-			if (this.organization && this.organization !== null) {
-				res.trustOrg = true;
-				res.apigktrustOrg = true;
-			} else if (this.owner && this.owner !== null) {
-				res.trustOwner = true;
-				res.apigktrustOwner = true;
-			}
-
-
-
-
-			res.clientRequests = 0;
-			res.hasClientRequests = false;
-			if (this.clientRequestCounter && this.clientRequestCounter > 0) {
-				res.clientRequests = this.clientRequestCounter;
-				res.hasClientRequests = true;
-			}
-
-			return res;			
 		},
+
+		/**
+		 * Feed this with a the clients orgauthorizations, and it will return a matrix
+		 * containing rows of organizations, and which scopes they have authorized.
+		 * 
+		 * @param  {[type]} orgauthorizations [description]
+		 * @return {[type]}                   [description]
+		 */
+		"getOrgAdminScopeMatrix": function(client) {
+			var i, j;
+			var data = {
+				"scopes": [],
+				"orgs": []
+			};
+			var orgauthorization = client.orgauthorization;
+			var orgs = this.scopedef.getRealmList();
+			var allScopes = client.getScopesObjects();
+			var scopes = this.getOrgTargetedScopes(allScopes);
+
+			console.error("-----");
+			if (scopes.length === 0) {
+				console.error("   ====> No orgadmin scopes here. ", this.name);
+				return null;
+			}
+
+
+			for (i = 0; i < scopes.length; i++) {
+				data.scopes.push({
+					"scope": scopes[i],
+					"descr": this.scopedef.getScopeDescr(scopes[i])
+				});
+			}
+
+			console.error("Client " + client.name + " wants access to " + this.name);
+			console.error("Orgs", orgs);
+			console.error("Org authorizations", orgauthorization);
+			console.error("All Scopes", allScopes);
+			console.error("Scopes", scopes);				
+
+
+			for (i = 0; i < orgs.length; i++) {
+				var org = orgs[i];
+				var orgentry = {
+					"org": org,
+					"scopes": []
+				};
+
+				for (j = 0; j < scopes.length; j++) {
+					orgentry.scopes.push(client.hasOrgAuthorized(org, scopes[j]));
+				}
+				data.orgs.push(orgentry);
+
+			}
+
+			return data;
+
+
+		},
+
+
 
 		"getClientView": function(client) {
 			// console.error("Client ", client);
@@ -150,6 +232,11 @@ define(function(require, exports, module) {
 				}
 
 			}
+
+			v.orgadminscopematrix = this.getOrgAdminScopeMatrix(client);
+
+			console.error("Get client view of API Gatekeeper", JSON.stringify(v.scopematrix, undefined, 4));
+			// console.error("Get client view of API Gatekeeper", JSON.stringify(v, undefined, 4));
 
 			return v;
 		},

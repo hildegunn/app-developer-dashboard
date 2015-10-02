@@ -199,6 +199,47 @@
 				</p>
 
 
+
+
+
+				{#orgadminscopematrix}
+					<p><strong>API Authorization by Organizations</strong></p>
+					<table class="table table-striped" style="margin-bottom: 3em">
+					<thead>
+						<tr>
+							<td>Organization</td>
+							{#scopes}
+								<td>{descr.title}</td>
+							{/scopes}
+						</tr>
+
+					</thead>
+					<tbody>
+						{#orgs}
+						<tr>
+							<td>{org}</td>
+							{#scopes}
+								<td>
+								{?.}
+									<span class="label label-success">
+										<i class="fa fa-check"></i>&nbsp;
+										Accepted</span>
+								{:else}
+									<span class="label label-danger">
+										<i class="fa fa-check-square-o"></i>&nbsp;
+										Requested</span>
+								{/.}
+								</td>
+							{/scopes}
+						</tr>
+						{/orgs}
+					</tbody>
+					</table>
+				{/orgadminscopematrix}
+
+
+
+
 				<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
 
 

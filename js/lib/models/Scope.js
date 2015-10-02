@@ -30,6 +30,20 @@ define(function(require, exports, module) {
 				}
 			}
 
+		},
+
+		/*
+		 * Does this scope belong to a given apigk?
+		 */
+		"belongsTo": function(apigk) {
+			// console.log("Compare ", this.apigk, apigk.id);
+			if (!this.apigk) {
+				return false;
+			}
+			if (this.apigk === apigk.id) {
+				return true;
+			}
+			return false;
 		}
 
 

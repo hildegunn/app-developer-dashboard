@@ -23,6 +23,21 @@ define(function(require, exports, module) {
 
 		},
 
+
+		/*
+		 * Provide a scope that is controlled upon this scope policy definition
+		 * Check whether or not this scope has orgadmin policy for moderation...
+		 */
+		"isScopeOrgAdmin": function(scope) {
+
+			if (scope.isBasic) {
+				return (this.policy.orgadmin && this.policy.orgadmin.moderate);
+			}
+			return (this.subscopes && this.subscopes[scope.subscope] && this.subscopes[scope.subscope].policy && 
+				this.subscopes[scope.subscope].policy.orgadmin && this.subscopes[scope.subscope].policy.orgadmin.moderate);
+
+		},
+
 		"getOrgList": function() {
 
 			if (this.policy.orgadmin && this.policy.orgadmin.target) {
@@ -36,6 +51,21 @@ define(function(require, exports, module) {
 				}	
 			}
 			return [];
+		},
+
+		"getRealmList": function() {
+
+			var matcher = /^feide\|realm\|(.*?)$/;
+			var realms = this.getOrgList().reduce(function(prev, curr) {
+				var m = curr.match(matcher);
+				if (m) {
+					console.error(m);
+					prev.push(m[1]);
+					return prev;
+				}
+				return prev;
+			}, []);
+			return realms;
 		},
 			
 		"addEmptySubScope": function() {

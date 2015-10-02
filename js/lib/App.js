@@ -65,6 +65,8 @@ define(function (require, exports, module) {
 			this.orgRoleSelector.initLoad();
 
 
+
+
 			this.orgRoleSelector.on("orgRoleSelected", function(orgid) {
 				that.onLoaded()
 					.then(function() {
@@ -92,7 +94,6 @@ define(function (require, exports, module) {
 			this.pc = new PaneController(this.el.find('#panecontainer'));
 
 			this.orgApps = {};
-
 
 			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)?$/, "routeMainlisting");
 			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/mandatory$/, "routeMandatory");
@@ -140,13 +141,12 @@ define(function (require, exports, module) {
 			});
 
 
-
 			this.feideconnect.on("stateChange", function(authenticated, user) {
 
 				that.onLoaded()
 					.then(function() {
 
-						
+
 
 						var _config = that.feideconnect.getConfig();
 						var profilephoto = _config.apis.core + '/userinfo/v1/user/media/' + user.profilephoto;
@@ -162,6 +162,7 @@ define(function (require, exports, module) {
 
 							$(".loader-hideOnLoad").hide();
 							$(".loader-showOnLoad").show();
+
 
 						} else {
 
@@ -378,6 +379,10 @@ define(function (require, exports, module) {
 
 		"routeMainlisting": function(orgid) {
 
+
+
+
+
 			var that = this;
 			if (!orgid) {
 				orgid = '_';
@@ -385,7 +390,6 @@ define(function (require, exports, module) {
 			}
 			this.orgRoleSelector.setOrg(orgid, false);
 			this.orgRoleSelector.show();
-
 
 
 

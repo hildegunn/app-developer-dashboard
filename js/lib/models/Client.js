@@ -5,6 +5,7 @@ define(function(require, exports, module) {
 		moment = require('bower/momentjs/moment'),
 		APIGK = require('./APIGK'),
 		Model = require('./Model'),
+		Scope = require('./Scope'),
 		utils = require('../utils')
 	;
 
@@ -193,6 +194,23 @@ define(function(require, exports, module) {
 			return utils.getKeys(apis);
 		},
 
+		"hasOrgAuthorized": function(realm, scope) {
+
+			console.error("About to check if has orgauthrizatsion", this.orgauthorization, scope, realm);
+			if (!this.orgauthorization) {
+				return false;
+			}
+			if (!this.orgauthorization[realm]) {
+				return false;
+			}
+			for (var i = 0; i < this.orgauthorization[realm].length; i++) {
+				if (this.orgauthorization[realm][i] === scope.scope) {
+					return true;
+				}
+			}
+			return false;
+		},
+
 		/**
 		 * Takes a scope definition as input and returns all scopes that is defined in the 
 		 * scopedef, sorted into available, requested and accepted lists.
@@ -220,6 +238,17 @@ define(function(require, exports, module) {
 				}
 			}
 			return res;
+		},
+
+		"getScopesObjects": function() {
+			var list = [];
+			if (!this.scopes) {
+				return list;
+			}
+			for (var i = 0; i < this.scopes.length; i++) {
+				list.push(new Scope({"scope": this.scopes[i]}));
+			}
+			return list;
 		}
 
 	});

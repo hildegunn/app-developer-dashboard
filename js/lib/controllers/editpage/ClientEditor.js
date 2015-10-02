@@ -43,8 +43,6 @@ define(function(require) {
 			this.ebind("click", ".apiEntry", "actScopeUpdate");
 
 
-
-
     		this.searchWaiter = new Waiter(function(x) {
     			that.doSearch(x);
     		});
@@ -66,11 +64,17 @@ define(function(require) {
 
 
 
+    		/*
+    		 * Disable provider filters until implemented.
+    		 */
 			this.el.on('click', "#apilistfilterprovider a", function(e) {
 				e.preventDefault();
 			});
 
 
+			/*
+			 * Handle the accordion view of available APIs.
+			 */
 			this.el.on('click', '#apilistavailable .apiEntry', function(e) {
 
 				var itemx = $(e.target);
@@ -83,8 +87,6 @@ define(function(require) {
 
 				e.preventDefault();
 				var item = $(e.currentTarget);
-
-				console.log("ITEM", itemx);
 
 				var wasOpen = item.hasClass("opened");
 
@@ -232,7 +234,7 @@ define(function(require) {
 			view.authorizedAPIs = [];
 			view.requestedAPIs = [];
 
-			// console.error("APIS", apis);
+			
 
 			view.apis = [];
 			for(var key in apis) {
@@ -259,7 +261,10 @@ define(function(require) {
 
 			}
 
-			// console.error("Client editor view is ", view);
+
+			console.error("Client view..", view);
+
+
 			
 			this.el.children().detach();
 			return this.template.render(this.el, view)
@@ -375,9 +380,6 @@ define(function(require) {
 
 			});
 
-			// console.log("Adding API ", apigk);
-			// console.error("Adding scopes", newscopes);
-
 			this.current.addScopes(newscopes);
 
 			var fullobj = this.current.getStorable();
@@ -489,13 +491,11 @@ define(function(require) {
 					that.app.setErrorMessage("Error adding scope", "danger", err);
 				});
 
-			// console.log("trying to actScopeAdd ", scopeid);
 		},
 
 		"actScopeRemove": function(e) {
 			e.preventDefault();
 			var scopeid = $(e.currentTarget).closest(".scopeEntry").data("scopeid");
-			// console.log("trying to actScopeRemove  ", scopeid);
 
 			this.current.removeScope(scopeid);
 			var obj = this.current.getStorable();
@@ -520,8 +520,6 @@ define(function(require) {
 			var that = this;
 			var redirectURIs;
 			var obj;
-
-			// console.log("About to save changes");
 
 			this.current.setName(this.el.find("#name").val());
 			this.current.setDescr(this.el.find("#descr").val());
