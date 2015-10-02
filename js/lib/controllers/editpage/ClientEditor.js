@@ -523,6 +523,31 @@ define(function(require) {
 
 			this.current.setName(this.el.find("#name").val());
 			this.current.setDescr(this.el.find("#descr").val());
+			this.current.systemdescr = this.el.find("#systemdescr").val();
+			if (this.current.systemdescr === '') {
+				this.current.systemdescr = null;
+			}			
+			this.current.privacypolicyurl = this.el.find('#privacypolicyurl').val();
+			if (this.current.privacypolicyurl === '') {
+				this.current.privacypolicyurl = null;
+			}			
+			this.current.homepageurl = this.el.find('#homepageurl').val();
+			if (this.current.homepageurl === '') {
+				this.current.homepageurl = null;
+			}			
+			this.current.loginurl = this.el.find('#loginurl').val();
+			if (this.current.loginurl === '') {
+				this.current.loginurl = null;
+			}			
+			this.current.supporturl = this.el.find('#supporturl').val();
+			if (this.current.supporturl === '') {
+				this.current.supporturl = null;
+			}			
+
+
+
+			this.current.authoptions = {};
+
 
 			redirectURIs = [];
 			this.el.find("input.redirect_uri").each(function(i, item) {
@@ -534,8 +559,13 @@ define(function(require) {
 
 			this.current.redirect_uri = redirectURIs;
 
-			obj = this.current.getStorable();
-			obj.authproviders = [];
+			obj = this.current.getStorable(["id", "name", "descr", "systemdescr", 
+				"privacypolicyurl", "homepageurl", "loginurl", "supporturl",
+				"redirect_uri"]);
+
+			// obj = this.current.getStorable();
+			// obj.authproviders = [];
+			console.error("UPDATE", obj);
 
 			this.feideconnect.clientsUpdate(obj)
 				.then(function(savedClient) {
@@ -544,7 +574,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.setErrorMessage("Error updating client", "danger", err);
 				});
 
 		},
