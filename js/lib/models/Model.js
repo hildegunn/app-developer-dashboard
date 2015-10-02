@@ -9,10 +9,24 @@ define(function(require, exports, module) {
 				this[key] = props[key];
 			}
 		},
-		"getStorable": function() {
+		"getStorable": function(limit) {
 			var res = {};
+
+			var selected = {};
+			if (limit) {
+				for (var i = 0; i < limit.length; i++) {
+					selected[limit[i]] = true;
+				}
+			}
+
+
 			for(var key in this) {
 				if (typeof this[key] !== 'function') {
+
+					if (limit && !selected.hasOwnProperty(key)) {
+						continue;
+					}
+
 					res[key] = this[key];
 				}
 			}
