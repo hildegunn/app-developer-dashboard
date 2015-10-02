@@ -17,6 +17,21 @@ Then rename the config from
 And then edit the client ID and redirect URI in the `etc/config.js` configuration file.
 
 
+# Build production web app
+
+Install npm dependencies
+
+	npm install
+	npm install -g grunt-cli
+
+Now, use grunt to build the app:
+
+	grunt build
+
+Thats all.
+
+
+
 # Run developement build
 
 You can now already use the development version, by loading
@@ -28,6 +43,17 @@ It will load all the CSS and javascript files one by one, where changes in the f
 The configuration file needs to be adjusted to reflect index.dev.html as your redirect_uri:
 
 	"redirect_uri": "http://xxxxx.example.org/index.dev.html",
+
+
+# Deployment requirements
+
+
+This app needs to run at the root path of your host.
+
+
+The web server needs to be configured to load the propert app build depending on language negotiation.
+
+A development version may be loaded by using the `/index.dev.html` loader instead of `index.html`. The developer version will not load load the app minified and built, but instead load the source files one by one.
 
 
 # Handling translation of web app
@@ -44,18 +70,6 @@ Downloading completed transaltions is done by:
 
 Then multi-lingual app packs are built automatically.
 
-# Build production web app
-
-Install npm dependencies
-
-	npm install
-	npm install -g grunt-cli
-
-Now, use grunt to build the app:
-
-	grunt build
-
-Thats all.
 
 
 ## Behind the scene of the grunt build
