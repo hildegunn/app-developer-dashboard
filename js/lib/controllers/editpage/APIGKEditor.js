@@ -228,10 +228,21 @@ define(function(require, exports, module) {
 			obj.name = this.el.find("#apiname").val();
 			obj.descr = this.el.find("#apidescr").val();
 			obj.endpoints = [this.el.find("#endpoint").val()];
-			// obj.scopedef = {};
-			// obj.trust = {};
 
+			obj.privacypolicyurl = this.el.find('#privacypolicyurl').val();
+			if (obj.privacypolicyurl === '') {
+				obj.privacypolicyurl = null;
+			}		
 
+			obj.systemdescr = this.el.find('#systemdescr').val();
+			if (obj.systemdescr === '') {
+				obj.systemdescr = null;
+			}	
+
+			obj.docurl = this.el.find('#docurl').val();
+			if (obj.docurl === '') {
+				obj.docurl = null;
+			}
 
 			that.feideconnect.apigkUpdate(obj)
 				.then(function(savedObject) {
@@ -244,6 +255,8 @@ define(function(require, exports, module) {
 				});
 
 		},
+
+
 		"actDelete": function(e) {
 			e.preventDefault();
 			var that = this;

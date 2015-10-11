@@ -530,7 +530,7 @@ define(function(require) {
 			this.current.privacypolicyurl = this.el.find('#privacypolicyurl').val();
 			if (this.current.privacypolicyurl === '') {
 				this.current.privacypolicyurl = null;
-			}			
+			}
 			this.current.homepageurl = this.el.find('#homepageurl').val();
 			if (this.current.homepageurl === '') {
 				this.current.homepageurl = null;
