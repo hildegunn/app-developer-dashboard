@@ -55,7 +55,7 @@ define(function(require, exports, module) {
 
 		"checkEndpoint": function() {
 			var str = $(this.el).find("#newAPIendpoint").val();
-			if (str.match(/^http[s]?:\/\/([^\/]+)$/)) {
+			if (str.match(/^https:\/\/.+[^/]$/)) {
 				this.el.find(".endpointFormatDescr").addClass("endpointValidOK");
 				this.el.find(".endpointFormatDescr").removeClass("endpointValidBad");
 				return true;
