@@ -29,6 +29,38 @@ define(function(require, exports, module) {
 		},
 
 
+		"setStatusPublic": function(ispublic) {
+			this.setStatusProp("public", ispublic);
+		},
+
+		"setStatusProp": function(prop, value) {
+			var props = this.getStatusProps();
+			props[prop] = value;
+			this.setStatusProps(props);
+		},
+
+		"getStatusProps": function() {
+			var props = {};
+			if (typeof this.status === 'undefined' || this.status === null) {
+				return props;
+			}
+			for(var i = 0; i < this.status.length; i++) {
+				props[this.status[i]] = true;
+			}
+			return props;
+		},
+
+		"setStatusProps": function(props) {
+			var proplist = [];
+			for(var key in props) {
+				if (props[key] === true) {
+					proplist.push(key);
+				}
+			}
+			this.status = proplist;
+		},
+
+
 		"searchMatch": function(term) {
 			var re = new RegExp(term);
 			if (this.name && this.name.toLowerCase().match(re)) {
@@ -78,6 +110,7 @@ define(function(require, exports, module) {
 			}
 
 
+			res.statuses = this.getStatusProps();
 
 
 			res.clientRequests = 0;
