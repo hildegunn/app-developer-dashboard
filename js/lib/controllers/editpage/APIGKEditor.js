@@ -135,7 +135,7 @@ define(function(require, exports, module) {
 					// $("#debug").append("<pre style='background-color: #cc7; margin-bottom: 5em'>" + JSON.stringify(view, undefined, 4) + "</pre>");
 
 
-					console.error("view is ", view);
+					// console.error("view is ", view);
 					dust.render("apigkeditor", view, function(err, out) {
 
 						var tab = that.currentTab;
@@ -221,28 +221,34 @@ define(function(require, exports, module) {
 			e.preventDefault();
 
 			var that = this;
-			var obj = {
-				"id": this.current.id
-			};
+			var obj;
 
-			obj.name = this.el.find("#apiname").val();
-			obj.descr = this.el.find("#apidescr").val();
-			obj.endpoints = [this.el.find("#endpoint").val()];
+			this.current.name = this.el.find("#apiname").val();
+			this.current.descr = this.el.find("#apidescr").val();
+			this.current.endpoints = [this.el.find("#endpoint").val()];
 
-			obj.privacypolicyurl = this.el.find('#privacypolicyurl').val();
-			if (obj.privacypolicyurl === '') {
-				obj.privacypolicyurl = null;
-			}		
 
-			obj.systemdescr = this.el.find('#systemdescr').val();
-			if (obj.systemdescr === '') {
-				obj.systemdescr = null;
+			this.current.systemdescr = this.el.find('#systemdescr').val();
+			if (this.current.systemdescr === '') {
+				this.current.systemdescr = null;
 			}	
 
-			obj.docurl = this.el.find('#docurl').val();
-			if (obj.docurl === '') {
-				obj.docurl = null;
+			this.current.privacypolicyurl = this.el.find('#privacypolicyurl').val();
+			if (this.current.privacypolicyurl === '') {
+				this.current.privacypolicyurl = null;
 			}
+
+
+			this.current.docurl = this.el.find('#docurl').val();
+			if (this.current.docurl === '') {
+				this.current.docurl = null;
+			}
+
+			this.current.setStatusPublic(this.el.find('#ispublic').prop("checked"));
+
+
+			obj = this.current.getStorable(["id", "name", "descr", "systemdescr", 
+				"privacypolicyurl", "docurl", "status"]);
 
 			that.feideconnect.apigkUpdate(obj)
 				.then(function(savedObject) {

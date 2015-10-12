@@ -53,6 +53,15 @@
 					</div>
 
 					<div class="form-group">
+
+						<label>
+							<input id="ispublic" class="" type="checkbox" {#statuses.public} checked="checked" {/statuses.public} />  Public API
+						</label>
+
+						<p>Only public APIs will be visible to developers and may be requested. Do not check the API as public until it is well tested and ready to be consumer by third party developers.</p>
+					</div>
+
+					<div class="form-group">
 						<label for="systemdescr">Description for system administrators and developers</label>
 						<textarea class="form-control" id="systemdescr" rows="5">{systemdescr}</textarea>
 					</div>
