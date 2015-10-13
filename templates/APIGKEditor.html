@@ -278,6 +278,21 @@ X_FEIDECONNECT_USERID_SEC: feide:xxxx@uninett.no
 
 
 
+							<div style="margin-top: 1.4em">
+								{?systemdescr}
+								<h5>Extended description for system administrators</h5>
+								<p class="list-group-item-text">{systemdescr}</p>
+								{/systemdescr}
+
+								<ul style="margin-top: .6em">
+									{?homepageurl}<li><a target="_blank" href="{homepageurl}">Application homepage</a></li>{/homepageurl}
+									{?loginurl}<li><a target="_blank" href="{loginurl}">Application login</a></li>{/loginurl}
+									{?privacypolicyurl}<li><a target="_blank" href="{privacypolicyurl}">Privacy policy</a></li>{/privacypolicyurl}
+									{?supporturl}<li><a target="_blank" href="{supporturl}">Application Support</a></li>{/supporturl}
+								</ul>
+							</div>
+
+
 
 							<table style="font-size: 95%; margin-top: 2em" class="table table-striped">
 
@@ -544,24 +559,30 @@ X_FEIDECONNECT_USERID_SEC: feide:xxxx@uninett.no
 
 
 
-
-
-
 							<div>
-
-
-
 								<p class="list-group-item-text" style="margin-top: 15px">Authorized scopes &nbsp;
 								
 									{#scopes}
 										<code>{.}</code> &nbsp;
 									{/scopes}
 								</p>
-
-								<!-- <p class="list-group-item-text">This client was created {createdAgo} and updated {updatedAgo}.</p> -->
 							</div>
 
 
+
+							<div style="margin-top: 1.4em">
+								{?systemdescr}
+								<h5>Extended description for system administrators</h5>
+								<p class="list-group-item-text">{systemdescr}</p>
+								{/systemdescr}
+
+								<ul style="margin-top: .6em">
+									{?homepageurl}<li><a target="_blank" href="{homepageurl}">Application homepage</a></li>{/homepageurl}
+									{?loginurl}<li><a target="_blank" href="{loginurl}">Application login</a></li>{/loginurl}
+									{?privacypolicyurl}<li><a target="_blank" href="{privacypolicyurl}">Privacy policy</a></li>{/privacypolicyurl}
+									{?supporturl}<li><a target="_blank" href="{supporturl}">Application Support</a></li>{/supporturl}
+								</ul>
+							</div>
 
 
 
