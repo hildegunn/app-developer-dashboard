@@ -203,7 +203,9 @@ define(function(require) {
 			var that = this;
 			this.current = item;
 
-			var view = item.getView(this.feideconnect);
+			var view = {
+				"client": item.getView(this.feideconnect)
+			};
 
 
 			var scopes = item.getScopes(this.scopePolicy);
@@ -219,10 +221,14 @@ define(function(require) {
 			var clientAPIkeys = new StringSet(apiids);
 			var apis = this.publicapis.apigks;
 
-			// console.error("")
 
+
+			/*
+			 * From the list of API GK oriented scopes, such as gk_preferanse_foo 
+			 * it will obtain a list of API model objects from the referring APIs
+			 * into the list myapis.
+			 */
 			var myapis = [], api, i;
-
 			for(i = 0; i < apiids.length; i++) {
 				api = that.publicapis.getAPIGK(apiids[i]);
 				if (api !== null) {
@@ -230,12 +236,15 @@ define(function(require) {
 				}
 			}
 
+
+			/*
+			 * Now we want to sort all APIs into those accepted, requested and 3rd party (potential)
+			 */
 			var aapiview;
 			view.authorizedAPIs = [];
 			view.requestedAPIs = [];
 
 			
-
 			view.apis = [];
 			for(var key in apis) {
 				if (apis.hasOwnProperty(key)) {
@@ -246,10 +255,6 @@ define(function(require) {
 			}
 
 			for(i = 0; i < myapis.length; i++) {
-
-				// if (new Client()  instanceof Client.prototype) {
-				// 	throw new Error("Cannot getClientView without providing a valid Client object.");
-				// }
 
 				aapiview = myapis[i].getClientView(that.current);
 				if (aapiview.sd.authz) {
@@ -276,7 +281,6 @@ define(function(require) {
 						tab = setTab;
 					}
 					that.selectTab(tab);
-					var mockupdata = ['feide|all', 'social|all'];
 					// console.error("ITem is ", that.current);
 					that.aps = new AuthProviderSelector(that.el.find('.authproviders'), that.app.providerdata, that.current.authproviders);
 					that.aps.on('save', function(providers) {

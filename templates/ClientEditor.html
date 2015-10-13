@@ -32,14 +32,10 @@
 			<div class="col-sm-9">
 
 
+				{#client}
 				<form class="" style="">
 
-				<!-- 			
-					<div class="form-group">
-						<label for="exampleInputEmail1">Client Identifier</label>
-						<input type="email" class="form-control" id="client_id" value="{id}" disabled="disabled">
-					</div> 
-				-->
+
 
 					<div class="form-group">
 						<label for="name">Name</label>
@@ -129,7 +125,7 @@
 						<span style="color: #999"><i class="glyphicon glyphicon-time"></i> {updatedH}</span>
 				</p>
 
-
+				{/client}
 
 			</div>
 
@@ -152,6 +148,8 @@
 		<div id="tabOAuth">
 			<div class="row" style="">
 
+			{#client}
+
 				<div class="col-sm-6">
 					<h3>OAuth Client credentials</h3>
 
@@ -169,6 +167,7 @@
 						{/redirect_uri}
 
 					</dl>
+
 				</div>
 
 				<div class="col-sm-6">
@@ -185,21 +184,7 @@
 
 				</div>
 
-			<!--
-				<div class="col-md-4">
-					<h3>Usage Statistics</h3>
-
-					<p><img src="img/plot.jpg" style="border-radius: 5px"></p>
-
-					<p>{count} registered users. ( <a href="">see more statistics</a> )</p>
-
-				</div>
-			-->
-
 			</div>
-
-
-
 
 			<div style="margin-top: .2em" class="row">
 				<div class="col-sm-12">
@@ -215,6 +200,8 @@
 				</div>
 			</div>
 
+			{/client}
+			
 		</div>
 
 
