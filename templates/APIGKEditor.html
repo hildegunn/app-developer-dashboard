@@ -232,48 +232,73 @@ X_FEIDECONNECT_USERID_SEC: feide:xxxx@uninett.no
 
 
 
-							<div class="media-left">
-								<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/clientadm/clients/{id}/logo" alt="client logo">
-							</div>
-							<div class="media-body">
-								<h4 class="list-group-item-heading">{name}</h4>
-								<p class="list-group-item-text" style="font-size: 80%">
-									<i class="glyphicon glyphicon-chevron-right"></i> {id}
-								</p>
-								<p class="list-group-item-text">{descr}</p>
 
-								<p class="list-group-item-text" style="margin-top: 15px">Redirect URIs
-									<ul class="list-group-item-text" style="margin: 0px;">
-										{#redirect_uri}
-											<li style="margin:0px; padding: 0px"><code>{.}</code></li>
-										{/redirect_uri}
-									</ul>
-								</p>
-								<p class="list-group-item-text">Created {createdAgo}. Updated {updatedAgo}.</p>
+							<div class="row">
 
+								<div class="col-md-8">
 
-								{#owner}
-									<!-- <p class="list-group-item-text">Client owner</p> -->
-									
-									<div class="media" style="margin-top: .5em; margin-bottom: .3em">
+									<div class="media">
+										
 										<div class="media-left">
-											<img style="margin-right: 20px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" 
-												src="{_config.apis.core}/userinfo/v1/user/media/{id}" >
+											<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/clientadm/clients/{id}/logo" alt="Logo of client">
 										</div>
+
 										<div class="media-body">
-										<p>{name}<br /><strong>client owner</strong></p>
+
+											<h4 class="list-group-item-heading">{name}</h4>
+											<p class="list-group-item-text" style="font-size: 80%">
+												<i class="glyphicon glyphicon-chevron-right"></i> {id}
+											</p>
+											<p class="list-group-item-text">{descr}</p>
+
+											<p class="list-group-item-text" style="margin-top: 15px">Redirect URIs
+												<ul class="list-group-item-text" style="margin: 0px;">
+													{#redirect_uri}
+														<li style="margin:0px; padding: 0px"><code>{.}</code></li>
+													{/redirect_uri}
+												</ul>
+											</p>
 										</div>
+
 									</div>
 
-								{/owner}
+								</div>
 
-								<p class="list-group-item-text" style="margin-top: 15px">Authorized scopes &nbsp;
-								
-									{#scopes}
-										<code>{.}</code> &nbsp;
-									{/scopes}
-								</p>
+								<div class="col-md-4">
+									
+									{?trustOwner}
+										{#owner}
+											
+											<div class="media">
+												<div class="media-left">
+													<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.auth}/user/media/{id}">
+												</div>
+												<div class="media-body">
+													<p>{name}
+													</p>
+												</div>
+											</div>
+										{/owner}
+									{/trustOwner}
+
+									{?trustOrg}
+										{#organization}
+											<div class="media">
+												<div class="media-left">
+													<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/orgs/{id}/logo">
+												</div>
+												<div class="media-body">
+													<p>{name}
+													</p>
+												</div>
+											</div>
+										{/organization}
+									{/trustOrg}
+								</div>
+
 							</div>
+
+
 
 
 
@@ -486,11 +511,6 @@ X_FEIDECONNECT_USERID_SEC: feide:xxxx@uninett.no
 
 					<div class="panel panel-default authzClient" data-clientid="{id}">
 						<div class="panel-body">
-
-
-
-
-
 
 
 							<div class="row">
