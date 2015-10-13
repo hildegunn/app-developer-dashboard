@@ -63,8 +63,15 @@
 
 	<div class="extendedinfo showOnOpened" style="display: none; margin-top: 2em">
 
-					<p><strong>Extended description for system developers</strong></p>
-					<p class="list-group-item-text">{systemdescr}</p>
+
+		{?systemdescr}
+		<h5>Extended description for system developers</h5>
+		<p style="margin-botton: 1em">{systemdescr}</p>
+		{/systemdescr}
+		<ul style="margin-top: .6em; margin-bottom: 1em">
+			{?docurl}<li><a href="{docurl}">API Documentation</a></li>{/docurl}
+			{?privacypolicyurl}<li><a href="{privacypolicyurl}">Privacy policy</a></li>{/privacypolicyurl}
+		</ul>
 
 		{#scopedef}
 
