@@ -10,6 +10,7 @@
 			
 		<ul class="nav nav-pills nav-stacked tabselector" style="text-align:right">
 			<li role="presentation" data-tabid="tabBasic" class=""><a href="#">Basic info</a></li>
+			<li role="presentation" data-tabid="tabExtended" class=""><a href="#">Extended info</a></li>
 			<li role="presentation" data-tabid="tabOAuth" class=""><a href="#">OAuth details</a></li>
 			<li role="presentation" data-tabid="tabAuthProviders" class=""><a href="#">Auth Providers</a></li>
 			<li role="presentation" data-tabid="tabScopes" class=""><a href="#">Scopes</a></li>
@@ -45,12 +46,6 @@
 					<div class="form-group">
 						<label for="descr">Description for end-users</label>
 						<textarea class="form-control" id="descr" rows="3">{descr}</textarea>
-					</div>
-
-
-					<div class="form-group">
-						<label for="descr">Description for system administrators</label>
-						<textarea class="form-control" id="systemdescr" rows="5">{systemdescr}</textarea>
 					</div>
 
 
@@ -93,6 +88,54 @@
 
 					</div>
 
+
+					<p><button class="btn btn-success actSaveChanges" class="">
+						<i class="glyphicon glyphicon-ok"></i> Save changes</button></p>
+
+				</form>
+
+				<p style="margin: 0px">
+					<span style=" color: #555">Registered {createdAgo}</span> 
+						<span style="color: #999"><i class="glyphicon glyphicon-time"></i> {createdH}</span>
+					<span style="margin-left: 2em;  color: #555">Updated {updatedAgo}</span> 
+						<span style="color: #999"><i class="glyphicon glyphicon-time"></i> {updatedH}</span>
+				</p>
+
+				{/client}
+
+			</div>
+
+			<div class="col-sm-3 ">
+				
+				<div class="imagezone" style="min-height: 128px; min-width: 128px">
+					<img class="itemlogo" src="{_config.apis.core}/clientadm/clients/{client.id}/logo" style="padding: 5px; border: 1px solid #ddd; border-radius: 4px; backgroud: #eee" />
+				</div>
+
+				<p>Drag a new square (1:1) PNG logo over the current one to replace it. <br /><span style="font-size: 90%">Minimum 128px</span></p>
+			</div>
+
+		</div>
+
+
+
+
+		<div id="tabExtended" class="row">
+
+
+			<div class="col-sm-12">
+
+
+				{#client}
+				<form class="" style="">
+
+
+
+					<div class="form-group">
+						<label for="descr">Description for system administrators</label>
+						<textarea class="form-control" id="systemdescr" rows="5">{systemdescr}</textarea>
+					</div>
+
+
 					<div class="form-group">
 						<label for="privacypolicyurl">Privacy Policy URL</label>
 						<input class="form-control" id="privacypolicyurl" placeholder="http://" value="{privacypolicyurl}" />
@@ -127,15 +170,6 @@
 
 				{/client}
 
-			</div>
-
-			<div class="col-sm-3 ">
-				
-				<div class="imagezone" style="min-height: 128px; min-width: 128px">
-					<img class="itemlogo" src="{_config.apis.core}/clientadm/clients/{id}/logo" style="padding: 5px; border: 1px solid #ddd; border-radius: 4px; backgroud: #eee" />
-				</div>
-
-				<p>Drag a new square (1:1) PNG logo over the current one to replace it. <br /><span style="font-size: 90%">Minimum 128px</span></p>
 			</div>
 
 		</div>
