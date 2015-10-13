@@ -196,7 +196,7 @@ define(function(require, exports, module) {
 
 		"hasOrgAuthorized": function(realm, scope) {
 
-			console.error("About to check if has orgauthrizatsion", this.orgauthorization, scope, realm);
+			// console.error("About to check if has orgauthrizatsion", this.orgauthorization, scope, realm);
 			if (!this.orgauthorization) {
 				return false;
 			}

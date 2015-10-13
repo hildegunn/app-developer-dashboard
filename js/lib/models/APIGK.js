@@ -186,9 +186,9 @@ define(function(require, exports, module) {
 			var allScopes = client.getScopesObjects();
 			var scopes = this.getOrgTargetedScopes(allScopes);
 
-			console.error("-----");
+			// console.error("-----");
 			if (scopes.length === 0) {
-				console.error("   ====> No orgadmin scopes here. ", this.name);
+				// console.error("   ====> No orgadmin scopes here. ", this.name);
 				return null;
 			}
 
@@ -200,11 +200,11 @@ define(function(require, exports, module) {
 				});
 			}
 
-			console.error("Client " + client.name + " wants access to " + this.name);
-			console.error("Orgs", orgs);
-			console.error("Org authorizations", orgauthorization);
-			console.error("All Scopes", allScopes);
-			console.error("Scopes", scopes);				
+			// console.error("Client " + client.name + " wants access to " + this.name);
+			// console.error("Orgs", orgs);
+			// console.error("Org authorizations", orgauthorization);
+			// console.error("All Scopes", allScopes);
+			// console.error("Scopes", scopes);				
 
 
 			for (i = 0; i < orgs.length; i++) {
@@ -268,7 +268,7 @@ define(function(require, exports, module) {
 
 			v.orgadminscopematrix = this.getOrgAdminScopeMatrix(client);
 
-			console.error("Get client view of API Gatekeeper", JSON.stringify(v.scopematrix, undefined, 4));
+			// console.error("Get client view of API Gatekeeper", JSON.stringify(v.scopematrix, undefined, 4));
 			// console.error("Get client view of API Gatekeeper", JSON.stringify(v, undefined, 4));
 
 			return v;

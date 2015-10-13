@@ -59,7 +59,7 @@ define(function(require, exports, module) {
 			var realms = this.getOrgList().reduce(function(prev, curr) {
 				var m = curr.match(matcher);
 				if (m) {
-					console.error(m);
+					// console.error(m);
 					prev.push(m[1]);
 					return prev;
 				}
