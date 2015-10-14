@@ -57,7 +57,10 @@ define(function(require, exports, module) {
 			});
 		},
 
-
+		"setTabHashFragment": function(tabid) {
+			var orgid = this.app.orgid;
+			this.app.app.setHash('/' + orgid + '/apigk/' + this.current.id + '/edit/' + tabid);
+		},
 
 		"logoUploaded": function(data) {
 			var that = this;

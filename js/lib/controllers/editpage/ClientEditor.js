@@ -22,6 +22,7 @@ define(function(require) {
 		"init": function(app, feideconnect, publicapis) {
 			
 			var that = this;
+
 			this.editor = "clients";
 			this.publicapis = publicapis;
 			this._super(app, feideconnect);
@@ -134,8 +135,15 @@ define(function(require) {
 				])
 				.then(this.proxy("_initLoaded"));
 
+
+
 		},
 
+
+		"setTabHashFragment": function(tabid) {
+			var orgid = this.app.orgid;
+			this.app.app.setHash('/' + orgid + '/clients/' + this.current.id + '/edit/' + tabid);
+		},
 
 		"loadScopeDef": function() {
 
@@ -179,7 +187,7 @@ define(function(require) {
 				})
 				.catch(function(err) {
 					// console.error(err);
-					that.app.setErrorMessage("Error uploading logo", "danger", err);
+					that.app.app.setErrorMessage("Error uploading logo", "danger", err);
 				});
 		},
 
@@ -282,7 +290,7 @@ define(function(require) {
 					}
 					that.selectTab(tab);
 					// console.error("ITem is ", that.current);
-					that.aps = new AuthProviderSelector(that.el.find('.authproviders'), that.app.providerdata, that.current.authproviders);
+					that.aps = new AuthProviderSelector(that.el.find('.authproviders'), that.app.app.providerdata, that.current.authproviders);
 					that.aps.on('save', function(providers) {
 						that.actUpdateAuthProviders(providers);
 					});
@@ -291,7 +299,7 @@ define(function(require) {
 
 				})
 				.catch(function(err) {
-					that.app.setErrorMessage("Error loading client editor", "danger", err);
+					that.app.app.setErrorMessage("Error loading client editor", "danger", err);
 				});
 
 
@@ -355,10 +363,10 @@ define(function(require) {
 					that.edit(x);
 					that.emit("saved", x);
 
-					that.app.setErrorMessage("Successfully updated list of authentication providers", "success");
+					that.app.app.setErrorMessage("Successfully updated list of authentication providers", "success");
 				})
 				.catch(function(err) {
-					that.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.app.setErrorMessage("Error adding scope", "danger", err);
 				});
 
 		},
@@ -400,7 +408,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.app.setErrorMessage("Error adding scope", "danger", err);
 				});
 
 		},
@@ -443,7 +451,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.app.setErrorMessage("Error adding scope", "danger", err);
 				});
 
 
@@ -492,7 +500,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.app.setErrorMessage("Error adding scope", "danger", err);
 				});
 
 		},
@@ -513,7 +521,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.setErrorMessage("Error removing scope", "danger", err);
+					that.app.app.setErrorMessage("Error removing scope", "danger", err);
 				});
 
 		},
@@ -578,7 +586,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.setErrorMessage("Error updating client", "danger", err);
+					that.app.app.setErrorMessage("Error updating client", "danger", err);
 				});
 
 		},
