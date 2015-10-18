@@ -1,0 +1,17 @@
+<ol class="breadcrumb">
+
+{#items}
+	<li 
+		{?active}
+		class="active"
+		{/active}
+		>
+
+		{?href}
+			<a href="{href}">{title}</a>
+		{:else}
+			{title}
+		{/href}
+	</li>
+{/items}
+</ol>

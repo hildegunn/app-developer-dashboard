@@ -231,6 +231,14 @@ define(function(require) {
 
 
 
+			this.app.app.bccontroller.draw([
+				this.app.getBCItem(),
+				{
+					"title": 'Client ' + item.name,
+					"active": true
+				}
+			]);
+
 			/*
 			 * From the list of API GK oriented scopes, such as gk_preferanse_foo 
 			 * it will obtain a list of API model objects from the referring APIs

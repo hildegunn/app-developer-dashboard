@@ -10,6 +10,7 @@ define(function (require, exports, module) {
 		// APIGKEditor = require('./controllers/editpage/APIGKEditor'),
 		OrgRoleSelector = require('./controllers/OrgRoleSelector'),
 
+		BCController = require('./controllers/BCController'),
 		OrgApp = require('./OrgApp'),
 
 		PublicAPIPool = require('./models/PublicAPIPool'),
@@ -57,13 +58,14 @@ define(function (require, exports, module) {
 			this.tmpHeader = new TemplateEngine(tmpHeader);
 			this.tmpFooter = new TemplateEngine(tmpFooter);
 
-
 			this.providerdata = new ProviderData();
 
 			this.elOrgSelector = $("<div></div>");
 			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector, this.feideconnect);
 			this.orgRoleSelector.initLoad();
 
+			this.bccontroller = new BCController($("#breadcrumb"));
+			
 
 
 

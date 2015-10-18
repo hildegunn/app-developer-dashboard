@@ -241,6 +241,19 @@ define(function (require, exports, module) {
 				
 		},
 
+		"getBCItem": function() {
+			var title = 'Main overview personal';
+			if (this.orgid !== '_') {
+				title = 'Main overview ' + this.orgid;
+			}
+			var item = {
+				"href": "#!/" + this.orgid,
+				"title": title,
+				"active": false
+			};
+			return item;
+		},
+
 		"editClient": function(clientid, tabid) {
 
 			var that = this;
@@ -265,6 +278,7 @@ define(function (require, exports, module) {
 
 		"actMainlisting": function() {
 			this.app.setHash('/' + this.orgid);
+			this.app.bccontroller.hide();
 			this.mainlisting.activate();
 		},
 
