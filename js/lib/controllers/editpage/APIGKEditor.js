@@ -253,11 +253,13 @@ define(function(require, exports, module) {
 				this.current.docurl = null;
 			}
 
+			this.current.requireuser = this.el.find('.fieldrequireuser').prop("checked");
+
 			this.current.setStatusPublic(this.el.find('#ispublic').prop("checked"));
 
 
 			obj = this.current.getStorable(["id", "name", "descr", "systemdescr", 
-				"privacypolicyurl", "docurl", "status"]);
+				"privacypolicyurl", "docurl", "status", "requireuser"]);
 
 			that.feideconnect.apigkUpdate(obj)
 				.then(function(savedObject) {
