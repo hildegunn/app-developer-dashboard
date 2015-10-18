@@ -119,11 +119,17 @@ define(function(require, exports, module) {
 					var reqClientsReq = [];
 
 					for (i = 0; i < clients.length; i++) {
+
+						clients[i].orgauthorization = {
+							"uninett.no": ["gk_scopetestapi"]
+						};
+
 						nc = new Client(clients[i]);
 						that.clients[nc.id] = nc;
 						cv = nc.getAPIGKview(that.current);
 
-						// console.error("Processing API GK View", cv);
+						console.error("Processing API GK View of a client", JSON.stringify(cv, undefined, 2));
+						// console.error("Orgauthorizations", cv.name, nc.orgauthorization);
 
 						if (cv.sd.authz) {
 							view.clients.push(cv);
