@@ -106,6 +106,17 @@ define(function(require, exports, module) {
 				});
 			}
 
+
+			this.app.app.bccontroller.draw([
+				this.app.getBCItem(),
+				{
+					"title": 'API GK ' + item.name,
+					"active": true
+				}
+			]);
+
+
+
 			// that.feideconnect.clientsByScope(this.current.getBasicScope()).
 			// 	then(function(clients) {
 
