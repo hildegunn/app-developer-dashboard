@@ -60,6 +60,71 @@ define(function(require, exports, module) {
 			return view;
 		},
 
+
+		/**
+		 * Feed this with a the clients orgauthorizations, and it will return a matrix
+		 * containing rows of organizations, and which scopes they have authorized.
+		 * 
+		 * @param  {[type]} orgauthorizations [description]
+		 * @return {[type]}                   [description]
+		 */
+		"getOrgAdminScopeMatrix": function(apigk) {
+			var i, j;
+			var data = {
+				"scopes": [],
+				"orgs": []
+			};
+			
+			var orgauthorization = this.orgauthorization;
+			var orgs = apigk.scopedef.getRealmList();
+			var allScopes = this.getScopesObjects();
+			var scopes = apigk.getOrgTargetedScopes(allScopes);
+
+			if (scopes.length === 0) {
+				// console.error("   ====> No orgadmin scopes here. ", this.name);
+				return null;
+			}
+
+			for (i = 0; i < scopes.length; i++) {
+				data.scopes.push({
+					"scope": scopes[i],
+					"descr": apigk.scopedef.getScopeDescr(scopes[i])
+				});
+			}
+		
+			// if(this.id === '541bc151-4a34-47c6-b9fb-15947dbf54ae' && apigk.id === 'scopetestapi') {
+			// 	console.error("Client " + this.name + " wants access to " + apigk.name);
+			// 	console.error("Org authorizations", orgauthorization);
+			// }
+			
+			// console.error("Orgs", orgs);
+			
+			// console.error("All Scopes", allScopes);
+			// console.error("Scopes", scopes);		
+
+			for (i = 0; i < orgs.length; i++) {
+				var org = orgs[i];
+				var orgentry = {
+					"org": org,
+					"scopes": []
+				};
+				// console.error("ORGentry", orgentry);
+
+				for (j = 0; j < scopes.length; j++) {
+					// if(this.id === '541bc151-4a34-47c6-b9fb-15947dbf54ae' && apigk.id === 'scopetestapi') {
+						// console.error("Check scopes ", org, scopes[j], this.hasOrgAuthorized(org, scopes[j]))
+					// }
+					orgentry.scopes.push(this.hasOrgAuthorized(org, scopes[j]));
+				}
+				data.orgs.push(orgentry);
+
+			}
+
+			return data;
+		},
+
+
+
 		"getAPIGKview": function(apigk) {
 
 			var that = this;
@@ -91,6 +156,9 @@ define(function(require, exports, module) {
 				}
 
 			}
+
+
+			v.orgadminscopematrix = this.getOrgAdminScopeMatrix(apigk);
 
 			return v;
 

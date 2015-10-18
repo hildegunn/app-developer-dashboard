@@ -740,9 +740,51 @@ X_FEIDECONNECT_USERID_SEC: feide:xxxx@uninett.no
 
 							</table>
 
+
+
+
+							{#orgadminscopematrix}
+								<div style="margin-top: 2em">
+									<p><strong>API Authorization by Organizations</strong></p>
+									<table class="table table-striped" style="margin-bottom: 3em">
+									<thead>
+										<tr>
+											<td>Organization</td>
+											{#scopes}
+												<td>{descr.title}</td>
+											{/scopes}
+										</tr>
+
+									</thead>
+									<tbody>
+										{#orgs}
+										<tr>
+											<td>{org}</td>
+											{#scopes}
+												<td>
+												{?.}
+													<span class="label label-success">
+														<i class="fa fa-check-square-o"></i>&nbsp;
+														Accepted</span>
+												{:else}
+													<span class="label label-danger">
+														<i class="fa fa-square-o"></i>&nbsp;
+														Requested</span>
+												{/.}
+												</td>
+											{/scopes}
+										</tr>
+										{/orgs}
+									</tbody>
+									</table>
+								</div>
+							{/orgadminscopematrix}
+
+
+
 							<div class="pull-right">
 								
-							<button class="btn btn-primary btn-sm actUpdateAuthz">Update authorizations</button>
+								<button class="btn btn-primary btn-sm actUpdateAuthz">Update authorizations</button>
 
 							</div>
 

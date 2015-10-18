@@ -120,15 +120,15 @@ define(function(require, exports, module) {
 
 					for (i = 0; i < clients.length; i++) {
 
-						clients[i].orgauthorization = {
-							"uninett.no": ["gk_scopetestapi"]
-						};
+						// clients[i].orgauthorization = {
+						// 	"uninett.no": ["gk_scopetestapi"]
+						// };
 
 						nc = new Client(clients[i]);
 						that.clients[nc.id] = nc;
 						cv = nc.getAPIGKview(that.current);
 
-						console.error("Processing API GK View of a client", JSON.stringify(cv, undefined, 2));
+						// console.error("Processing API GK View of a client", JSON.stringify(cv, undefined, 2));
 						// console.error("Orgauthorizations", cv.name, nc.orgauthorization);
 
 						if (cv.sd.authz) {
@@ -144,7 +144,7 @@ define(function(require, exports, module) {
 					// $("#debug").append("<pre style='background-color: #cc7; margin-bottom: 5em'>" + JSON.stringify(view, undefined, 4) + "</pre>");
 
 
-					console.error("view is ", view);
+					// console.error("view is ", view);
 					dust.render("apigkeditor", view, function(err, out) {
 
 						var tab = that.currentTab;
@@ -236,7 +236,6 @@ define(function(require, exports, module) {
 			this.current.descr = this.el.find("#apidescr").val();
 			this.current.endpoints = [this.el.find("#endpoint").val()];
 
-
 			this.current.systemdescr = this.el.find('#systemdescr').val();
 			if (this.current.systemdescr === '') {
 				this.current.systemdescr = null;
@@ -256,7 +255,6 @@ define(function(require, exports, module) {
 			this.current.requireuser = this.el.find('.fieldrequireuser').prop("checked");
 
 			this.current.setStatusPublic(this.el.find('#ispublic').prop("checked"));
-
 
 			obj = this.current.getStorable(["id", "name", "descr", "systemdescr", 
 				"privacypolicyurl", "docurl", "status", "requireuser"]);

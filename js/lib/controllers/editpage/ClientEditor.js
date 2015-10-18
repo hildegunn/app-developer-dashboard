@@ -265,6 +265,7 @@ define(function(require) {
 			for(i = 0; i < myapis.length; i++) {
 
 				aapiview = myapis[i].getClientView(that.current);
+				// console.error("Get client view is ", JSON.stringify(aapiview, undefined, 2));
 				if (aapiview.sd.authz) {
 					view.authorizedAPIs.push(aapiview);
 				} 
@@ -275,7 +276,7 @@ define(function(require) {
 			}
 
 
-			console.error("Client view..", view);
+			// console.error("Client view..", view);
 
 
 			
@@ -577,7 +578,7 @@ define(function(require) {
 
 			// obj = this.current.getStorable();
 			// obj.authproviders = [];
-			console.error("UPDATE", obj);
+			// console.error("UPDATE", obj);
 
 			this.feideconnect.clientsUpdate(obj)
 				.then(function(savedClient) {
