@@ -44,7 +44,7 @@ define(function(require, exports, module) {
 				return false;
 			}
 			if (this.type === null) {
-				console.error("This has type of null", this);
+				// console.error("This has type of null", this);
 				return false;
 			}
 			// console.log("Type", this.type);
@@ -76,7 +76,7 @@ define(function(require, exports, module) {
 			}
 			if (this.has("uiinfo") && this.uiinfo !== null) {
 				services.Geo = true;
-				console.error("Geo loength: ", this.uiinfo.geo.length);
+				// console.error("Geo loength: ", this.uiinfo.geo.length);
 				this.geocount = this.uiinfo.geo.length;
 			}
 			if (this.has("hasLogo") && this.uiinfo !== null) {
