@@ -127,10 +127,6 @@ define(function (require, exports, module) {
 
 
 
-
-
-
-
 			this.mainlisting.on("clientCreate", function(obj) {
 				that.feideconnect.clientsRegister(obj)
 					.then(function(data) {
@@ -170,8 +166,6 @@ define(function (require, exports, module) {
 						that.app.setErrorMessage("Error creating new API Gatekeeper", "danger", err);
 					});
 			});
-
-
 
 
 			this.clienteditor = new ClientEditor(this, this.feideconnect, this.publicapis);

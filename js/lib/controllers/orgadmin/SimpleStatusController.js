@@ -6,7 +6,7 @@ define(function(require, exports, module) {
 		Controller = require('../Controller'),
 		EventEmitter = require('../../EventEmitter'),
 		TemplateEngine = require('../../TemplateEngine'),
-		OrgStatus = require('../../Models/OrgStatus')
+		OrgStatus = require('../../models/OrgStatus')
 
 		;
 
