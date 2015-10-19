@@ -89,8 +89,6 @@ define(function(require, exports, module) {
 		},
 
 
-
-
 		"edit": function(item, setTab) {
 
 			var that = this;
@@ -267,7 +265,7 @@ define(function(require, exports, module) {
 
 			this.current.setStatusPublic(this.el.find('#ispublic').prop("checked"));
 
-			obj = this.current.getStorable(["id", "name", "descr", "systemdescr", 
+			obj = this.current.getStorable(["id", "name", "descr", "endpoints", "systemdescr", 
 				"privacypolicyurl", "docurl", "status", "requireuser"]);
 
 			that.feideconnect.apigkUpdate(obj)
