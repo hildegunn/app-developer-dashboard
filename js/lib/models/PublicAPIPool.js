@@ -27,7 +27,7 @@ define(function(require, exports, module) {
 
 		"load": function() {
 			var that = this;
-
+			that.apigks = {};
 			return that.feideconnect.apigkPublicList()
 				.then(function(apigks) {
 					var i;

@@ -158,6 +158,9 @@ define(function (require, exports, module) {
 						that.activate();
 						that.app.orgRoleSelector.hide();
 						that.app.setHash('/' + that.orgid + '/apigk/' + apigk.id + '/edit/tabBasic');
+
+						// When creating a new API GK, reload the list of available 3rd party APIs.
+						that.app.publicapis.load();
 					})
 					.then(function() {
 						that.app.setErrorMessage("Successfully created new API Gatekeeper", "success");
@@ -189,6 +192,9 @@ define(function (require, exports, module) {
 			this.apigkeditor.on("saved", function(apigk) {
 				// console.log("APIGK is saved, updatge client pool and mainlisting");
 				that.clientpool.setAPIGK(apigk);
+
+				// When saving changes to a new API GK, reload the list of available 3rd party APIs.
+				that.app.publicapis.load();
 			});
 			this.apigkeditor.on("deleted", function(id) {
 				// console.log("APIGK is removed, update apigk pool and mainlisting");
@@ -196,6 +202,9 @@ define(function (require, exports, module) {
 				that.mainlisting.activate();
 				that.app.orgRoleSelector.show();
 				that.app.setHash('/' + that.orgid);
+
+				// When deleting a API GK, reload the list of available 3rd party APIs.
+				that.app.publicapis.load();
 			});
 
 
