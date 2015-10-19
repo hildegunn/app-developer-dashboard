@@ -5,9 +5,7 @@ define(function(require, exports, module) {
 		$ = require('jquery'),
 		Controller = require('./Controller'),
 		EventEmitter = require('../EventEmitter'),
-		TemplateEngine = require('../TemplateEngine')
-
-		
+		TemplateEngine = require('../TemplateEngine')		
 		;
 
 

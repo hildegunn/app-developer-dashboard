@@ -1,5 +1,12 @@
 
 
+<div>
+	<h1>
+		Manage mandatory clients
+	</h1>
+</div>
+
+
 <div class="listingMandClients list-group" style="margin-top: 1em">
 
 {#clients}
@@ -34,9 +41,7 @@
 
 				{?trustOwner}
 				{#owner}
-					
-					<!--<p></p>
-					<p>{id}</p>-->
+
 					<p>
 						<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.auth}/user/media/{id}"> &nbsp;&nbsp;
 						{name}

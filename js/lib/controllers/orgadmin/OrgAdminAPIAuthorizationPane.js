@@ -124,6 +124,17 @@ define(function(require, exports, module) {
 			this.el.children().detach();
 			return this.tmp.render(this.el, view);
 
+		},
+
+		"activate": function() {
+			this.orgapp.app.bccontroller.draw([
+				this.orgapp.getBCItem(),
+				{
+					"title": 'API Authorization Management',
+					"active": true
+				}
+			]);
+			return this._super();
 		}
 	}).extend(EventEmitter);
 

@@ -273,8 +273,6 @@ define(function (require, exports, module) {
 			var that = this;
 			type = (type ? type : "danger");
 
-			// console.error("Error ", title, type, typeof msg, msg);
-
 			var pmsg = '';
 			if (typeof msg === 'object' && msg.hasOwnProperty("message")) {
 				pmsg = '<p>' + utils.escape(msg.message, false).replace("\n", "<br />") + '</p>';
@@ -340,9 +338,7 @@ define(function (require, exports, module) {
 		"routeMandatory": function(orgid) {
 
 			var that = this;
-			// console.error("Setting org to be ", orgid);
 			this.orgRoleSelector.setOrg(orgid, false);
-			this.orgRoleSelector.show();
 
 			this.feideconnect.onAuthenticated()
 				.then(function() {
@@ -351,6 +347,7 @@ define(function (require, exports, module) {
 				.then(function(orgApp) {
 					orgApp.actMandatory();
 					orgApp.activate();
+					that.orgRoleSelector.hide();
 				})
 				.catch(function(err) {
 					console.error("err", err);
@@ -361,9 +358,7 @@ define(function (require, exports, module) {
 
 		"routeAPIAuthorization": function(orgid) {
 			var that = this;
-			// console.error("Setting org to be ", orgid);
 			this.orgRoleSelector.setOrg(orgid, false);
-			this.orgRoleSelector.show();
 
 			this.feideconnect.onAuthenticated()
 				.then(function() {
@@ -372,6 +367,7 @@ define(function (require, exports, module) {
 				.then(function(orgApp) {
 					orgApp.actAPIAuth();
 					orgApp.activate();
+					that.orgRoleSelector.hide();
 				})
 				.catch(function(err) {
 					console.error("err", err);
@@ -381,10 +377,6 @@ define(function (require, exports, module) {
 
 		"routeMainlisting": function(orgid) {
 
-
-
-
-
 			var that = this;
 			if (!orgid) {
 				orgid = '_';
@@ -393,8 +385,6 @@ define(function (require, exports, module) {
 			this.orgRoleSelector.setOrg(orgid, false);
 			this.orgRoleSelector.show();
 
-
-
 			this.feideconnect.onAuthenticated()
 				.then(function() {
 					return that.getOrgApp(orgid)
@@ -402,16 +392,12 @@ define(function (require, exports, module) {
 				.then(function(orgApp) {
 					orgApp.actMainlisting();
 					orgApp.activate();
-					// console.error("Route mainlisting, for this orgapp: ", orgApp);ch
 				})
 				.catch(function(err) {
 					console.error("err", err);
 					that.setErrorMessage("Error loading Mainlisting", "danger", err);
 				});
-
 		}
-
-
 
 	});
 

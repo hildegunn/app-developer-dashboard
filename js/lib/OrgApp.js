@@ -136,7 +136,6 @@ define(function (require, exports, module) {
 						that.clientpool.setClient(client);
 
 						that.clienteditor.edit(client, 'tabBasic');	
-
 						
 						that.activate();
 						that.app.orgRoleSelector.hide();
@@ -285,11 +284,13 @@ define(function (require, exports, module) {
 		"actMandatory": function() {
 			this.app.setHash('/' + this.orgid + '/mandatory');
 			this.orgAdminView.activate();
+			this.app.orgRoleSelector.hide();
 		},
 
 		"actAPIAuth": function() {
 			this.app.setHash('/' + this.orgid + '/apiauthorization');
 			this.orgAdminAPIAuthorization.activate();
+			this.app.orgRoleSelector.hide();
 		},
 
 		"getOrgInfo": function() {
