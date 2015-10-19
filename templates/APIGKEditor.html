@@ -10,9 +10,9 @@
 			
 		<ul class="nav nav-pills nav-stacked tabselector" style="text-align:right">
 			<li role="presentation" data-tabid="tabBasic" class=""><a href="#">Basic info</a></li>
-			<li role="presentation" data-tabid="tabTrust" class=""><a href="#">Trust</a></li>
-			<li role="presentation" data-tabid="tabAccess" class=""><a href="#">Access info</a></li>
+			<li role="presentation" data-tabid="tabExtended" class=""><a href="#">Extended info</a></li>
 			<li role="presentation" data-tabid="tabScopes" class=""><a href="#">Scopes</a></li>
+			<li role="presentation" data-tabid="tabAccess" class=""><a href="#">API Access</a></li>
 			<li role="presentation" data-tabid="tabRequests" class="">
 				<a href="#"><span class="label label-danger queuecount pull-left"></span> Requests</a></li>
 			<li role="presentation" data-tabid="tabClients" class=""><a href="#">Clients</a></li>
@@ -70,10 +70,6 @@
 						<p>Uncheck this if clients should be allowed to interact with this API without any authenticated user.</p>
 					</div>
 
-					<div class="form-group">
-						<label for="systemdescr">Description for system administrators and developers</label>
-						<textarea class="form-control" id="systemdescr" rows="5">{systemdescr}</textarea>
-					</div>
 
 
 					<div class="form-group">
@@ -88,22 +84,6 @@
 							<code>https://api.example.org</code>
 						</div>
 
-					</div>
-
-
-
-
-					<div class="form-group">
-						<label for="privacypolicyurl">Privacy Policy URL</label>
-						<input class="form-control" id="privacypolicyurl" 
-							placeholder="http://" value="{privacypolicyurl}" />
-					</div>
-
-
-					<div class="form-group">
-						<label for="docurl">API Documentation</label>
-						<input class="form-control" id="docurl" 
-							placeholder="http://" value="{docurl}" />
 					</div>
 
 
@@ -140,17 +120,76 @@
 
 
 
+		<div id="tabExtended" class="row">
+
+
+			<div class="col-sm-12">
+
+
+				<form class="" style="">
+
+					<div class="form-group">
+						<label for="systemdescr">Description for system administrators and developers</label>
+						<textarea class="form-control" id="systemdescr" rows="5">{systemdescr}</textarea>
+					</div>
+
+
+					<div class="form-group">
+						<label for="privacypolicyurl">Privacy Policy URL</label>
+						<input class="form-control" id="privacypolicyurl" 
+							placeholder="http://" value="{privacypolicyurl}" />
+					</div>
+
+
+					<div class="form-group">
+						<label for="docurl">API Documentation</label>
+						<input class="form-control" id="docurl" 
+							placeholder="http://" value="{docurl}" />
+					</div>
 
 
 
 
-		<div id="tabTrust">
+
+					<p><button class="btn btn-success actSaveChanges" class="">
+						<i class="glyphicon glyphicon-ok"></i> Save changes</button></p>
+
+				</form>
+
+				<p style="margin: 0px">
+					<span style=" color: #555">Registered {createdAgo}</span> 
+						<span style="color: #999"><i class="glyphicon glyphicon-time"></i> {createdH}</span>
+					<span style="margin-left: 2em;  color: #555">Updated {updatedAgo}</span> 
+						<span style="color: #999"><i class="glyphicon glyphicon-time"></i> {updatedH}</span>
+				</p>
+
+
+
+			</div>
+
+
+		</div>
+
+
+
+
+
+
+
+
+
+
+		<div id="tabAccess">
 
 			<div class="row" style="">
 
-				<div class="col-sm-12">
-					
+				<div class="col-sm-5">
+				
+
 					{#trust}
+
+					<p>These credentials are used when Connet is accessing your API.</p>
+
 					<dl>
 						<dt>Trust type</dt>
 						<dd><code>{type}</code></dd>
@@ -165,21 +204,10 @@
 
 					</dl>
 					{/trust}
-
-
 				</div>
 
-			</div>
-
-		</div>
-
-
-
-		<div id="tabAccess">
-
-			<div class="row" style="">
-
-				<div class="col-sm-12">
+				<div class="col-sm-7">
+					
 
 					<p>Your API may be accessed on this API Gatekeeper base URL:</p>
 
@@ -206,7 +234,9 @@ X_FEIDECONNECT_USERID: 76a7a061-3c55-430d-8ee0-6f82ec42501f{~n}
 X_FEIDECONNECT_USERID_SEC: feide:xxxx@uninett.no
 </code></pre>		
 
+
 				</div>
+
 
 			</div>
 
