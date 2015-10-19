@@ -11,7 +11,7 @@ define(function(require, exports, module) {
 		;
 
 
-	var template = require('text!templates/Breadcrumb.html');
+	var template = require('text!templates/breadcrumb.html');
 
 	var BCController = Controller.extend({
 
