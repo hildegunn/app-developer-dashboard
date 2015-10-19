@@ -244,7 +244,7 @@ define(function(require, exports, module) {
 			var obj;
 
 			this.current.name = this.el.find("#apiname").val();
-			this.current.descr = this.el.find("#apidescr").val();
+			this.current.descr = this.el.find("#descr").val();
 			this.current.endpoints = [this.el.find("#endpoint").val()];
 
 			this.current.systemdescr = this.el.find('#systemdescr').val();
