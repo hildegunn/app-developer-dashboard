@@ -22,15 +22,6 @@ define(function(require, exports, module) {
 
 		"draw": function(items) {
 
-
-			// var txt = '<div class="row"><div class="col-md-12"><ol class="breadcrumb">';
-			// var i;
-
-			// for(i = 0; i < items.length; i++) {
-			// 	txt += '<li><a href="#">' + items[i].title + '</a></li>';
-			// }
-			// txt += '</ol></div></div>';
-			// this.el.empty().append(txt);
 			var view = {
 				"items": items
 			};
