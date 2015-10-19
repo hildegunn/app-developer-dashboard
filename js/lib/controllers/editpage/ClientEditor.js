@@ -606,6 +606,9 @@ define(function(require) {
 			this.feideconnect.clientsDelete(this.current.id)
 				.then(function() {
 					that.emit("deleted", that.current.id);
+				})
+				.catch(function(err) {
+					that.app.app.setErrorMessage("Error deleting client", "danger", err);
 				});
 		}
 

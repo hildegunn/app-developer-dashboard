@@ -286,9 +286,13 @@ define(function(require, exports, module) {
 		"actDelete": function(e) {
 			e.preventDefault();
 			var that = this;
-			this.feideconnect.apigkDelete(this.current.id, function(data) {
-				that.emit("deleted", that.current.id);
-			});
+			this.feideconnect.apigkDelete(this.current.id)
+				.then(function(data) {
+					that.emit("deleted", that.current.id);
+				})
+				.catch(function(err) {
+					that.app.app.setErrorMessage("Error deleting API Gatekeeper", "danger", err);
+				});
 		}
 
 	});

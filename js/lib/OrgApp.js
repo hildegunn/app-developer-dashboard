@@ -190,8 +190,6 @@ define(function (require, exports, module) {
 
 
 			
-
-
 			this.apigkeditor = new APIGKEditor(this, this.feideconnect);
 			this.pc.add(this.apigkeditor);
 			this.apigkeditor.on("saved", function(apigk) {
@@ -199,7 +197,7 @@ define(function (require, exports, module) {
 				that.clientpool.setAPIGK(apigk);
 			});
 			this.apigkeditor.on("deleted", function(id) {
-				// console.log("APIGK is removed, update client pool and mainlisting");
+				// console.log("APIGK is removed, update apigk pool and mainlisting");
 				that.clientpool.removeAPIGK(id);
 				that.mainlisting.activate();
 				that.app.orgRoleSelector.show();
@@ -226,21 +224,8 @@ define(function (require, exports, module) {
 		},
 
 		"initLoad": function() {
-
-
-
-
 			return this.draw()
-				// .then(function() {
-				// 	return new Promise(function(resolve, reject) {
-				// 		setTimeout(function() {
-				// 			console.error("RESOLVED");
-				// 			resolve();
-				// 		}, 3000);
-				// 	});
-				// })
 				.then(this.proxy("_initLoaded"));
-				
 		},
 
 		"getBCItem": function() {
