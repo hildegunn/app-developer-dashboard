@@ -54,7 +54,7 @@ define(function(require, exports, module) {
 			var that = this;
 			var view = this.orgstatus.getView();
 
-			console.error("About to render", view);
+			// console.error("About to render", view);
 			return this.tmp.render(this.el, view);
 		}
 

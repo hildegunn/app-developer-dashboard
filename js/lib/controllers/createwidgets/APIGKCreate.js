@@ -181,18 +181,17 @@ define(function(require, exports, module) {
 				if (--that.checkCounter <= 0) {
 					that.checkCounter = 0;
 
-
 					that.lastChecked = str;
-
-					that.feideconnect.apigkCheck(str, function(exists) {
-						if (!exists) {
-							that.setStatus(true);
-							that.checkContinue(true);
-						} else {
-							that.setStatus(false, 'Already taken');
-							that.checkContinue(false);
-						}
-					});
+					that.feideconnect.apigkCheck(str)
+						.then(function(exists) {
+							if (!exists) {
+								that.setStatus(true);
+								that.checkContinue(true);
+							} else {
+								that.setStatus(false, 'Already taken');
+								that.checkContinue(false);
+							}
+						});
 
 				}
 			}, 400);
@@ -232,6 +231,8 @@ define(function(require, exports, module) {
 			var ready = true;
 
 			var endp = this.checkEndpoint();
+
+
 
 			if (!endp) {
 				ready = false;
