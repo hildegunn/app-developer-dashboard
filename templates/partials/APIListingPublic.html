@@ -17,7 +17,7 @@
 				<div class="media-body">
 
 					<h4 class="list-group-item-heading">{name}</h4>
-					<p class="list-group-item-text">{descr}</p>
+					<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
 
 				</div>
 
@@ -66,7 +66,7 @@
 
 		{?systemdescr}
 		<h5>Extended description for system developers</h5>
-		<p style="margin-botton: 1em">{systemdescr}</p>
+		<p style="margin-botton: 1em">{systemdescr|s|h|acceptnewline}</p>
 		{/systemdescr}
 		<ul style="margin-top: .6em; margin-bottom: 1em">
 			{?docurl}<li><a target="_blank" href="{docurl}">API Documentation</a></li>{/docurl}

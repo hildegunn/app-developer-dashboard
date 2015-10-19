@@ -49,7 +49,7 @@
 
 					<div class="form-group">
 						<label for="descr">Description for end-users</label>
-						<textarea class="form-control" id="descr" rows="3">{descr}</textarea>
+						<textarea class="form-control" id="descr" rows="3">{descr|s|h|acceptnewline}</textarea>
 					</div>
 
 					<div class="form-group">
@@ -345,7 +345,7 @@ X_FEIDECONNECT_USERID_SEC: feide:xxxx@uninett.no
 							<div style="margin-top: 1.4em">
 								{?systemdescr}
 								<h5>Extended description for system administrators</h5>
-								<p class="list-group-item-text">{systemdescr}</p>
+								<p class="list-group-item-text">{systemdescr|s|h|acceptnewline}</p>
 								{/systemdescr}
 
 								<ul style="margin-top: .6em">
@@ -566,7 +566,7 @@ X_FEIDECONNECT_USERID_SEC: feide:xxxx@uninett.no
 											<p class="list-group-item-text" style="font-size: 80%">
 												<i class="glyphicon glyphicon-chevron-right"></i> {id}
 											</p>
-											<p class="list-group-item-text">{descr}</p>
+											<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
 
 											<p class="list-group-item-text" style="margin-top: 15px">Redirect URIs
 												<ul class="list-group-item-text" style="margin: 0px;">
@@ -632,7 +632,7 @@ X_FEIDECONNECT_USERID_SEC: feide:xxxx@uninett.no
 							<div style="margin-top: 1.4em">
 								{?systemdescr}
 								<h5>Extended description for system administrators</h5>
-								<p class="list-group-item-text">{systemdescr}</p>
+								<p class="list-group-item-text">{systemdescr|s|h|acceptnewline}</p>
 								{/systemdescr}
 
 								<ul style="margin-top: .6em">

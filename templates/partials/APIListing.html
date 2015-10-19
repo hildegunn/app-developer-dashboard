@@ -20,7 +20,7 @@
 							<div class="media-body">
 
 								<h4 class="list-group-item-heading">{name}</h4>
-								<p class="list-group-item-text">{descr}</p>
+								<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
 
 
 							</div>
@@ -69,7 +69,7 @@
 
 						{?systemdescr}
 						<h5>Extended description for system developers</h5>
-						<p class="list-group-item-text">{systemdescr}</p>
+						<p class="list-group-item-text">{systemdescr|s|h|acceptnewline}</p>
 						{/systemdescr}
 
 						<ul style="margin-top: .6em">
@@ -297,7 +297,7 @@
 							<div class="media-body">
 
 								<h4 class="list-group-item-heading">{name}</h4>
-								<p class="list-group-item-text">{descr}</p>
+								<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
 							</div>
 
 						</div>

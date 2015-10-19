@@ -7,7 +7,7 @@
 			<p class="pull-right" style="color: #666; font-size: 82%">Updated {updatedAgo}</p>
 			<h4 class="list-group-item-heading">{name}</h4>
 			<p class="list-group-item-text" style="font-size: 80%" ><i class="glyphicon glyphicon-chevron-right"></i> {id}</p>
-			<p class="list-group-item-text">{descr}</p>
+			<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
 		</div>
 	</a>
 {:else}
