@@ -12,6 +12,7 @@ define(function(require, exports, module) {
 
 		SimpleOrgAdminController = require('../orgadmin/SimpleOrgAdminController'),
 		SimpleOrgAdminAPIAuth = require('../orgadmin/SimpleOrgAdminAPIAuth'),
+		SimpleStatusController = require('../orgadmin/SimpleStatusController'),
 
 
 		utils = require('../../utils'),
@@ -56,6 +57,7 @@ define(function(require, exports, module) {
 
 			this.simpleOrgAdminView = null;
 			this.simpleOrgAdminAPI = null;
+			this.orgAdminStatus = null;
 
 			if (orgAdminClients !== null) {
 
@@ -65,6 +67,18 @@ define(function(require, exports, module) {
 				this.simpleOrgAdminView.on("manageMandatory", function() {
 					that.emit("manageMandatory");
 				});
+
+
+
+
+				this.orgAdminStatus = new SimpleStatusController(this.feideconnect, this.app.orgid);
+				this.orgAdminStatus.initLoad();
+
+				this.orgAdminStatus.on("manageStatus", function() {
+					that.emit("manageStatus");
+				});
+
+
 
 			}
 
@@ -228,6 +242,9 @@ define(function(require, exports, module) {
 					}
 					if  (that.simpleOrgAdminAPI !== null) {
 						that.el.find(".simpleOrgAdminAPI").show().append(that.simpleOrgAdminAPI.el);
+					}
+					if  (that.orgAdminStatus !== null) {
+						that.el.find(".simpleOrgAdminStatus").show().append(that.orgAdminStatus.el);
 					}
 
 					that.elClientsAttached = true;

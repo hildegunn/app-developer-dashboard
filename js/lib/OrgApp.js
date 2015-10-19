@@ -12,6 +12,7 @@ define(function (require, exports, module) {
 
 		OrgAdminPane = require('./controllers/orgadmin/OrgAdminPane'),
 		OrgAdminAPIAuthorizationPane = require('./controllers/orgadmin/OrgAdminAPIAuthorizationPane'),
+		SimpleStatusController = require('./controllers/orgadmin/SimpleStatusController'),
 		OrgAdminClients = require('./models/OrgAdminClients'),
 		OrgAdminAPIs = require('./models/OrgAdminAPIs'),
 
@@ -72,6 +73,8 @@ define(function (require, exports, module) {
 
 				this.orgAdminView = new OrgAdminPane(this.feideconnect, this, this.publicClientPool, this.orgAdminClients);
 				this.orgAdminView.initLoad();
+
+
 
 				this.orgAdminAPIs = new OrgAdminAPIs(this.feideconnect, orgid2);
 				this.orgAdminAPIs.initLoad();
