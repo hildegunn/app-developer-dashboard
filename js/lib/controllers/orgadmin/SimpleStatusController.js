@@ -6,7 +6,8 @@ define(function(require, exports, module) {
 		Controller = require('../Controller'),
 		EventEmitter = require('../../EventEmitter'),
 		TemplateEngine = require('../../TemplateEngine'),
-		OrgStatus = require('../../models/OrgStatus')
+		OrgStatus = require('../../models/OrgStatus'),
+		LDAPStatus = require('../../models/LDAPStatus')
 
 		;
 
@@ -43,6 +44,18 @@ define(function(require, exports, module) {
 					// console.error("ORGSTATUS", orgstatus)
 					that.orgstatus = new OrgStatus(orgstatus);
 				})
+			        .then(function() {
+                                    var path = '/orgs/' + that.orgid + '/ldap_status';
+                                    return that.feideconnect._request('core', path, null, ['orgadmin']);
+				})
+			        .catch(function(err) {
+				    // No ldap endpoints if ldap_status fails
+				    return new Object();
+				})
+				.then(function(ldapstatus) {
+				    console.error("Data fra ldapstatus", ldapstatus);
+					that.ldapstatus = new LDAPStatus({"data": ldapstatus});
+				})
 				.then(this.proxy("draw"))
 				.then(this.proxy("_initLoaded"));
 
@@ -53,6 +66,7 @@ define(function(require, exports, module) {
 
 			var that = this;
 			var view = this.orgstatus.getView();
+			view.ldapstatus = this.ldapstatus.getView();
 
 			// console.error("About to render", view);
 			return this.tmp.render(this.el, view);

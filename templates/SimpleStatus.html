@@ -24,7 +24,7 @@
 					{/s.pilot}
 
 				</td>
-				<td>Pilot – En eller flere kontaktpersoner har meldt seg fra institusjonen for deltagelse i piloten</td>
+				<td colspan="2">Pilot – En eller flere kontaktpersoner har meldt seg fra institusjonen for deltagelse i piloten</td>
 			</tr>
 
 
@@ -38,7 +38,7 @@
 					{/s.avtale}
 
 				</td>
-				<td>Databehandleravtale – signert og sendt UNINETT</td>
+				<td colspan="2">Databehandleravtale – signert og sendt UNINETT</td>
 			</tr>
 
 
@@ -56,7 +56,7 @@
 					{/s.auth}
 
 				</td>
-				<td>Autentisering – åpnet for i Feides kundeportal</td>
+				<td colspan="2">Autentisering – åpnet for i Feides kundeportal</td>
 			</tr>
 
 
@@ -65,15 +65,47 @@
 				<td style="text-align: right">
 
 					{#s.LDAP}
-						<span class="label label-success"><i class="fa fa-check-square-o"></i> OK</span>
+						{#ldapstatus.OK}
+							<span class="label label-success"><i class="fa fa-check-square-o"></i> OK</span>
+						{:else}
+							<span class="label label-danger"><i class="fa fa-exclamation-triangle"></i> Feil</span>
+						{/ldapstatus.OK}
 					{:else}
 						<span class="label label-warning"><i class="fa fa-square-o"></i> Avventer konfig</span>
 					{/s.LDAP}
 
 				</td>
-				<td>LDAP oppsett – Connect settes opp for å kommunisere med organisasjonens Feide katalog</td>
+				<td colspan="2">LDAP-oppsett – Connect settes opp for å kommunisere med organisasjonens Feide katalog
+					{#ldapstatus.message}
+						<br> <span class="label label-danger"> {ldapstatus.message}</span>
+					{/ldapstatus.message}
+				</td>
 			</tr>
 
+			{#ldapstatus.endpoints}
+			<tr>
+			<tr>
+			  <td/>
+				<td style="text-align: right">
+
+					{#OK}
+						<span class="label label-success"><i class="fa fa-check"></i> OK</span>
+					{:else}
+						<span class="label label-danger"><i class="fa fa-exclamation-triangle"></i> Feil</span>
+					{/OK}
+						&nbsp;
+				</td>
+				<td style="width: 100%">LDAP-endepunkt {name}
+					{#OK}
+					{:else}
+						<br> {result}
+						{#message}
+							– {message}</span>
+						{/message}
+					{/OK}
+				</td>
+			</tr>
+			{/ldapstatus.endpoints}
 
 			<tr>
 				<td style="text-align: right">
@@ -85,7 +117,7 @@
 					{/s.PeopleSearch}
 
 				</td>
-				<td>Personsøk – Connect tillates Feide katalog for brukersøk</td>
+				<td colspan="2">Personsøk – Connect tillates Feide katalog for brukersøk</td>
 			</tr>
 
 
@@ -100,7 +132,7 @@
 					{/s.FS}
 
 				</td>
-				<td>FS integrasjon – Connect tillates uttrekk av grupper fra institusjonens FS database.</td>
+				<td colspan="2">FS integrasjon – Connect tillates uttrekk av grupper fra institusjonens FS database.</td>
 			</tr>
 
 
@@ -115,8 +147,9 @@
 					{/s.Geo}
 
 				</td>
-				<td>Geografisk posisjon registrert – Connect registrerer koordinater for en eller flere Campus for å gjøre det enklere å finne riktig institusjon.</td>
+				<td colspan="2">Geografisk posisjon registrert – Connect registrerer koordinater for en eller flere Campus for å gjøre det enklere å finne riktig institusjon.</td>
 			</tr>
+
 
 
 
