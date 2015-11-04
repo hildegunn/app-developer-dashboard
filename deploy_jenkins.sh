@@ -20,7 +20,7 @@ cf target -o system -s prod
 cp app/etc/config.template.js app/etc/config.js
 
 npm install
-grunt build
+node_modules/grunt-cli/bin/grunt build
 #npm prepublish
 
 if cf app "${app}" |egrep -q '#.*running'
