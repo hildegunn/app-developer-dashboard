@@ -34,7 +34,7 @@ module.exports = function(grunt) {
 	        },
 	        version: {
 	        	command: ["git rev-parse --verify HEAD > app/etc/version-git.txt",
-	        	"bower list -j > app/etc/bower-list.json"].join(' && ')
+	        	"node_modules/bower/bin/bower list -j > app/etc/bower-list.json"].join(' && ')
 	        }
 	    },
 		watch: {
