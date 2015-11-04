@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		config: grunt.file.readJSON('etc/config.js'),
+		config: grunt.file.readJSON('app/etc/config.js'),
 		jslint: {
 			app: {
 				src: ['Gruntfile.js', 'js/**/*.js', 'test/**/*.js'],
@@ -31,6 +31,10 @@ module.exports = function(grunt) {
 	        },
 	        bower: {
 	        	command: "node_modules/bower/bin/bower --allow-root install"
+	        },
+	        version: {
+	        	command: ["git rev-parse --verify HEAD > app/etc/version-git.txt",
+	        	"bower list -j > app/etc/bower-list.json"].join(' && ')
 	        }
 	    },
 		watch: {
@@ -60,6 +64,12 @@ module.exports = function(grunt) {
 
 		var lang, langdict, key;
 
+		// Bokmål henter fra nb heller en englesk hvis oversettelse ikke finnes.
+		//  Not yet implemented. TODO.
+		var defaultOverrides = {
+			"nn": "nb"
+		};
+
 		// Iterate over all languages...
 		for(var i = 0; i < cfg.languages.length; i++) {
 			lang = cfg.languages[i];
@@ -68,6 +78,7 @@ module.exports = function(grunt) {
 
 			for(key in maindict) {
 				if (!langdict.hasOwnProperty(key)) {
+
 					grunt.log.writeln('Dictionary [' + lang + '] is missing translation of the term [' + key + ']. Using the [' + mainlang + '] string.');
 					langdict[key] = maindict[key];
 				}
@@ -92,15 +103,15 @@ module.exports = function(grunt) {
 	shell.rjs.command = [];
 	for(var i = 0; i < cfg.languages.length; i++) {
 		lang = cfg.languages[i];
-		shell.rjs.command.push("node_modules/requirejs/bin/r.js -o build.js paths.dict=../dictionaries/build/dictionary." + lang + ".json out=dist/app.min.js." + lang + "");
+		shell.rjs.command.push("node_modules/requirejs/bin/r.js -o build.js paths.dict=../../dictionaries/build/dictionary." + lang + ".json out=app/dist/app.min.js." + lang + "");
 	}
 	// We comment out this, because it overrides the langauge negotiation 
 	// when enabled.
 	// shell.rjs.command.push("cp dist/app.min.js.en dist/app.min.js");
 
 	for(var to in cfg["language-aliases"]) {
-		var tofile = "dist/app.min.js." + to;
-		var fromfile = "dist/app.min.js." + cfg["language-aliases"][to];
+		var tofile = "app/dist/app.min.js." + to;
+		var fromfile = "app/dist/app.min.js." + cfg["language-aliases"][to];
 		shell.rjs.command.push("cp " + fromfile + " " + tofile);
 	}
 
@@ -125,7 +136,7 @@ module.exports = function(grunt) {
 	// grunt.registerTask('jshint', ['jshint']);
 	// grunt.registerTask('jslint', ['jslint']);
 	grunt.registerTask('bower', ['shell:bower']);
-	grunt.registerTask('build', ['shell:bower', 'jshint', 'shell:rcss', 'shell:rjs']);
+	grunt.registerTask('build', ['shell:bower', 'jshint', 'shell:rcss', 'shell:rjs', 'shell:version']);
 	grunt.registerTask('test', ['jshint']);
 
 	grunt.registerTask('lang', ['transifex', 'langbuild']);
