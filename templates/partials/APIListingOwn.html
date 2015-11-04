@@ -1,0 +1,116 @@
+{#apis}
+<div class="list-group-item apiEntry" data-apigkid="{id}">
+
+
+    <div class="row">
+
+        <div class="col-md-1" style="padding-top: 8px">
+            <i class="fa fa-chevron-right fa-2x hideOnOpened"></i>
+            <i class="fa fa-chevron-down fa-2x showOnOpened"></i>
+        </div>
+        <div class="col-md-11">
+            <div class="media">
+                
+                <div class="media-left">
+                    <img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/apigkadm/apigks/{id}/logo" alt="Logo of 3rd party API">
+                </div>
+                <div class="media-body">
+
+                    <h4 class="list-group-item-heading">{name}</h4>
+                    <p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div><!-- end row -->
+
+
+
+
+    <div class="extendedinfo showOnOpened" style="display: none; margin-top: 2em">
+
+
+        {?systemdescr}
+        <h5>Extended description for system developers</h5>
+        <p style="margin-botton: 1em">{systemdescr|s|h|acceptnewline}</p>
+        {/systemdescr}
+        <ul style="margin-top: .6em; margin-bottom: 1em">
+            {?docurl}<li><a target="_blank" href="{docurl}">API Documentation</a></li>{/docurl}
+            {?privacypolicyurl}<li><a target="_blank" href="{privacypolicyurl}">Privacy policy</a></li>{/privacypolicyurl}
+        </ul>
+
+        {#scopedef}
+
+            <table style="font-size: 85%" class="table table-striped">
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox" checked="checked" disabled="disabled" /></td>
+                        <td>{title}</td>
+                        <td style="font-size: 90%"><code>gk_{id}</code></td>
+
+                        <td>
+                            {#policy.auto}
+                                <span class="label label-success">
+                                    <i class="fa fa-check"></i>&nbsp;
+                                    Accept</span>
+                            {:else}
+                                <span class="label label-danger">
+                                    <i class="fa fa-check-square-o"></i>&nbsp;
+                                    Moderate</span>
+                            {/policy.auto}
+                        </td>
+                    </tr>
+
+                    {#subscopes}
+
+                        <tr>
+                            <td><input type="checkbox" class="subScopeSelection" name="gk_{id}_{scope}" /></td>
+                            <td>{title}</td>
+                            <td style="font-size: 90%"><code>gk_{id}_{scope}</code></td>
+
+                            <td>
+                                {#policy.auto}
+                                    <span class="label label-success">
+                                        <i class="fa fa-check"></i>&nbsp;
+                                        Accept</span>
+                                {:else}
+                                    <span class="label label-danger">
+                                        <i class="fa fa-check-square-o"></i>&nbsp;
+                                        Moderate</span>
+                                {/policy.auto}
+                            </td>
+                        </tr>
+
+                    {:else}
+                        <tr><td colspan="4">No subscopes</td></tr>
+                    {/subscopes}
+
+
+                </thead>
+
+            </table>
+
+        {/scopedef}
+
+
+
+        <p style="margin-top: .3em; margin-bottom: 0px">
+
+            <button class="btn btn-sm btn-primary actAPIadd">
+                <i class="glyphicon glyphicon-chevron-left"></i>
+                Add access</button>
+
+        </p>
+
+
+    </div><!-- end extendedinfo -->
+
+
+</div>
+
+{:else}
+    <p>No third party APIs available</p>
+{/apis}

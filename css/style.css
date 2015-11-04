@@ -41,10 +41,10 @@ body.stateLoggedOut .showOnLoggedOut { display: block !important; }
 #apilisttabcontent .apiEntry {
 	cursor: pointer;
 }
-#apilistavailable .apiEntry .showOnOpened { display: none!important; }
-#apilistavailable .apiEntry .hideOnOpened { display: inline-block!important; }
-#apilistavailable .apiEntry.opened .showOnOpened { display: block !important; }
-#apilistavailable .apiEntry.opened .hideOnOpened { display: none !important; }
+#apilisttabcontent .apiEntry .showOnOpened { display: none!important; }
+#apilisttabcontent .apiEntry .hideOnOpened { display: inline-block!important; }
+#apilisttabcontent .apiEntry.opened .showOnOpened { display: block !important; }
+#apilisttabcontent .apiEntry.opened .hideOnOpened { display: none !important; }
 
 
 .endpointFormatDescr {

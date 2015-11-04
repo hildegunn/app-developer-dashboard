@@ -171,7 +171,7 @@ define(function (require, exports, module) {
 			});
 
 
-			this.clienteditor = new ClientEditor(this, this.feideconnect, this.publicapis);
+			this.clienteditor = new ClientEditor(this, this.feideconnect, this.publicapis, this.clientpool);
 			this.pc.add(this.clienteditor);
 			this.clienteditor.on("saved", function(client) {
 				// console.log("Client is saved, updatge client pool and mainlisting");
