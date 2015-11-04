@@ -24,6 +24,7 @@
 		"dustjs-linkedin": "~2.5.1",
 		"momentjs": "~2.9.0",
 		"almond": "~0.3.0",
-		"es6-promise": "*"
+		"es6-promise": "*",
+		"js-cookie": "~2.0.4"
 	}
 }

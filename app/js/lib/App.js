@@ -11,6 +11,7 @@ define(function (require, exports, module) {
 		OrgRoleSelector = require('./controllers/OrgRoleSelector'),
 
 		BCController = require('./controllers/BCController'),
+		LanguageController = require('./controllers/LanguageController'),
 		OrgApp = require('./OrgApp'),
 
 		PublicAPIPool = require('./models/PublicAPIPool'),
@@ -50,8 +51,8 @@ define(function (require, exports, module) {
 		"init": function() {
 			var that = this;
 
-			var config = JSON.parse(rawconfig);
-			this.feideconnect = new FeideConnect(config);
+			this.config = JSON.parse(rawconfig);
+			this.feideconnect = new FeideConnect(this.config);
 
 			this.dict = new Dictionary();
 
@@ -65,6 +66,7 @@ define(function (require, exports, module) {
 			this.orgRoleSelector.initLoad();
 
 			this.bccontroller = new BCController($("#breadcrumb"));
+			this.languageselector = new LanguageController(this);
 			
 
 
@@ -259,6 +261,7 @@ define(function (require, exports, module) {
 				that.tmpHeader.render(that.el.find("#header"), view),
 				that.tmpFooter.render(that.el.find("#footer"), view)
 			]).then(function() {
+				that.el.find("#navcontainer").append(that.languageselector.el);
 				that.el.find('#orgSelector').append(that.elOrgSelector);
 			});
 

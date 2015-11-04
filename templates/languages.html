@@ -1,0 +1,13 @@
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-right: 0px">
+	<b class="caret"></b> {current}
+</a>
+
+<ul class="dropdown-menu">
+	{#languages}
+		{#selected}
+			<li><a style="color: #600" href="#" class="languageoption disabled" data-lang="{code}"><i class="fa fa-language fa-fw"></i> {title}</a></li>
+		{:else}
+			<li><a href="#" class="languageoption" data-lang="{code}"><i class="fa fa-language fa-fw"></i> {title}</a></li>
+		{/selected}
+	{/languages}
+</ul>

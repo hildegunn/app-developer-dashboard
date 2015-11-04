@@ -1,9 +1,12 @@
 define(function(require, exports, module) {
+
 	"use strict";
 
 	var 
 		Class = require('./class'),
 		dict = require('text!dict');
+
+
 
 	var parsed = null;
 
@@ -15,6 +18,12 @@ define(function(require, exports, module) {
 		},
 		"get": function() {
 			return parsed;
+		},
+		"getItem": function(key) {
+			if (parsed.hasOwnProperty(key)) {
+				return parsed[key];
+			}
+			return null;
 		}
 	});
 
