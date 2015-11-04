@@ -32,6 +32,26 @@ Thats all.
 
 
 
+
+# Publishing to PaaS / Jenkins
+
+See `deploy_jenkins.sh`
+
+
+# Running App
+
+
+Run app in production
+
+	grunt lang # To update dictionaries
+	grunt build
+	npm start
+
+Run app in development mode
+
+	NODE_ENV=development npm start
+
+
 # Run developement build
 
 You can now already use the development version, by loading
