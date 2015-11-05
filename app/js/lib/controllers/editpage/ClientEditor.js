@@ -248,15 +248,9 @@ define(function(require) {
 			var myapis = [],
 				api, i;
 			for (i = 0; i < apiids.length; i++) {
-				api = that.publicapis.getAPIGK(apiids[i]);
-				// console.error("Looked up ", apiids[i], "found", api);
+				api = this.getAPI(apiids[i]);
 				if (api !== null) {
 					myapis.push(api);
-				} else {
-					api = that.clientpool.getAPIGK(apiids[i]);
-					if (api !== null) {
-						myapis.push(api);
-					}
 				}
 			}
 
@@ -457,12 +451,12 @@ define(function(require) {
 
 			var api;
 			api = this.publicapis.getAPIGK(id);
-			if  (api !== null) {
+			if (api !== null) {
 				return api;
 			}
 
 			api = this.clientpool.getAPIGK(id);
-			if  (api !== null) {
+			if (api !== null) {
 				return api;
 			}
 
@@ -479,7 +473,7 @@ define(function(require) {
 
 			var container = $(e.currentTarget).closest(".apiEntry");
 			var apigkid = container.data('apigkid');
-			var apigk = this.getAPI(apigkid); 
+			var apigk = this.getAPI(apigkid);
 
 			newscopes.push(apigk.getBasicScope());
 			container.find("input.subScopeSelection").each(function(i, item) {
