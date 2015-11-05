@@ -1,5 +1,4 @@
-
-define(function (require, exports, module) {
+define(function(require, exports, module) {
 
 	"use strict";
 
@@ -25,7 +24,7 @@ define(function (require, exports, module) {
 		PaneController = require('./controllers/PaneController'),
 		Dictionary = require('./Dictionary'),
 		TemplateEngine = require('./TemplateEngine'),
-		utils  = require('./utils'),
+		utils = require('./utils'),
 		rawconfig = require('text!../../etc/config.js'),
 		$ = require('jquery');
 
@@ -47,7 +46,7 @@ define(function (require, exports, module) {
 	 */
 
 	var App = AppController.extend({
-		
+
 		"init": function() {
 			var that = this;
 
@@ -67,7 +66,6 @@ define(function (require, exports, module) {
 
 			this.bccontroller = new BCController($("#breadcrumb"));
 			this.languageselector = new LanguageController(this);
-			
 
 
 
@@ -78,10 +76,10 @@ define(function (require, exports, module) {
 						if (that.orgApps[orgid]) {
 							that.orgApps[orgid].actMainlisting();
 							that.orgApps[orgid].activate();
-							that.setHash('/' + that.orgRoleSelector.getOrg());	
+							that.setHash('/' + that.orgRoleSelector.getOrg());
 
 						}
-						
+
 					})
 					.catch(function(err) {
 						that.setErrorMessage("Error loading client and apigk data from an organization", "danger", err);
@@ -91,7 +89,6 @@ define(function (require, exports, module) {
 
 			// Call contructor of the AppController(). Takes no parameters.
 			this._super(undefined, false);
-
 
 
 
@@ -183,9 +180,9 @@ define(function (require, exports, module) {
 
 			});
 
-			this.initLoad();	
+			this.initLoad();
 
-	
+
 		},
 
 
@@ -197,35 +194,35 @@ define(function (require, exports, module) {
 			// Draw template..
 			return this.draw()
 
-				.then(function() {
-					return that.feideconnect.onAuthenticated()
-				})
+			.then(function() {
+				return that.feideconnect.onAuthenticated()
+			})
 
-				// Wait for orgRoleSelector to be loaded.
-				.then(function() {
-					return that.orgRoleSelector.onLoaded()
-				})
+			// Wait for orgRoleSelector to be loaded.
+			.then(function() {
+				return that.orgRoleSelector.onLoaded()
+			})
 
-				// Then setup all the orgApps.
-				.then(function() {
+			// Then setup all the orgApps.
+			.then(function() {
 
-					return Promise.all(
-						that.orgRoleSelector.getOrgIdentifiers().map(function(orgid) {
-							// console.error(" ››› Setting up a new orgapp for " + orgid);
-							that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid));
-							that.pc.add(that.orgApps[orgid]);
-						})
-					);
-				})
+				return Promise.all(
+					that.orgRoleSelector.getOrgIdentifiers().map(function(orgid) {
+						// console.error(" ››› Setting up a new orgapp for " + orgid);
+						that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid));
+						that.pc.add(that.orgApps[orgid]);
+					})
+				);
+			})
 
-				// Then activate one of them
-				.then(function() {
+			// Then activate one of them
+			.then(function() {
 					that.orgApps._.activate();
 					// now route.
 					that.route(true);
 				})
 				.then(this.proxy("_initLoaded"));
-				
+
 		},
 
 		// orgid = "_" means personal space
@@ -270,11 +267,12 @@ define(function (require, exports, module) {
 
 
 
-
 		"setErrorMessage": function(title, type, msg) {
 
 			var that = this;
 			type = (type ? type : "danger");
+
+			console.error("Error: ", msg.stack);
 
 			var pmsg = '';
 			if (typeof msg === 'object' && msg.hasOwnProperty("message")) {
@@ -283,10 +281,10 @@ define(function (require, exports, module) {
 				pmsg = '<p>' + utils.escape(msg, false).replace("\n", "<br />") + '</p>';
 			}
 
-			var str = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' +  
+			var str = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' +
 				' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-				(title ? '<strong>' + utils.escape(title, false).replace("\n", "<br />")  + '</strong>' : '') +
-				pmsg + 
+				(title ? '<strong>' + utils.escape(title, false).replace("\n", "<br />") + '</strong>' : '') +
+				pmsg +
 				'</div>';
 
 			if (this.hasOwnProperty("errorClearCallback")) {
