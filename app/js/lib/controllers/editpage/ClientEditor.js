@@ -453,6 +453,23 @@ define(function(require) {
 		},
 
 
+		"getAPI": function(id) {
+
+			var api;
+			api = this.publicapis.getAPIGK(id);
+			if  (api !== null) {
+				return api;
+			}
+
+			api = this.clientpool.getAPIGK(id);
+			if  (api !== null) {
+				return api;
+			}
+
+			throw new Error("Could not look up API " + id + " from neigther public pool or your own apis.");
+		},
+
+
 		"actAPIadd": function(e) {
 
 			e.preventDefault();
@@ -462,7 +479,7 @@ define(function(require) {
 
 			var container = $(e.currentTarget).closest(".apiEntry");
 			var apigkid = container.data('apigkid');
-			var apigk = this.publicapis.getAPIGK(apigkid);
+			var apigk = this.getAPI(apigkid); 
 
 			newscopes.push(apigk.getBasicScope());
 			container.find("input.subScopeSelection").each(function(i, item) {
