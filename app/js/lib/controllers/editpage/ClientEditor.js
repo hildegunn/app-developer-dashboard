@@ -81,7 +81,7 @@ define(function(require) {
 			this.el.on('click', '#apilisttabcontent .apiEntry', function(e) {
 
 				var itemx = $(e.target);
-				console.error("X", itemx);
+				// console.error("X", itemx);
 
 				if (itemx.closest("div.extendedinfo").length !== 0) {
 					// console.error("Ignore");
