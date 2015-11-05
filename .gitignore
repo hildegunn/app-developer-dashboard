@@ -6,3 +6,4 @@ app/etc/version-git.txt
 app/etc/bower-list.json
 .transifexrc
 .DS_Store
+npm-debug.log
