@@ -1,15 +1,14 @@
 define(function(require, exports, module) {
-	"use strict";	
+	"use strict";
 
-	var 
+	var
 		$ = require('jquery'),
 		moment = require('bower/momentjs/moment'),
 		Model = require('./Model'),
 		Client = require('./Client'),
-		ScopeDef = require('./ScopeDef')
-	;
+		ScopeDef = require('./ScopeDef');
 
-	function parseDate (input) {
+	function parseDate(input) {
 		var x = input.substring(0, 19) + 'Z';
 		// console.log("About to parse date " + input, x);
 		return moment(x);
@@ -44,7 +43,7 @@ define(function(require, exports, module) {
 			if (typeof this.status === 'undefined' || this.status === null) {
 				return props;
 			}
-			for(var i = 0; i < this.status.length; i++) {
+			for (var i = 0; i < this.status.length; i++) {
 				props[this.status[i]] = true;
 			}
 			return props;
@@ -52,7 +51,7 @@ define(function(require, exports, module) {
 
 		"setStatusProps": function(props) {
 			var proplist = [];
-			for(var key in props) {
+			for (var key in props) {
 				if (props[key] === true) {
 					proplist.push(key);
 				}
@@ -73,7 +72,7 @@ define(function(require, exports, module) {
 		},
 
 		"increaseClientRequestCounter": function() {
-			if  (!this.clientRequestCounter) {
+			if (!this.clientRequestCounter) {
 				this.clientRequestCounter = 0;
 			}
 			this.clientRequestCounter++;
@@ -89,7 +88,7 @@ define(function(require, exports, module) {
 				res.createdH = res.created.format('D. MMM YYYY');
 			}
 
-			if  (this.updated) {
+			if (this.updated) {
 				res.updated = parseDate(this.updated);
 				res.updatedAgo = res.updated.fromNow();
 				res.updatedH = res.updated.format('D. MMM YYYY');
@@ -104,10 +103,12 @@ define(function(require, exports, module) {
 			if (this.organization && this.organization !== null) {
 				// res.trustOrg = true;
 				res.apigktrustOrg = true;
-			} else if (this.owner && this.owner !== null) {
+			} else if (this.owner && this.owner !== null && typeof this.owner !== 'string') {
 				// res.trustOwner = true;
 				res.apigktrustOwner = true;
 			}
+
+			// console.error("typeo f", typeof this.owner, this.owner);
 
 			res.statuses = this.getStatusProps();
 
@@ -122,7 +123,7 @@ define(function(require, exports, module) {
 				res.hasClientRequests = true;
 			}
 
-			return res;			
+			return res;
 		},
 
 
@@ -252,7 +253,7 @@ define(function(require, exports, module) {
 			}
 
 			if (v.sd.subscopes) {
-				for(var i = 0; i < v.sd.subscopes.length; i++) {
+				for (var i = 0; i < v.sd.subscopes.length; i++) {
 					v.sd.subscopes[i].status = {};
 					var siq = bs + '_' + v.sd.subscopes[i].scope;
 					if (client.scopeIsAccepted(siq)) {
@@ -293,7 +294,9 @@ define(function(require, exports, module) {
 
 	APIGK.getAPIfromScope = function(scope) {
 		var match = scope.match(/^gk_([a-z0-9\-]+)(_([a-z0-9\-]+))?$/);
-		if (match !== null) {return match[1];}
+		if (match !== null) {
+			return match[1];
+		}
 		return null;
 	};
 
@@ -301,4 +304,3 @@ define(function(require, exports, module) {
 
 
 });
-
