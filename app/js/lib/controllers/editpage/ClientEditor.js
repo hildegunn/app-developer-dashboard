@@ -248,7 +248,7 @@ define(function(require) {
 			var myapis = [],
 				api, i;
 			for (i = 0; i < apiids.length; i++) {
-				api = this.getAPI(apiids[i]);
+				api = this.getAPI(apiids[i], true);
 				if (api !== null) {
 					myapis.push(api);
 				}
@@ -441,13 +441,13 @@ define(function(require) {
 					that.app.app.setErrorMessage("Successfully updated list of authentication providers", "success");
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.app.setErrorMessage("Error updating auth providers", "danger", err);
 				});
 
 		},
 
 
-		"getAPI": function(id) {
+		"getAPI": function(id, acceptempty) {
 
 			var api;
 			api = this.publicapis.getAPIGK(id);
@@ -460,6 +460,9 @@ define(function(require) {
 				return api;
 			}
 
+			if (typeof acceptempty !== 'undefined' && acceptempty === true) {
+				return null;
+			}
 			throw new Error("Could not look up API " + id + " from neigther public pool or your own apis.");
 		},
 
@@ -500,7 +503,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.app.setErrorMessage("Error adding third party API", "danger", err);
 				});
 
 		},
@@ -543,7 +546,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.app.setErrorMessage("Error third party API scope update", "danger", err);
 				});
 
 
