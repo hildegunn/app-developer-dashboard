@@ -1,5 +1,4 @@
-
-define(function (require, exports, module) {
+define(function(require, exports, module) {
 
 	"use strict";
 
@@ -22,7 +21,7 @@ define(function (require, exports, module) {
 		PaneController = require('./controllers/PaneController'),
 		Dictionary = require('./Dictionary'),
 		TemplateEngine = require('./TemplateEngine'),
-		utils  = require('./utils'),
+		utils = require('./utils'),
 		rawconfig = require('text!../../etc/config.js'),
 		$ = require('jquery');
 
@@ -39,7 +38,7 @@ define(function (require, exports, module) {
 	 */
 
 	var OrgApp = Pane.extend({
-		
+
 		"init": function(feideconnect, app, publicClientPool, publicapis, role) {
 			var that = this;
 
@@ -126,7 +125,6 @@ define(function (require, exports, module) {
 
 
 
-
 			this.mainlisting.on("clientCreate", function(obj) {
 				that.feideconnect.clientsRegister(obj)
 					.then(function(data) {
@@ -134,8 +132,8 @@ define(function (require, exports, module) {
 
 						that.clientpool.setClient(client);
 
-						that.clienteditor.edit(client, 'tabBasic');	
-						
+						that.clienteditor.edit(client, 'tabBasic');
+
 						that.activate();
 						that.app.orgRoleSelector.hide();
 						that.app.setHash('/' + that.orgid + '/clients/' + client.id + '/edit/tabBasic');
@@ -186,7 +184,7 @@ define(function (require, exports, module) {
 			});
 
 
-			
+
 			this.apigkeditor = new APIGKEditor(this, this.feideconnect);
 			this.pc.add(this.apigkeditor);
 			this.apigkeditor.on("saved", function(apigk) {
@@ -209,20 +207,31 @@ define(function (require, exports, module) {
 
 
 			this.mainlisting.on('clientSelected', function(clientid) {
-				var client = that.clientpool.getClient(clientid);
-				that.clienteditor.edit(client, 'tabBasic');
-				that.app.orgRoleSelector.hide();
-				that.app.setHash('/' + that.orgid + '/clients/' + clientid + '/edit/tabBasic');
+
+				try {
+					var client = that.clientpool.getClient(clientid);
+					that.clienteditor.edit(client, 'tabBasic');
+					that.app.orgRoleSelector.hide();
+					that.app.setHash('/' + that.orgid + '/clients/' + clientid + '/edit/tabBasic');
+
+				} catch (err) {
+					that.app.setErrorMessage("Error opening client", "danger", err);
+				}
 			});
 			this.mainlisting.on('apigkSelected', function(apigkid) {
-				var apigk = that.clientpool.getAPIGK(apigkid);
-				that.apigkeditor.edit(apigk, 'tabBasic');
-				that.app.orgRoleSelector.hide();
-				that.app.setHash('/' + that.orgid + '/apigk/' + apigkid + '/edit/tabBasic');
+
+				try {
+					var apigk = that.clientpool.getAPIGK(apigkid);
+					that.apigkeditor.edit(apigk, 'tabBasic');
+					that.app.orgRoleSelector.hide();
+					that.app.setHash('/' + that.orgid + '/apigk/' + apigkid + '/edit/tabBasic');
+				} catch (err) {
+					that.app.setErrorMessage("Error opening apigk", "danger", err);
+				}
 			});
 
 
-			this.initLoad();	
+			this.initLoad();
 
 		},
 
@@ -315,7 +324,6 @@ define(function (require, exports, module) {
 
 
 		},
-
 
 
 

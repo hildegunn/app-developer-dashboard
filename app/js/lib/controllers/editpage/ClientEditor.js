@@ -416,7 +416,7 @@ define(function(require) {
 					view.apis.push(apis[key].getView());
 				}
 			}
-			// console.error("VIew own", view);
+
 			return this.apiowntemplate.render(this.el.find("#apicontainerown").empty(), view);
 
 		},
