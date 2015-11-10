@@ -5,11 +5,7 @@ set -e # halt script on error
 app=dashboard
 hostnameapp=dashboard
 oldapp="${app}-old"
-
-
-
 domain="feideconnect.no"
-#domain="paas.uninett.no"
 
 echo "Ready to deploy updated version of ${domain}"
 
