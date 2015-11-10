@@ -9,14 +9,14 @@ requirejs.config({
 	//never includes a ".js" extension since
 	//the paths config could be for a directory.
 	paths: {
-		"bower"     : '/bower_components',
-		"text"      : '/bower_components/text/text',
-		"templates" : '/templates/',
-		"dust"      : '/bower_components/dustjs-linkedin/dist/dust-full.min',
-		"class"     : "class",
-		"jquery"	: "/bower_components/jquery/dist/jquery.min",
-		"dict"		: "/dictionaries/dictionary.en.json",
-		"bootstrap" : "/bower_components/bootstrap/dist/js/bootstrap.min",
+		"bower": '/bower_components',
+		"text": '/bower_components/text/text',
+		"templates": '/templates/',
+		"dust": '/bower_components/dustjs-linkedin/dist/dust-full.min',
+		"class": "class",
+		"jquery": "/bower_components/jquery/dist/jquery.min",
+		"dict": "/dictionaries/dictionary.en.json",
+		"bootstrap": "/bower_components/bootstrap/dist/js/bootstrap.min",
 		"es6-promise": "/bower_components/es6-promise/promise"
 	},
 	shim: {
@@ -39,7 +39,7 @@ if (!window.console) {
 
 define(function(require, exports, module) {
 
-	var 
+	var
 		$ = require('jquery'),
 		App = require('lib/App');
 
@@ -48,6 +48,3 @@ define(function(require, exports, module) {
 	});
 
 });
-
-
-
