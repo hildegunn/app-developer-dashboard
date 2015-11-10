@@ -1,15 +1,14 @@
 define(function(require, exports, module) {
 	"use strict";
 
-	var 
+	var
 		$ = require('jquery'),
 		Controller = require('./Controller'),
 		dust = require('dust'),
 
 		// Model = require('../models/Model'),
 		// Group = require('../models/Group'),
-		EventEmitter = require('../EventEmitter')
-		;
+		EventEmitter = require('../EventEmitter');
 
 	// var template = require('text!templates/OrgRoleSelector.html');
 
@@ -40,13 +39,14 @@ define(function(require, exports, module) {
 					return;
 				}
 
-				e.preventDefault(); 
+				e.preventDefault();
 				var ti = t.find('input');
 				ti.prop('checked', !ti.prop('checked'));
 
 			});
 			this.el.on("change", "input.selectgroup", function(e) {
-				e.preventDefault(); e.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 				var t = $(e.currentTarget);
 				// var ti = t.find('input');
 				// ti.prop('checked', !ti.prop('checked'));
@@ -55,7 +55,8 @@ define(function(require, exports, module) {
 			});
 
 			this.el.on("click", "button.actSaveChanges", function(e) {
-				e.preventDefault(); e.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 				// var t = $(e.currentTarget);
 				// var ti = t.find('input');
 				// ti.prop('checked', !ti.prop('checked'));
@@ -128,11 +129,11 @@ define(function(require, exports, module) {
 					// console.log("Found list entry ", key, ep.data('id'));	
 					listselections[key].push(ep.data('id'));
 				}
-				
+
 			};
-			
-			for(var key in listselections) {
-				this.el.find('.' + key +  ' .providerentry input').each(xfunc);
+
+			for (var key in listselections) {
+				this.el.find('.' + key + ' .providerentry input').each(xfunc);
 			}
 
 
@@ -157,14 +158,14 @@ define(function(require, exports, module) {
 					providers.push('feide|all');
 
 					this.el.find('.pgroupfeide').hide();
-					
+
 				} else {
 					this.el.find('.pgroupfeide').show();
 
 					if (props['feide|he']) {
 						providers.push('feide|he');
 						this.el.find('.orglisthe').hide();
-						
+
 					} else {
 						providers = providers.concat(listselections.orglisthe);
 						this.el.find('.orglisthe').show();
@@ -177,7 +178,7 @@ define(function(require, exports, module) {
 					} else {
 						providers = providers.concat(listselections.orglistvgs);
 						this.el.find('.orglistvgs').show();
-						
+
 					}
 
 					if (props['feide|go']) {
@@ -186,13 +187,10 @@ define(function(require, exports, module) {
 					} else {
 						providers = providers.concat(listselections.orglistgo);
 						this.el.find('.orglistgo').show();
-						
+
 					}
 
 				}
-
-
-
 
 
 
@@ -201,7 +199,7 @@ define(function(require, exports, module) {
 
 			// console.error("Data is ", providers)
 			// console.error("List selections", listselections);
-			if(providers.length === 0) {
+			if (providers.length === 0) {
 				providers.push('none');
 			}
 			this.selectedProviders = providers;
@@ -212,12 +210,12 @@ define(function(require, exports, module) {
 
 		"initLoad": function() {
 
-			var that = this;			
-		 	// console.error("Loading AuthProviderSelector");
+			var that = this;
+			// console.error("Loading AuthProviderSelector");
 
-		 	// console.log((new Error()).stack);
+			// console.log((new Error()).stack);
 
-		 	// console.log("Provciderdata is ", this.providerdata);
+			// console.log("Provciderdata is ", this.providerdata);
 
 			return this.providerdata.onLoaded()
 				.then(this.proxy("draw"))
@@ -234,26 +232,26 @@ define(function(require, exports, module) {
 			var classes = [];
 			var id = item.def.join('|');
 			var active = this.hasItem(id);
-			var checked = (active ? 'checked="checked"': '');
+			var checked = (active ? 'checked="checked"' : '');
 			if (active) {
 				classes.push('list-group-item-info');
 			}
 
 			var iconImage = '';
 			if (item.iconImage) {
-				iconImage = '<img class="media-object" style="width: 32px; height: 32px" src="https://auth.dev.feideconnect.no/static/media/disco/' + item.iconImage + '" alt="...">';
+				iconImage = '<img class="media-object" style="width: 32px; height: 32px" src="https://auth.feideconnect.no/static/media/disco/' + item.iconImage + '" alt="...">';
 			} else if (item.icon) {
 				iconImage = '<i style="margin-left: 6px" class="' + item.icon + '"></i>';
 			}
 			// var datastr = 'data-id="' + Utils.quoteattr(this.entityID) + '" data-subid="' + Utils.quoteattr(this.entityID) + '" data-type="saml"';
 			txt += '<a href="#" data-id="' + id + '" class="list-group-item providerentry ' + classes.join(' ') + '" >' +
-					'<div class="pull-left"><input type="checkbox" ' + checked + ' /></div>' +
-					'<div style="margin-left: 24px" class="media"><div class="media-left media-middle">' + 
-					iconImage +
-					'</div>' +
-					'<div class="media-body"><p>' + item.title + '</p></div>' +
+				'<div class="pull-left"><input type="checkbox" ' + checked + ' /></div>' +
+				'<div style="margin-left: 24px" class="media"><div class="media-left media-middle">' +
+				iconImage +
 				'</div>' +
-			'</a>';
+				'<div class="media-body"><p>' + item.title + '</p></div>' +
+				'</div>' +
+				'</a>';
 			return txt;
 
 		},
@@ -264,27 +262,28 @@ define(function(require, exports, module) {
 			var classes = [];
 			var id = 'feide|realm|' + item.id;
 			var active = this.hasItem(id);
-			var checked = (active ? 'checked="checked"': '');
+			var checked = (active ? 'checked="checked"' : '');
 			if (active) {
 				classes.push('list-group-item-info');
 			}
 
 			// var datastr = 'data-id="' + Utils.quoteattr(this.entityID) + '" data-subid="' + Utils.quoteattr(this.entityID) + '" data-type="saml"';
-			txt += '<a href="#" data-id="' + id  + '" class="list-group-item providerentry ' + classes.join(' ') + '" >' +
-					'<div class="pull-left"><input type="checkbox" ' + checked + '/></div>' +
-					'<div style="margin-left: 24px" class="media"><div class="media-left media-middle">' + 
-						'<img class="media-object" style="width: 32px; height: 32px" src="https://api.feideconnect.no/orgs/fc:org:' + item.id + '/logo" alt="...">' + 
-					'</div>' +
-					'<div class="media-body"><p>' + item.title + '</p></div>' +
+			txt += '<a href="#" data-id="' + id + '" class="list-group-item providerentry ' + classes.join(' ') + '" >' +
+				'<div class="pull-left"><input type="checkbox" ' + checked + '/></div>' +
+				'<div style="margin-left: 24px" class="media"><div class="media-left media-middle">' +
+				'<img class="media-object" style="width: 32px; height: 32px" src="https://api.feideconnect.no/orgs/fc:org:' + item.id + '/logo" alt="...">' +
 				'</div>' +
-			'</a>';
+				'<div class="media-body"><p>' + item.title + '</p></div>' +
+				'</div>' +
+				'</a>';
 			return txt;
 
 		},
 
 
 		"draw": function() {
-			var that = this, i;
+			var that = this,
+				i;
 			var txt = {
 				'he': '',
 				'vgs': '',
@@ -299,7 +298,7 @@ define(function(require, exports, module) {
 				var xb = (that.hasItem('feide|realm|' + b.id) ? 1 : 0);
 				return xb - xa;
 			});
-			
+
 			for (i = 0; i < this.providerdata.orgs.length; i++) {
 				item = this.providerdata.orgs[i];
 				// console.error("item", item);
@@ -309,7 +308,7 @@ define(function(require, exports, module) {
 						txt[item.type[j]] += txtitem;
 					}
 				}
-				
+
 			}
 			// console.error("This is what we got: ", txt);
 
@@ -325,7 +324,7 @@ define(function(require, exports, module) {
 				item = this.providerdata.extra[i];
 				txtitem = this.getProviderExtraHTML(item);
 				txt[item.def[0]] += txtitem;
-				
+
 			}
 
 

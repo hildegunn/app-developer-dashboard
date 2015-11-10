@@ -58,7 +58,7 @@ define(function(require, exports, module) {
 			this.tmpHeader = new TemplateEngine(tmpHeader);
 			this.tmpFooter = new TemplateEngine(tmpFooter);
 
-			this.providerdata = new ProviderData();
+			this.providerdata = new ProviderData(this);
 
 			this.elOrgSelector = $("<div></div>");
 			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector, this.feideconnect);
