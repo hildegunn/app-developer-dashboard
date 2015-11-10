@@ -61,17 +61,30 @@
 
 
 
-			<tr>
+			<tr id="ldapmain">
 				<td style="text-align: right">
 
 					{#s.LDAP}
-						<span class="label label-success"><i class="fa fa-check-square-o"></i> OK</span>
+						<span class="label label-success"><i class="fa fa-check-square-o"></i> Konfigurert</span>
+						<!--
+						{#ldapstatus.OK}
+							<span class="label label-success"><i class="fa fa-check-square-o"></i> OK</span>
+						{:else}
+							<span class="label label-danger"><i class="fa fa-exclamation-triangle"></i> Feil</span>
+						{/ldapstatus.OK}
+						-->
 					{:else}
 						<span class="label label-warning"><i class="fa fa-square-o"></i> Avventer konfig</span>
 					{/s.LDAP}
 
 				</td>
-				<td>LDAP oppsett – Connect settes opp for å kommunisere med organisasjonens Feide katalog</td>
+				<td>LDAP-oppsett – Connect settes opp for å kommunisere med organisasjonens Feide katalog
+					{#ldapstatus.message}
+						<br> <span class="label label-danger"> {ldapstatus.message}</span>
+					{/ldapstatus.message}
+
+					<div id="ldapstatuscontainer"></div>
+				</td>
 			</tr>
 
 
@@ -117,6 +130,7 @@
 				</td>
 				<td>Geografisk posisjon registrert – Connect registrerer koordinater for en eller flere Campus for å gjøre det enklere å finne riktig institusjon.</td>
 			</tr>
+
 
 
 

@@ -143,7 +143,6 @@ define(function(require, exports, module) {
 
 
 			this.feideconnect.on("stateChange", function(authenticated, user) {
-
 				that.onLoaded()
 					.then(function() {
 
