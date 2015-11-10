@@ -2,8 +2,7 @@ define(function(require, exports, module) {
 	"use strict";
 
 	var
-		Model = require('./Model')
-		;
+		Model = require('./Model');
 
 	function normalizeEndpoint(name, attrs) {
 		var endpoint = attrs;
@@ -23,16 +22,18 @@ define(function(require, exports, module) {
 		"getEndpoints": function() {
 			var endpoints = [];
 			for (var server in this.data) {
-			    endpoints.push(normalizeEndpoint(server, this.data[server]));
+				endpoints.push(normalizeEndpoint(server, this.data[server]));
 			}
 			return endpoints;
 		},
 		"getView": function() {
 			var res = this._super();
 			res.endpoints = this.getEndpoints();
-			res.OK = res.endpoints.length > 0 && res.endpoints.every(function(ep){return ep.OK;});
-			if (res.endpoints.length == 0) {
-					res.message = "Ingen LDAP-server funnet";
+			res.OK = res.endpoints.length > 0 && res.endpoints.every(function(ep) {
+				return ep.OK;
+			});
+			if (res.endpoints.length === 0) {
+				res.message = "Ingen LDAP-server funnet";
 			}
 			return res;
 		}
