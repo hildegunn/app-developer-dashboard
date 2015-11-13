@@ -1,14 +1,13 @@
 define(function(require, exports, module) {
-	"use strict";	
+	"use strict";
 
 
-	var 
-		// $ = require('jquery'),
+	var
+	// $ = require('jquery'),
 		Controller = require('../controllers/Controller'),
 		EventEmitter = require('../EventEmitter'),
 		Client = require('./Client'),
-		Scope = require('./Scope')
-		;
+		Scope = require('./Scope');
 
 
 	var APIScopeSet = Controller.extend({
@@ -37,9 +36,9 @@ define(function(require, exports, module) {
 			return this.clients;
 		},
 
-		"updateOrgAdminAPIclients": function(orgAdminAPIclients)  {
+		"updateOrgAdminAPIclients": function(orgAdminAPIclients) {
 			this.orgAdminAPIclients = orgAdminAPIclients;
-			this.process();	
+			this.process();
 		},
 
 		"getClientView": function() {
@@ -55,7 +54,15 @@ define(function(require, exports, module) {
 				vco.client = c.client.getView();
 				vco.apis = [];
 
-				for(var key in c.apis) {
+
+
+				for (var key in c.apis) {
+					if (c.apis[key].api === null) {
+						console.error("Unable to get information about a requested API because it is not public or accessible.",
+							JSON.stringify(c.apis[key], undefined, 2));
+						continue;
+					}
+
 					vco.apis.push(c.apis[key].api.getOrgAdminView(c.apis[key].scopes));
 				}
 
@@ -68,7 +75,7 @@ define(function(require, exports, module) {
 
 			this.clients = [];
 
-			for(var i = 0; i < this.orgAdminAPIclients.clients.length; i++) {
+			for (var i = 0; i < this.orgAdminAPIclients.clients.length; i++) {
 
 				var cliententry = {};
 				cliententry.client = this.orgAdminAPIclients.clients[i];
@@ -76,9 +83,11 @@ define(function(require, exports, module) {
 				var aset = this.orgAdminAPIclients.clients[i].scopeauthorizations;
 				var apis = {};
 
-				for(var scopetext in aset) {
-					
-					var scope = new Scope({"scope": scopetext});
+				for (var scopetext in aset) {
+
+					var scope = new Scope({
+						"scope": scopetext
+					});
 					if (scope.apigk) {
 						if (!apis[scope.apigk]) {
 							apis[scope.apigk] = {
@@ -108,6 +117,4 @@ define(function(require, exports, module) {
 
 
 
-
 });
-

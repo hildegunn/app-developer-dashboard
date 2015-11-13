@@ -1,13 +1,13 @@
 language: node_js
 node_js:
-  - "0.10"
+  - "0.12"
 before_install: 
   - npm install -g grunt-cli
 install: 
   - npm install
 before_script: 
   - mv bower.ci.json bower.json
-  - cp etc/config.template.js etc/config.js
+  - cp app/etc/config.template.js app/etc/config.js
   - grunt build
 notifications:
   slack: uninett:5CpnkrlaqOLKLXDttDzpTqqU

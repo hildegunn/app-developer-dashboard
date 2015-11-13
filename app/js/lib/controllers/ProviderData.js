@@ -1,11 +1,10 @@
 define(function(require, exports, module) {
 	"use strict";
 
-	var 
+	var
 		$ = require('jquery'),
 		Controller = require('./Controller'),
-		EventEmitter = require('../EventEmitter')
-		;
+		EventEmitter = require('../EventEmitter');
 
 	// var template = require('text!templates/OrgRoleSelector.html');
 
@@ -13,16 +12,16 @@ define(function(require, exports, module) {
 
 	var ProviderData = Controller.extend({
 
-		"init": function() {
+		"init": function(app) {
 			var that = this;
 			this._super(undefined, true);
-
+			this.app = app;
 
 		},
 
 		"initLoad": function() {
 
-			var that = this;			
+			var that = this;
 			return this.loadData()
 				.then(this.proxy("loadDataExtra"))
 				.then(that.proxy("_initLoaded"));
@@ -30,15 +29,15 @@ define(function(require, exports, module) {
 		},
 
 
-    	"loadData": function() {
-    		var that = this;
+		"loadData": function() {
+			var that = this;
 
-    		return new Promise(function(resolve, reject) {
+			return new Promise(function(resolve, reject) {
 
-				$.getJSON('https://auth.dev.feideconnect.no/orgs', function(orgs) {
+				$.getJSON('https://auth.feideconnect.no/orgs', function(orgs) {
 
 					that.orgs = [];
-					for(var i = 0; i < orgs.length; i++) {
+					for (var i = 0; i < orgs.length; i++) {
 						// that.orgs.push(new NorwegianOrg(orgs[i]));
 						that.orgs.push(orgs[i]);
 					}
@@ -48,16 +47,18 @@ define(function(require, exports, module) {
 					reject(err);
 				});
 
-    		});
+			});
 
 
-    	},
+		},
 
-    	"loadDataExtra": function() {
-    		var that = this;
-    		return new Promise(function(resolve, reject) {
+		"loadDataExtra": function() {
+			var that = this;
+			return new Promise(function(resolve, reject) {
 
-				$.getJSON('https://auth.dev.feideconnect.no/accountchooser/extra', function(extra) {
+				// console.error("extra load", that.app.feideconnect.config);
+
+				$.getJSON('https://auth.feideconnect.no/accountchooser/extra', function(extra) {
 					that.extra = [];
 					for (var i = 0; i < extra.length; i++) {
 						// that.extra.push(new Provider(extra[i]));
@@ -68,9 +69,9 @@ define(function(require, exports, module) {
 				}).fail(function(err) {
 					reject(err);
 				});
-    		});
+			});
 
-    	}
+		}
 
 
 	}).extend(EventEmitter);

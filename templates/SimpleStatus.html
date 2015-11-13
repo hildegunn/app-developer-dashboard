@@ -24,7 +24,7 @@
 					{/s.pilot}
 
 				</td>
-				<td colspan="2">Pilot – En eller flere kontaktpersoner har meldt seg fra institusjonen for deltagelse i piloten</td>
+				<td>Pilot – En eller flere kontaktpersoner har meldt seg fra institusjonen for deltagelse i piloten</td>
 			</tr>
 
 
@@ -38,7 +38,7 @@
 					{/s.avtale}
 
 				</td>
-				<td colspan="2">Databehandleravtale – signert og sendt UNINETT</td>
+				<td>Databehandleravtale – signert og sendt UNINETT</td>
 			</tr>
 
 
@@ -56,29 +56,40 @@
 					{/s.auth}
 
 				</td>
-				<td colspan="2">Autentisering – åpnet for i Feides kundeportal</td>
+				<td>Autentisering – åpnet for i Feides kundeportal</td>
 			</tr>
 
 
 
-			<tr>
+			<tr id="ldapmain">
 				<td style="text-align: right">
 
 					{#s.LDAP}
+
+						<span class="label label-success"><i class="fa fa-check-square-o"></i> Konfigurert</span>
+						<!--
+
 						{#ldapstatus.OK}
 							<span class="label label-success"><i class="fa fa-check-square-o"></i> OK</span>
 						{:else}
 							<span class="label label-danger"><i class="fa fa-exclamation-triangle"></i> Feil</span>
 						{/ldapstatus.OK}
+
+						-->
+
 					{:else}
 						<span class="label label-warning"><i class="fa fa-square-o"></i> Avventer konfig</span>
 					{/s.LDAP}
 
 				</td>
-				<td colspan="2">LDAP-oppsett – Connect settes opp for å kommunisere med organisasjonens Feide katalog
+
+				<td>LDAP-oppsett – Connect settes opp for å kommunisere med organisasjonens Feide katalog
 					{#ldapstatus.message}
 						<br> <span class="label label-danger"> {ldapstatus.message}</span>
 					{/ldapstatus.message}
+
+					<div id="ldapstatuscontainer"></div>
+
 				</td>
 			</tr>
 
@@ -117,7 +128,7 @@
 					{/s.PeopleSearch}
 
 				</td>
-				<td colspan="2">Personsøk – Connect tillates Feide katalog for brukersøk</td>
+				<td>Personsøk – Connect tillates Feide katalog for brukersøk</td>
 			</tr>
 
 
@@ -132,7 +143,7 @@
 					{/s.FS}
 
 				</td>
-				<td colspan="2">FS integrasjon – Connect tillates uttrekk av grupper fra institusjonens FS database.</td>
+				<td>FS integrasjon – Connect tillates uttrekk av grupper fra institusjonens FS database.</td>
 			</tr>
 
 
@@ -147,7 +158,7 @@
 					{/s.Geo}
 
 				</td>
-				<td colspan="2">Geografisk posisjon registrert – Connect registrerer koordinater for en eller flere Campus for å gjøre det enklere å finne riktig institusjon.</td>
+				<td>Geografisk posisjon registrert – Connect registrerer koordinater for en eller flere Campus for å gjøre det enklere å finne riktig institusjon.</td>
 			</tr>
 
 

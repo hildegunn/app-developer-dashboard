@@ -41,10 +41,10 @@ body.stateLoggedOut .showOnLoggedOut { display: block !important; }
 #apilisttabcontent .apiEntry {
 	cursor: pointer;
 }
-#apilistavailable .apiEntry .showOnOpened { display: none!important; }
-#apilistavailable .apiEntry .hideOnOpened { display: inline-block!important; }
-#apilistavailable .apiEntry.opened .showOnOpened { display: block !important; }
-#apilistavailable .apiEntry.opened .hideOnOpened { display: none !important; }
+#apilisttabcontent .apiEntry .showOnOpened { display: none!important; }
+#apilisttabcontent .apiEntry .hideOnOpened { display: inline-block!important; }
+#apilisttabcontent .apiEntry.opened .showOnOpened { display: block !important; }
+#apilisttabcontent .apiEntry.opened .hideOnOpened { display: none !important; }
 
 
 .endpointFormatDescr {
@@ -77,7 +77,7 @@ body {
 	/*font-family: Helvetica, arial, sans-serif;*/
 	font-size: 15px;
 	color: #454545;
-	background: #fff url("/css/images/bg.png");
+	background: #fff; 
 	text-shadow: 0 1px 0 rgba(0,0,0,0.02);
 	-webkit-font-smoothing: antialiased;
 }

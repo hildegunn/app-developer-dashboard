@@ -1,7 +1,7 @@
 define(function(require) {
-	"use strict";	
+	"use strict";
 
-	var 
+	var
 		Client = require('../../models/Client'),
 		Editor = require('./Editor'),
 		utils = require('../../utils'),
@@ -10,21 +10,23 @@ define(function(require) {
 		TemplateEngine = require('../../TemplateEngine'),
 		AuthProviderSelector = require('../AuthProviderSelector'),
 		Waiter = require('../../Waiter'),
-		$ = require('jquery')
-		;
+		$ = require('jquery');
 
 
 	var clientTemplate = require('text!templates/ClientEditor.html');
 	var apilistingTemplate = require('text!templates/partials/APIListing.html');
 	var publicAPIListingTemplate = require('text!templates/partials/APIListingPublic.html');
+	var ownAPIListingTemplate = require('text!templates/partials/APIListingOwn.html');
 
 	var ClientEditor = Editor.extend({
-		"init": function(app, feideconnect, publicapis) {
-			
+		"init": function(app, feideconnect, publicapis, clientpool) {
+
 			var that = this;
 
 			this.editor = "clients";
 			this.publicapis = publicapis;
+			this.clientpool = clientpool;
+
 			this._super(app, feideconnect);
 
 			this.template = new TemplateEngine(clientTemplate);
@@ -32,7 +34,8 @@ define(function(require) {
 			// this.template.loadPartial("apilistingpublic", publicAPIListingTemplate);
 
 			this.apipublictemplate = new TemplateEngine(publicAPIListingTemplate);
-			
+			this.apiowntemplate = new TemplateEngine(ownAPIListingTemplate);
+
 			this.ebind("click", ".actSaveChanges", "actSaveChanges");
 			this.ebind("click", ".actScopeAdd", "actScopeAdd");
 			this.ebind("click", ".actScopeRemove", "actScopeRemove");
@@ -44,12 +47,12 @@ define(function(require) {
 			this.ebind("click", ".apiEntry", "actScopeUpdate");
 
 
-    		this.searchWaiter = new Waiter(function(x) {
-    			that.doSearch(x);
-    		});
+			this.searchWaiter = new Waiter(function(x) {
+				that.doSearch(x);
+			});
 
-    		that.searchTerm = '';
-    		this.el.on("propertychange change click keyup input paste", '#apisearch', function() {
+			that.searchTerm = '';
+			this.el.on("propertychange change click keyup input paste", '#apisearch', function() {
 				var st = utils.normalizeST($("#apisearch").val());
 
 				if (st !== that.searchTerm) {
@@ -64,38 +67,38 @@ define(function(require) {
 
 
 
-
-    		/*
-    		 * Disable provider filters until implemented.
-    		 */
+			/*
+			 * Disable provider filters until implemented.
+			 */
 			this.el.on('click', "#apilistfilterprovider a", function(e) {
-				e.preventDefault();
+				// e.preventDefault();
 			});
 
 
 			/*
 			 * Handle the accordion view of available APIs.
 			 */
-			this.el.on('click', '#apilistavailable .apiEntry', function(e) {
+			this.el.on('click', '#apilisttabcontent .apiEntry', function(e) {
 
 				var itemx = $(e.target);
+				// console.error("X", itemx);
 
-				if(itemx.closest("div.extendedinfo").length !== 0) {
+				if (itemx.closest("div.extendedinfo").length !== 0) {
 					// console.error("Ignore");
 					return;
 				}
 
 
-				e.preventDefault();
+				// e.preventDefault();
 				var item = $(e.currentTarget);
 
 				var wasOpen = item.hasClass("opened");
 
-				that.el.find('#apilistavailable .apiEntry').removeClass("opened");
+				that.el.find('#apilisttabcontent .apiEntry').removeClass("opened");
 				if (!wasOpen) {
 					item.addClass("opened");
 				}
-				
+
 			});
 
 
@@ -103,7 +106,7 @@ define(function(require) {
 			/*
 			 * Handle tabs under 3rd party APIs.
 			 */
-			this.el.on('click', '#apilisttabs a', function (e) {
+			this.el.on('click', '#apilisttabs a', function(e) {
 				e.preventDefault()
 				var x = $(e.currentTarget);
 				var href = x.attr("href");
@@ -121,7 +124,7 @@ define(function(require) {
 				}
 
 			});
-		
+
 			this.initLoad();
 		},
 
@@ -198,9 +201,9 @@ define(function(require) {
 			var apis = this.publicapis.apigks;
 			$("#apigklisting").empty();
 
-			for(var key in apis) {
+			for (var key in apis) {
 				if (apis.hasOwnProperty(key)) {
-					$("#apigklisting").append('<div>' + apis + '</div>');	
+					$("#apigklisting").append('<div>' + apis + '</div>');
 				}
 			}
 
@@ -227,13 +230,11 @@ define(function(require) {
 
 			var apiids = item.getAPIscopes();
 			var clientAPIkeys = new StringSet(apiids);
-			var apis = this.publicapis.apigks;
-
-
+			var publicapis = this.publicapis.apigks;
+			var ownapis = this.clientpool.apigks;
 
 			this.app.app.bccontroller.draw([
-				this.app.getBCItem(),
-				{
+				this.app.getBCItem(), {
 					"title": 'Client ' + item.name,
 					"active": true
 				}
@@ -244,9 +245,10 @@ define(function(require) {
 			 * it will obtain a list of API model objects from the referring APIs
 			 * into the list myapis.
 			 */
-			var myapis = [], api, i;
-			for(i = 0; i < apiids.length; i++) {
-				api = that.publicapis.getAPIGK(apiids[i]);
+			var myapis = [],
+				api, i;
+			for (i = 0; i < apiids.length; i++) {
+				api = this.getAPI(apiids[i], true);
 				if (api !== null) {
 					myapis.push(api);
 				}
@@ -260,23 +262,41 @@ define(function(require) {
 			view.authorizedAPIs = [];
 			view.requestedAPIs = [];
 
-			
+
+			// console.error("Publicapis", publicapis);
+			// console.error("Own apis", ownapis);
+			// console.error("clientAPIkeys", clientAPIkeys);
+
 			view.apis = [];
-			for(var key in apis) {
-				if (apis.hasOwnProperty(key)) {
-					// console.log("About to process ", apis[key].name, clientAPIkeys.has(apis[key].id));
-					if (clientAPIkeys.has(apis[key].id)) {continue;}
-					view.apis.push(apis[key].getView());
+			var key;
+			for (key in publicapis) {
+				if (publicapis.hasOwnProperty(key)) {
+					// console.log("About to process (public) ", publicapis[key].name, clientAPIkeys.has(publicapis[key].id));
+					if (clientAPIkeys.has(publicapis[key].id)) {
+						continue;
+					}
+					view.apis.push(publicapis[key].getView());
+				}
+			}
+			for (key in ownapis) {
+				if (ownapis.hasOwnProperty(key)) {
+					// console.log("About to process (own) ", ownapis[key].name, clientAPIkeys.has(ownapis[key].id));
+					if (clientAPIkeys.has(ownapis[key].id)) {
+						continue;
+					}
+					view.apis.push(ownapis[key].getView());
 				}
 			}
 
-			for(i = 0; i < myapis.length; i++) {
+
+
+			for (i = 0; i < myapis.length; i++) {
 
 				aapiview = myapis[i].getClientView(that.current);
 				// console.error("Get client view is ", JSON.stringify(aapiview, undefined, 2));
 				if (aapiview.sd.authz) {
 					view.authorizedAPIs.push(aapiview);
-				} 
+				}
 				if (aapiview.sd.req) {
 					view.requestedAPIs.push(aapiview);
 				}
@@ -287,10 +307,11 @@ define(function(require) {
 			// console.error("Client view..", view);
 
 
-			
+
 			this.el.children().detach();
 			return this.template.render(this.el, view)
 				.then(this.proxy("drawAPIs"))
+				.then(this.proxy("drawOwnAPIs"))
 				.then(function() {
 
 					var tab = that.currentTab;
@@ -316,16 +337,18 @@ define(function(require) {
 
 
 
-
 		"doSearch": function(term) {
+
 			return this.drawAPIs();
 		},
-		
+
 
 		"drawAPIs": function() {
-			
+
 			var that = this;
-			var view = {"apis": []};
+			var view = {
+				"apis": []
+			};
 			if (this.feideconnect) {
 				$.extend(view, {
 					"_config": that.feideconnect.getConfig()
@@ -336,10 +359,12 @@ define(function(require) {
 			var apiids = this.current.getAPIscopes();
 			var clientAPIkeys = new StringSet(apiids);
 
-			for(var key in apis) {
+			for (var key in apis) {
 				if (apis.hasOwnProperty(key)) {
 					// console.log("About to process ", apis[key].name, clientAPIkeys.has(apis[key].id));
-					if (clientAPIkeys.has(apis[key].id)) {continue;}
+					if (clientAPIkeys.has(apis[key].id)) {
+						continue;
+					}
 
 					if (this.searchTerm !== null) {
 						if (!apis[key].searchMatch(this.searchTerm)) {
@@ -350,11 +375,52 @@ define(function(require) {
 					view.apis.push(apis[key].getView());
 				}
 			}
-			
+
+
+			// console.error("VIew public", view);
 			return this.apipublictemplate.render(this.el.find("#publicapicontainer").empty(), view);
 
-			
 		},
+
+		"drawOwnAPIs": function() {
+
+			var that = this;
+			var view = {
+				"apis": []
+			};
+			if (this.feideconnect) {
+				$.extend(view, {
+					"_config": that.feideconnect.getConfig()
+				});
+			}
+
+
+
+			var apis = this.clientpool.apigks;
+			var apiids = this.current.getAPIscopes();
+			var clientAPIkeys = new StringSet(apiids);
+
+			for (var key in apis) {
+				if (apis.hasOwnProperty(key)) {
+					// console.log("About to process ", apis[key].name, clientAPIkeys.has(apis[key].id));
+					if (clientAPIkeys.has(apis[key].id)) {
+						continue;
+					}
+
+					if (this.searchTerm !== null) {
+						if (!apis[key].searchMatch(this.searchTerm)) {
+							continue;
+						}
+					}
+
+					view.apis.push(apis[key].getView());
+				}
+			}
+
+			return this.apiowntemplate.render(this.el.find("#apicontainerown").empty(), view);
+
+		},
+
 
 		"actUpdateAuthProviders": function(providers) {
 
@@ -375,9 +441,29 @@ define(function(require) {
 					that.app.app.setErrorMessage("Successfully updated list of authentication providers", "success");
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.app.setErrorMessage("Error updating auth providers", "danger", err);
 				});
 
+		},
+
+
+		"getAPI": function(id, acceptempty) {
+
+			var api;
+			api = this.publicapis.getAPIGK(id);
+			if (api !== null) {
+				return api;
+			}
+
+			api = this.clientpool.getAPIGK(id);
+			if (api !== null) {
+				return api;
+			}
+
+			if (typeof acceptempty !== 'undefined' && acceptempty === true) {
+				return null;
+			}
+			throw new Error("Could not look up API " + id + " from neigther public pool or your own apis.");
 		},
 
 
@@ -390,7 +476,7 @@ define(function(require) {
 
 			var container = $(e.currentTarget).closest(".apiEntry");
 			var apigkid = container.data('apigkid');
-			var apigk = this.publicapis.getAPIGK(apigkid);
+			var apigk = this.getAPI(apigkid);
 
 			newscopes.push(apigk.getBasicScope());
 			container.find("input.subScopeSelection").each(function(i, item) {
@@ -417,7 +503,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.app.setErrorMessage("Error adding third party API", "danger", err);
 				});
 
 		},
@@ -437,7 +523,7 @@ define(function(require) {
 				scopes[scope] = enabled;
 			});
 
-			for(var scope in scopes) {
+			for (var scope in scopes) {
 				if (scopes[scope]) {
 					this.current.addScope(scope);
 				} else {
@@ -460,7 +546,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.app.setErrorMessage("Error third party API scope update", "danger", err);
 				});
 
 
@@ -479,14 +565,19 @@ define(function(require) {
 
 
 		"actScopeUpdate": function(e) {
+			// e.preventDefault();
+			// return;
+			// console.error("Scope update");
 			var container = $(e.currentTarget);
 			var input = $(e.target);
 			var isChecked = input.prop("checked");
 			var type = input.data("scopetype");
 
 			if (type === "main" && !isChecked) {
+				// console.error("Scope update autoadjust 1");
 				this.autoadjustScopes(container, "sub", false);
 			} else if (type === "sub" && isChecked) {
+				// console.error("Scope update autoadjust 2");
 				this.autoadjustScopes(container, "main", true);
 			}
 
@@ -547,7 +638,7 @@ define(function(require) {
 			this.current.systemdescr = this.el.find("#systemdescr").val();
 			if (this.current.systemdescr === '') {
 				this.current.systemdescr = null;
-			}			
+			}
 			this.current.privacypolicyurl = this.el.find('#privacypolicyurl').val();
 			if (this.current.privacypolicyurl === '') {
 				this.current.privacypolicyurl = null;
@@ -555,15 +646,15 @@ define(function(require) {
 			this.current.homepageurl = this.el.find('#homepageurl').val();
 			if (this.current.homepageurl === '') {
 				this.current.homepageurl = null;
-			}			
+			}
 			this.current.loginurl = this.el.find('#loginurl').val();
 			if (this.current.loginurl === '') {
 				this.current.loginurl = null;
-			}			
+			}
 			this.current.supporturl = this.el.find('#supporturl').val();
 			if (this.current.supporturl === '') {
 				this.current.supporturl = null;
-			}			
+			}
 
 
 
@@ -574,15 +665,16 @@ define(function(require) {
 			this.el.find("input.redirect_uri").each(function(i, item) {
 				var x = $(item).val();
 				if (x !== '') {
-					redirectURIs.push(x);	
+					redirectURIs.push(x);
 				}
 			});
 
 			this.current.redirect_uri = redirectURIs;
 
-			obj = this.current.getStorable(["id", "name", "descr", "systemdescr", 
+			obj = this.current.getStorable(["id", "name", "descr", "systemdescr",
 				"privacypolicyurl", "homepageurl", "loginurl", "supporturl",
-				"redirect_uri"]);
+				"redirect_uri"
+			]);
 
 			// obj = this.current.getStorable();
 			// obj.authproviders = [];

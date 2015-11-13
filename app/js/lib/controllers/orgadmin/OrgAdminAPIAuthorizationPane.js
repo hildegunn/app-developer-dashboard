@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
-	"use strict";	
+	"use strict";
 
-	var 
+	var
 		dust = require('dust'),
 		Pane = require('../Pane'),
 
@@ -11,12 +11,10 @@ define(function(require, exports, module) {
 
 		APIScopeSet = require('../../models/APIScopeSet'),
 		utils = require('../../utils'),
-		$ = require('jquery')
-		;
+		$ = require('jquery');
 
-	var 
-		template = require('text!templates/OrgAdminAPIAuthorization.html')
-		;
+	var
+		template = require('text!templates/OrgAdminAPIAuthorization.html');
 
 	/*
 	 * This controller controls API authorization view. Org admins will list clients that requests access to APIs for 
@@ -60,16 +58,16 @@ define(function(require, exports, module) {
 					data[clientid] = [];
 				}
 				if (checked) {
-					data[clientid].push(scope);	
+					data[clientid].push(scope);
 				}
-				
+
 			});
 			var orgid = this.orgapp.orgid.substring(7);
 
 
 
 			var toUpdate = [];
-			for(var key in data) {
+			for (var key in data) {
 				toUpdate.push({
 					"client": key,
 					"scopes": data[key]
@@ -79,8 +77,8 @@ define(function(require, exports, module) {
 
 			return toUpdate.reduce(function(current, client) {
 				// console.error("UPDATING", orgid, client.client, client.scopes);
-				return that.feideconnect.updateOrgAuthorizations(orgid, client.client, client.scopes);
-			}, Promise.resolve())
+					return that.feideconnect.updateOrgAuthorizations(orgid, client.client, client.scopes);
+				}, Promise.resolve())
 				.then(function() {
 					that.orgapp.app.setErrorMessage("Successfully updated API authorizations.", "success");
 				})
@@ -99,7 +97,8 @@ define(function(require, exports, module) {
 					this.apiscopeset.onLoaded(),
 				])
 				.then(this.proxy("draw"))
-				.then(this.proxy("_initLoaded")).catch(function(err) {
+				.then(this.proxy("_initLoaded"))
+				.catch(function(err) {
 					console.error("Error loading [OrgAdminAPIAuthorizationPane]", err);
 				});
 		},
@@ -111,7 +110,7 @@ define(function(require, exports, module) {
 					that.apiscopeset.updateOrgAdminAPIclients(that.orgAdminAPIclients);
 					return that.draw();
 				});
-		},	
+		},
 
 		"draw": function() {
 			var that = this;
@@ -128,8 +127,7 @@ define(function(require, exports, module) {
 
 		"activate": function() {
 			this.orgapp.app.bccontroller.draw([
-				this.orgapp.getBCItem(),
-				{
+				this.orgapp.getBCItem(), {
 					"title": 'API Authorization Management',
 					"active": true
 				}
