@@ -271,7 +271,7 @@ define(function(require, exports, module) {
 			var that = this;
 			type = (type ? type : "danger");
 
-			console.error("Error: ", msg.stack);
+			// console.error("Error: ", msg.stack);
 
 			var pmsg = '';
 			if (typeof msg === 'object' && msg.hasOwnProperty("message")) {
