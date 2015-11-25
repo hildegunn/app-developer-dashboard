@@ -229,10 +229,12 @@ Authorization: Bearer a005656a-8510-4d34-8897-f10638bb7b05
 <pre><code class="language-http">
 GET /foo/bar HTTP/1.1{~n}
 Authorization: Basic XXXXXXXX{~n}
-X_FEIDECONNECT_CLIENTID: 42b0c02e-0dda-4882-9da0-882a4b1abad6{~n}
-X_FEIDECONNECT_USERID: 76a7a061-3c55-430d-8ee0-6f82ec42501f{~n}
-X_FEIDECONNECT_USERID_SEC: feide:xxxx@uninett.no
-</code></pre>		
+X-FeideConnect-clientid: 42b0c02e-0dda-4882-9da0-882a4b1abad6{~n}
+X_FeideConnect-userid: 76a7a061-3c55-430d-8ee0-6f82ec42501f{~n}
+X-FeideConnect-userid-sec: feide:xxxx@uninett.no
+</code></pre>
+
+<p>Note that http headers should be treated case insensitively</p>
 
 
 				</div>
