@@ -71,7 +71,7 @@ define(function(require, exports, module) {
 			obj.name = $(this.el).find("#newClientName").val();
 			obj.descr = $(this.el).find("#newClientDescr").val();
 			obj.redirect_uri = [$(this.el).find("#newClientRedirectURI").val()];
-			obj.scopes_requested = ["userinfo"];
+			obj.scopes_requested = ["userid", "profile"];
 			obj.client_secret = utils.guid();
 			obj.authproviders = ['feide|all', 'other|feidetest', 'other|idporten', 'other|openidp', 'social|all'];
 
