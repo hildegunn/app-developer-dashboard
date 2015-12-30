@@ -20,7 +20,7 @@
 	"isexperimental": "This service is experimental",
 
 	"createclientintro": "You are about to create a application to access the Feide Connect platform.",
-	"createclientname": "Give your application a short desriptive name, and a longer descriptive text to explain what your application does.",
+	"createclientname": "Give your application application a short desriptive name, and a longer descriptive text to explain what your application does.",
 
 	"createapigkintro": "You are about to register a new API to be accessed through the Feide Connect platform.",
 
@@ -35,7 +35,6 @@
 	"cancel": "Cancel",
 
 	"createnewgroup": "Create new group",
-
 	"createnewgroups": "Create new groups",
 	"creategrptxt": "By using the group manager, you may create new groups, and edit existing groups that you have created.",
 
@@ -88,7 +87,28 @@
 	"registernewgroup": "Register a new group",
 	"registernewgroupinfo": "You are about to create a group to use on the Feide Connect platform.",
 	"groupnameinfo": "Give your group a short desriptive name, and a longer descriptive text to explain the intendend use of the group.",
-	"publicinfo": "By setting a group to be public, it means that anyone can search for and know about the existence of this group. Users may also use the group to setup access control. However whether a group is public or not does not impact who can be member or not."
+	"publicinfo": "By setting a group to be public, it means that anyone can search for and know about the existence of this group. Users may also use the group to setup access control. However whether a group is public or not does not impact who can be member or not.",
+
+
+	"email": "E-Mail",
+	"connectuserid": "Connect user identifier",
+	"connectuseridsec": "Secondary user identifiers",
+	"viewmygroups": "View my group memberships",
+	"aboutme": "About me",
+	"appauth": "App authorizations",
+	"privacy": "Privacy",
+	"privacypolicy": "Privacy policy",
+	"innsynfeide": "Feide insight",
+	"removinguseraccount": "Removing your user account",
+	"removeuserwarning": "You are entitled to completely remove your account on Feide Connect, but then you will not be able to access Feide Connect services anymore.",
+	"yesiunderstand": "Yes. I understand. Please, remove my user account",
+	"beforeinstructions": "Before you will be able to remove your Feide Connect account, you will need to remove applications, APIs and groups associated with your account.",
+	"theseobjectsare": "These objects are associated to your account:",
+	"appliations": "appliations",
+	"apis": "APIs",
+	"groups": "groups",
+	"toremoveinstruction2": "To remove these objects, you would need to use",
+	"removeauthz": "Remove authorization"
 
 
 }
