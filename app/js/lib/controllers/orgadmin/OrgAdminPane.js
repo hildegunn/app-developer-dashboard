@@ -10,7 +10,7 @@ define(function(require, exports, module) {
 		// APIGKCreate = require('../createwidgets/APIGKCreate'),
 		EventEmitter = require('../../EventEmitter'),
 		// OrgRoleSelector = require('./OrgRoleSelector'),
-		TemplateEngine = require('../../TemplateEngine'),
+		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		utils = require('../../utils'),
 		$ = require('jquery')
 		;

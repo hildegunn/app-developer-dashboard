@@ -4,14 +4,11 @@ define(function(require, exports, module) {
 	var 
 		$ = require('jquery'),
 		Controller = require('./Controller'),
-		dust = require('dust'),
 
 		Model = require('../models/Model'),
 		Group = require('../models/Group'),
-		EventEmitter = require('../EventEmitter')
-
-
-		
+		EventEmitter = require('../EventEmitter'),
+		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine')
 		;
 
 	var template = require('text!templates/OrgRoleSelector.html');
@@ -71,10 +68,11 @@ define(function(require, exports, module) {
 
 	var OrgRoleSelector = Controller.extend({
 
-		"init": function(el, feideconnect) {
+		"init": function(el, feideconnect, app) {
 
 			var that = this;
 			this.feideconnect = feideconnect;
+			this.app = app;
 
 			this._super(el);
 
@@ -83,7 +81,9 @@ define(function(require, exports, module) {
 			this.roles = {};
 			this.currentRole = '_';
 
-			dust.loadSource(dust.compile(template, "OrgRoleSelector"));
+			console.error("Dict is ", this.app.dict);
+
+			this.tmp = new TemplateEngine(template, this.app.dict);
 
 			this.ebind("click", ".orgSelector a", "actSelect");
 
@@ -230,15 +230,18 @@ define(function(require, exports, module) {
 			}
 
 			if (!this.enabled) {return;}
-			// console.error("View s ", view);
+			
+			// alert("boo");
 
-			return new Promise(function(resolve, reject) {
-				dust.render("OrgRoleSelector", view, function(err, out) {
-					if (err) {return reject(err);}
-					that.el.empty().append(out);
-					return resolve();
-				});
-			});
+			return this.tmp.render(this.el.empty(), view);
+
+			// return new Promise(function(resolve, reject) {
+			// 	dust.render("OrgRoleSelector", view, function(err, out) {
+			// 		if (err) {return reject(err);}
+			// 		that.el.empty().append(out);
+			// 		return resolve();
+			// 	});
+			// });
 		}
 
 

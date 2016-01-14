@@ -23,7 +23,7 @@ define(function(require, exports, module) {
 		APIGK = require('./models/APIGK'),
 		PaneController = require('./controllers/PaneController'),
 		Dictionary = require('./Dictionary'),
-		TemplateEngine = require('./TemplateEngine'),
+		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		utils = require('./utils'),
 		rawconfig = require('text!../../etc/config.js'),
 		$ = require('jquery');
@@ -61,7 +61,7 @@ define(function(require, exports, module) {
 			this.providerdata = new ProviderData(this);
 
 			this.elOrgSelector = $("<div></div>");
-			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector, this.feideconnect);
+			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector, this.feideconnect, this);
 			this.orgRoleSelector.initLoad();
 
 			this.bccontroller = new BCController($("#breadcrumb"));

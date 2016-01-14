@@ -20,7 +20,7 @@ define(function(require, exports, module) {
 		APIGK = require('./models/APIGK'),
 		PaneController = require('./controllers/PaneController'),
 		Dictionary = require('./Dictionary'),
-		TemplateEngine = require('./TemplateEngine'),
+		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		utils = require('./utils'),
 		rawconfig = require('text!../../etc/config.js'),
 		$ = require('jquery');
