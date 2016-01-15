@@ -17,7 +17,8 @@ requirejs.config({
 		"jquery": "/bower_components/jquery/dist/jquery.min",
 		"dict": "/dictionaries/dictionary.en.json",
 		"bootstrap": "/bower_components/bootstrap/dist/js/bootstrap.min",
-		"es6-promise": "/bower_components/es6-promise/promise"
+		"es6-promise": "/bower_components/es6-promise/promise",
+		"selectize": "/bower_components/selectize/dist/js/standalone/selectize"
 	},
 	shim: {
 		"dust": {
@@ -25,6 +26,9 @@ requirejs.config({
 		},
 		"bootstrap": {
 			"deps": ["jquery"]
+		},
+		"selectize": {
+			"deps": ["jquery"]	
 		}
 	}
 });

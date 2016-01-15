@@ -7,7 +7,7 @@ define(function(require) {
 		utils = require('../../utils'),
 		StringSet = require('../../StringSet'),
 
-		TemplateEngine = require('../../TemplateEngine'),
+		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		AuthProviderSelector = require('../AuthProviderSelector'),
 		Waiter = require('../../Waiter'),
 		$ = require('jquery');

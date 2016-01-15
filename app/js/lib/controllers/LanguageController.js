@@ -5,7 +5,7 @@ define(function(require, exports, module) {
         $ = require('jquery'),
         Controller = require('./Controller'),
         EventEmitter = require('../EventEmitter'),
-        TemplateEngine = require('../TemplateEngine'),
+        TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
         Cookies = require('bower/js-cookie/src/js.cookie');
 
     var template = require('text!templates/languages.html');

@@ -5,7 +5,7 @@ define(function(require, exports, module) {
 		$ = require('jquery'),
 		Controller = require('../Controller'),
 		EventEmitter = require('../../EventEmitter'),
-		TemplateEngine = require('../../TemplateEngine'),
+		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		OrgStatus = require('../../models/OrgStatus'),
 		LDAPStatus = require('../../models/LDAPStatus')
 

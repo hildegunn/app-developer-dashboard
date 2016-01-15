@@ -7,7 +7,7 @@ define(function(require, exports, module) {
 
 		Dictionary = require('../../Dictionary'),
 		EventEmitter = require('../../EventEmitter'),
-		TemplateEngine = require('../../TemplateEngine'),
+		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 
 		APIScopeSet = require('../../models/APIScopeSet'),
 		utils = require('../../utils'),

@@ -5,7 +5,7 @@ define(function(require, exports, module) {
 		dust = require('dust'),
 		Dictionary = require('../../Dictionary'),
 		Controller = require('../Controller'),
-		TemplateEngine = require('../../TemplateEngine'),
+		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		EventEmitter = require('../../EventEmitter'),
 		utils = require('../../utils'),
 		$ = require('jquery')

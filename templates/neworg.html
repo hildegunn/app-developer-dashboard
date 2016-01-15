@@ -1,0 +1,114 @@
+
+<div style="margin-top: 1em">
+	
+
+	<h1>{_.organization}</h1>
+
+	<p>{_.associatewithorg}</p>
+
+	<div class="row">
+		
+		<div class="col-md-4">
+			
+			<div class="panel panel-default">
+				<div class="panel-body">
+
+					<i class="fa fa-chevron-right fa-2x pull-right"></i>
+
+					<div class="media">
+						<div class="media-left">
+							<img style="max-height: 64px; max-width: 64px" class="img-thumbnail" src="{userinfo.profile}">
+						</div>
+						<div class="media-body">
+							<p>{userinfo.name}</p>
+							<!-- <p>{userinfo.userid}</p> -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="col-md-3">
+			
+			<div class="panel panel-default">
+			  <div class="panel-body">
+			  	<i class="fa fa-chevron-right fa-2x pull-right"></i>
+
+			    requests the role <br />
+			    <strong>technical contact</strong><br />
+			    at the following organization
+			  </div>
+			</div>
+
+		</div>
+
+		<div class="col-md-5">
+					
+			<form class="registerform" role="form">  
+
+				<div class="form-group">
+					<select id="newselectorg">
+						<option value="">Select organization, or create new</option>
+						{#orgs}
+							<option value="{id}">{name}</option>
+						{/orgs}				
+					</select>
+
+				</div>
+
+				<div style="display: none" id="neworgregister">
+
+					<div class="form-group">
+						<p>Register a new organization only if you cannot find your organization in the dropdown above.</p>
+					</div>
+
+					<div class="form-group">
+						<label for="newOrgName">Organization name</label>
+						<input style="" id="newOrgName" type="text" class="form-control input" placeholder="">
+					</div>
+
+					<div class="form-group">
+						<label for="newOrgNumber">Organization number</label>
+						<input style="" id="newOrgNumber" type="text" class="form-control input" placeholder="">
+					</div>
+
+					<div class="form-group">
+						<label for="email">Contact e-mail</label>
+						<input style="" id="email" type="text" class="form-control input" placeholder="">
+					</div>
+
+					<div class="form-group">
+						<label for="message">Optional message</label>
+						<textarea style="" class="form-control" id="message" placeholder=""></textarea>
+					</div>
+
+					<div class="form-group">
+						<p>We would also like to register logos for service provider organizations. Please send us an 128x128px transparent PNG to <tt>kontakt@uninett.no</tt>.</p>
+					</div>
+
+
+				</div>
+				<div id="orgresult">
+					
+				</div>
+
+				<button class="btn btn-primary btn-lg actSubmit">Request </button>
+
+
+
+			</form>
+
+
+		</div>
+
+
+
+	</div>
+
+
+
+
+
+</div>
+
