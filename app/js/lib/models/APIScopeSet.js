@@ -58,8 +58,8 @@ define(function(require, exports, module) {
 
 				for (var key in c.apis) {
 					if (c.apis[key].api === null) {
-						console.error("Unable to get information about a requested API because it is not public or accessible.",
-							JSON.stringify(c.apis[key], undefined, 2));
+						console.error("Unable to get information about a requested API because it is not public or accessible.",key);
+							// JSON.stringify(c.apis[key], undefined, 2));
 						continue;
 					}
 

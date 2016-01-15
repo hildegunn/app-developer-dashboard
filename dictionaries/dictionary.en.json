@@ -110,6 +110,8 @@
 	"toremoveinstruction2": "To remove these objects, you would need to use",
 	"removeauthz": "Remove authorization",
 
-	"organization": "Organization"
+	"organization": "Organization",
+	
+	"associatewithorg": "For services that are provided by an organizations we strongly reccomend that this organization is registered as the service provider. Here you may request to register as a technical contact of an existing organization, or request to register a new organization."
 
 }
