@@ -8,6 +8,7 @@ define(function(require, exports, module) {
 		// ClientEditor = require('./controllers/editpage/ClientEditor'),
 		// APIGKEditor = require('./controllers/editpage/APIGKEditor'),
 		OrgRoleSelector = require('./controllers/OrgRoleSelector'),
+		NewOrgController = require('./controllers/NewOrgController'),
 
 		BCController = require('./controllers/BCController'),
 		LanguageController = require('./controllers/LanguageController'),
@@ -64,6 +65,9 @@ define(function(require, exports, module) {
 			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector, this.feideconnect, this);
 			this.orgRoleSelector.initLoad();
 
+
+			this.newOrgController = new NewOrgController(this);
+
 			this.bccontroller = new BCController($("#breadcrumb"));
 			this.languageselector = new LanguageController(this);
 
@@ -73,7 +77,10 @@ define(function(require, exports, module) {
 				that.onLoaded()
 					.then(function() {
 
-						if (that.orgApps[orgid]) {
+						if (orgid === '_new') {
+							that.newOrgController.activate();
+
+						} else if (that.orgApps[orgid]) {
 							that.orgApps[orgid].actMainlisting();
 							that.orgApps[orgid].activate();
 							that.setHash('/' + that.orgRoleSelector.getOrg());
@@ -93,6 +100,7 @@ define(function(require, exports, module) {
 
 
 			this.pc = new PaneController(this.el.find('#panecontainer'));
+			that.pc.add(that.newOrgController);
 
 			this.orgApps = {};
 
@@ -142,42 +150,37 @@ define(function(require, exports, module) {
 			});
 
 
-			this.feideconnect.on("stateChange", function(authenticated, user) {
-				that.onLoaded()
-					.then(function() {
+			this.feideconnect.onAuthenticated()
+				.then(that.proxy("onLoaded"))
+				.then(function() {
+					var user = that.feideconnect.getUser();
+					var _config = that.feideconnect.getConfig();
+					var profilephoto = _config.apis.core + '/userinfo/v1/user/media/' + user.profilephoto;
+					// console.error("Profile url iu s", profilephoto);
+
+					// if (authenticated) {
+
+						$("body").addClass("stateLoggedIn");
+						$("body").removeClass("stateLoggedOut");
+
+						$("#username").empty().text(user.name);
+						$("#profilephoto").html('<img style="margin-top: -28px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" src="' + profilephoto + '" alt="Profile photo" />');
+
+						$(".loader-hideOnLoad").hide();
+						$(".loader-showOnLoad").show();
 
 
+					// } else {
 
-						var _config = that.feideconnect.getConfig();
-						var profilephoto = _config.apis.core + '/userinfo/v1/user/media/' + user.profilephoto;
-						// console.error("Profile url iu s", profilephoto);
+					// 	$("body").removeClass("stateLoggedIn");
+					// 	$("body").addClass("stateLoggedOut");
 
-						if (authenticated) {
+					// 	$(".loader-hideOnLoad").show();
+					// 	$(".loader-showOnLoad").hide();
 
-							$("body").addClass("stateLoggedIn");
-							$("body").removeClass("stateLoggedOut");
+					// }
+				});
 
-							$("#username").empty().text(user.name);
-							$("#profilephoto").html('<img style="margin-top: -28px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" src="' + profilephoto + '" alt="Profile photo" />');
-
-							$(".loader-hideOnLoad").hide();
-							$(".loader-showOnLoad").show();
-
-
-						} else {
-
-							$("body").removeClass("stateLoggedIn");
-							$("body").addClass("stateLoggedOut");
-
-							$(".loader-hideOnLoad").show();
-							$(".loader-showOnLoad").hide();
-
-						}
-
-
-					});
-
-			});
 
 			this.initLoad();
 
@@ -385,7 +388,11 @@ define(function(require, exports, module) {
 			this.orgRoleSelector.setOrg(orgid, false);
 			this.orgRoleSelector.show();
 
-			this.feideconnect.onAuthenticated()
+			if (orgid === '_neworg') {
+				return this.newOrgController.activate();
+			}
+
+			return this.feideconnect.onAuthenticated()
 				.then(function() {
 					return that.getOrgApp(orgid)
 				})
