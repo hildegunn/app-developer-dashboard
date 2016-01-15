@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 	"use strict";
 
-	var 
+	var
 		$ = require('jquery'),
 		Controller = require('./Controller'),
 
@@ -9,8 +9,7 @@ define(function(require, exports, module) {
 		Group = require('../models/Group'),
 		GroupOption = require('../models/GroupOption'),
 		EventEmitter = require('../EventEmitter'),
-		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine')
-		;
+		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine');
 
 	var template = require('text!templates/OrgRoleSelector.html');
 
@@ -26,7 +25,7 @@ define(function(require, exports, module) {
 
 			this._super(el);
 
-			this.enabled = false;
+			this.enabled = true; // If set to false,it will only show if member of one or more org
 
 			this.roles = {};
 			this.currentRole = '_';
@@ -41,24 +40,33 @@ define(function(require, exports, module) {
 
 			var that = this;
 			that.roles = {};
-			that.roles._ = new GroupOption({"id": "_", "title": "Personal"});
+			that.roles._ = new GroupOption({
+				"id": "_",
+				"title": "Personal"
+			});
 
 			this.setOrg(this.currentRole, false);
 
 			return that.feideconnect.vootGroupsList()
 				.then(function(groups) {
 
-					for(var i = 0; i < groups.length; i++) {
+					for (var i = 0; i < groups.length; i++) {
 
 						var g = new Group(groups[i]);
 
 						// Only use group memberships where a user is admin in an orgadmin group.
-						if (!g.isType("fc:orgadmin")) { continue; }
-						if (!g.isMemberType("admin")) { continue; }
+						if (!g.isType("fc:orgadmin")) {
+							continue;
+						}
+						if (!g.isMemberType("admin")) {
+							continue;
+						}
 
 						// console.error("GROUP ", g);
 						that.enabled = true;
-						that.roles[groups[i].org] = new GroupOption({"group": g});
+						that.roles[groups[i].org] = new GroupOption({
+							"group": g
+						});
 					}
 
 				})
@@ -84,7 +92,7 @@ define(function(require, exports, module) {
 		"getOrgIdentifiers": function() {
 
 			var keys = [];
-			for(var key in this.roles) {
+			for (var key in this.roles) {
 				keys.push(key);
 			}
 			return keys;
@@ -92,7 +100,9 @@ define(function(require, exports, module) {
 
 
 		"getOrgInfo": function(orgid) {
-			if (orgid === '_') { return null; }
+			if (orgid === '_') {
+				return null;
+			}
 
 			var c = this.feideconnect.getConfig();
 			// console.error("Config was", c);
@@ -128,7 +138,7 @@ define(function(require, exports, module) {
 			if (this.currentRole !== orgidraw) {
 				this.currentRole = orgid;
 				if (notify) {
-					this.emit("orgRoleSelected", orgidraw);	
+					this.emit("orgRoleSelected", orgidraw);
 				}
 			}
 
@@ -163,7 +173,7 @@ define(function(require, exports, module) {
 			};
 
 
-			for(var key in this.roles) {
+			for (var key in this.roles) {
 				// var re = {
 				// 	"id": key,
 				// 	"title": this.roles[key],
@@ -177,8 +187,10 @@ define(function(require, exports, module) {
 				view.roles.push(re);
 			}
 
-			if (!this.enabled) {return;}
-			
+			if (!this.enabled) {
+				return;
+			}
+
 			// alert("boo");
 
 			return this.tmp.render(this.el.empty(), view);
