@@ -4,7 +4,7 @@ define(function(require, exports, module) {
 	var
 		$ = require('jquery'),
 		moment = require('bower/momentjs/moment'),
-		Model = require('./Model'),
+		Entity = require('./Entity'),
 		Client = require('./Client'),
 		ScopeDef = require('./ScopeDef');
 
@@ -16,7 +16,7 @@ define(function(require, exports, module) {
 
 
 
-	var APIGK = Model.extend({
+	var APIGK = Entity.extend({
 		"init": function(props) {
 
 			if (props.scopedef) {
@@ -26,6 +26,7 @@ define(function(require, exports, module) {
 
 			this._super(props);
 		},
+
 
 
 		"setStatusPublic": function(ispublic) {

@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
-	"use strict";	
+	"use strict";
 
-	var 
+	var
 		dust = require('dust'),
 		Pane = require('../Pane'),
 		Client = require('../../models/Client'),
@@ -9,8 +9,7 @@ define(function(require, exports, module) {
 		ScopeDefBuilder = require('./ScopeDefBuilder'),
 		Editor = require('./Editor'),
 		utils = require('../../utils'),
-		$ = require('jquery')
-		;
+		$ = require('jquery');
 
 
 	var apigkTemplate = require('text!templates/APIGKEditor.html');
@@ -18,7 +17,7 @@ define(function(require, exports, module) {
 	var APIGKEditor = Editor.extend({
 
 		"init": function(app, feideconnect) {
-				
+
 			var that = this;
 			this.editor = "apigk";
 			this._super(app, feideconnect);
@@ -47,15 +46,49 @@ define(function(require, exports, module) {
 			this.ebind("click", ".actSaveChanges", "actSaveChanges");
 			this.ebind("click", ".actDelete", "actDelete");
 
+			this.ebind("click", ".actScopeAdd", "actScopeAdd");
+			this.ebind("click", ".actScopeRemove", "actScopeRemove");
+
+
+			this.initLoad();
 		},
 
-		"loadClients": function() {
+		// "loadClients": function() {
 
+		// 	var that = this;
+		// 	return new Promise(function(resolve, reject) {
+
+		// 	});
+		// },
+
+
+		"initLoad": function() {
+
+			return this.loadScopeDef()
+				.then(this.proxy("_initLoaded"));
+
+		},
+
+
+		"loadScopeDef": function() {
+
+			var fcc = this.feideconnect.getConfig();
+			var endpoint = fcc.apis.core + '/clientadm/scopes/';
 			var that = this;
-			return new Promise(function(resolve, reject) {
 
+			console.error("Scope policy is", endpoint);
+
+			return new Promise(function(resolve, reject) {
+				$.getJSON(endpoint, function(scopePolicy) {
+					console.error("Scope policy is", scopePolicy);
+					that.scopePolicy = scopePolicy;
+					resolve();
+				});
 			});
+
+
 		},
+
 
 		"setTabHashFragment": function(tabid) {
 			var orgid = this.app.orgid;
@@ -97,17 +130,20 @@ define(function(require, exports, module) {
 			var view = item.getView(this.feideconnect);
 			// console.error("About to pass on view", view);
 			this.scopedefbuilder.setAPIGK(item);
-			
+
+			console.error("Scope policy", this.scopePolicy);
+
+			var scopes = item.getScopes(this.scopePolicy);
+
 			if (this.feideconnect) {
 				$.extend(view, {
-					"_config": that.feideconnect.getConfig()
+					"_config": that.feideconnect.getConfig(),
+					"scopelist": scopes
 				});
 			}
 
-
 			this.app.app.bccontroller.draw([
-				this.app.getBCItem(),
-				{
+				this.app.getBCItem(), {
 					"title": 'API GK ' + item.name,
 					"active": true
 				}
@@ -124,7 +160,7 @@ define(function(require, exports, module) {
 					var i, nc, cv;
 					view.clients = [];
 					view.clientsReq = [];
-					
+
 					var reqClientsReq = [];
 
 					for (i = 0; i < clients.length; i++) {
@@ -145,7 +181,7 @@ define(function(require, exports, module) {
 						}
 						if (cv.sd.req) {
 							view.clientsReq.push($.extend({}, cv));
-						} 
+						}
 
 					}
 
@@ -153,13 +189,13 @@ define(function(require, exports, module) {
 					// $("#debug").append("<pre style='background-color: #cc7; margin-bottom: 5em'>" + JSON.stringify(view, undefined, 4) + "</pre>");
 
 
-					// console.error("view is ", view);
+					console.error("apigkeditor view is ", view);
 					dust.render("apigkeditor", view, function(err, out) {
 
 						var tab = that.currentTab;
 						if (setTab) {
 							tab = setTab;
-						} 
+						}
 						that.el.children().detach();
 						that.el.append(out);
 						that.selectTab(tab);
@@ -168,7 +204,7 @@ define(function(require, exports, module) {
 						that.updateQueueCount(view.clientsReq.length);
 
 					});
-				
+
 				});
 
 
@@ -182,8 +218,6 @@ define(function(require, exports, module) {
 			var that = this;
 			var clientContainer = $(e.currentTarget).closest("div.authzClient");
 			var clientid = clientContainer.data("clientid");
-
-
 
 
 
@@ -214,7 +248,7 @@ define(function(require, exports, module) {
 
 
 			var client = this.clients[clientid];
-			for(var scope in scopes) {
+			for (var scope in scopes) {
 				if (scopes[scope]) {
 					authorizeScopes.scopes_add.push(scope);
 				} else {
@@ -248,7 +282,7 @@ define(function(require, exports, module) {
 			this.current.systemdescr = this.el.find('#systemdescr').val();
 			if (this.current.systemdescr === '') {
 				this.current.systemdescr = null;
-			}	
+			}
 
 			this.current.privacypolicyurl = this.el.find('#privacypolicyurl').val();
 			if (this.current.privacypolicyurl === '') {
@@ -265,8 +299,9 @@ define(function(require, exports, module) {
 
 			this.current.setStatusPublic(this.el.find('#ispublic').prop("checked"));
 
-			obj = this.current.getStorable(["id", "name", "descr", "endpoints", "systemdescr", 
-				"privacypolicyurl", "docurl", "status", "requireuser"]);
+			obj = this.current.getStorable(["id", "name", "descr", "endpoints", "systemdescr",
+				"privacypolicyurl", "docurl", "status", "requireuser"
+			]);
 
 			that.feideconnect.apigkUpdate(obj)
 				.then(function(savedObject) {

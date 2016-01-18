@@ -157,7 +157,6 @@ define(function(require) {
 			return new Promise(function(resolve, reject) {
 
 				$.getJSON(endpoint, function(scopePolicy) {
-					// console.error("Scopedef is", scopePolicy);
 					that.scopePolicy = scopePolicy;
 					resolve();
 				});

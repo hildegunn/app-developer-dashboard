@@ -1,22 +1,21 @@
 define(function(require, exports, module) {
-	"use strict";	
+	"use strict";
 
-	var 
+	var
 		moment = require('bower/momentjs/moment'),
 		APIGK = require('./APIGK'),
-		Model = require('./Model'),
+		Entity = require('./Entity'),
 		Scope = require('./Scope'),
-		utils = require('../utils')
-	;
+		utils = require('../utils');
 
-	function parseDate (input) {
+	function parseDate(input) {
 		var x = input.substring(0, 19) + 'Z';
 		return moment(x);
 	}
 
 
-	var Client = Model.extend({
-		
+	var Client = Entity.extend({
+
 		"getView": function() {
 			var res = this._super();
 			if (this.created) {
@@ -25,7 +24,7 @@ define(function(require, exports, module) {
 				res.createdH = res.created.format('D. MMM YYYY');
 			}
 
-			if  (this.updated) {
+			if (this.updated) {
 				res.updated = parseDate(this.updated);
 				res.updatedAgo = res.updated.fromNow();
 				res.updatedH = res.updated.format('D. MMM YYYY');
@@ -39,8 +38,7 @@ define(function(require, exports, module) {
 
 
 
-
-			return res;			
+			return res;
 		},
 
 
@@ -49,7 +47,7 @@ define(function(require, exports, module) {
 			// console.error("this.scopeauthorizations", this);
 			if (this.hasOwnProperty("scopeauthorizations")) {
 
-				for(var key in this.scopeauthorizations) {
+				for (var key in this.scopeauthorizations) {
 					var x = {};
 					x.scope = key;
 					x.authorized = this.scopeauthorizations[key];
@@ -74,7 +72,7 @@ define(function(require, exports, module) {
 				"scopes": [],
 				"orgs": []
 			};
-			
+
 			var orgauthorization = this.orgauthorization;
 			var orgs = apigk.scopedef.getRealmList();
 			var allScopes = this.getScopesObjects();
@@ -91,14 +89,14 @@ define(function(require, exports, module) {
 					"descr": apigk.scopedef.getScopeDescr(scopes[i])
 				});
 			}
-		
+
 			// if(this.id === '541bc151-4a34-47c6-b9fb-15947dbf54ae' && apigk.id === 'scopetestapi') {
 			// 	console.error("Client " + this.name + " wants access to " + apigk.name);
 			// 	console.error("Org authorizations", orgauthorization);
 			// }
-			
+
 			// console.error("Orgs", orgs);
-			
+
 			// console.error("All Scopes", allScopes);
 			// console.error("Scopes", scopes);		
 
@@ -112,7 +110,7 @@ define(function(require, exports, module) {
 
 				for (j = 0; j < scopes.length; j++) {
 					// if(this.id === '541bc151-4a34-47c6-b9fb-15947dbf54ae' && apigk.id === 'scopetestapi') {
-						// console.error("Check scopes ", org, scopes[j], this.hasOrgAuthorized(org, scopes[j]))
+					// console.error("Check scopes ", org, scopes[j], this.hasOrgAuthorized(org, scopes[j]))
 					// }
 					orgentry.scopes.push(this.hasOrgAuthorized(org, scopes[j]));
 				}
@@ -143,7 +141,7 @@ define(function(require, exports, module) {
 			}
 
 			if (v.sd.subscopes) {
-				for(var i = 0; i < v.sd.subscopes.length; i++) {
+				for (var i = 0; i < v.sd.subscopes.length; i++) {
 					v.sd.subscopes[i].status = {};
 					var siq = bs + '_' + v.sd.subscopes[i].scope;
 					if (this.scopeIsAccepted(siq)) {
@@ -173,17 +171,19 @@ define(function(require, exports, module) {
 		},
 
 		"setOneRedirectURI": function(redirect_uri) {
-			if (!this.redirect_uri) {redirect_uri = [];}
+			if (!this.redirect_uri) {
+				redirect_uri = [];
+			}
 			if (redirect_uri.length < 1) {
 				this.redirect_uri.push(redirect_uri);
 			} else {
-				this.redirect_uri[0] = redirect_uri;	
+				this.redirect_uri[0] = redirect_uri;
 			}
-			
+
 		},
 
 		"addScopes": function(scopes) {
-			for(var i = 0; i < scopes.length; i++) {
+			for (var i = 0; i < scopes.length; i++) {
 				this.addScope(scopes[i]);
 			}
 		},
@@ -195,8 +195,10 @@ define(function(require, exports, module) {
 			if (this.scopes_requested && this.scopes_requested.length) {
 				existingScopes = this.scopes_requested;
 			}
-			for(var i = 0; i < existingScopes.length; i++) {
-				if (existingScopes[i] === scope) {exists = true;}
+			for (var i = 0; i < existingScopes.length; i++) {
+				if (existingScopes[i] === scope) {
+					exists = true;
+				}
 				newscopes.push(existingScopes[i]);
 			}
 			if (!exists) {
@@ -211,53 +213,34 @@ define(function(require, exports, module) {
 			if (this.scopes_requested && this.scopes_requested.length) {
 				existingScopes = this.scopes_requested;
 			}
-			for(var i = 0; i < existingScopes.length; i++) {
+			for (var i = 0; i < existingScopes.length; i++) {
 				if (existingScopes[i] !== scope) {
-					newscopes.push(existingScopes[i]);	
+					newscopes.push(existingScopes[i]);
 				}
 			}
 			this.scopes_requested = newscopes;
 		},
 
-		/**
-		 * Check if a scope is found in "scopes"
-		 * @param  {[type]} scope [description]
-		 * @return {[type]}       [description]
-		 */
-		"scopeIsAccepted": function(scope) {
-			if (!this.scopes) {return false;}
-			if (!this.scopes.length) {return false;}
-			for(var i = 0; i < this.scopes.length; i++) {
-				if (scope === this.scopes[i]) {return true;}
-			}
-			return false;
-		},
 
-		/**
-		 * Check if a scope is found in "scopes_requested"
-		 * @param  {[type]} scope [description]
-		 * @return {[type]}       [description]
-		 */
-		"scopeIsRequested": function(scope) {
-			if (!this.scopes_requested) {return false;}
-			if (!this.scopes_requested.length) {return false;}
-			for(var i = 0; i < this.scopes_requested.length; i++) {
-				if (scope === this.scopes_requested[i]) {return true;}
-			}
-			return false;
-		},
 
 		/*
 		 * Returns an array with API Gatekeeper IDs represented by scopes found in 
 		 * scopes_requested.
 		 */
 		"getAPIscopes": function() {
-			var apis = {}, api;
-			if (!this.scopes_requested) {return apis;}
-			if (!this.scopes_requested.length) {return apis;}
-			for(var i = 0; i < this.scopes_requested.length; i++) {
+			var apis = {},
+				api;
+			if (!this.scopes_requested) {
+				return apis;
+			}
+			if (!this.scopes_requested.length) {
+				return apis;
+			}
+			for (var i = 0; i < this.scopes_requested.length; i++) {
 				api = APIGK.getAPIfromScope(this.scopes_requested[i]);
-				if (api !== null) {apis[api] = true;}
+				if (api !== null) {
+					apis[api] = true;
+				}
 			}
 			return utils.getKeys(apis);
 		},
@@ -294,12 +277,12 @@ define(function(require, exports, module) {
 				"accepted": []
 			};
 
-			for(var scope in scopedef) {
+			for (var scope in scopedef) {
 				var x = scopedef[scope];
 				x.scope = scope;
 				if (this.scopeIsAccepted(scope)) {
 					res.accepted.push(x);
-				} else if(this.scopeIsRequested(scope)) {
+				} else if (this.scopeIsRequested(scope)) {
 					res.requested.push(x);
 				} else {
 					res.available.push(x);
@@ -314,7 +297,9 @@ define(function(require, exports, module) {
 				return list;
 			}
 			for (var i = 0; i < this.scopes.length; i++) {
-				list.push(new Scope({"scope": this.scopes[i]}));
+				list.push(new Scope({
+					"scope": this.scopes[i]
+				}));
 			}
 			return list;
 		}
@@ -325,4 +310,3 @@ define(function(require, exports, module) {
 
 
 });
-
