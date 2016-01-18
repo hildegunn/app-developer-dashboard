@@ -1,6 +1,6 @@
 [![Code Climate](https://codeclimate.com/github/feideconnect/app-developer-dashboard/badges/gpa.svg)](https://codeclimate.com/github/feideconnect/app-developer-dashboard)
 
-# Feide Connect Developer Dashboard	
+# Dataporten Developer Dashboard	
 
 Manage clients and API Gatekeepers.
 
@@ -8,7 +8,7 @@ Manage clients and API Gatekeepers.
 ## Configuratioun
 
 * Expose the web app on a web server, capable of serving static files.
-* Register the web app in [Feide Connect developer dashboard](https://developers.feideconnect.no)
+* Register the web app in [Dataporten developer dashboard](https://developers.feideconnect.no)
 
 Then rename the config from 
 
