@@ -46,6 +46,57 @@ define(function(require, exports, module) {
 			return res;
 		},
 
+
+		"setName": function(name) {
+			this.name = name;
+		},
+
+		"setDescr": function(descr) {
+			this.descr = descr;
+		},
+		
+		"addScopes": function(scopes) {
+			for (var i = 0; i < scopes.length; i++) {
+				this.addScope(scopes[i]);
+			}
+		},
+
+		"addScope": function(scope) {
+			var exists = false;
+			var existingScopes = [];
+			var newscopes = [];
+			if (this.scopes_requested && this.scopes_requested.length) {
+				existingScopes = this.scopes_requested;
+			}
+			for (var i = 0; i < existingScopes.length; i++) {
+				if (existingScopes[i] === scope) {
+					exists = true;
+				}
+				newscopes.push(existingScopes[i]);
+			}
+			if (!exists) {
+				newscopes.push(scope);
+			}
+			this.scopes_requested = newscopes;
+		},
+
+		"removeScope": function(scope) {
+			var existingScopes = [];
+			var newscopes = [];
+			if (this.scopes_requested && this.scopes_requested.length) {
+				existingScopes = this.scopes_requested;
+			}
+			for (var i = 0; i < existingScopes.length; i++) {
+				if (existingScopes[i] !== scope) {
+					newscopes.push(existingScopes[i]);
+				}
+			}
+			this.scopes_requested = newscopes;
+		},
+
+
+
+
 		/**
 		 * Check if a scope is found in "scopes"
 		 * @param  {[type]} scope [description]
@@ -85,6 +136,21 @@ define(function(require, exports, module) {
 			}
 			return false;
 		},
+
+
+
+		"getScopesObjects": function() {
+			var list = [];
+			if (!this.scopes) {
+				return list;
+			}
+			for (var i = 0; i < this.scopes.length; i++) {
+				list.push(new Scope({
+					"scope": this.scopes[i]
+				}));
+			}
+			return list;
+		}
 
 
 

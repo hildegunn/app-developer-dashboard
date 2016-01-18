@@ -162,13 +162,6 @@ define(function(require, exports, module) {
 
 		},
 
-		"setName": function(name) {
-			this.name = name;
-		},
-
-		"setDescr": function(descr) {
-			this.descr = descr;
-		},
 
 		"setOneRedirectURI": function(redirect_uri) {
 			if (!this.redirect_uri) {
@@ -181,46 +174,6 @@ define(function(require, exports, module) {
 			}
 
 		},
-
-		"addScopes": function(scopes) {
-			for (var i = 0; i < scopes.length; i++) {
-				this.addScope(scopes[i]);
-			}
-		},
-
-		"addScope": function(scope) {
-			var exists = false;
-			var existingScopes = [];
-			var newscopes = [];
-			if (this.scopes_requested && this.scopes_requested.length) {
-				existingScopes = this.scopes_requested;
-			}
-			for (var i = 0; i < existingScopes.length; i++) {
-				if (existingScopes[i] === scope) {
-					exists = true;
-				}
-				newscopes.push(existingScopes[i]);
-			}
-			if (!exists) {
-				newscopes.push(scope);
-			}
-			this.scopes_requested = newscopes;
-		},
-
-		"removeScope": function(scope) {
-			var existingScopes = [];
-			var newscopes = [];
-			if (this.scopes_requested && this.scopes_requested.length) {
-				existingScopes = this.scopes_requested;
-			}
-			for (var i = 0; i < existingScopes.length; i++) {
-				if (existingScopes[i] !== scope) {
-					newscopes.push(existingScopes[i]);
-				}
-			}
-			this.scopes_requested = newscopes;
-		},
-
 
 
 		/*
@@ -260,48 +213,6 @@ define(function(require, exports, module) {
 				}
 			}
 			return false;
-		},
-
-		/**
-		 * Takes a scope definition as input and returns all scopes that is defined in the 
-		 * scopedef, sorted into available, requested and accepted lists.
-		 * 
-		 * @param  {[type]} scopedef Typically a global scope definition.
-		 * @return {[type]}          [description]
-		 */
-		"getScopes": function(scopedef) {
-
-			var res = {
-				"available": [],
-				"requested": [],
-				"accepted": []
-			};
-
-			for (var scope in scopedef) {
-				var x = scopedef[scope];
-				x.scope = scope;
-				if (this.scopeIsAccepted(scope)) {
-					res.accepted.push(x);
-				} else if (this.scopeIsRequested(scope)) {
-					res.requested.push(x);
-				} else {
-					res.available.push(x);
-				}
-			}
-			return res;
-		},
-
-		"getScopesObjects": function() {
-			var list = [];
-			if (!this.scopes) {
-				return list;
-			}
-			for (var i = 0; i < this.scopes.length; i++) {
-				list.push(new Scope({
-					"scope": this.scopes[i]
-				}));
-			}
-			return list;
 		}
 
 	});
