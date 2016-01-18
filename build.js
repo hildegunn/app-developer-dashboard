@@ -9,7 +9,8 @@
 		"jquery": "../../bower_components/jquery/dist/jquery.min",
 		"dict": "_",
 		"es6-promise": "../../bower_components/es6-promise/promise",
-		"bootstrap": "../../bower_components/bootstrap/dist/js/bootstrap.min"
+		"bootstrap": "../../bower_components/bootstrap/dist/js/bootstrap.min",
+		"selectize": "../../bower_components/selectize/dist/js/standalone/selectize"
 	},
 	shim: {
 		"dust": {
