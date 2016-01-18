@@ -36,10 +36,7 @@ define(function(require) {
 			this.apipublictemplate = new TemplateEngine(publicAPIListingTemplate);
 			this.apiowntemplate = new TemplateEngine(ownAPIListingTemplate);
 
-			this.ebind("click", ".actSaveChanges", "actSaveChanges");
-			this.ebind("click", ".actScopeAdd", "actScopeAdd");
-			this.ebind("click", ".actScopeRemove", "actScopeRemove");
-			this.ebind("click", ".actDelete", "actDelete");
+
 			this.ebind("click", ".actAPIadd", "actAPIadd");
 			this.ebind("click", ".actAPIScopeUpdate", "actAPIScopeUpdate");
 			this.ebind("click", ".actRemoveRedirectURI", "actRemoveRedirectURI");
@@ -535,9 +532,6 @@ define(function(require) {
 			obj.id = fullobj.id;
 			obj.scopes_requested = fullobj.scopes_requested;
 
-
-			// console.error("Scope update", obj); return;
-
 			this.feideconnect.clientsUpdate(obj)
 				.then(function(savedClient) {
 					var x = new Client(savedClient);
@@ -564,9 +558,6 @@ define(function(require) {
 
 
 		"actScopeUpdate": function(e) {
-			// e.preventDefault();
-			// return;
-			// console.error("Scope update");
 			var container = $(e.currentTarget);
 			var input = $(e.target);
 			var isChecked = input.prop("checked");
@@ -583,16 +574,10 @@ define(function(require) {
 		},
 
 
-		"actScopeAdd": function(e) {
-			e.preventDefault();
-			var scopeid = $(e.currentTarget).closest(".scopeEntry").data("scopeid");
-
-			this.current.addScope(scopeid);
-			var obj = this.current.getStorable();
+		"save": function(properties) {
+			var obj = this.current.getStorable(properties);
 			var that = this;
-
-
-			this.feideconnect.clientsUpdate(obj)
+			return this.feideconnect.clientsUpdate(obj)
 				.then(function(savedClient) {
 					var x = new Client(savedClient);
 					that.edit(x);
@@ -601,29 +586,9 @@ define(function(require) {
 				.catch(function(err) {
 					that.app.app.setErrorMessage("Error adding scope", "danger", err);
 				});
-
 		},
 
-		"actScopeRemove": function(e) {
-			e.preventDefault();
-			var scopeid = $(e.currentTarget).closest(".scopeEntry").data("scopeid");
 
-			this.current.removeScope(scopeid);
-			var obj = this.current.getStorable();
-			var that = this;
-
-
-			this.feideconnect.clientsUpdate(obj)
-				.then(function(savedClient) {
-					var x = new Client(savedClient);
-					that.edit(x);
-					that.emit("saved", x);
-				})
-				.catch(function(err) {
-					that.app.app.setErrorMessage("Error removing scope", "danger", err);
-				});
-
-		},
 
 		"actSaveChanges": function(e) {
 			e.preventDefault();
@@ -655,10 +620,7 @@ define(function(require) {
 				this.current.supporturl = null;
 			}
 
-
-
 			this.current.authoptions = {};
-
 
 			redirectURIs = [];
 			this.el.find("input.redirect_uri").each(function(i, item) {

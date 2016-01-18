@@ -24,6 +24,11 @@ define(function(require, exports, module) {
 
 			this._super();
 
+			this.ebind("click", ".actSaveChanges", "actSaveChanges");
+			this.ebind("click", ".actDelete", "actDelete");
+
+			this.ebind("click", ".actScopeAdd", "actScopeAdd");
+			this.ebind("click", ".actScopeRemove", "actScopeRemove");
 
 			this.el.on("dragover", ".imagezone", function(e) {
 				if (e.preventDefault) { e.preventDefault(); }
@@ -71,10 +76,29 @@ define(function(require, exports, module) {
 		},
 
 
+		"save": function() {
+			throw new Error("Save() not implemented for this editor.");
+		},
+
 		"logoUploaded": function(data) {
 			throw "Photo uploaded handler not implemented";
 		},
 
+
+		"actScopeAdd": function(e) {
+			e.preventDefault();
+			var scopeid = $(e.currentTarget).closest(".scopeEntry").data("scopeid");
+			this.current.addScope(scopeid);
+			return this.save(["id", "scopes_requested"]);
+		},
+
+		"actScopeRemove": function(e) {
+			e.preventDefault();
+			var scopeid = $(e.currentTarget).closest(".scopeEntry").data("scopeid");
+			this.current.removeScope(scopeid);
+			return this.save(["id", "scopes_requested"]);
+		},
+		
 
 		"selectTab": function(id) {
 

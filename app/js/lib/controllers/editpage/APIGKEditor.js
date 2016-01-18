@@ -29,37 +29,14 @@ define(function(require, exports, module) {
 
 			this.scopedefbuilder = new ScopeDefBuilder(this.feideconnect, app.app);
 			this.scopedefbuilder.on("save", function(obj) {
-
-				that.feideconnect.apigkUpdate(obj)
-					.then(function(savedObject) {
-						var x = new APIGK(savedObject);
-						that.edit(x);
-						that.emit("saved", x);
-					})
-					.catch(function(err) {
-						that.app.app.setErrorMessage("Error saving API Gatekeeper", "danger", err);
-					});
-
+				that.current.scopedef = obj.scopedef;
+				return that.save(["scopedef", "id"]);
 			});
 
 			this.ebind("click", ".actUpdateAuthz", "actUpdateAuthz");
-			this.ebind("click", ".actSaveChanges", "actSaveChanges");
-			this.ebind("click", ".actDelete", "actDelete");
-
-			this.ebind("click", ".actScopeAdd", "actScopeAdd");
-			this.ebind("click", ".actScopeRemove", "actScopeRemove");
-
 
 			this.initLoad();
 		},
-
-		// "loadClients": function() {
-
-		// 	var that = this;
-		// 	return new Promise(function(resolve, reject) {
-
-		// 	});
-		// },
 
 
 		"initLoad": function() {
@@ -69,6 +46,20 @@ define(function(require, exports, module) {
 
 		},
 
+
+		"save": function(properties) {
+			var obj = this.current.getStorable(properties);
+			var that = this;
+			return that.feideconnect.apigkUpdate(obj)
+				.then(function(savedObject) {
+					var x = new APIGK(savedObject);
+					that.edit(x);
+					that.emit("saved", x);
+				})
+				.catch(function(err) {
+					that.app.app.setErrorMessage("Error saving API Gatekeeper", "danger", err);
+				});
+		},
 
 		"loadScopeDef": function() {
 
@@ -289,29 +280,17 @@ define(function(require, exports, module) {
 				this.current.privacypolicyurl = null;
 			}
 
-
 			this.current.docurl = this.el.find('#docurl').val();
 			if (this.current.docurl === '') {
 				this.current.docurl = null;
 			}
 
 			this.current.requireuser = this.el.find('.fieldrequireuser').prop("checked");
-
 			this.current.setStatusPublic(this.el.find('#ispublic').prop("checked"));
 
-			obj = this.current.getStorable(["id", "name", "descr", "endpoints", "systemdescr",
+			return this.save(["id", "name", "descr", "endpoints", "systemdescr",
 				"privacypolicyurl", "docurl", "status", "requireuser"
 			]);
-
-			that.feideconnect.apigkUpdate(obj)
-				.then(function(savedObject) {
-					var x = new APIGK(savedObject);
-					that.edit(x);
-					that.emit("saved", x);
-				})
-				.catch(function(err) {
-					that.app.app.setErrorMessage("Error saving API Gatekeeper", "danger", err);
-				});
 
 		},
 
