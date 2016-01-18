@@ -118,12 +118,13 @@ define(function(require, exports, module) {
 			obj.descr = $(this.el).find("#newAPIdescr").val();
 			obj.endpoints = [$(this.el).find("#newAPIendpoint").val()];
 
-			obj.expose = {
-				"userid": true,
-				"scopes": true,
-				"clientid": true,
-				"userid-sec": ["feide", "uuid"]
-			};
+			// obj.expose = {
+			// 	"userid": true,
+			// 	"scopes": true,
+			// 	"clientid": true,
+			// 	"userid-sec": ["feide", "uuid"]
+			// };
+			obj.scopes_requested = ["userid", "userid-feide", "profile"];
 			obj.requireuser = true;
 			obj.trust = {
 				"type": "basic",
