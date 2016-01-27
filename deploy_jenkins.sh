@@ -33,7 +33,7 @@ cf map-route "${app}" "${domain}" -n "${hostnameapp}"
 
 if [ "${first}" = 'n' ]
 then
-    cf unmap-route "${oldapp}" "${domain}"
+    cf unmap-route "${oldapp}" "${domain}" -n "${hostnameapp}"
     cf stop "${oldapp}"
 fi
 
