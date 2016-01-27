@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
 set -e # halt script on error
 #app=$(jq -r .name nova.config.json)
-#
-app=dashboard
+app=dataporten_dashboard
 hostnameapp=dashboard
 oldapp="${app}-old"
-domain="feideconnect.no"
+domain="dataporten.no"
 
 echo "Ready to deploy updated version of ${domain}"
-
 
 . ~/cf-login.sh
 cf target -o system -s prod
