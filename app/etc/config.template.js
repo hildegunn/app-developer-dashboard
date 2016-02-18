@@ -1,10 +1,10 @@
 {
-    "client_id": "a76c907f-1922-456c-a037-1b30af82c7be",
+    "client_id": "df34f687-ff1b-419e-9b5c-55b49e4babad",
     "redirect_uri": "https://dashboard.dataporten.no/",
     "debug": false,
     "instance": "pilot",
 
-    "cookiedomain": ".feideconnect.no",
+    "cookiedomain": ".dataporten.no",
     "languages": ["en", "nb"],
     "language-aliases": {
         "no": "nb"
