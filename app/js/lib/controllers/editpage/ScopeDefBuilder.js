@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
-	"use strict";	
+	"use strict";
 
-	var 
+	var
 		dust = require('dust'),
 		Controller = require('../Controller'),
 
@@ -10,8 +10,7 @@ define(function(require, exports, module) {
 
 		EventEmitter = require('../../EventEmitter'),
 		utils = require('../../utils'),
-		$ = require('jquery')
-		;
+		$ = require('jquery');
 
 
 	var template = require('text!templates/ScopeDefBuilder.html');
@@ -20,7 +19,7 @@ define(function(require, exports, module) {
 
 	var ScopeDefBuilder = Controller.extend({
 		"init": function(feideconnect, app) {
-			
+
 			var that = this;
 
 			this.feideconnect = feideconnect;
@@ -48,9 +47,9 @@ define(function(require, exports, module) {
 					.then($.proxy(that.setOrgSelection, that));
 			});
 			this.onLoaded().
-				then(function() {
-					
-				});
+			then(function() {
+
+			});
 			this.el.on("click", "#basicOrgAdminPolicy", function(e) {
 				that.updateOrgScopeControllers();
 			});
@@ -58,7 +57,7 @@ define(function(require, exports, module) {
 				that.updateOrgScopeControllers();
 			});
 
-		
+
 		},
 
 		"updateOrgScopeControllers": function() {
@@ -98,11 +97,11 @@ define(function(require, exports, module) {
 			if (!scopedef.policy.hasOwnProperty("orgadmin")) {
 				scopedef.policy.orgadmin = {};
 			}
-			if ( this.el.find("#basicOrgAdminPolicy").prop("checked")) {
+			if (this.el.find("#basicOrgAdminPolicy").prop("checked")) {
 				scopedef.policy.orgadmin.moderate = false;
 			} else {
 				scopedef.policy.orgadmin.moderate = true;
-				scopedef.policy.orgadmin.target = this.orgselection;	
+				scopedef.policy.orgadmin.target = this.orgselection;
 
 			}
 
@@ -115,18 +114,18 @@ define(function(require, exports, module) {
 				var scope = $(item).find(".scopeID").val();
 				entry.title = $(item).find(".scopeTitle").val();
 				entry.descr = $(item).find(".scopeDescr").val();
-				if ( $(item).find(".scopePolicy").prop("checked")) {
+				if ($(item).find(".scopePolicy").prop("checked")) {
 					entry.policy.auto = true;
 				}
 				entry.policy.orgadmin = {};
-				if ( $(item).find(".scopePolicyOrgAdmin").prop("checked")) {
+				if ($(item).find(".scopePolicyOrgAdmin").prop("checked")) {
 					entry.policy.orgadmin.moderate = false;
 				} else {
 					entry.policy.orgadmin.moderate = true;
 					entry.policy.orgadmin.target = that.orgselection;
 				}
-				
-				scopedef.subscopes[scope] =entry;
+
+				scopedef.subscopes[scope] = entry;
 			});
 
 			this.apigkUpdated.scopedef = scopedef;
@@ -206,14 +205,14 @@ define(function(require, exports, module) {
 			dust.render("ScopeDefBuilder", view, function(err, out) {
 
 				that.el.empty();
-				that.el.append(out);	
+				that.el.append(out);
 
 				that.updateOrgScopeControllers();
 				that.updateOrgList();
 
 				var list = that.apigkUpdated.scopedef.getOrgList();
 
-				that.orglistselector = new OrgListSelector(that.app.providerdata, list);
+				that.orglistselector = new OrgListSelector(that.feideconnect, that.app.providerdata, list);
 				// that.orglistselector.makeSelection()
 				// 	.then($.proxy(that.setOrgSelection, that));
 
