@@ -87,6 +87,7 @@ define(function(require, exports, module) {
 			var view = this.orgstatus.getView();
 			// view.ldapstatus = this.ldapstatus.getView();
 
+			view._config = this.feideconnect.config;
 			// console.error("About to render", view);
 			return this.tmp.render(this.el, view)
 				.then(function() {
