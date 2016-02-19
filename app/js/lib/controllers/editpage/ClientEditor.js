@@ -26,6 +26,7 @@ define(function(require) {
 			this.editor = "clients";
 			this.publicapis = publicapis;
 			this.clientpool = clientpool;
+			this.feideconnect = feideconnect;
 
 			this._super(app, feideconnect);
 
@@ -316,7 +317,7 @@ define(function(require) {
 					}
 					that.selectTab(tab);
 					// console.error("ITem is ", that.current);
-					that.aps = new AuthProviderSelector(that.el.find('.authproviders'), that.app.app.providerdata, that.current.authproviders);
+					that.aps = new AuthProviderSelector(that.el.find('.authproviders'), that.feideconnect, that.app.app.providerdata, that.current.authproviders);
 					that.aps.on('save', function(providers) {
 						that.actUpdateAuthProviders(providers);
 					});
