@@ -71,6 +71,7 @@ define(function(require, exports, module) {
 			this.bccontroller = new BCController($("#breadcrumb"));
 			this.languageselector = new LanguageController(this);
 
+			// console.log("COnfig", this.feideconnect.config);
 
 
 			this.orgRoleSelector.on("orgRoleSelected", function(orgid) {
@@ -160,14 +161,14 @@ define(function(require, exports, module) {
 
 					// if (authenticated) {
 
-						$("body").addClass("stateLoggedIn");
-						$("body").removeClass("stateLoggedOut");
+					$("body").addClass("stateLoggedIn");
+					$("body").removeClass("stateLoggedOut");
 
-						$("#username").empty().text(user.name);
-						$("#profilephoto").html('<img style="margin-top: -28px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" src="' + profilephoto + '" alt="Profile photo" />');
+					$("#username").empty().text(user.name);
+					$("#profilephoto").html('<img style="margin-top: -28px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" src="' + profilephoto + '" alt="Profile photo" />');
 
-						$(".loader-hideOnLoad").hide();
-						$(".loader-showOnLoad").show();
+					$(".loader-hideOnLoad").hide();
+					$(".loader-showOnLoad").show();
 
 
 					// } else {
