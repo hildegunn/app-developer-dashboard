@@ -67,7 +67,7 @@ define(function(require, exports, module) {
 			var endpoint = fcc.apis.core + '/clientadm/scopes/';
 			var that = this;
 
-			console.error("Scope policy is", endpoint);
+			// console.error("Scope policy is", endpoint);
 
 			return new Promise(function(resolve, reject) {
 				$.getJSON(endpoint, function(scopePolicy) {

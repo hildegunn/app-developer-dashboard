@@ -5,6 +5,9 @@ define(function(require, exports, module) {
 	var
 		FeideConnect = require('bower/feideconnectjs/src/FeideConnect').FeideConnect,
 		AppController = require('./controllers/AppController'),
+
+		UserContext = require('./data/UserContext'),
+
 		OrgRoleSelector = require('./controllers/OrgRoleSelector'),
 		NewOrgController = require('./controllers/NewOrgController'),
 		PlatformAdminController = require('./controllers/PlatformAdminController'),
@@ -60,8 +63,10 @@ define(function(require, exports, module) {
 
 			this.providerdata = new ProviderData(this);
 
+			this.usercontext = new UserContext(this.feideconnect, this);
+
 			this.elOrgSelector = $("<div></div>");
-			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector, this.feideconnect, this);
+			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector, this.usercontext, this);
 			this.orgRoleSelector.initLoad();
 
 
@@ -77,6 +82,7 @@ define(function(require, exports, module) {
 			this.orgRoleSelector.on("orgRoleSelected", function(orgid) {
 				that.onLoaded()
 					.then(function() {
+						console.log("orgRoleSelected");
 
 						if (orgid === '_new') {
 							that.newOrgController.activate();
@@ -184,26 +190,26 @@ define(function(require, exports, module) {
 		"initLoad": function() {
 			var that = this;
 
-
 			// Draw template..
 			return this.draw()
-
-			.then(function() {
-				return that.feideconnect.onAuthenticated()
-			})
+				.then(function() {
+					return that.feideconnect.onAuthenticated()
+				})
 
 			// Wait for orgRoleSelector to be loaded.
 			.then(function() {
+				console.log("WAIting for orgRoleSelector to complete");
 				return that.orgRoleSelector.onLoaded()
 			})
 
 			// Then setup all the orgApps.
 			.then(function() {
-
+				console.log(" orgRoleSelector is loaded");
 				return Promise.all(
-					that.orgRoleSelector.getOrgIdentifiers().map(function(orgid) {
-						// console.error(" ››› Setting up a new orgapp for " + orgid);
-						that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid));
+					that.usercontext.getOrgIdentifiers().map(function(orgid) {
+						console.error(" ››› Setting up a new orgapp for " + orgid);
+
+						that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid));
 						that.pc.add(that.orgApps[orgid]);
 					})
 				);
@@ -211,11 +217,15 @@ define(function(require, exports, module) {
 
 			// Then activate one of them
 			.then(function() {
+					console.error("Is loaded 2");
 					that.orgApps._.activate();
 					// now route.
 					that.route(true);
 				})
-				.then(this.proxy("_initLoaded"));
+				.then(this.proxy("_initLoaded"))
+				.catch(function(err) {
+					console.error("Error loading initLoad on app", err);
+				});
 
 		},
 

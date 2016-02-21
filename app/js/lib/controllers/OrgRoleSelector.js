@@ -17,10 +17,10 @@ define(function(require, exports, module) {
 
 	var OrgRoleSelector = Controller.extend({
 
-		"init": function(el, feideconnect, app) {
+		"init": function(el, usercontext, app) {
 
 			var that = this;
-			this.feideconnect = feideconnect;
+			this.usercontext = usercontext;
 			this.app = app;
 
 			this._super(el);
@@ -50,40 +50,25 @@ define(function(require, exports, module) {
 
 			this.setOrg(this.currentRole, false);
 
-			return that.feideconnect.vootGroupsList()
-				.then(function(groups) {
+			return this.usercontext.onLoaded()
+				.then(function() {
 
-					that.groups = groups;
-
-					for (var i = 0; i < groups.length; i++) {
-
-						var g = new Group(groups[i]);
-
-						if (g.id === 'fc:platformadmin:admins') {
-							that.platformadmin = true;
-							that.roles._platformadmin = new GroupOption({
-								"id": "_platformadmin",
-								"title": "Platform admin"
-							});
-							continue;
-						}
-
-						// Only use group memberships where a user is admin in an orgadmin group.
-						if (!g.isType("fc:orgadmin")) {
-							continue;
-						}
-						if (!g.isMemberType("admin")) {
-							continue;
-						}
-
-						// console.error("GROUP ", g);
-						that.enabled = true;
-						that.roles[groups[i].org] = new GroupOption({
-							"group": g
+					if (that.usercontext.platformadmin !== null) {
+						that.roles._platformadmin = new GroupOption({
+							"id": "_platformadmin",
+							"title": "Platform admin"
 						});
 					}
 
-					// console.log("GROUPS", groups);
+					for (var orgid in that.usercontext.groups) {
+
+						that.roles[orgid] = new GroupOption({
+							"group": that.usercontext.groups[orgid]
+						});
+					}
+
+					console.log("usercontext", that.usercontext);
+					console.log("roles", that.roles);
 
 				})
 				.then(this.proxy("draw"))
@@ -105,32 +90,13 @@ define(function(require, exports, module) {
 			return this.currentRole;
 		},
 
-		"getOrgIdentifiers": function() {
 
+		"getOrgIdentifiers": function() {
 			var keys = [];
 			for (var key in this.roles) {
 				keys.push(key);
 			}
 			return keys;
-		},
-
-
-		"getOrgInfo": function(orgid) {
-			if (orgid === '_') {
-				return null;
-			}
-
-			var c = this.feideconnect.getConfig();
-			// console.error("Config was", c);
-
-			// console.log("Getting orginfo for " + orgid, this.roles);
-			var orgInfo = {
-				"id": orgid,
-				"displayName": this.roles[orgid].getTitle(),
-				"logoURL": c.apis.core + '/orgs/' + orgid + '/logo'
-			};
-
-			return orgInfo;
 		},
 
 		"setOrg": function(orgid, notify) {
