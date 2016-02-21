@@ -27,6 +27,9 @@ define(function(require, exports, module) {
 
 			this.enabled = true; // If set to false,it will only show if member of one or more org
 
+			this.groups = null;
+
+			this.platformadmin = false;
 			this.roles = {};
 			this.currentRole = '_';
 
@@ -50,9 +53,20 @@ define(function(require, exports, module) {
 			return that.feideconnect.vootGroupsList()
 				.then(function(groups) {
 
+					that.groups = groups;
+
 					for (var i = 0; i < groups.length; i++) {
 
 						var g = new Group(groups[i]);
+
+						if (g.id === 'fc:platformadmin:admins') {
+							that.platformadmin = true;
+							that.roles._platformadmin = new GroupOption({
+								"id": "_platformadmin",
+								"title": "Platform admin"
+							});
+							continue;
+						}
 
 						// Only use group memberships where a user is admin in an orgadmin group.
 						if (!g.isType("fc:orgadmin")) {
@@ -68,6 +82,8 @@ define(function(require, exports, module) {
 							"group": g
 						});
 					}
+
+					// console.log("GROUPS", groups);
 
 				})
 				.then(this.proxy("draw"))
@@ -166,19 +182,11 @@ define(function(require, exports, module) {
 
 
 		"draw": function() {
-			var that = this;
-
 			var view = {
 				"roles": []
 			};
 
-
 			for (var key in this.roles) {
-				// var re = {
-				// 	"id": key,
-				// 	"title": this.roles[key],
-				// 	"classes": ''
-				// };
 				var re = this.roles[key].getView();
 				re.classes = [];
 				if (this.currentRole === key) {
@@ -191,17 +199,9 @@ define(function(require, exports, module) {
 				return;
 			}
 
-			// alert("boo");
+			console.log("Roles", view);
 
 			return this.tmp.render(this.el.empty(), view);
-
-			// return new Promise(function(resolve, reject) {
-			// 	dust.render("OrgRoleSelector", view, function(err, out) {
-			// 		if (err) {return reject(err);}
-			// 		that.el.empty().append(out);
-			// 		return resolve();
-			// 	});
-			// });
 		}
 
 

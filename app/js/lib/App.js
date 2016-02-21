@@ -5,10 +5,9 @@ define(function(require, exports, module) {
 	var
 		FeideConnect = require('bower/feideconnectjs/src/FeideConnect').FeideConnect,
 		AppController = require('./controllers/AppController'),
-		// ClientEditor = require('./controllers/editpage/ClientEditor'),
-		// APIGKEditor = require('./controllers/editpage/APIGKEditor'),
 		OrgRoleSelector = require('./controllers/OrgRoleSelector'),
 		NewOrgController = require('./controllers/NewOrgController'),
+		PlatformAdminController = require('./controllers/PlatformAdminController'),
 
 		BCController = require('./controllers/BCController'),
 		LanguageController = require('./controllers/LanguageController'),
@@ -67,6 +66,7 @@ define(function(require, exports, module) {
 
 
 			this.newOrgController = new NewOrgController(this);
+			this.platformadminController = new PlatformAdminController(this);
 
 			this.bccontroller = new BCController($("#breadcrumb"));
 			this.languageselector = new LanguageController(this);
@@ -80,6 +80,9 @@ define(function(require, exports, module) {
 
 						if (orgid === '_new') {
 							that.newOrgController.activate();
+
+						} else if (orgid === '_platformadmin') {
+							that.platformadminController.activate();
 
 						} else if (that.orgApps[orgid]) {
 							that.orgApps[orgid].actMainlisting();
@@ -101,7 +104,8 @@ define(function(require, exports, module) {
 
 
 			this.pc = new PaneController(this.el.find('#panecontainer'));
-			that.pc.add(that.newOrgController);
+			that.pc.add(this.newOrgController);
+			this.pc.add(this.platformadminController);
 
 			this.orgApps = {};
 
@@ -157,9 +161,6 @@ define(function(require, exports, module) {
 					var user = that.feideconnect.getUser();
 					var _config = that.feideconnect.getConfig();
 					var profilephoto = _config.apis.core + '/userinfo/v1/user/media/' + user.profilephoto;
-					// console.error("Profile url iu s", profilephoto);
-
-					// if (authenticated) {
 
 					$("body").addClass("stateLoggedIn");
 					$("body").removeClass("stateLoggedOut");
@@ -170,16 +171,6 @@ define(function(require, exports, module) {
 					$(".loader-hideOnLoad").hide();
 					$(".loader-showOnLoad").show();
 
-
-					// } else {
-
-					// 	$("body").removeClass("stateLoggedIn");
-					// 	$("body").addClass("stateLoggedOut");
-
-					// 	$(".loader-hideOnLoad").show();
-					// 	$(".loader-showOnLoad").hide();
-
-					// }
 				});
 
 
@@ -391,6 +382,9 @@ define(function(require, exports, module) {
 
 			if (orgid === '_neworg') {
 				return this.newOrgController.activate();
+			}
+			if (orgid === '_platformadmin') {
+				return this.platformadminController.activate();
 			}
 
 			return this.feideconnect.onAuthenticated()
