@@ -202,8 +202,6 @@ define(function(require, exports, module) {
 
 			// Then setup all the orgApps.
 			.then(function() {
-				console.log(" orgRoleSelector is loaded");
-
 				if (that.usercontext.policy.register) {
 					that.orgApps._ = new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole('_'));
 					that.pc.add(that.orgApps._);
@@ -213,7 +211,7 @@ define(function(require, exports, module) {
 				}
 
 				that.usercontext.getOrgIdentifiers().map(function(orgid) {
-					console.error(" ››› Setting up a new orgapp for " + orgid);
+					// console.error(" ››› Setting up a new orgapp for " + orgid);
 					that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid));
 					that.pc.add(that.orgApps[orgid]);
 				});
@@ -222,7 +220,6 @@ define(function(require, exports, module) {
 
 			// Then activate one of them
 			.then(function() {
-					console.error("Is loaded 2");
 					that.orgApps._.activate();
 					// now route.
 					that.route(true);
