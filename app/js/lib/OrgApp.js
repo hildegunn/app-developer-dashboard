@@ -49,15 +49,11 @@ define(function(require, exports, module) {
 			this.usercontext = usercontext;
 			this.role = role;
 
-			// console.error("Loaded a usercontext", this.usercontext);
-
 			this._super();
 
 
 			this.orgid = this.role.getID();
 			var orgid2 = (this.role.getID() === '_' ? null : this.role.getID());
-
-			// console.error("OrgApp initaite3d", role, this.orgid, orgid2)
 
 			this.clientpool = new ClientPool(this.feideconnect, orgid2);
 

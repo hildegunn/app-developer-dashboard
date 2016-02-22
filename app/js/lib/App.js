@@ -14,6 +14,8 @@ define(function(require, exports, module) {
 
 		BCController = require('./controllers/BCController'),
 		LanguageController = require('./controllers/LanguageController'),
+
+		RestrictedOrgApp = require('./RestrictedOrgApp'),
 		OrgApp = require('./OrgApp'),
 
 		PublicAPIPool = require('./models/PublicAPIPool'),
@@ -82,7 +84,7 @@ define(function(require, exports, module) {
 			this.orgRoleSelector.on("orgRoleSelected", function(orgid) {
 				that.onLoaded()
 					.then(function() {
-						console.log("orgRoleSelected");
+						// console.log("orgRoleSelected");
 
 						if (orgid === '_new') {
 							that.newOrgController.activate();
@@ -190,29 +192,32 @@ define(function(require, exports, module) {
 		"initLoad": function() {
 			var that = this;
 
-			// Draw template..
-			return this.draw()
-				.then(function() {
-					return that.feideconnect.onAuthenticated()
-				})
+			return Promise.all([
+				this.draw(),
+				that.feideconnect.onAuthenticated(),
+				that.usercontext.onLoaded(),
+				that.orgRoleSelector.onLoaded()
+			])
 
-			// Wait for orgRoleSelector to be loaded.
-			.then(function() {
-				console.log("WAIting for orgRoleSelector to complete");
-				return that.orgRoleSelector.onLoaded()
-			})
 
 			// Then setup all the orgApps.
 			.then(function() {
 				console.log(" orgRoleSelector is loaded");
-				return Promise.all(
-					that.usercontext.getOrgIdentifiers().map(function(orgid) {
-						console.error(" ››› Setting up a new orgapp for " + orgid);
 
-						that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid));
-						that.pc.add(that.orgApps[orgid]);
-					})
-				);
+				if (that.usercontext.policy.register) {
+					that.orgApps._ = new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole('_'));
+					that.pc.add(that.orgApps._);
+				} else {
+					that.orgApps._ = new RestrictedOrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole('_'));
+					that.pc.add(that.orgApps._);
+				}
+
+				that.usercontext.getOrgIdentifiers().map(function(orgid) {
+					console.error(" ››› Setting up a new orgapp for " + orgid);
+					that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid));
+					that.pc.add(that.orgApps[orgid]);
+				});
+
 			})
 
 			// Then activate one of them

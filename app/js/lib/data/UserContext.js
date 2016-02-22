@@ -65,7 +65,7 @@ define(function(require, exports, module) {
 			return new Promise(function(resolve, reject) {
 
 				that.policy = {
-					"register": true
+					"register": false
 				};
 				return resolve();
 
@@ -78,7 +78,6 @@ define(function(require, exports, module) {
 			for (var key in this.groups) {
 				keys.push(key);
 			}
-			keys.push('_');
 			return keys;
 		},
 

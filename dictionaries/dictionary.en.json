@@ -112,6 +112,9 @@
 
 	"organization": "Organization",
 	
-	"associatewithorg": "For services that are provided by an organizations we strongly reccomend that this organization is registered as the service provider. Here you may request to register as a technical contact of an existing organization, or request to register a new organization."
+	"associatewithorg": "For services that are provided by an organizations we strongly reccomend that this organization is registered as the service provider. Here you may request to register as a technical contact of an existing organization, or request to register a new organization.",
+
+	"regnoaccess": "Your account is not allowed to register personal applications and APIs.",
+	"regnoaccessdetails": "Only accounts associated with an authenticated Feide user is allowed to register personal applications and APIs. Since your account is not associated with Feide, you need to register your applications and APIs to a service provider account. If you are not associated with a service provider already, you may request to do so from here."
 
 }
