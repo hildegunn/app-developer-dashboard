@@ -67,8 +67,8 @@ define(function(require, exports, module) {
 						});
 					}
 
-					console.log("usercontext", that.usercontext);
-					console.log("roles", that.roles);
+					// console.log("usercontext", that.usercontext);
+					// console.log("roles", that.roles);
 
 				})
 				.then(this.proxy("draw"))
@@ -164,9 +164,7 @@ define(function(require, exports, module) {
 			if (!this.enabled) {
 				return;
 			}
-
-			console.log("Roles", view);
-
+			
 			return this.tmp.render(this.el.empty(), view);
 		}
 
