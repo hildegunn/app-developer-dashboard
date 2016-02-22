@@ -1,18 +1,21 @@
 define(function(require, exports, module) {
-	"use strict";	
+	"use strict";
 
 
-	var 
-		Model = require('./Model')
-		;
+	var
+		Model = require('./Model');
 
 	var GroupOption = Model.extend({
 
 		"isOrgType": function(type) {
 
-			if (!this.group) {return false; }
-			if (!this.group.orgType) {return false; }
-			for(var i = 0; i < this.group.orgType.length; i++) {
+			if (!this.group) {
+				return false;
+			}
+			if (!this.group.orgType) {
+				return false;
+			}
+			for (var i = 0; i < this.group.orgType.length; i++) {
 				if (this.group.orgType[i] === type) {
 					return true;
 				}
@@ -22,14 +25,22 @@ define(function(require, exports, module) {
 		},
 
 		"getID": function() {
-			if (this.id) { return this.id; }
-			if (this.group && this.group.org) {return this.group.org; }
+			if (this.id) {
+				return this.id;
+			}
+			if (this.group && this.group.org) {
+				return this.group.org;
+			}
 			throw new Error("Could not get identifier for this groupoption.");
 		},
 
 		"getTitle": function() {
-			if (this.title) {return this.title; }
-			if (this.group && this.group.orgName) { return this.group.orgName; }
+			if (this.title) {
+				return this.title;
+			}
+			if (this.group && this.group.orgName) {
+				return this.group.orgName;
+			}
 			return 'na';
 		},
 
@@ -38,9 +49,11 @@ define(function(require, exports, module) {
 
 			if (this.id === '_') {
 				res.icon = 'fa fa-user';
-			} else if(this.isOrgType("home_organization")) {
+			} else if (this.id === '_platformadmin') {
+				res.icon = 'fa fa-asterisk';
+			} else if (this.isOrgType("home_organization")) {
 				res.icon = 'fa fa-home';
-			} else if(this.isOrgType("service_provider")) {
+			} else if (this.isOrgType("service_provider")) {
 				res.icon = 'fa fa-suitcase';
 			} else {
 				res.icon = 'fa fa-circle-o';
@@ -53,7 +66,7 @@ define(function(require, exports, module) {
 			}
 			return res;
 		}
-		
+
 	});
 
 	return GroupOption;

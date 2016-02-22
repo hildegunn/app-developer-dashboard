@@ -1,29 +1,25 @@
 define(function(require, exports, module) {
-	"use strict";	
+	"use strict";
 
-	var 
+	var
 		dust = require('dust'),
 		Dictionary = require('../../Dictionary'),
 		Controller = require('../Controller'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		EventEmitter = require('../../EventEmitter'),
 		utils = require('../../utils'),
-		$ = require('jquery')
-		;
+		$ = require('jquery');
 
 
 	var template = require('text!templates/OrgListSelector.html');
 
 
 	var OrgListSelector = Controller.extend({
-		"init": function(providerdata, orglist) {
+		"init": function(feideconnect, providerdata, orglist) {
 			// console.error("org list selector..", providerdata);
 
 			var that = this;
-
-
-
-
+			this.feideconnect = feideconnect;
 			this.providerdata = providerdata;
 			this.dict = new Dictionary();
 			this.template = new TemplateEngine(template);
@@ -40,14 +36,15 @@ define(function(require, exports, module) {
 					return;
 				}
 
-				e.preventDefault(); 
+				e.preventDefault();
 				var ti = t.find('input');
 				ti.prop('checked', !ti.prop('checked'));
 
 			});
 
 			this.el.on("click", ".actSaveChanges", function(e) {
-				e.preventDefault(); e.stopPropagation();
+				e.preventDefault();
+				e.stopPropagation();
 				that.emit("submit", that.updateDataFromInputControls());
 				$(that.el).find(".modal").modal("hide");
 			});
@@ -80,10 +77,10 @@ define(function(require, exports, module) {
 					// console.log("Found list entry ", key, ep.data('id'));	
 					selection[ep.data('id')] = true;
 				}
-				
+
 			});
 			var keys = [];
-			for(var key in selection) {
+			for (var key in selection) {
 				keys.push('feide|realm|' + key);
 			}
 			return keys;
@@ -91,13 +88,11 @@ define(function(require, exports, module) {
 
 
 
-
-
 		"makeSelection": function() {
 			var that = this;
 			return this.onLoaded()
 				.then(function() {
-					$(that.el).find(".modal").modal('show');		
+					$(that.el).find(".modal").modal('show');
 					return new Promise(function(resolve, reject) {
 
 						that.on("submit", resolve);
@@ -110,12 +105,12 @@ define(function(require, exports, module) {
 		},
 		"isSelected": function(org) {
 			// console.error("ORGlist", org, this.orglist);
-			for(var i = 0; i < this.orglist.length; i++) {
+			for (var i = 0; i < this.orglist.length; i++) {
 				if ('feide|realm|' + org === this.orglist[i]) {
 					return true;
 				}
 			}
-			return false;			
+			return false;
 
 		},
 
@@ -126,12 +121,14 @@ define(function(require, exports, module) {
 			var noc = 4;
 
 			for (i = 0; i < noc; i++) {
-				columns.push({"orgs": []});
+				columns.push({
+					"orgs": []
+				});
 			}
-			for(i = 0; i < this.providerdata.orgs.length; i++) {
+			for (i = 0; i < this.providerdata.orgs.length; i++) {
 				var c = i % noc;
 				this.providerdata.orgs[i].selected = this.isSelected(this.providerdata.orgs[i].id);
-				columns[i%noc].orgs.push(this.providerdata.orgs[i]);
+				columns[i % noc].orgs.push(this.providerdata.orgs[i]);
 			}
 			var view = {
 				"_": this.dict.get(),
@@ -141,8 +138,9 @@ define(function(require, exports, module) {
 
 			this.el.children().detach();
 
+			view._config = this.feideconnect.config;
 
-			// console.error("Draw clientcreate", view);
+			console.error("Draw clientcreate", view);
 			return this.template.render(this.el, view);
 		}
 	}).extend(EventEmitter);

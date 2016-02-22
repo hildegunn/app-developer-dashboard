@@ -5,10 +5,12 @@ define(function(require, exports, module) {
 	var
 		FeideConnect = require('bower/feideconnectjs/src/FeideConnect').FeideConnect,
 		AppController = require('./controllers/AppController'),
-		// ClientEditor = require('./controllers/editpage/ClientEditor'),
-		// APIGKEditor = require('./controllers/editpage/APIGKEditor'),
+
+		UserContext = require('./data/UserContext'),
+
 		OrgRoleSelector = require('./controllers/OrgRoleSelector'),
 		NewOrgController = require('./controllers/NewOrgController'),
+		PlatformAdminController = require('./controllers/PlatformAdminController'),
 
 		BCController = require('./controllers/BCController'),
 		LanguageController = require('./controllers/LanguageController'),
@@ -61,24 +63,32 @@ define(function(require, exports, module) {
 
 			this.providerdata = new ProviderData(this);
 
+			this.usercontext = new UserContext(this.feideconnect, this);
+
 			this.elOrgSelector = $("<div></div>");
-			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector, this.feideconnect, this);
+			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector, this.usercontext, this);
 			this.orgRoleSelector.initLoad();
 
 
 			this.newOrgController = new NewOrgController(this);
+			this.platformadminController = new PlatformAdminController(this);
 
 			this.bccontroller = new BCController($("#breadcrumb"));
 			this.languageselector = new LanguageController(this);
 
+			// console.log("COnfig", this.feideconnect.config);
 
 
 			this.orgRoleSelector.on("orgRoleSelected", function(orgid) {
 				that.onLoaded()
 					.then(function() {
+						console.log("orgRoleSelected");
 
 						if (orgid === '_new') {
 							that.newOrgController.activate();
+
+						} else if (orgid === '_platformadmin') {
+							that.platformadminController.activate();
 
 						} else if (that.orgApps[orgid]) {
 							that.orgApps[orgid].actMainlisting();
@@ -100,7 +110,8 @@ define(function(require, exports, module) {
 
 
 			this.pc = new PaneController(this.el.find('#panecontainer'));
-			that.pc.add(that.newOrgController);
+			that.pc.add(this.newOrgController);
+			this.pc.add(this.platformadminController);
 
 			this.orgApps = {};
 
@@ -156,29 +167,16 @@ define(function(require, exports, module) {
 					var user = that.feideconnect.getUser();
 					var _config = that.feideconnect.getConfig();
 					var profilephoto = _config.apis.core + '/userinfo/v1/user/media/' + user.profilephoto;
-					// console.error("Profile url iu s", profilephoto);
 
-					// if (authenticated) {
+					$("body").addClass("stateLoggedIn");
+					$("body").removeClass("stateLoggedOut");
 
-						$("body").addClass("stateLoggedIn");
-						$("body").removeClass("stateLoggedOut");
+					$("#username").empty().text(user.name);
+					$("#profilephoto").html('<img style="margin-top: -28px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" src="' + profilephoto + '" alt="Profile photo" />');
 
-						$("#username").empty().text(user.name);
-						$("#profilephoto").html('<img style="margin-top: -28px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" src="' + profilephoto + '" alt="Profile photo" />');
+					$(".loader-hideOnLoad").hide();
+					$(".loader-showOnLoad").show();
 
-						$(".loader-hideOnLoad").hide();
-						$(".loader-showOnLoad").show();
-
-
-					// } else {
-
-					// 	$("body").removeClass("stateLoggedIn");
-					// 	$("body").addClass("stateLoggedOut");
-
-					// 	$(".loader-hideOnLoad").show();
-					// 	$(".loader-showOnLoad").hide();
-
-					// }
 				});
 
 
@@ -192,26 +190,26 @@ define(function(require, exports, module) {
 		"initLoad": function() {
 			var that = this;
 
-
 			// Draw template..
 			return this.draw()
-
-			.then(function() {
-				return that.feideconnect.onAuthenticated()
-			})
+				.then(function() {
+					return that.feideconnect.onAuthenticated()
+				})
 
 			// Wait for orgRoleSelector to be loaded.
 			.then(function() {
+				console.log("WAIting for orgRoleSelector to complete");
 				return that.orgRoleSelector.onLoaded()
 			})
 
 			// Then setup all the orgApps.
 			.then(function() {
-
+				console.log(" orgRoleSelector is loaded");
 				return Promise.all(
-					that.orgRoleSelector.getOrgIdentifiers().map(function(orgid) {
-						// console.error(" ››› Setting up a new orgapp for " + orgid);
-						that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid));
+					that.usercontext.getOrgIdentifiers().map(function(orgid) {
+						console.error(" ››› Setting up a new orgapp for " + orgid);
+
+						that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid));
 						that.pc.add(that.orgApps[orgid]);
 					})
 				);
@@ -219,11 +217,15 @@ define(function(require, exports, module) {
 
 			// Then activate one of them
 			.then(function() {
+					console.error("Is loaded 2");
 					that.orgApps._.activate();
 					// now route.
 					that.route(true);
 				})
-				.then(this.proxy("_initLoaded"));
+				.then(this.proxy("_initLoaded"))
+				.catch(function(err) {
+					console.error("Error loading initLoad on app", err);
+				});
 
 		},
 
@@ -390,6 +392,9 @@ define(function(require, exports, module) {
 
 			if (orgid === '_neworg') {
 				return this.newOrgController.activate();
+			}
+			if (orgid === '_platformadmin') {
+				return this.platformadminController.activate();
 			}
 
 			return this.feideconnect.onAuthenticated()

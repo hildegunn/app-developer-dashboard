@@ -39,15 +39,17 @@ define(function(require, exports, module) {
 
 	var OrgApp = Pane.extend({
 
-		"init": function(feideconnect, app, publicClientPool, publicapis, role) {
+		"init": function(feideconnect, app, usercontext, publicClientPool, publicapis, role) {
 			var that = this;
 
 			this.publicClientPool = publicClientPool;
 			this.publicapis = publicapis;
 			this.feideconnect = feideconnect;
 			this.app = app;
+			this.usercontext = usercontext;
 			this.role = role;
 
+			// console.error("Loaded a usercontext", this.usercontext);
 
 			this._super();
 
@@ -73,8 +75,6 @@ define(function(require, exports, module) {
 				this.orgAdminView = new OrgAdminPane(this.feideconnect, this, this.publicClientPool, this.orgAdminClients);
 				this.orgAdminView.initLoad();
 
-
-
 				this.orgAdminAPIs = new OrgAdminAPIs(this.feideconnect, orgid2);
 				this.orgAdminAPIs.initLoad();
 
@@ -82,8 +82,6 @@ define(function(require, exports, module) {
 				this.orgAdminAPIAuthorization.initLoad();
 
 			}
-
-
 
 			this.pc = new PaneController(this.el);
 			this.mainlisting = new MainListing(this.feideconnect, this, this.orgAdminClients, this.orgAdminAPIs);
@@ -230,7 +228,6 @@ define(function(require, exports, module) {
 				}
 			});
 
-
 			this.initLoad();
 
 		},
@@ -294,8 +291,8 @@ define(function(require, exports, module) {
 		},
 
 		"getOrgInfo": function() {
-			// console.error("Looking up getOrgInfo for " + this.orgid, this.app.orgRoleSelector.getOrgInfo(this.orgid));
-			return this.app.orgRoleSelector.getOrgInfo(this.orgid);
+			console.error("Looking up getOrgInfo for " + this.orgid); //, this.app.orgRoleSelector.getOrgInfo(this.orgid));
+			return this.usercontext.getOrgInfo(this.orgid);
 
 		},
 

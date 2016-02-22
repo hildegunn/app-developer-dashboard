@@ -17,16 +17,19 @@ define(function(require, exports, module) {
 
 	var OrgRoleSelector = Controller.extend({
 
-		"init": function(el, feideconnect, app) {
+		"init": function(el, usercontext, app) {
 
 			var that = this;
-			this.feideconnect = feideconnect;
+			this.usercontext = usercontext;
 			this.app = app;
 
 			this._super(el);
 
 			this.enabled = true; // If set to false,it will only show if member of one or more org
 
+			this.groups = null;
+
+			this.platformadmin = false;
 			this.roles = {};
 			this.currentRole = '_';
 
@@ -47,27 +50,25 @@ define(function(require, exports, module) {
 
 			this.setOrg(this.currentRole, false);
 
-			return that.feideconnect.vootGroupsList()
-				.then(function(groups) {
+			return this.usercontext.onLoaded()
+				.then(function() {
 
-					for (var i = 0; i < groups.length; i++) {
-
-						var g = new Group(groups[i]);
-
-						// Only use group memberships where a user is admin in an orgadmin group.
-						if (!g.isType("fc:orgadmin")) {
-							continue;
-						}
-						if (!g.isMemberType("admin")) {
-							continue;
-						}
-
-						// console.error("GROUP ", g);
-						that.enabled = true;
-						that.roles[groups[i].org] = new GroupOption({
-							"group": g
+					if (that.usercontext.platformadmin !== null) {
+						that.roles._platformadmin = new GroupOption({
+							"id": "_platformadmin",
+							"title": "Platform admin"
 						});
 					}
+
+					for (var orgid in that.usercontext.groups) {
+
+						that.roles[orgid] = new GroupOption({
+							"group": that.usercontext.groups[orgid]
+						});
+					}
+
+					console.log("usercontext", that.usercontext);
+					console.log("roles", that.roles);
 
 				})
 				.then(this.proxy("draw"))
@@ -89,32 +90,13 @@ define(function(require, exports, module) {
 			return this.currentRole;
 		},
 
-		"getOrgIdentifiers": function() {
 
+		"getOrgIdentifiers": function() {
 			var keys = [];
 			for (var key in this.roles) {
 				keys.push(key);
 			}
 			return keys;
-		},
-
-
-		"getOrgInfo": function(orgid) {
-			if (orgid === '_') {
-				return null;
-			}
-
-			var c = this.feideconnect.getConfig();
-			// console.error("Config was", c);
-
-			// console.log("Getting orginfo for " + orgid, this.roles);
-			var orgInfo = {
-				"id": orgid,
-				"displayName": this.roles[orgid].getTitle(),
-				"logoURL": c.apis.core + '/orgs/' + orgid + '/logo'
-			};
-
-			return orgInfo;
 		},
 
 		"setOrg": function(orgid, notify) {
@@ -166,19 +148,11 @@ define(function(require, exports, module) {
 
 
 		"draw": function() {
-			var that = this;
-
 			var view = {
 				"roles": []
 			};
 
-
 			for (var key in this.roles) {
-				// var re = {
-				// 	"id": key,
-				// 	"title": this.roles[key],
-				// 	"classes": ''
-				// };
 				var re = this.roles[key].getView();
 				re.classes = [];
 				if (this.currentRole === key) {
@@ -191,17 +165,9 @@ define(function(require, exports, module) {
 				return;
 			}
 
-			// alert("boo");
+			console.log("Roles", view);
 
 			return this.tmp.render(this.el.empty(), view);
-
-			// return new Promise(function(resolve, reject) {
-			// 	dust.render("OrgRoleSelector", view, function(err, out) {
-			// 		if (err) {return reject(err);}
-			// 		that.el.empty().append(out);
-			// 		return resolve();
-			// 	});
-			// });
 		}
 
 

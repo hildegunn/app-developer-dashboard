@@ -14,9 +14,8 @@ define(function(require, exports, module) {
 
 		"init": function(app) {
 			var that = this;
-			this._super(undefined, true);
 			this.app = app;
-
+			this._super(undefined, true);
 		},
 
 		"initLoad": function() {
@@ -31,11 +30,9 @@ define(function(require, exports, module) {
 
 		"loadData": function() {
 			var that = this;
-
+			var ep = this.app.feideconnect.config.apis.auth + '/orgs';
 			return new Promise(function(resolve, reject) {
-
-				$.getJSON('https://auth.feideconnect.no/orgs', function(orgs) {
-
+				$.getJSON(ep, function(orgs) {
 					that.orgs = [];
 					for (var i = 0; i < orgs.length; i++) {
 						// that.orgs.push(new NorwegianOrg(orgs[i]));
@@ -54,11 +51,9 @@ define(function(require, exports, module) {
 
 		"loadDataExtra": function() {
 			var that = this;
+			var ep = this.app.feideconnect.config.apis.auth + '/accountchooser/extra';
 			return new Promise(function(resolve, reject) {
-
-				// console.error("extra load", that.app.feideconnect.config);
-
-				$.getJSON('https://auth.feideconnect.no/accountchooser/extra', function(extra) {
+				$.getJSON(ep, function(extra) {
 					that.extra = [];
 					for (var i = 0; i < extra.length; i++) {
 						// that.extra.push(new Provider(extra[i]));
