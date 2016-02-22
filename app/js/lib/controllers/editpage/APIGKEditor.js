@@ -71,7 +71,7 @@ define(function(require, exports, module) {
 
 			return new Promise(function(resolve, reject) {
 				$.getJSON(endpoint, function(scopePolicy) {
-					console.error("Scope policy is", scopePolicy);
+					// console.error("Scope policy is", scopePolicy);
 					that.scopePolicy = scopePolicy;
 					resolve();
 				});
@@ -122,7 +122,7 @@ define(function(require, exports, module) {
 			// console.error("About to pass on view", view);
 			this.scopedefbuilder.setAPIGK(item);
 
-			console.error("Scope policy", this.scopePolicy);
+			// console.error("Scope policy", this.scopePolicy);
 
 			var scopes = item.getScopes(this.scopePolicy);
 
@@ -180,7 +180,7 @@ define(function(require, exports, module) {
 					// $("#debug").append("<pre style='background-color: #cc7; margin-bottom: 5em'>" + JSON.stringify(view, undefined, 4) + "</pre>");
 
 
-					console.error("apigkeditor view is ", view);
+					// console.error("apigkeditor view is ", view);
 					dust.render("apigkeditor", view, function(err, out) {
 
 						var tab = that.currentTab;
