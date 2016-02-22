@@ -316,13 +316,24 @@ define(function(require) {
 						tab = setTab;
 					}
 					that.selectTab(tab);
-					// console.error("ITem is ", that.current);
-					that.aps = new AuthProviderSelector(that.el.find('.authproviders'), that.feideconnect, that.app.app.providerdata, that.current.authproviders);
-					that.aps.on('save', function(providers) {
-						that.actUpdateAuthProviders(providers);
-					});
+					
+					// console.error("Load AuthProviderSelector()", that.current.organization);
 
-					that.activate();
+					return that.app.usercontext.isClientAuthorizedToIDporten(that.current)
+						.then(function(isAuthorized) {
+
+							// console.error("isAuthorized", isAuthorized);
+
+							that.aps = new AuthProviderSelector(that.el.find('.authproviders'), that.feideconnect, that.app.app.providerdata, that.current.authproviders, isAuthorized);
+							that.aps.on('save', function(providers) {
+								that.actUpdateAuthProviders(providers);
+							});
+
+							that.activate();
+
+
+						});
+
 
 				})
 				.catch(function(err) {

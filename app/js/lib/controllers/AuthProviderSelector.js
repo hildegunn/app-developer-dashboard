@@ -1,4 +1,4 @@
-define(function(require, exports, module) {
+	define(function(require, exports, module) {
 	"use strict";
 
 	var
@@ -16,12 +16,14 @@ define(function(require, exports, module) {
 
 	var AuthProviderSelector = Controller.extend({
 
-		"init": function(el, feideconnect, providerdata, selectedProviders) {
+		"init": function(el, feideconnect, providerdata, selectedProviders, idportenAuthorized) {
 
 			var that = this;
 			this.feideconnect = feideconnect;
 			this.providerdata = providerdata;
 			this.selectedProviders = selectedProviders;
+			this.idportenAuthorized = idportenAuthorized;
+
 			if (selectedProviders === null) {
 				this.selectedProviders = ['all'];
 			} else {
@@ -42,6 +44,11 @@ define(function(require, exports, module) {
 
 				e.preventDefault();
 				var ti = t.find('input');
+
+				if (ti.attr("disabled") === "disabled") {
+					return;
+				}
+
 				ti.prop('checked', !ti.prop('checked'));
 
 			});
@@ -108,6 +115,7 @@ define(function(require, exports, module) {
 
 			var props = {};
 			var listselections = {
+				"idportenlist": [],
 				"sociallist": [],
 				"otherlist": [],
 				"orglistgo": [],
@@ -122,21 +130,28 @@ define(function(require, exports, module) {
 				props[val] = s;
 			});
 
+			// console.log("------ PROPS");
+			// console.log(props);
+
 			var xfunc = function(i, item) {
 				var e = $(item);
 				var ep = e.closest('.providerentry');
-				// console.log("Found list entry ", key, ep.data('id'));	
+				// console.log("Found list entry ", key, ep.data('id'), e.prop("checked"));	
 				if (e.prop("checked")) {
-					// console.log("Found list entry ", key, ep.data('id'));	
+					// console.log("Found list entry CHECKED ", key, ep.data('id'));	
 					listselections[key].push(ep.data('id'));
 				}
 
 			};
 
+
 			for (var key in listselections) {
 				this.el.find('.' + key + ' .providerentry input').each(xfunc);
 			}
 
+			if (listselections.idportenlist.length > 0) {
+				providers = providers.concat(listselections.idportenlist);
+			}
 
 			if (props.all) {
 				providers.push('all');
@@ -166,11 +181,9 @@ define(function(require, exports, module) {
 					if (props['feide|he']) {
 						providers.push('feide|he');
 						this.el.find('.orglisthe').hide();
-
 					} else {
 						providers = providers.concat(listselections.orglisthe);
 						this.el.find('.orglisthe').show();
-
 					}
 
 					if (props['feide|vgs']) {
@@ -179,7 +192,6 @@ define(function(require, exports, module) {
 					} else {
 						providers = providers.concat(listselections.orglistvgs);
 						this.el.find('.orglistvgs').show();
-
 					}
 
 					if (props['feide|go']) {
@@ -212,11 +224,6 @@ define(function(require, exports, module) {
 		"initLoad": function() {
 
 			var that = this;
-			// console.error("Loading AuthProviderSelector");
-
-			// console.log((new Error()).stack);
-
-			// console.log("Provciderdata is ", this.providerdata);
 
 			return this.providerdata.onLoaded()
 				.then(this.proxy("draw"))
@@ -228,7 +235,7 @@ define(function(require, exports, module) {
 
 		},
 
-		"getProviderExtraHTML": function(item) {
+		"getProviderExtraHTML": function(item, restricted) {
 			var txt = '';
 			var classes = [];
 			var id = item.def.join('|');
@@ -236,6 +243,12 @@ define(function(require, exports, module) {
 			var checked = (active ? 'checked="checked"' : '');
 			if (active) {
 				classes.push('list-group-item-info');
+			}
+
+			var disabledtxt = (restricted ? ' disabled="disabled" ': '');
+			var restrtxt = '';
+			if (restricted) {
+				restrtxt = '<p style="color: #400"><i class="fa fa-warning"></i> IDporten is now allowed for this application. Contact UNINETT to get permission to enable IDporten.</p>';
 			}
 
 
@@ -249,11 +262,11 @@ define(function(require, exports, module) {
 			}
 			// var datastr = 'data-id="' + Utils.quoteattr(this.entityID) + '" data-subid="' + Utils.quoteattr(this.entityID) + '" data-type="saml"';
 			txt += '<a href="#" data-id="' + id + '" class="list-group-item providerentry ' + classes.join(' ') + '" >' +
-				'<div class="pull-left"><input type="checkbox" ' + checked + ' /></div>' +
+				'<div class="pull-left"><input type="checkbox" ' + checked + ' ' + disabledtxt + ' /></div>' +
 				'<div style="margin-left: 24px" class="media"><div class="media-left media-middle">' +
 				iconImage +
 				'</div>' +
-				'<div class="media-body"><p>' + item.title + '</p></div>' +
+				'<div class="media-body"><p>' + item.title + '</p>' + restrtxt + '</div>' +
 				'</div>' +
 				'</a>';
 			return txt;
@@ -323,17 +336,29 @@ define(function(require, exports, module) {
 			this.el.find(".orglisthe").empty().append(txt.he);
 
 
+			txt.idporten = '';
 			txt.other = '';
 			txt.social = '';
 
 			for (i = 0; i < this.providerdata.extra.length; i++) {
+
+				// console.log(this.providerdata.extra[i]);
+
 				item = this.providerdata.extra[i];
-				txtitem = this.getProviderExtraHTML(item);
+				if (item.def[0] === 'other' && item.def[1] === 'idporten') {
+					item.def = ['idporten'];
+					txtitem = this.getProviderExtraHTML(item, !that.idportenAuthorized);
+
+				} else {
+					txtitem = this.getProviderExtraHTML(item, false);
+				}
+				
+
 				txt[item.def[0]] += txtitem;
 
 			}
 
-
+			this.el.find(".idportenlist").empty().append(txt.idporten);
 			this.el.find(".sociallist").empty().append(txt.social);
 			this.el.find(".otherlist").empty().append(txt.other);
 

@@ -36,8 +36,6 @@ define(function(require, exports, module) {
 				res.trustOwner = true;
 			}
 
-
-
 			return res;
 		},
 
@@ -150,11 +148,8 @@ define(function(require, exports, module) {
 						v.sd.subscopes[i].status.requested = true;
 						v.sd.req = true;
 					}
-
 				}
-
 			}
-
 
 			v.orgadminscopematrix = this.getOrgAdminScopeMatrix(apigk);
 

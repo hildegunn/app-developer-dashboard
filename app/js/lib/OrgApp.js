@@ -287,7 +287,7 @@ define(function(require, exports, module) {
 		},
 
 		"getOrgInfo": function() {
-			console.error("Looking up getOrgInfo for " + this.orgid); //, this.app.orgRoleSelector.getOrgInfo(this.orgid));
+			// console.error("Looking up getOrgInfo for " + this.orgid); //, this.app.orgRoleSelector.getOrgInfo(this.orgid));
 			return this.usercontext.getOrgInfo(this.orgid);
 
 		},

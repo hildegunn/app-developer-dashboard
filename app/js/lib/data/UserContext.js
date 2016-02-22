@@ -21,6 +21,9 @@ define(function(require, exports, module) {
 			this.groups = {};
 			this.platformadmin = null;
 
+
+			this.orgcache = {};
+
 			this._super(null, true);
 
 		},
@@ -72,6 +75,36 @@ define(function(require, exports, module) {
 			});
 		},
 
+		"isClientAuthorizedToIDporten": function(client) {
+			var that = this;
+			if (!client.organization) {
+				return Promise.resolve(false);
+			}
+			return that.isOrgAuthorizedToIDporten(client.organization);
+		},
+
+		"isOrgAuthorizedToIDporten": function(orgid) {
+			return this.getOrg(orgid)
+				.then(function(org) {
+					if (org.services) {
+						for(var i = 0; i < org.services.length; i++) {
+							if (org.services[i] === 'idporten') {
+								return true;
+							}
+						}
+					}
+					return false;
+				});
+		},
+
+		"getOrg": function(orgid) {
+			var that = this;
+			if (that.orgcache.hasOwnProperty(orgid)) {
+				return Promise.resolve(that.orgcache[orgid]);
+			}
+			return that.feideconnect.getOrg(orgid);
+		},
+
 		"getOrgIdentifiers": function() {
 
 			var keys = [];
@@ -88,9 +121,8 @@ define(function(require, exports, module) {
 			}
 
 			var c = this.feideconnect.getConfig();
-			// console.error("Config was", c);
 
-			console.log("Getting orginfo for " + orgid, this.roles);
+			// console.log("Getting orginfo for " + orgid, this.roles);
 			var orgInfo = {
 				"id": orgid,
 				"displayName": this.groups[orgid].getTitle(),

@@ -72,7 +72,7 @@ define(function(require, exports, module) {
 		},
 
 		"getOrgInfo": function() {
-			console.error("Looking up getOrgInfo for " + this.orgid); //, this.app.orgRoleSelector.getOrgInfo(this.orgid));
+			// console.error("Looking up getOrgInfo for " + this.orgid); //, this.app.orgRoleSelector.getOrgInfo(this.orgid));
 			return this.usercontext.getOrgInfo(this.orgid);
 		},
 
@@ -90,7 +90,7 @@ define(function(require, exports, module) {
 
 			view.userinfo = user;
 
-			console.error("VIEW is ", view);
+			// console.error("VIEW is ", view);
 			this.el.children().detach();
 			return this.template.render(this.el, view);
 		},
