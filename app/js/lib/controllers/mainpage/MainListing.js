@@ -14,7 +14,6 @@ define(function(require, exports, module) {
 		SimpleOrgAdminAPIAuth = require('../orgadmin/SimpleOrgAdminAPIAuth'),
 		SimpleStatusController = require('../orgadmin/SimpleStatusController'),
 
-
 		utils = require('../../utils'),
 		$ = require('jquery')
 		;
@@ -68,9 +67,6 @@ define(function(require, exports, module) {
 					that.emit("manageMandatory");
 				});
 
-
-
-
 				this.orgAdminStatus = new SimpleStatusController(this.feideconnect, this.app.orgid);
 				this.orgAdminStatus.initLoad();
 
@@ -78,14 +74,11 @@ define(function(require, exports, module) {
 					that.emit("manageStatus");
 				});
 
-
-
 			}
 
 			if (orgAdminAPIs !== null) {
 				this.simpleOrgAdminAPI = new SimpleOrgAdminAPIAuth(this.feideconnect, this.orgAdminAPIs);
 				this.simpleOrgAdminAPI.initLoad();
-
 
 				this.simpleOrgAdminAPI.on("manageAPIAuth", function() {
 					that.emit("manageAPIAuth");
@@ -228,7 +221,10 @@ define(function(require, exports, module) {
 
 				var view = {
 					"_": that.dict.get(),
-					"showHeader": false
+					"personal": that.app.isPersonal(),
+					"simpleOrgAdminStatus": (that.simpleOrgAdminView !== null),
+					"simpleOrgAdminAPI": (that.simpleOrgAdminAPI !== null),
+					"orgAdminStatus": (that.orgAdminStatus !== null)
 				};
 				dust.render("mainlisting", view, function(err, out) {
 

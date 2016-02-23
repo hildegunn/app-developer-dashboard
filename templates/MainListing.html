@@ -1,41 +1,53 @@
 
 
-{#showHeader}
 
-<div id="banner" class="row ">
-	<div class="col-lg-12"> 
-		<!-- Main component for a primary marketing message or call to action -->
-		<div class="jumbotron uninett-color-darkBlue uninett-pattern1">
-			<h1>Dataporten <br />{_.devdash} </h1>
-			<p class="uninett-fontColor-white">
-				
-			</p >
-			<p class="uninett-fontColor-white">
-				{_.registerinfo}.</p>
+<div class="gutter">
+	{?personal}
+		<div id="banner" class="row ">
+			<div class="col-lg-12"> 
+				<!-- Main component for a primary marketing message or call to action -->
+				<div class="jumbotron uninett-color-darkBlue uninett-pattern1">
+					<h1>{_.devdash} </h1>
+					<p class="uninett-fontColor-white">
+						
+					</p >
+					<p class="uninett-fontColor-white">
+						{_.registerinfo}.</p>
 
-			<div class="showOnLoggedOut"><button id="" class="btn btn-primary login">Login</button></div>
+					<div class="showOnLoggedOut"><button id="" class="btn btn-primary login">Login</button></div>
+				</div>
+			</div>
 		</div>
+		<div class="gutter bs-callout bs-callout-danger">
+			<h4>Personal accounts</h4>
+			<p>When users are accessing applications and APIs registered with your personal account, information about you will displayed as part of the login flow. We strongly reccomend that you register your company as a Dataporten service provider, and register your official applications to that account.</p>
+		</div>
+	{/personal}
+</div>
+
+
+{?simpleOrgAdminStatus}
+<div class="row gutter pane" id="listing">
+	<div class="simpleOrgAdminStatus" class="col-lg-12 " style="background: #eee;  padding: 1em"> 
 	</div>
 </div>
-{/showHeader}
+{/simpleOrgAdminStatus}
 
-
+{?simpleOrgAdminAPI}
 <div class="row gutter pane" id="listing">
-	<div class="simpleOrgAdminStatus" class="col-lg-12 " style="background: #eee; display: none; padding: 1em"> 
+	<div class="simpleOrgAdminView" class="col-lg-12 " style="background: #eee; padding: 1em"> 
 	</div>
 </div>
+{/simpleOrgAdminAPI}
 
+{?orgAdminStatus}
 <div class="row gutter pane" id="listing">
-	<div class="simpleOrgAdminView" class="col-lg-12 " style="background: #eee; display: none; padding: 1em"> 
-	</div>
+	<div class="simpleOrgAdminAPI" class="col-lg-12 " style="background: #eee; padding: 1em"> 
 </div>
-
-<div class="row gutter pane" id="listing">
-	<div class="simpleOrgAdminAPI" class="col-lg-12 " style="background: #eee; display: none; padding: 1em"> 
-</div>
+{/orgAdminStatus}
 
 
-<div class="row gutter pane" id="listing" style=" margin-bottom: 4em">
+<div class="row pane gutter" id="listing" style=" margin-bottom: 4em">
 	
 	<div class="col-md-6">
 		

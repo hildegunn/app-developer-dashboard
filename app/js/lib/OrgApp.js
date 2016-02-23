@@ -233,6 +233,10 @@ define(function(require, exports, module) {
 				.then(this.proxy("_initLoaded"));
 		},
 
+		"isPersonal": function() {
+			return (this.orgid === '_');
+		},
+
 		"getBCItem": function() {
 			var title = 'Main overview personal';
 			if (this.orgid !== '_') {
