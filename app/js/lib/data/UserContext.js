@@ -68,7 +68,7 @@ define(function(require, exports, module) {
 			return new Promise(function(resolve, reject) {
 
 				that.policy = {
-					"register": false
+					"register": true
 				};
 				return resolve();
 
