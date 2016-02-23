@@ -183,7 +183,7 @@ define(function(require, exports, module) {
 					// $("#debug").append("<pre style='background-color: #cc7; margin-bottom: 5em'>" + JSON.stringify(view, undefined, 4) + "</pre>");
 
 
-					
+					that.el.children().detach();
 					that.template.render(that.el, view)
 						.then(function() {
 
