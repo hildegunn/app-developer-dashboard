@@ -6,6 +6,7 @@ define(function(require) {
 		Editor = require('./Editor'),
 		utils = require('../../utils'),
 		StringSet = require('../../StringSet'),
+		Dictionary = require('../../Dictionary'),
 
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		AuthProviderSelector = require('../AuthProviderSelector'),
@@ -30,7 +31,8 @@ define(function(require) {
 
 			this._super(app, feideconnect);
 
-			this.template = new TemplateEngine(clientTemplate);
+			this.dict = new Dictionary();
+			this.template = new TemplateEngine(clientTemplate, this.dict);
 			this.template.loadPartial("apilisting", apilistingTemplate);
 			// this.template.loadPartial("apilistingpublic", publicAPIListingTemplate);
 

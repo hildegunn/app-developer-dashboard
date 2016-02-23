@@ -24,7 +24,7 @@ define(function(require, exports, module) {
 
 			this.app = app;
 			this.dict = new Dictionary();
-			this.template = new TemplateEngine(template);
+			this.template = new TemplateEngine(template, this.dict);
 
 			this.ebind("keyup change", "#newClientName", "checkIfReady");
 			this.ebind("click", ".createNewBtn", "submit");
@@ -47,7 +47,7 @@ define(function(require, exports, module) {
 
 		"draw": function() {
 			var view = {
-				"_": this.dict.get(),
+				// "_": this.dict.get(),
 				"orgInfo": this.app.getOrgInfo()
 			};
 			this.el.children().detach();

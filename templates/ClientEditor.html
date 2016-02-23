@@ -5,10 +5,11 @@
 		<ul class="nav nav-pills nav-stacked tabselector" style="text-align:right">
 			<li role="presentation" data-tabid="tabBasic" class=""><a href="#">Basic info</a></li>
 			<li role="presentation" data-tabid="tabExtended" class=""><a href="#">Extended info</a></li>
+			<li role="presentation" data-tabid="tabOAuth" class=""><a href="#">OAuth details</a></li>
 			<li role="presentation" data-tabid="tabAuthProviders" class=""><a href="#">Auth Providers</a></li>
 			<li role="presentation" data-tabid="tabScopes" class=""><a href="#">Scopes</a></li>
 			<li role="presentation" data-tabid="tabAPI" class=""><a href="#">3rd party APIs</a></li>
-			<li role="presentation" data-tabid="tabOAuth" class=""><a href="#">OAuth details</a></li>
+
 			<!-- <li role="presentation" data-tabid="tabStatistics" class=""><a href="#">Usage statistics</a></li> -->
 			<li role="presentation" data-tabid="tabDelete" class=""><a href="#">Delete</a></li>
 		</ul>
@@ -31,21 +32,20 @@
 				<form class="" style="">
 
 
-
 					<div class="form-group">
-						<label for="name">Name</label>
+						<label for="name">{_.name}</label>
 						<input style="font-size: 150%" type="text" class="form-control" id="name" placeholder="Name of client application" value="{name}">
 					</div>
 
 					<div class="form-group">
-						<label for="descr">Description for end-users</label>
+						<label for="descr">{_.descrendusers}</label>
 						<textarea class="form-control" id="descr" rows="3">{descr}</textarea>
 					</div>
 
 
 					<div class="form-group">
 						<label for="">Redirect URI</label>
-						<p>The OAuth Redirect URI is the URL where the user is send back to after authentication and authorization.</p>
+						<p>{_.redirecturiinfo}</p>
 
 
 						<div id="redirtemplate" style="display: none">
@@ -84,9 +84,15 @@
 
 
 					<p><button class="btn btn-success actSaveChanges" class="">
-						<i class="glyphicon glyphicon-ok"></i> Save changes</button></p>
+						<i class="glyphicon glyphicon-ok"></i> {_.savechanges}</button></p>
 
 				</form>
+
+				<div class="bs-callout bs-callout-success">
+					<h4><i class="fa fa-eye"></i> {_.regpublic}</h4>
+					<p>{_.regpublicinfo}</p>
+				</div>
+
 
 				<p style="margin: 0px">
 					<span style=" color: #555">Registered {createdAgo}</span> 
@@ -122,36 +128,36 @@
 				{#client}
 				<form class="" style="">
 
-
-
 					<div class="form-group">
-						<label for="descr">Description for system administrators</label>
+						<label for="descr">{_.descrsys}</label>
 						<textarea class="form-control" id="systemdescr" rows="5">{systemdescr}</textarea>
+
+						<p>{_.descrsysdetails}</p>
 					</div>
 
 
 					<div class="form-group">
-						<label for="privacypolicyurl">Privacy Policy URL</label>
+						<label for="privacypolicyurl">{_.privacypolicyurl}</label>
 						<input class="form-control" id="privacypolicyurl" placeholder="http://" value="{privacypolicyurl}" />
 					</div>
 
 					<div class="form-group">
-						<label for="homepageurl">Service homepage</label>
+						<label for="homepageurl">{_.servicehomepage}</label>
 						<input class="form-control" id="homepageurl" placeholder="http://" value="{homepageurl}" />
 					</div>
 
 					<div class="form-group">
-						<label for="loginurl">Service Login URL</label>
+						<label for="loginurl">{_.serviceloginurl}</label>
 						<input class="form-control" id="loginurl" placeholder="http://" value="{loginurl}" />
 					</div>
 
 					<div class="form-group">
-						<label for="supporturl">End-user support URL</label>
+						<label for="supporturl">{_.endusersupport}</label>
 						<input class="form-control" id="supporturl" placeholder="http://" value="{supporturl}" />
 					</div>
 
 					<p><button class="btn btn-success actSaveChanges" class="">
-						<i class="glyphicon glyphicon-ok"></i> Save changes</button></p>
+						<i class="glyphicon glyphicon-ok"></i> {_.savechanges}</button></p>
 
 				</form>
 
@@ -174,9 +180,25 @@
 
 
 		<div id="tabOAuth">
-			<div class="row" style="">
 
 			{#client}
+
+
+			<div style="" class="row gutter">
+				<div class="col-sm-12">
+
+					<h1>OAuth 2.0 and OpenID Connect</h1>
+
+					<p>All APIs at Dataporten are protected with OAuth 2.0. The first thing you would need to configure in your client is the OAuth 2.0 flow to let your client obtain an OAuth token for the current user, and then your client may use this token to access the various APIs.</p>
+
+					<p><a target="_blank" href="http://docs.dataporten.no/docs/authorization/">{_.seedocsformore}</a></p>
+
+				</div>
+			</div>
+
+
+
+			<div class="row" style="">
 
 				<div class="col-sm-6">
 					<h3>OAuth Client credentials</h3>
@@ -196,6 +218,15 @@
 
 					</dl>
 
+					<h3>Authorized Scopes</h3>
+
+					<p><code>
+					{#scopes}
+						{.} 
+					{/scopes}
+					</code></p>
+
+
 				</div>
 
 				<div class="col-sm-6">
@@ -210,23 +241,19 @@
 						<dd><code>{_config.token}</code></dd>
 					</dl>
 
+					<h3>OpenID Connect</h3>
+
+					<p>In order to use OpenID Connect, your client would need to have the <tt>openid</tt> scope authorized.</p>
+
+					<dl>
+						<dt>OpenID Connect Auto configuration</dt>
+						<dd><code>{_config.apis.auth}/.well-known/openid-configuration</code></dd>
+					</dl>
+
 				</div>
 
 			</div>
 
-			<div style="margin-top: .2em" class="row">
-				<div class="col-sm-12">
-
-					<h3>Authorized Scopes</h3>
-
-					<p><code>
-					{#scopes}
-						{.} 
-					{/scopes}
-					</code></p>
-
-				</div>
-			</div>
 
 			{/client}
 			
@@ -551,137 +578,4 @@
 </div>
 
 
-<!--
 
-
-
-
-<div class="row">
-
-	<div class="col-md-12">
-
-		<h3>Generic Authorization Scopes</h3>
-		<table class="table table-striped">
-
-			<thead>
-				<tr>
-					<th>Scope</th>
-					<th>Descr</th>
-					<th>Status</th>
-					<th>Action</th>
-				</tr>
-			</thead>
-
-			<tbody>
-
-			{! 
-					<tr class="scope" data-scope="{@key}">
-						<td><code>{key}</code></td>
-						<td>{name}. {descr}</td>
-						<td>
-							{#granted}
-								<span class="label label-success">Granted</span>
-							{/granted}
-							{#requested}
-								<span class="label label-danger">Requested</span>
-							{/requested}
-						</td>
-						<td>
-							{#granted}
-								<button class="btn btn-mini actRemoveAccessGeneric">Remove</button>
-							{{/granted}}
-							{#else2}
-								{#requested}
-									<button class="btn btn-mini actRemoveAccessGeneric">Remove</button>
-								{/requested}
-								{#else}
-									<button class="btn btn-mini actRequestAccessGeneric">Request</button>
-								{/else}
-								
-							{/else2}
-						</td>
-					</tr>
-				!}
-
-			</tbody>
-		</table>
-
-	</div>
-
-
-</div>
-
-
-
--->
-
-
-
-<!--
-
-<div class="row">
-
-	<div class="col-md-12">
-
-
-
-		<div class="panel panel-default authorizationlistcontainer" id="authorizedAPIContainer">
-
-			<div class="panel-heading">
-
-				<h3>Authorized APIs</h3>
-
-			</div>
-
-
-			<div class="panel-body">
-
-				<p style="margin: .8em .6em">These APIs are already authorized for your client, or pending moderation.</p>
-			
-
-				<div class="panel-body clientauthorizations" id="authorizedAPIlisting">
-					<div class="items"></div>
-				</div>
-				<div style="margin: 0px; padding: 0px; text-align: center" class="listpager"></div>
-
-			</div>
-
-		</div>
-
-
-
-
-
-
-		<div class="panel panel-default authorizationlistcontainer" id="availableAPIContainer">
-			<div class="panel-heading">
-
-				<form class=" pull-right" role="search">
-			      <div class="form-group">
-			        <input id="apiSearch" type="text" class="form-control" placeholder="Search">
-			      </div>
-			      
-			    </form>
-
-				<h3>Available APIs</h3>
-
-			</div>
-			<div class="panel-body">
-
-				<p style="margin: .8em .6em">Navigate through available APIs, and request permissions.</p>
-			
-				<div class="panel-body clientauthorizations" id="publicAPIlisting">
-					<div class="items"></div>
-				</div>
-				<div style="margin: 0px; padding: 0px; text-align: center" class="listpager"></div>
-
-			</div>
-		</div>
-
-
-	</div>
-
-</div>
-
-
--->

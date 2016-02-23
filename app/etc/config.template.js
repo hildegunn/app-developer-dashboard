@@ -5,6 +5,8 @@
     "instance": "dataporten",
 
     "cookiedomain": ".dataporten.no",
+    "gkdomain": "gk.dataporten.no",
+    
     "languages": ["en", "nb"],
     "language-aliases": {
         "no": "nb"

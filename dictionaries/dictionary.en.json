@@ -11,13 +11,25 @@
 	"registerinfo": "Register and manage your applications and API gatekeepers",
 	"clients": "Applications",
 	"clientsnew": "Register new application",
+	"clientorg": "Client will be associated with this organization",
+	"redirecturiinfo": "Enter the OAuth 2.0 redirect_uri of your application. This is the URL where the user will be redirected back after successfull authentication.",
+	"seedocsformore": "See documentation for more information",
+
+
 	"apigks": "API Gatekeepers",
 	"apigksnew": "Register new API Gatekeeper",
+	"apigivename": "Give your API a short desriptive name.",
+	"apigivedescr": "And a longer descriptive text to explain your API service.",
+	"apiendpoint": "API Endpoint",
+	"enterapiendpoint": "Enter the API endpoint of the base URL of the API on your side.",
+	"apirules": "The format of the endpoint MUST be HTTPS, a valid hostname, an optional portnumber, an optional path, and no trailing slash.",
+	"inexample": "In example:",
 
 	"forquestions": "For questions",
 	"contact": "contact",
 	"reportissues": "report issues",
 	"isexperimental": "This service is experimental",
+	"clientorg": "Client will be associated with this organization",
 
 	"createclientintro": "You are about to create a application to access the Dataporten platform.",
 	"createclientname": "Give your application application a short desriptive name, and a longer descriptive text to explain what your application does.",
@@ -26,7 +38,19 @@
 
 	"identifier": "Identifier",
 	"name": "Name",
+	"shortname": "Short descriptive name",
+	"descrendusers": "Description for end-users",
 	"descr": "Description",
+	"longdescr": "Longer description...",
+	"descrsys": "Description for system administrators",
+	"descrsysdetails": "This description will not be visible to end-users. Instead this will be visible to adminstrators of organizations and API owners moderating permission requests.",
+	"privacypolicyurl": "Privacy Policy URL",
+	"servicehomepage": "Service homepage",
+	"serviceloginurl": "Service Login URL",
+	"endusersupport": "End-user support URL",
+
+	"regpublic": "Most information about registered clients and APIs are public",
+	"regpublicinfo": "All registered clients and APIs are considered public information and visible to the public, not only the users logging in to your application. Therefore you should make sure that you do not include confidential information in the description and naming of your client.",
 
 	"required": "Required",
 	"available": "Available",

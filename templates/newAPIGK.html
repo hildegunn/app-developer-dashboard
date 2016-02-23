@@ -1,87 +1,88 @@
 <div class="modal fade" id="apigkCreateModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">{_.apigksnew}</h4>
-      </div>
-      <div class="modal-body">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">{_.apigksnew}</h4>
+			</div>
+			<div class="modal-body">
 
-		<p>{_.createapigkintro}</p>
+				<p>{_.createapigkintro}</p>
 
-			<form class="registerform" role="form">  
+				<form class="registerform" role="form">  
 
-				<div class="form-group">
-					<label for="newAPIid">{_.identifier}</label>
-					<div class="input-group" style="">
-						<div class="inputStateIDok input-group-addon bg-danger" style="display: none">
-							<i class="glyphicon glyphicon-info-sign"></i> <span class="inputStateIDwarningText">{_.required}</span>
+					<div class="form-group">
+						<label for="newAPIid">{_.identifier}</label>
+						<div class="input-group" style="">
+							<div class="inputStateIDok input-group-addon bg-danger" style="display: none">
+								<i class="glyphicon glyphicon-info-sign"></i> <span class="inputStateIDwarningText">{_.required}</span>
+							</div>
+							<div class="inputStateIDwarning input-group-addon bg-danger" style="background: #9b9; display: none">
+								<i class="glyphicon glyphicon-ok"></i> {_.available}
+							</div>
+							<div class="inputStateIDwaiting input-group-addon bg-danger" style="display: none">
+								<i class="fa fa-cog fa-spin"></i> {_.checking}
+							</div>
+							<input  id="newAPIid" type="text" class="form-control input" placeholder="" style="text-align: right">
+							<div class="input-group-addon">.{_config.gkdomain}</div>
 						</div>
-						<div class="inputStateIDwarning input-group-addon bg-danger" style="background: #9b9; display: none">
-							<i class="glyphicon glyphicon-ok"></i> {_.available}
-						</div>
-						<div class="inputStateIDwaiting input-group-addon bg-danger" style="display: none">
-							<i class="fa fa-cog fa-spin"></i> {_.checking}
-						</div>
-						<input  id="newAPIid" type="text" class="form-control input" placeholder="" style="text-align: right">
-						<div class="input-group-addon">.gk.feideconnect.no</div>
 					</div>
-				</div>
 
 
-				<div class="form-group">
-					<label for="newAPIname">{_.name}</label>
-					<p style="margin: 0px;">Give your API a short desriptive name. </p>					
-					<input style="" id="newAPIname" type="text" class="form-control input" placeholder="">
-				</div>
+					<div class="form-group">
+						<label for="newAPIname">{_.name}</label>
+						<p style="margin: 0px;">{_.apigivename} </p>					
+						<input style="" id="newAPIname" type="text" class="form-control input" placeholder="{_.shortname}">
+					</div>
 
 
-				<div class="form-group">
-					<label for="newAPIdescr">{_.descr}</label>
-					<p style="margin: 0px;">And a longer descriptive text to explain your API service.</p>
-					<textarea style="" class="form-control" id="newAPIdescr" placeholder="Describe your client..."></textarea>
-				</div>
+					<div class="form-group">
+						<label for="newAPIdescr">{_.descr}</label>
+						<p style="margin: 0px;">{_.apigivedescr}</p>
+
+						<textarea style="" class="form-control" id="newAPIdescr" placeholder="{_.longdescr}"></textarea>
+					</div>
 
 
-				<div class="form-group">
-					<label for="newAPIendpoint">API Endpoint</label>
-					<p>Enter the API endpoint of the base URL of the API on your side.</p>
-					<input style="" id="newAPIendpoint" type="text" class="form-control input" placeholder="https://api.example.org">
-						<div class="endpointFormatDescr">
-							<p>
-								<i class="fa fa-check ifOK" style="display: none"></i>
-								<i class="fa fa-times ifBad" style="display: none"></i>
-								&nbsp;
-								The format of the endpoint MUST be HTTPS, a valid hostname, an optional portnumber, but no path or trailing slash.</p>
-							<p>In example:
-							<code>https://api.example.org</code></p>
+					<div class="form-group">
+						<label for="newAPIendpoint">{_.apiendpoint}</label>
+						<p>{_.enterapiendpoint}</p>
+						<input style="" id="newAPIendpoint" type="text" class="form-control input" placeholder="https://api.example.org">
+							<div class="endpointFormatDescr">
+								<p>
+									<i class="fa fa-check ifOK" style="display: none"></i>
+									<i class="fa fa-times ifBad" style="display: none"></i>
+									&nbsp;
+									{_.apirules}</p>
+								<p>{_.inexample}
+								<code>https://api.example.org</code></p>
+							</div>
+
+					</div>
+
+				</form>
+
+				{#orgInfo}
+					<div class="media">
+						<div class="media-left">
+						<a href="#">
+							<img class="media-object" style="max-height: 64px; max-width: 64px" src="{logoURL}" alt="Organiazation Logo">
+						</a>
 						</div>
-
-				</div>
-
-			</form>
-
-			{#orgInfo}
-				<div class="media">
-					<div class="media-left">
-					<a href="#">
-						<img class="media-object" style="max-height: 64px; max-width: 64px" src="{logoURL}" alt="Organiazation Logo">
-					</a>
+						<div class="media-body">
+							<h4 style="margin: 0px">{displayName}</h4>
+							<p>{_.clientorg}</p>
+						</div>
 					</div>
-					<div class="media-body">
-						<h4 style="margin: 0px">{displayName}</h4>
-						<p>Client will be associated with this organization</p>
-					</div>
-				</div>
-			{/orgInfo}
+				{/orgInfo}
 
-      </div>
+			</div>
 
-      <div class="modal-footer">
-		<a href="#" class="btn" data-dismiss="modal">{_.cancel}</a>
-		<a href="#" class="createNewBtn btn btn-primary" disabled="disabled">{_.apigksnew}</a>
-      </div>
+			<div class="modal-footer">
+			<a href="#" class="btn" data-dismiss="modal">{_.cancel}</a>
+			<a href="#" class="createNewBtn btn btn-primary" disabled="disabled">{_.apigksnew}</a>
+			</div>
       
-    </div>
-  </div>
+		</div>
+	</div>
 </div>

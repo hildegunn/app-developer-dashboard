@@ -1,5 +1,3 @@
-
-
 <div class="row">
 	<div class="col-sm-2">
 			
@@ -34,12 +32,12 @@
 
 
 					<div class="form-group">
-						<label for="apiid">Identifier</label>
+						<label for="apiid">{_.identifier}</label>
 						<input style="font-size: 150%" type="text" class="form-control " disabled="disabled" id="apiid" placeholder="Name of client application" value="{id}" >
 					</div>
 
 					<div class="form-group">
-						<label for="apiname">Name</label>
+						<label for="apiname">{_.name}</label>
 						<input style="font-size: 150%" type="text" class="form-control" id="apiname" placeholder="Name of client application" value="{name}">
 					</div>
 
@@ -53,8 +51,8 @@
 						<label>
 							<input id="ispublic" class="" type="checkbox" {#statuses.public} checked="checked" {/statuses.public} /> Public API
 						</label>
-
 						<p>Only public APIs will be visible to developers and may be requested. Do not check the API as public until it is well tested and ready to be consumer by third party developers.</p>
+						
 					</div>
 
 					<div class="form-group">
@@ -69,14 +67,14 @@
 
 
 					<div class="form-group">
-						<label for="endpoint">API Endpoint</label>
+						<label for="endpoint">{_.apiendpoint}</label>
 						<p>This is the base URL endpoint of your API. The endpoints on your side that will receive all the requests.</p>
 						
 						<input type="text" class="form-control" id="endpoint" placeholder="https://example.org/api" value="{endpoints[0]}" >
 
 						<div class="endpointFormatDescr">
-							<p>The format of the endpoint MUST be HTTPS, a valid hostname, an optional portnumber, but no path or trailing slash.</p>
-							<p>In example:</p>
+							<p>{_.apirules}</p>
+							<p>{_.inexample}</p>
 							<code>https://api.example.org</code>
 						</div>
 
@@ -84,12 +82,16 @@
 
 
 
-
-
 					<p><button class="btn btn-success actSaveChanges" class="">
-						<i class="glyphicon glyphicon-ok"></i> Save changes</button></p>
+						<i class="glyphicon glyphicon-ok"></i> {_.savechanges}</button></p>
 
 				</form>
+
+
+				<div class="bs-callout bs-callout-success">
+					<h4><i class="fa fa-eye"></i> {_.regpublic}</h4>
+					<p>{_.regpublicinfo}</p>
+				</div>
 
 				<p style="margin: 0px">
 					<span style=" color: #555">Registered {createdAgo}</span> 
