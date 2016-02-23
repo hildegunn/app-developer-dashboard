@@ -5,6 +5,9 @@ define(function(require, exports, module) {
 		dust = require('dust'),
 		Pane = require('../Pane'),
 		Client = require('../../models/Client'),
+		Dictionary = require('../../Dictionary'),
+		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
+
 		APIGK = require('../../models/APIGK'),
 		ScopeDefBuilder = require('./ScopeDefBuilder'),
 		Editor = require('./Editor'),
@@ -22,8 +25,8 @@ define(function(require, exports, module) {
 			this.editor = "apigk";
 			this._super(app, feideconnect);
 
-			var x = dust.compile(apigkTemplate, "apigkeditor");
-			dust.loadSource(x);
+			this.dict = new Dictionary();
+			this.template = new TemplateEngine(apigkTemplate, this.dict);
 
 			this.clients = {};
 
@@ -180,21 +183,21 @@ define(function(require, exports, module) {
 					// $("#debug").append("<pre style='background-color: #cc7; margin-bottom: 5em'>" + JSON.stringify(view, undefined, 4) + "</pre>");
 
 
-					// console.error("apigkeditor view is ", view);
-					dust.render("apigkeditor", view, function(err, out) {
+					
+					that.template.render(that.el, view)
+						.then(function() {
 
-						var tab = that.currentTab;
-						if (setTab) {
-							tab = setTab;
-						}
-						that.el.children().detach();
-						that.el.append(out);
-						that.selectTab(tab);
 
-						that.el.find("#scopedef").append(that.scopedefbuilder.el);
-						that.updateQueueCount(view.clientsReq.length);
+							var tab = that.currentTab;
+							if (setTab) {
+								tab = setTab;
+							}
+							that.selectTab(tab);
 
-					});
+							that.el.find("#scopedef").append(that.scopedefbuilder.el);
+							that.updateQueueCount(view.clientsReq.length);
+
+						});
 
 				});
 
