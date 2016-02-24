@@ -26,6 +26,7 @@ define(function(require, exports, module) {
 			this.dict = new Dictionary();
 			this.template = new TemplateEngine(template, this.dict);
 
+			this.ebind("change", "#newClientTOU", "checkIfReady");
 			this.ebind("keyup change", "#newClientName", "checkIfReady");
 			this.ebind("click", ".createNewBtn", "submit");
 
@@ -85,8 +86,22 @@ define(function(require, exports, module) {
 		},
 
 		"checkIfReady": function() {
+
+			var isReady = true;
 			var name = this.el.find("#newClientName").val();
-			if (name.length > 1) {
+			var tou = this.el.find("#newClientTOU").prop("checked");
+
+
+			if (name.length < 1) {
+				isReady = false;
+			}
+
+			if (!tou) {
+				isReady = false;
+			}
+
+
+			if (isReady) {
 				$(this.el).find(".createNewBtn").removeClass("disabled");
 			} else {
 				$(this.el).find(".createNewBtn").addClass("disabled");

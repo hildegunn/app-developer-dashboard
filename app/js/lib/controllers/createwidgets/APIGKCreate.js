@@ -31,6 +31,7 @@ define(function(require, exports, module) {
 			this.verified = false;
 			this.verifytimer = null;
 
+			this.ebind("change", "#newClientTOUa", "checkIfReady");
 			this.ebind('keyup change', '#newAPIid', "checkIfReady");
 			this.ebind('keyup change', '#newAPIendpoint', "checkIfReady");
 			this.ebind('click', '.createNewBtn', "submit");
@@ -214,6 +215,11 @@ define(function(require, exports, module) {
 			}
 
 			if (!endpoint || endpoint === '') {
+				ready = false;
+			}
+
+			var tou = this.el.find("#newClientTOUa").prop("checked");
+			if (!tou) {
 				ready = false;
 			}
 

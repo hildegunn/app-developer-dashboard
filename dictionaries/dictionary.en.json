@@ -12,6 +12,8 @@
 	"clients": "Applications",
 	"clientsnew": "Register new application",
 	"clientorg": "Client will be associated with this organization",
+	"accept": "Accept",
+	"accepttou": "Dataporten Terms of Use",
 	"redirecturiinfo": "Enter the OAuth 2.0 redirect_uri of your application. This is the URL where the user will be redirected back after successfull authentication.",
 	"seedocsformore": "See documentation for more information",
 
