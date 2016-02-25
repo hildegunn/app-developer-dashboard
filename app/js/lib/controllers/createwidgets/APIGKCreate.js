@@ -77,7 +77,7 @@ define(function(require, exports, module) {
 				"orgInfo": this.app.getOrgInfo(),
 				"_config": this.app.app.config
 			};
-			console.error("View", view);
+			// console.error("View", view);
 			this.el.children().detach();
 			return this.template.render(this.el, view);
 		},
