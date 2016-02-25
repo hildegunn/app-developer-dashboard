@@ -140,7 +140,7 @@ define(function(require, exports, module) {
 
 			view._config = this.feideconnect.config;
 
-			console.error("Draw clientcreate", view);
+			// console.error("Draw clientcreate", view);
 			return this.template.render(this.el, view);
 		}
 	}).extend(EventEmitter);
