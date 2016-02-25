@@ -46,10 +46,10 @@
 				org.orgnumber = this.el.find('#newOrgNumber').val();
 				org.email = this.el.find('#email').val();
 				org.message = this.el.find('#message').val();
-				console.error("New org registered", org);
+				// console.error("New org registered", org);
 
 			} else {
-				console.error("About to request role at ", this.selectedOrg);
+				// console.error("About to request role at ", this.selectedOrg);
 			}
 
 			
@@ -137,7 +137,7 @@
 
 			view.userinfo = user;
 
-			console.error("VIEW is ", view);
+			// console.error("VIEW is ", view);
 			this.el.children().detach();
 			return this.template.render(this.el, view);
 		},
