@@ -65,14 +65,17 @@ define(function(require, exports, module) {
 
 		"loadPolicy": function() {
 			var that = this;
-			return new Promise(function(resolve, reject) {
-
-				that.policy = {
-					"register": true
-				};
-				return resolve();
-
-			});
+			return this.feideconnect.getClientPolicy()
+				.then(function(policy) {
+					console.error("Got policy", policy);
+					that.policy = policy;
+				});
+			// return new Promise(function(resolve, reject) {
+			// 	that.policy = {
+			// 		"register": true
+			// 	};
+			// 	return resolve();
+			// });
 		},
 
 		"isClientAuthorizedToIDporten": function(client) {
