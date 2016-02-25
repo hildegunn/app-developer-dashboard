@@ -2,16 +2,16 @@
 	<div class="col-sm-2">
 			
 		<ul class="nav nav-pills nav-stacked tabselector" style="text-align:right">
-			<li role="presentation" data-tabid="tabBasic" class=""><a href="#">Basic info</a></li>
-			<li role="presentation" data-tabid="tabExtended" class=""><a href="#">Extended info</a></li>
-			<li role="presentation" data-tabid="tabScopesClient" class=""><a href="#">Client Scopes</a></li>
+			<li role="presentation" data-tabid="tabBasic" class=""><a href="#">{_.basicinfo}</a></li>
+			<li role="presentation" data-tabid="tabExtended" class=""><a href="#">{_.extendedinfo}</a></li>
+			<li role="presentation" data-tabid="tabScopesClient" class=""><a href="#">{_.permissions}</a></li>
 			<li role="presentation" data-tabid="tabScopes" class=""><a href="#">API Scopes</a></li>
 			<li role="presentation" data-tabid="tabAccess" class=""><a href="#">API Access</a></li>
 			<li role="presentation" data-tabid="tabRequests" class="">
-				<a href="#"><span class="label label-danger queuecount pull-left"></span> Requests</a></li>
-			<li role="presentation" data-tabid="tabClients" class=""><a href="#">Clients</a></li>
+				<a href="#"><span class="label label-danger queuecount pull-left"></span> {_.requests}</a></li>
+			<li role="presentation" data-tabid="tabClients" class=""><a href="#">{_.applications}</a></li>
 			<!-- <li role="presentation" data-tabid="tabStatistics" class=""><a href="#">Usage statistics</a></li> -->
-			<li role="presentation" data-tabid="tabDelete" class=""><a href="#">Delete</a></li>
+			<li role="presentation" data-tabid="tabDelete" class=""><a href="#">{_.delete}</a></li>
 		</ul>
 
 	</div>
@@ -42,7 +42,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="descr">Description for end-users</label>
+						<label for="descr">{_.descrendusers}</label>
 						<textarea class="form-control" id="descr" rows="3">{descr|s|h|acceptnewline}</textarea>
 					</div>
 
@@ -133,7 +133,7 @@
 
 
 					<div class="form-group">
-						<label for="privacypolicyurl">Privacy Policy URL</label>
+						<label for="privacypolicyurl">{_.privacypolicyurl}</label>
 						<input class="form-control" id="privacypolicyurl" 
 							placeholder="http://" value="{privacypolicyurl}" />
 					</div>
@@ -150,7 +150,7 @@
 
 
 					<p><button class="btn btn-success actSaveChanges" class="">
-						<i class="glyphicon glyphicon-ok"></i> Save changes</button></p>
+						<i class="glyphicon glyphicon-ok"></i> {_.savechanges}</button></p>
 
 				</form>
 
@@ -209,31 +209,30 @@
 
 					<p>Your API may be accessed on this API Gatekeeper base URL:</p>
 
-					<p><code>https://{id}.gk.feideconnect.no</code></p>
+					<p><code>https://{id}.{_appconfig.gkdomain}</code></p>
 					
 
 					<p>OAuth protected API requests that are sent to in example </p>
 
-					<p><code>https://{id}.gk.feideconnect.no/foo/bar</code>, like this:</p>
+					<p><code>https://{id}.{_appconfig.gkdomain}/foo/bar</code>, like this:</p>
 
 <pre><code class="language-http">
 GET /foo/bar HTTP/1.1{~n}
-Host: {id}.gk.feideconnect.no{~n}
+Host: {id}.{_appconfig.gkdomain}{~n}
 Authorization: Bearer a005656a-8510-4d34-8897-f10638bb7b05
 </code></pre>	
 
-		<p>is forwarded to your API, <code>{endpoints[0]}/foo/bar</code>, like this:</p>
+					<p>is forwarded to your API, <code>{endpoints[0]}/foo/bar</code>, like this:</p>
 
 <pre><code class="language-http">
 GET /foo/bar HTTP/1.1{~n}
 Authorization: Basic XXXXXXXX{~n}
-X-FeideConnect-clientid: 42b0c02e-0dda-4882-9da0-882a4b1abad6{~n}
-X_FeideConnect-userid: 76a7a061-3c55-430d-8ee0-6f82ec42501f{~n}
-X-FeideConnect-userid-sec: feide:xxxx@uninett.no
+X-Dataporten-clientid: 42b0c02e-0dda-4882-9da0-882a4b1abad6{~n}
+X-Dataporten-userid: 76a7a061-3c55-430d-8ee0-6f82ec42501f{~n}
+X-Dataporten-userid-sec: feide:xxxx@uninett.no
 </code></pre>
 
-<p>Note that http headers should be treated case insensitively</p>
-
+					<p>Note that http headers should be treated case insensitively</p>
 
 				</div>
 
@@ -254,98 +253,106 @@ X-FeideConnect-userid-sec: feide:xxxx@uninett.no
 
 
 
-		<div id="tabScopes"  style="" class="row">
+		<div id="tabScopes"  style="" class="">
+
+			<div class="row">
+				<div class="col-sm-12">
+					<p>{_.scopesinfo}</p>
+					<p><a href="http://docs.dataporten.no/docs/oauth-scopes/" target="_blank">{_.seedocsformore}</a></p>
+				</div>
+			</div>
 
 
-			<div class="col-sm-6">
+			<div class="row">
+				<div class="col-sm-6">
 
-				<h3>Accepted scopes</h3>
+					<h3>Accepted scopes</h3>
 
-				<div class="list-group">
-					{#scopelist.accepted}
-						<div class="list-group-item scopeEntry" data-scopeid="{scope}">
-							<div class="pull-right"><code class="">{scope}</code></div>
-							<h4 class="list-group-item-heading">{title}</h4>
-							<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
+					<div class="list-group">
+						{#scopelist.accepted}
+							<div class="list-group-item scopeEntry" data-scopeid="{scope}">
+								<div class="pull-right"><code class="">{scope}</code></div>
+								<h4 class="list-group-item-heading">{title}</h4>
+								<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
 
-							<div class="">
-									<button class="btn btn-xs btn-danger actScopeRemove">
+								<div class="">
+										<button class="btn btn-xs btn-danger actScopeRemove">
+											<i class="glyphicon glyphicon-remove"></i>
+											Remove scope 
+											</button>
+								</div>
+								<p class="clearfix"></p>
+							</div>
+						{:else}
+							<p>No available scopes</p>
+						{/scopelist.accepted}
+						
+					</div>
+
+
+					<h3 style="margin-top: 1.5em">Requested scopes</h3>
+
+					<div class="list-group">
+						{#scopelist.requested}
+							<div class="list-group-item scopeEntry" data-scopeid="{scope}">
+								<div class="pull-right"><code class="">{scope}</code></div>
+								<h4 class="list-group-item-heading">{title}</h4>
+								<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
+
+								<div class="" style="margin-top: .3em; margin-bottom: 0px">
+									<button class="btn btn-xs btn-default actScopeRemove">
 										<i class="glyphicon glyphicon-remove"></i>
 										Remove scope 
 										</button>
+								</div>
+								<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
 							</div>
-							<p class="clearfix"></p>
-						</div>
-					{:else}
-						<p>No available scopes</p>
-					{/scopelist.accepted}
-					
+						{:else}
+							<p>No requested scopes</p>
+						{/scopelist.requested}
+					</div>
+
 				</div>
 
 
-				<h3 style="margin-top: 1.5em">Requested scopes</h3>
 
-				<div class="list-group">
-					{#scopelist.requested}
-						<div class="list-group-item scopeEntry" data-scopeid="{scope}">
-							<div class="pull-right"><code class="">{scope}</code></div>
-							<h4 class="list-group-item-heading">{title}</h4>
-							<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
+				<div class="col-sm-6">
 
-							<div class="" style="margin-top: .3em; margin-bottom: 0px">
-								<button class="btn btn-xs btn-default actScopeRemove">
-									<i class="glyphicon glyphicon-remove"></i>
-									Remove scope 
-									</button>
+					<h3>Available scopes</h3>
+
+
+
+
+					<div class="list-group">
+						{#scopelist.available}
+							<div class="list-group-item scopeEntry" data-scopeid="{scope}">
+								<div class="pull-right"><code class="">{scope}</code></div>
+								<h4 class="list-group-item-heading">{title}</h4>
+								<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
+
+
+								<p style="margin-top: .3em; margin-bottom: 0px">
+									{?policy.auto}
+										<button class="btn btn-sm btn-primary actScopeAdd">
+											<i class="glyphicon glyphicon-chevron-left"></i>
+											Add scope</button>
+									{/policy.auto}
+									{^policy.auto}
+										<button class="btn btn-sm btn-warning actScopeAdd">
+											<i class="glyphicon glyphicon-chevron-left"></i>
+											Request scope</button>
+									{/policy.auto}
+								</p>
+								<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
+
 							</div>
-							<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
-						</div>
-					{:else}
-						<p>No requested scopes</p>
-					{/scopelist.requested}
+						{:else}
+							<p>No available scopes</p>
+						{/scopelist.available}
+					</div>
+
 				</div>
-
 			</div>
-
-
-
-			<div class="col-sm-6">
-
-				<h3>Available scopes</h3>
-
-
-
-
-				<div class="list-group">
-					{#scopelist.available}
-						<div class="list-group-item scopeEntry" data-scopeid="{scope}">
-							<div class="pull-right"><code class="">{scope}</code></div>
-							<h4 class="list-group-item-heading">{title}</h4>
-							<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
-
-
-							<p style="margin-top: .3em; margin-bottom: 0px">
-								{?policy.auto}
-									<button class="btn btn-sm btn-primary actScopeAdd">
-										<i class="glyphicon glyphicon-chevron-left"></i>
-										Add scope</button>
-								{/policy.auto}
-								{^policy.auto}
-									<button class="btn btn-sm btn-warning actScopeAdd">
-										<i class="glyphicon glyphicon-chevron-left"></i>
-										Request scope</button>
-								{/policy.auto}
-							</p>
-							<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
-
-						</div>
-					{:else}
-						<p>No available scopes</p>
-					{/scopelist.available}
-				</div>
-
-			</div>
-
 
 
 		</div>
@@ -366,9 +373,6 @@ X-FeideConnect-userid-sec: feide:xxxx@uninett.no
 
 					<div class="panel panel-default authzClient" data-clientid="{id}">
 						<div class="panel-body">
-
-
-
 
 							<div class="row">
 

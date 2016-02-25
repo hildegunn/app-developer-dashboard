@@ -132,6 +132,7 @@ define(function(require, exports, module) {
 			if (this.feideconnect) {
 				$.extend(view, {
 					"_config": that.feideconnect.getConfig(),
+					"_appconfig": that.app.app.config,
 					"scopelist": scopes
 				});
 			}
@@ -184,10 +185,9 @@ define(function(require, exports, module) {
 
 
 					that.el.children().detach();
+					console.error("VIEW", view);
 					that.template.render(that.el, view)
 						.then(function() {
-
-
 							var tab = that.currentTab;
 							if (setTab) {
 								tab = setTab;

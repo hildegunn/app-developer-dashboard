@@ -11,12 +11,20 @@
 	"registerinfo": "Register and manage your applications and API gatekeepers",
 	"clients": "Applications",
 	"clientsnew": "Register new application",
-	"clientorg": "Client will be associated with this organization",
+	"clientorg": "The application will be associated with this organization",
 	"accept": "Accept",
 	"accepttou": "Dataporten Terms of Use",
 	"redirecturiinfo": "Enter the OAuth 2.0 redirect_uri of your application. This is the URL where the user will be redirected back after successfull authentication.",
 	"seedocsformore": "See documentation for more information",
-
+	"basicinfo": "Basic info",
+	"extendedinfo": "Extended info",
+	"oauthdetails": "OAuth details",
+	"authproviders": "Auth Providers",
+	"permissions": "Permissions",
+	"thirdpartyapis": "3rd party APIs",
+	"delete": "delete",
+	"applications": "Applications",
+	"requests": "Requests",
 
 	"apigks": "API Gatekeepers",
 	"apigksnew": "Register new API Gatekeeper",
@@ -81,6 +89,8 @@
 
 	"savechanges": "Save changes",
 
+	"scopesinfo": "The permissions is represented by OAuth 2.0 scopes. Each scope listed below represent some permission set that will be requested from your end users. Please only request access to information that is strictly needed for your application to function.",
+
 	"invite1": "To invite others into this group, please share this URL:",
 	"invite2": "Users authenticating on this URL will be asked to join this group, and will then be added as regular members.",
 	"delete1": "Are you really sure that you want to delete this group?",
@@ -137,7 +147,7 @@
 	"removeauthz": "Remove authorization",
 
 	"organization": "Organization",
-	
+
 	"associatewithorg": "For services that are provided by an organizations we strongly reccomend that this organization is registered as the service provider. Here you may request to register as a technical contact of an existing organization, or request to register a new organization.",
 
 	"regnoaccess": "Your account is not allowed to register personal applications and APIs.",
