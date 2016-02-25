@@ -318,13 +318,11 @@ define(function(require) {
 						tab = setTab;
 					}
 					that.selectTab(tab);
-					
+
 					// console.error("Load AuthProviderSelector()", that.current.organization);
 
 					return that.app.usercontext.isClientAuthorizedToIDporten(that.current)
 						.then(function(isAuthorized) {
-
-							// console.error("isAuthorized", isAuthorized);
 
 							that.aps = new AuthProviderSelector(that.el.find('.authproviders'), that.feideconnect, that.app.app.providerdata, that.current.authproviders, isAuthorized);
 							that.aps.on('save', function(providers) {
