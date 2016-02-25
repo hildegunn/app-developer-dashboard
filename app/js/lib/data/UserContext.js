@@ -67,15 +67,8 @@ define(function(require, exports, module) {
 			var that = this;
 			return this.feideconnect.getClientPolicy()
 				.then(function(policy) {
-					console.error("Got policy", policy);
 					that.policy = policy;
 				});
-			// return new Promise(function(resolve, reject) {
-			// 	that.policy = {
-			// 		"register": true
-			// 	};
-			// 	return resolve();
-			// });
 		},
 
 		"isClientAuthorizedToIDporten": function(client) {
@@ -90,7 +83,7 @@ define(function(require, exports, module) {
 			return this.getOrg(orgid)
 				.then(function(org) {
 					if (org.services) {
-						for(var i = 0; i < org.services.length; i++) {
+						for (var i = 0; i < org.services.length; i++) {
 							if (org.services[i] === 'idporten') {
 								return true;
 							}
