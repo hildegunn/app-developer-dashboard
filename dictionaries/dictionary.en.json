@@ -26,6 +26,9 @@
 	"applications": "Applications",
 	"requests": "Requests",
 
+	"mainoverview": "Main overview",
+	"mainoverviewpersonal": "Main overview personal",
+
 	"apigks": "API Gatekeepers",
 	"apigksnew": "Register new API Gatekeeper",
 	"apigivename": "Give your API a short desriptive name.",

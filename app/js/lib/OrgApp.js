@@ -49,6 +49,8 @@ define(function(require, exports, module) {
 			this.usercontext = usercontext;
 			this.role = role;
 
+			this.dict = new Dictionary();
+
 			this._super();
 
 
@@ -238,9 +240,13 @@ define(function(require, exports, module) {
 		},
 
 		"getBCItem": function() {
-			var title = 'Main overview personal';
+			var title = this.dict.getItem('mainoverviewpersonal');
+			var groupname = 'na';
 			if (this.orgid !== '_') {
-				title = 'Main overview ' + this.orgid;
+				if (this.role && this.role.group && this.role.group.orgName ) {
+					groupname = this.role.group.orgName;
+				}
+				title = this.dict.getItem('mainoverview') + ' ' + groupname;
 			}
 			var item = {
 				"href": "#!/" + this.orgid,
