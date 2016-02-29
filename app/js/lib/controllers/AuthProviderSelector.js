@@ -250,7 +250,7 @@
 				var disabledtxt = (restricted ? ' disabled="disabled" ' : '');
 				var restrtxt = '';
 				if (restricted) {
-					restrtxt = '<p style="color: #400"><i class="fa fa-warning"></i> IDporten is now allowed for this application. Contact UNINETT to get permission to enable IDporten.</p>';
+					restrtxt = '<p style="color: #400"><i class="fa fa-warning"></i> ID-porten is not allowed for this application. Contact UNINETT to get permission to enable IDporten.</p>';
 				}
 
 
