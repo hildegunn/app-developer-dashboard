@@ -115,7 +115,7 @@ define(function(require, exports, module) {
 
 			// We want to get this from Core API. Seems reasonable to introduce this at the same time
 			// as we start to register which remote API gatekeeper to use for each API.
-			res.baseurl = 'https://' + this.id + '.gk.feideconnect.no/';
+			res.baseurl = 'https://' + this.id + '.dataporten-api.no/';
 
 			res.clientRequests = 0;
 			res.hasClientRequests = false;
