@@ -131,7 +131,7 @@ define(function(require, exports, module) {
 			obj.requireuser = true;
 			obj.trust = {
 				"type": "basic",
-				"username": "feideconnect",
+				"username": "dataporten",
 				"password": utils.guid()
 			};
 			obj.scopedef =  {
