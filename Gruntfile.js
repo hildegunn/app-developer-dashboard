@@ -22,6 +22,16 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+		cachebreaker: {
+			dev: {
+				options: {
+					match: ['dist/app.min.css', 'build/app.min.js']
+				},
+				files: {
+					src: ['app/index.html']
+				}
+			}
+		},
 		shell: {
 			rcss: {
 				command: 'node_modules/requirejs/bin/r.js -o build.css.js'
@@ -124,20 +134,17 @@ module.exports = function(grunt) {
 	grunt.config.set("transifex", transifex);
 	// ---- Section on building locale based app builds.
 
-
-
-	// grunt.loadNpmTasks('grunt-jslint');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
-	// grunt.loadNpmTasks('grunt-requirejs');
 	grunt.loadNpmTasks('grunt-shell');
 	grunt.loadNpmTasks('grunt-transifex');
+	grunt.loadNpmTasks('grunt-cache-breaker');
 
 	// Tasks
 	grunt.registerTask('default', ['jshint']);
 	// grunt.registerTask('jshint', ['jshint']);
 	// grunt.registerTask('jslint', ['jslint']);
 	grunt.registerTask('bower', ['shell:bower']);
-	grunt.registerTask('build', ['shell:bower', 'jshint', 'shell:rcss', 'shell:rjs', 'shell:version']);
+	grunt.registerTask('build', ['shell:bower', 'jshint', 'shell:rcss', 'shell:rjs', 'shell:version', 'cachebreaker']);
 	grunt.registerTask('test', ['jshint']);
 
 	grunt.registerTask('lang', ['transifex', 'langbuild']);
