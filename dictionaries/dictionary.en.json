@@ -62,6 +62,9 @@
 	"serviceloginurl": "Service Login URL",
 	"endusersupport": "End-user support URL",
 
+	"support": "Support",
+	"apphomepage": "Application homepage",
+
 	"regpublic": "Most information about registered clients and APIs are public",
 	"regpublicinfo": "All registered clients and APIs are considered public information and visible to the public, not only the users logging in to your application. Therefore you should make sure that you do not include confidential information in the description and naming of your client.",
 
@@ -74,6 +77,11 @@
 	"createnewgroup": "Create new group",
 	"createnewgroups": "Create new groups",
 	"creategrptxt": "By using the group manager, you may create new groups, and edit existing groups that you have created.",
+	"owner": "Owner",
+	"admin": "Admin",
+	"member": "Member",
+	"action": "Action",
+	"invitemissing": "Invitation token is missing for this group.",
 
 	"basicinfo": "Basic info",
 	"invitation": "Invitation",
@@ -84,6 +92,9 @@
 	"groupidentifier": "Group Identifier",
 
 	"groupowner": "Group owner",
+	"group": "group",
+	"view": "View",
+	"edit": "Edit",
 
 	"created": "Created",
 	"updated": "Updated",
@@ -105,6 +116,7 @@
 
 	"grouptypes": "Group types",
 	"memberroles": "Member roles",
+	"grouplist": "List of groups",
 
 	"invitationtojoin": "Invitation to join group",
 	"invitationdescr": "You have been invited to join the group:",
@@ -150,6 +162,7 @@
 	"removeauthz": "Remove authorization",
 
 	"officialapps": "Official apps at my organizations",
+	"officialapps1": "Official apps",
 	"officialinfo": "These apps are official application that your organization has a contract with.",
 
 	"organization": "Organization",
