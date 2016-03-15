@@ -194,20 +194,6 @@ define(function(require) {
 		},
 
 
-		"showPublicAPIs": function() {
-
-
-			var apis = this.publicapis.apigks;
-			$("#apigklisting").empty();
-
-			for (var key in apis) {
-				if (apis.hasOwnProperty(key)) {
-					$("#apigklisting").append('<div>' + apis + '</div>');
-				}
-			}
-
-		},
-
 		"edit": function(item, setTab) {
 
 			var that = this;
