@@ -19,7 +19,7 @@
 					<div class="col-md-3">
 						<div class="list-group">
 						{#orgs}
-							<a href="#" data-id="{id}" class="list-group-item providerentry {#selected}active{/selected}" >
+							<div data-id="{id}" class="list-group-item providerentry {#selected}active{/selected}" >
 								<div class="pull-left">
 									<input type="checkbox" {#selected}checked="checked"{/selected} />
 								</div>
@@ -30,7 +30,7 @@
 									</div>
 									<div class="media-body"><p>{title}</p></div>
 								</div>
-							</a>
+							</div>
 						{/orgs}
 						</div>
 					</div>
