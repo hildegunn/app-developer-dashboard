@@ -263,14 +263,14 @@
 					iconImage = '<i style="margin-left: 6px" class="' + item.icon + '"></i>';
 				}
 				// var datastr = 'data-id="' + Utils.quoteattr(this.entityID) + '" data-subid="' + Utils.quoteattr(this.entityID) + '" data-type="saml"';
-				txt += '<a href="#" data-id="' + id + '" class="list-group-item providerentry ' + classes.join(' ') + '" >' +
+				txt += '<div data-id="' + id + '" class="list-group-item providerentry ' + classes.join(' ') + '" >' +
 					'<div class="pull-left"><input type="checkbox" ' + checked + ' ' + disabledtxt + ' /></div>' +
 					'<div style="margin-left: 24px" class="media"><div class="media-left media-middle">' +
 					iconImage +
 					'</div>' +
 					'<div class="media-body"><p>' + item.title + '</p>' + restrtxt + '</div>' +
 					'</div>' +
-					'</a>';
+					'</div>';
 				return txt;
 
 			},
@@ -289,14 +289,14 @@
 				var apibase = this.feideconnect.config.apis.core;
 
 				// var datastr = 'data-id="' + Utils.quoteattr(this.entityID) + '" data-subid="' + Utils.quoteattr(this.entityID) + '" data-type="saml"';
-				txt += '<a href="#" data-id="' + id + '" class="list-group-item providerentry ' + classes.join(' ') + '" >' +
+				txt += '<div data-id="' + id + '" class="list-group-item providerentry ' + classes.join(' ') + '" >' +
 					'<div class="pull-left"><input type="checkbox" ' + checked + '/></div>' +
 					'<div style="margin-left: 24px" class="media"><div class="media-left media-middle">' +
 					'<img class="media-object" style="width: 32px; height: 32px" src="' + apibase + '/orgs/fc:org:' + item.id + '/logo" alt="...">' +
 					'</div>' +
 					'<div class="media-body"><p>' + item.title + '</p></div>' +
 					'</div>' +
-					'</a>';
+					'</div>';
 				return txt;
 
 			},

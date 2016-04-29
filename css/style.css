@@ -13,6 +13,10 @@ body.stateLoggedOut .showOnLoggedOut { display: block !important; }
 
 
 
+div.list-group-item.providerentry {
+	cursor: pointer;
+}
+
 
 .selectize-dropdown-content {
 	max-height: 500px !important;
