@@ -33,7 +33,6 @@ define(function(require, exports, module) {
 			this.orglistselector = null;
 			this.orgselection = [];
 
-
 			dust.loadSource(dust.compile(template, "ScopeDefBuilder"));
 
 			this.ebind("click", ".actAddSubScope", "actAddSubScope");
@@ -45,10 +44,6 @@ define(function(require, exports, module) {
 				e.preventDefault();
 				that.orglistselector.makeSelection()
 					.then($.proxy(that.setOrgSelection, that));
-			});
-			this.onLoaded().
-			then(function() {
-
 			});
 			this.el.on("click", "#basicOrgAdminPolicy", function(e) {
 				that.updateOrgScopeControllers();
