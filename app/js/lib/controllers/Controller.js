@@ -1,5 +1,4 @@
 define(function(require, exports, module) {
-	"use strict";	
 
 	var 
 		$ = require('jquery'),
@@ -13,6 +12,8 @@ define(function(require, exports, module) {
 			this.el = el || this.el || $('<div class=""></div>');
 
 			this._loaderTimeout = 8000;
+
+			this.debug = false;
 			
 			this.onLoadedCallbacks = [];
 			this.isLoaded = false;
@@ -23,8 +24,13 @@ define(function(require, exports, module) {
 		"registerOnLoaded": function(func) {
 			this.onLoadedCallbacks.push(func);
 		},
-		"onLoaded": function() {
+		"onLoaded": function(title) {
 
+			var num = Math.floor(Math.random()*900 + 100);
+
+			if (this.debug) {
+				console.trace(num);
+			}
 			var that = this;
 			if (this.isLoaded) {
 				return new Promise(function(resolve, reject) {
@@ -37,7 +43,7 @@ define(function(require, exports, module) {
 				that.registerOnLoaded(resolve);
 				setTimeout(function() {
 					if (!that.isLoaded) {
-						reject(new Error("Loading this objected timed out. (Time out is set to " + that._loaderTimeout + "ms)"));
+						reject(new Error("Loading this objected timed out. (Time out is set to " + that._loaderTimeout + "ms) " + num));
 					}
 				}, that._loaderTimeout);
 			});
