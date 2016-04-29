@@ -76,6 +76,28 @@ define(function(require, exports, module) {
 
 		},
 
+		"addOrg": function(org) {
+			var x = new Group({
+				"id": org.id,
+				"orgName": org.name,
+				"org": org.id,
+				"membership": {
+					"basic": "admin"
+				},
+				"orgType": org.type
+			});
+			this.roles[org.id] = new GroupOption({
+				"group": x
+			});
+			// console.log("Adding 1", org);
+			// console.log("Adding 1.2", x.getView());
+			// console.log("Adding 2", this.roles[org.id].getView());
+			return this.draw(true)
+				.catch(function(err) {
+					console.error("err", err);
+				})
+		},
+
 		"getRole": function(orgid) {
 			// console.error("Getting role for ", orgid, this.roles[orgid]);
 			return this.roles[orgid];
@@ -147,24 +169,28 @@ define(function(require, exports, module) {
 		},
 
 
-		"draw": function() {
+		"draw": function(enforce) {
 			var view = {
 				"roles": []
 			};
+			// console.log("_");
 
 			for (var key in this.roles) {
+				// console.log("KEy", key, this.roles[key]);
 				var re = this.roles[key].getView();
+				// console.log("re", re);
 				re.classes = [];
 				if (this.currentRole === key) {
 					re.classes = 'active';
 				}
 				view.roles.push(re);
 			}
-
+			// console.error("VIEW 1", view);
 			if (!this.enabled) {
 				return;
 			}
-			
+			// console.error("VIEW 2", view);
+
 			return this.tmp.render(this.el.empty(), view);
 		}
 

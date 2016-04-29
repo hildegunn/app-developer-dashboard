@@ -1,0 +1,85 @@
+<div  id="papislist"  class="list-group"  style="margin-top: 1em">
+{#apigks}
+
+
+	<a href="#" data-apigkid="{id}" class="list-group-item media apigkEntry">
+
+		<div class="row">
+
+			<div class="col-md-8">
+
+
+				<div class="media-left">
+					<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/apigkadm/apigks/{id}/logo?t={random}" alt="...">
+				</div>
+				<div class="media-body">
+
+					{#hasClientRequests}
+						<span style="margin-left: .7em" class="label label-danger queuecount pull-right">{clientRequests} pending requests</span>
+					{/hasClientRequests}
+
+					<!-- <p class="pull-right" style="clear: right; color: #666; font-size: 82%">Updated {updatedAgo}</p> -->
+
+					<h4 class="list-group-item-heading">{name} 
+
+					</h4>
+					<p class="list-group-item-text" style="font-size: 80%" ><i class="glyphicon glyphicon-chevron-right"></i> {id}</p>
+					<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
+				</div>
+
+			</div>
+			<div class="col-md-4">
+
+										
+				{?apigktrustOwner}
+					{#owner}
+						
+						<div class="media">
+							<div class="media-left">
+								<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/userinfo/v1/user/media/{id}">
+							</div>
+							<div class="media-body">
+								<p>{name}
+								</p>
+							</div>
+						</div>
+					{/owner}
+				{/apigktrustOwner}
+
+				{?apigktrustOrg}
+					{#organization}
+						<div class="media">
+							<div class="media-left">
+								<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/orgs/{id}/logo">
+							</div>
+							<div class="media-body">
+								<p>{name}
+								</p>
+							</div>
+						</div>
+					{/organization}
+				{/apigktrustOrg}
+
+
+			</div>
+
+		</div>
+
+		<div style="color: #222">
+				<p class="" style="margin: 0px; padding: 0px; font-size: 80%"><code>{baseurl}</code></p>
+		</div>
+
+
+
+
+
+
+
+
+
+
+	</a>
+{:else}
+	<p>No API Gatekeepers are currently registered.</p>
+{/apigks}
+</div>

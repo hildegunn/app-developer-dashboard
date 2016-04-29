@@ -58,7 +58,6 @@ define(function(require, exports, module) {
 			} else {
 				res.icon = 'fa fa-circle-o';
 			}
-
 			if (this.group) {
 				res.group = this.group.getView();
 				res.id = this.getID();

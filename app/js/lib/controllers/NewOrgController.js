@@ -48,7 +48,6 @@
 					org.email = this.el.find('#email').val();
 					org.message = this.el.find('#message').val();
 					// console.error("New org registered", org);
-
 				}
 
 
@@ -58,7 +57,7 @@
 			"actSelectOrg": function(e) {
 				var orgid = $(e.currentTarget).val();
 				var org = this.getOrg(orgid);
-				console.log("ORG IS ", org, "[" + orgid + "]");
+				// console.log("ORG IS ", org, "[" + orgid + "]");
 				this.selectedOrg = org;
 
 				if (org === null) {

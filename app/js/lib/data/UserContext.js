@@ -117,11 +117,13 @@ define(function(require, exports, module) {
 			}
 
 			var c = this.feideconnect.getConfig();
-
-			// console.log("Getting orginfo for " + orgid, this.roles);
+			var orgtitle = orgid;
+			if (this.groups[orgid]) {
+				orgtitle = this.groups[orgid].getTitle();
+			}
 			var orgInfo = {
 				"id": orgid,
-				"displayName": this.groups[orgid].getTitle(),
+				"displayName": orgtitle,
 				"logoURL": c.apis.core + '/orgs/' + orgid + '/logo'
 			};
 

@@ -84,7 +84,7 @@ define(function(require, exports, module) {
 			this.orgRoleSelector.on("orgRoleSelected", function(orgid) {
 				that.onLoaded()
 					.then(function() {
-						// console.log("orgRoleSelected");
+						// console.log("orgRoleSelected", orgid);
 
 						if (orgid === '_new') {
 							that.newOrgController.activate();
@@ -181,12 +181,25 @@ define(function(require, exports, module) {
 
 				});
 
-
 			this.initLoad();
-
 
 		},
 
+		"addOrgAdmin": function(orgid) {
+			var that = this;
+
+			this.feideconnect.getOrg(orgid)
+				.then(function(org) {
+
+					that.orgRoleSelector.addOrg(org);
+
+					that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid));
+					that.pc.add(that.orgApps[orgid]);
+
+				});
+
+
+		},
 
 
 		"initLoad": function() {
@@ -223,6 +236,8 @@ define(function(require, exports, module) {
 					that.orgApps._.activate();
 					// now route.
 					that.route(true);
+
+					// that.addOrgAdmin('fc:org:ntnu.no');
 				})
 				.then(this.proxy("_initLoaded"))
 				.catch(function(err) {
@@ -304,6 +319,8 @@ define(function(require, exports, module) {
 			$("#errorcontainer").empty().append(str);
 
 		},
+
+		
 
 
 		"routeEditClient": function(orgid, clientid, tabid) {
