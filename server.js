@@ -19,6 +19,7 @@ var languages = new LangNeg.Lang(config);
 app.use(cookieParser());
 app.use(function(req, res, next) {
 	console.log(req.method + ' ' + req.url);
+	res.setHeader('Strict-Transport-Security', 'max-age=15768000');
 	next();
 });
 
