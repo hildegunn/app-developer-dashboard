@@ -1,0 +1,3 @@
+VCAP_APP_PORT=8091
+OIC_CLIENTID=df34f687-ff1b-419e-9b5c-55b49e4babad
+OIC_REDIRECT_URI=http://dashboard.dataporten.no:8091/
