@@ -22,7 +22,6 @@ define(function(require, exports, module) {
 		Dictionary = require('./Dictionary'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		utils = require('./utils'),
-		rawconfig = require('text!../../etc/config.js'),
 		$ = require('jquery');
 
 
