@@ -43,8 +43,9 @@ module.exports = function(grunt) {
 				command: "node_modules/bower/bin/bower --allow-root install"
 			},
 			version: {
-				command: ["git rev-parse --verify HEAD > app/etc/version-git.txt",
-					"node_modules/bower/bin/bower list -j > app/etc/bower-list.json"
+				command: [
+					// "git rev-parse --verify HEAD > app/etc/version-git.txt",
+					"node_modules/bower/bin/bower --allow-root list -j > app/etc/bower-list.json"
 				].join(' && ')
 			}
 		},
