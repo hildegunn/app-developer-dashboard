@@ -185,7 +185,7 @@ define(function(require, exports, module) {
 
 
 					that.el.children().detach();
-					console.error("VIEW", view);
+					// console.error("VIEW", view);
 					that.template.render(that.el, view)
 						.then(function() {
 							var tab = that.currentTab;

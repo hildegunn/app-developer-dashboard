@@ -1,0 +1,73 @@
+<div id="pclientslist"  class="list-group" style="margin-top: 1em">
+{#clients}
+	<a href="#" data-clientid="{id}" class="list-group-item media clientEntry">
+
+
+		<div class="row">
+
+			<div class="col-md-8">
+
+
+				<div class="media-left">
+					<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/clientadm/clients/{id}/logo?t={random}" alt="Client logo">
+				</div>
+				<div class="media-body">
+					<!-- <p class="pull-right" style="color: #666; font-size: 82%">Updated {updatedAgo}</p> -->
+					<h4 class="list-group-item-heading">{name}</h4>
+					<p class="list-group-item-text" style="font-size: 80%" ><i class="glyphicon glyphicon-chevron-right"></i> {id}</p>
+					<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
+
+
+				</div>
+
+			</div>
+			<div class="col-md-4">
+
+										
+				{?trustOwner}
+					{#owner}
+						
+						<div class="media">
+							<div class="media-left">
+								<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/userinfo/v1/user/media/{id}">
+							</div>
+							<div class="media-body">
+								<p>{name}
+								</p>
+							</div>
+						</div>
+					{/owner}
+				{/trustOwner}
+
+				{?trustOrg}
+					{#organization}
+						<div class="media">
+							<div class="media-left">
+								<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/orgs/{id}/logo">
+							</div>
+							<div class="media-body">
+								<p>{name}
+								</p>
+							</div>
+						</div>
+					{/organization}
+				{/trustOrg}
+
+
+			</div>
+
+		</div>
+
+		<div style="color: #222">
+			{#redirect_uri}
+				<p class="" style="margin: 0px; padding: 0px; font-size: 80%"><code>{.}</code></p>
+			{/redirect_uri}
+		</div>
+
+
+
+	</a>
+{:else}
+	<p>No clients are currently registered.</p>
+{/clients}
+</div>

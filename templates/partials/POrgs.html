@@ -1,0 +1,23 @@
+<div class="porgslist list-group" style="margin-top: 1em">
+{#orgs}
+	<a href="#" data-orgid="{id}" class="list-group-item media orgEntry">
+		<div class="media-left">
+			<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/orgs/{id}/logo" alt="logo of org {name}">
+		</div>
+		<div class="media-body">
+
+			{#services}
+				<span class="label label-info pull-right" style="margin-right: 5px">{.}</span>
+			{/services}
+
+			<!-- <p class="pull-right" style="color: #666; font-size: 82%">Updated {updatedAgo}</p> -->
+			<h4 class="list-group-item-heading">{name}</h4>
+			<p class="list-group-item-text" style="font-size: 80%" ><i class="glyphicon glyphicon-chevron-right"></i> {id}</p>
+			<!-- <p>{#type} ({.})
+			{/type}</p> -->
+		</div>
+	</a>
+{:else}
+	<p>No orgs are currently registered.</p>
+{/orgs}
+</div>

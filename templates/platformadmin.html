@@ -6,10 +6,75 @@
 		</div>
 
 		<div class="media-body">
-			<h4 class="media-heading">Platform admin</h4>
-			<p>Ingen funksjonalitet lagt inn her enda. Dette vil være en naturlig samleplass for funksjonalitet for adminitratorer av Dataporten sentralt.</p>
+			<h4 class="media-heading">Platform administrasjon</h4>
+			<p>Kun for platform-adminitratorer av Dataporten. Vær varsom med hva du gjør.</p>
 		</div>
+
+		<!-- 	
+		<p style="text-align: center">
+			<button class="btn btn-primary actAdmin" data-org="ntnu.no"><i class="fa fa-cog"></i> NTNU</button> &nbsp;
+			<button class="btn btn-primary actAdmin" data-org="uio.no"><i class="fa fa-cog"></i> UiO</button></p> -->
+
 	</div>
+
+
+
+
+
+
+
+	<div>
+
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active">
+				<a href="#clients" aria-controls="clients" role="tab" data-toggle="tab">Clients <span class="badge">{counts.clients}</span></a></li>
+			<li role="presentation">
+				<a href="#apigks" aria-controls="apigks" role="tab" data-toggle="tab">API Gatekeepers <span class="badge">{counts.apigks}</span></a></li>
+			<li role="presentation">
+				<a href="#organizationsh" aria-controls="organizationsh" role="tab" data-toggle="tab">Organizations <span class="badge">{counts.orgs}</span></a></li>
+			<li role="presentation">
+				<a href="#organizationss" aria-controls="organizationss" role="tab" data-toggle="tab">Service Providers</a></li>
+			<!-- <li role="presentation">
+				<a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li> -->
+		</ul>
+
+		<!-- Tab panes -->
+		<div class="tab-content">
+
+
+			<div role="tabpanel" class="tab-pane active" id="clients">
+				{> pclients /}
+			</div>
+
+			<div role="tabpanel" class="tab-pane" id="apigks">
+				{> papis /}
+			</div>
+
+			
+			<div role="tabpanel" class="tab-pane" id="organizationsh">
+				{#orgs.home}
+				{> porgs /}
+				{/orgs.home}
+			</div>
+			
+			<div role="tabpanel" class="tab-pane" id="organizationss">
+				{#orgs.services}
+				{> porgs /}
+				{/orgs.services}
+			</div>
+			
+			<!-- <div role="tabpanel" class="tab-pane" id="settings">...</div> -->
+		</div>
+
+	</div>
+
+
+
+
+
+
+
 
 </div>
 
