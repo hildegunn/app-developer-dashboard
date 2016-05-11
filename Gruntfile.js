@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		config: grunt.file.readJSON('app/etc/config.js'),
+		config: grunt.file.readJSON('config.js'),
 		jslint: {
 			app: {
 				src: ['Gruntfile.js', 'app/js/**/*.js', 'test/**/*.js'],

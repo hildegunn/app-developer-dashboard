@@ -28,6 +28,7 @@ COPY app app
 COPY js js
 COPY lib lib
 COPY server.js .
+COPY config.js .
 
 # These are only needed for building not for running. Can be cleaned afterwards.
 COPY css css
