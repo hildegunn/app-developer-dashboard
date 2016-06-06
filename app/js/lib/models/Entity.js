@@ -39,7 +39,7 @@ define(function(require, exports, module) {
 					res.accepted.push(x);
 				} else if (this.scopeIsRequested(scope)) {
 					res.requested.push(x);
-				} else {
+				} else if (x.public) {
 					res.available.push(x);
 				}
 			}
