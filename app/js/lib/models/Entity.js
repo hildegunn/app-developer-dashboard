@@ -13,6 +13,13 @@ define(function(require, exports, module) {
 		return moment(x);
 	}
 
+	// Helper Sorter function to sort scopedef-array
+	var ssorter = function(a, b) {
+		var x = a.scope || '_';
+		var y = b.scope || '_';
+		return x < y ? -1 : x > y ? 1 : 0;
+	};
+
 
 
 	var Entity = Model.extend({
@@ -43,6 +50,10 @@ define(function(require, exports, module) {
 					res.available.push(x);
 				}
 			}
+			res.available.sort(ssorter);
+			res.requested.sort(ssorter);
+			res.accepted.sort(ssorter);
+
 			return res;
 		},
 
