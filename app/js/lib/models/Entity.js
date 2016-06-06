@@ -31,7 +31,7 @@ define(function(require, exports, module) {
 		 * @param  {[type]} scopedef Typically a global scope definition.
 		 * @return {[type]}          [description]
 		 */
-		"getScopes": function(scopedef) {
+		"getScopes": function(scopedef, includeHidden) {
 
 			var res = {
 				"available": [],
@@ -48,11 +48,15 @@ define(function(require, exports, module) {
 					res.requested.push(x);
 				} else if (x.public) {
 					res.available.push(x);
+				} else if (includeHidden) {
+					res.available.push(x);
 				}
 			}
 			res.available.sort(ssorter);
 			res.requested.sort(ssorter);
 			res.accepted.sort(ssorter);
+
+			console.error("Scope list", res);
 
 			return res;
 		},

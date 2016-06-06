@@ -20,7 +20,7 @@ define(function(require) {
 	var ownAPIListingTemplate = require('text!templates/partials/APIListingOwn.html');
 
 	var ClientEditor = Editor.extend({
-		"init": function(app, feideconnect, publicapis, clientpool) {
+		"init": function(app, feideconnect, publicapis, clientpool, usercontext) {
 
 			var that = this;
 
@@ -28,6 +28,7 @@ define(function(require) {
 			this.publicapis = publicapis;
 			this.clientpool = clientpool;
 			this.feideconnect = feideconnect;
+			this.usercontext = usercontext;
 
 			this._super(app, feideconnect);
 
@@ -39,13 +40,11 @@ define(function(require) {
 			this.apipublictemplate = new TemplateEngine(publicAPIListingTemplate);
 			this.apiowntemplate = new TemplateEngine(ownAPIListingTemplate);
 
-
 			this.ebind("click", ".actAPIadd", "actAPIadd");
 			this.ebind("click", ".actAPIScopeUpdate", "actAPIScopeUpdate");
 			this.ebind("click", ".actRemoveRedirectURI", "actRemoveRedirectURI");
 			this.ebind("click", ".actAddRedirectURI", "actAddRedirectURI");
 			this.ebind("click", ".apiEntry", "actScopeUpdate");
-
 
 			this.searchWaiter = new Waiter(function(x) {
 				that.doSearch(x);
@@ -64,8 +63,6 @@ define(function(require) {
 					}
 				}
 			});
-
-
 
 			/*
 			 * Disable provider filters until implemented.
@@ -158,6 +155,13 @@ define(function(require) {
 
 				$.getJSON(endpoint, function(scopePolicy) {
 					that.scopePolicy = scopePolicy;
+					// that.scopePolicy.email = {
+					// 	"title": "EMAILSD FSLDKF ",
+					// 	"public": true,
+					// 	"policy": {
+					// 		"auto": false
+					// 	}
+					// }
 					resolve();
 				});
 
@@ -204,7 +208,8 @@ define(function(require) {
 			};
 
 
-			var scopes = item.getScopes(this.scopePolicy);
+			var includeHidden = this.usercontext.isPlatformAdmin();
+			var scopes = item.getScopes(this.scopePolicy, includeHidden);
 
 			if (that.feideconnect) {
 				$.extend(view, {
@@ -289,7 +294,7 @@ define(function(require) {
 			}
 
 
-			// console.error("Client view..", view);
+			console.error("Client view..", view);
 
 
 

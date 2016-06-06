@@ -95,6 +95,16 @@ define(function(require, exports, module) {
 		"actScopeRemove": function(e) {
 			e.preventDefault();
 			var scopeid = $(e.currentTarget).closest(".scopeEntry").data("scopeid");
+			var optConfirm = $(e.currentTarget).closest(".scopeEntry").hasClass("optConfirm");
+
+			if (optConfirm) {
+				var ok = confirm('Are you really sure you would like to remove this scope, as you cannot automatically re-add it.')
+				if (!ok) {
+					return;
+				}
+
+			}
+
 			this.current.removeScope(scopeid);
 			return this.save(["id", "scopes_requested"]);
 		},

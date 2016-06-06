@@ -79,6 +79,10 @@ define(function(require, exports, module) {
 			return that.isOrgAuthorizedToIDporten(client.organization);
 		},
 
+		"isPlatformAdmin": function() {
+			return this.platformadmin !== null;
+		},
+
 		"isOrgAuthorizedToIDporten": function(orgid) {
 			return this.getOrg(orgid)
 				.then(function(org) {
