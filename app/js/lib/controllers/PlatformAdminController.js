@@ -123,7 +123,7 @@ define(function(require, exports, module) {
 			this.feideconnect.getAPIGK(apigkid)
 				.then(function(data) {
 					apigk = new APIGK(data);
-					console.error("CLIENT IS ", apigk.getView());
+					console.error("APIGK IS ", apigk.getView());
 					return that.app.getOrgApp('_');
 				})
 				.then(function(app) {
