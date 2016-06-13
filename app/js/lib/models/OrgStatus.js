@@ -22,7 +22,6 @@ define(function(require, exports, module) {
 		"calculateScore": function() {
 			this.score = 0;
 			var scores = {
-				'pilot': 100,
 				'avtale': 100,
 				'auth': 70,
 				'PeopleSearch': 10,
