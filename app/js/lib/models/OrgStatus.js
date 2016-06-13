@@ -14,7 +14,7 @@ define(function(require, exports, module) {
 
 
 			// if (Math.random() > 0.4) { this.s.Contract = true; }
-			// if (Math.random() > 0.9) { this.s.FS = true; }
+			// if (Math.random() > 0.9) { this.s.fsgroups = true; }
 			// if (Math.random() > 0.97) { this.s.PeopleSearch = true; }
 
 			this.calculateScore();
@@ -26,7 +26,7 @@ define(function(require, exports, module) {
 				'auth': 70,
 				'PeopleSearch': 10,
 				'LDAP': 10,
-				'FS': 10,
+				'fsgroups': 10,
 				'Geo': 4,
 				'Logo': 4
 			};
@@ -69,9 +69,6 @@ define(function(require, exports, module) {
 			}
 			if (this.has_ldapgroups) {
 				services.LDAP = true;
-			}
-			if (this.fs_groups) {
-				services.FS = true;
 			}
 			if (this.has("uiinfo") && this.uiinfo !== null) {
 				services.Geo = true;
