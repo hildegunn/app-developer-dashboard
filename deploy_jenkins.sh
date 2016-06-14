@@ -15,6 +15,7 @@ cp app/etc/config.template.js app/etc/config.js
 
 npm install
 node_modules/grunt-cli/bin/grunt build
+cp -a dataporten-resources/fonts/* bower_components/uninett-bootstrap-theme/fonts
 #npm prepublish
 
 if cf app "${app}" |egrep -q '#.*running'
