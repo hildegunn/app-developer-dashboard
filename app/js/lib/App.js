@@ -30,7 +30,7 @@ define(function(require, exports, module) {
 		Dictionary = require('./Dictionary'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		utils = require('./utils'),
-		rawconfig = require('text!../../etc/config.js'),
+		// rawconfig = require('text!../../etc/config.js'),
 		$ = require('jquery');
 
 	var tmpHeader = require('text!templates/header.html');
@@ -52,136 +52,160 @@ define(function(require, exports, module) {
 
 	var App = AppController.extend({
 
+
+		"loadConfig": function() {
+			var that = this;
+			return new Promise(function(resolve, reject) {
+				$.getJSON('/config', function(data) {
+					console.error("got data", data);
+					that.config = data;
+					return resolve(data);
+				});
+			});
+		},
+
+
 		"init": function() {
 			var that = this;
 
-			this.config = JSON.parse(rawconfig);
-			this.feideconnect = new FeideConnect(this.config);
-
-			this.dict = new Dictionary();
-
-			this.tmpHeader = new TemplateEngine(tmpHeader);
-			this.tmpFooter = new TemplateEngine(tmpFooter);
-
-			this.providerdata = new ProviderData(this);
-
-			this.usercontext = new UserContext(this.feideconnect, this);
-
-			this.elOrgSelector = $("<div></div>");
-			this.orgRoleSelector = new OrgRoleSelector(this.elOrgSelector, this.usercontext, this);
-			this.orgRoleSelector.initLoad();
-
-
-			this.newOrgController = new NewOrgController(this);
-			this.platformadminController = new PlatformAdminController(this);
-
-			this.bccontroller = new BCController($("#breadcrumb"));
-			this.languageselector = new LanguageController(this);
-
-			// console.log("COnfig", this.feideconnect.config);
-
-
-			this.orgRoleSelector.on("orgRoleSelected", function(orgid) {
-				that.onLoaded()
-					.then(function() {
-						// console.log("orgRoleSelected", orgid);
-
-						if (orgid === '_new') {
-							that.newOrgController.activate();
-
-						} else if (orgid === '_platformadmin') {
-							that.platformadminController.activate();
-
-						} else if (that.orgApps[orgid]) {
-							that.orgApps[orgid].actMainlisting();
-							that.orgApps[orgid].activate();
-							that.setHash('/' + that.orgRoleSelector.getOrg());
-
-						}
-
-					})
-					.catch(function(err) {
-						that.setErrorMessage("Error loading client and apigk data from an organization", "danger", err);
-					});
-			});
-
-
 			// Call contructor of the AppController(). Takes no parameters.
-			this._super(undefined, false);
+			that._super(undefined, false);
+
+			this.loadConfig()
+				.then(function() {
+
+					that.feideconnect = new FeideConnect(that.config);
+
+					that.dict = new Dictionary();
+
+					that.tmpHeader = new TemplateEngine(tmpHeader);
+					that.tmpFooter = new TemplateEngine(tmpFooter);
+
+					that.providerdata = new ProviderData(that);
+
+					that.usercontext = new UserContext(that.feideconnect, that);
+
+					that.elOrgSelector = $("<div></div>");
+					that.orgRoleSelector = new OrgRoleSelector(that.elOrgSelector, that.usercontext, that);
+					that.orgRoleSelector.initLoad();
 
 
+					that.newOrgController = new NewOrgController(that);
+					that.platformadminController = new PlatformAdminController(that);
 
-			this.pc = new PaneController(this.el.find('#panecontainer'));
-			that.pc.add(this.newOrgController);
-			this.pc.add(this.platformadminController);
+					that.bccontroller = new BCController($("#breadcrumb"));
+					that.languageselector = new LanguageController(that);
 
-			this.orgApps = {};
-
-			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)?$/, "routeMainlisting");
-			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/mandatory$/, "routeMandatory");
-			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/apiauthorization$/, "routeAPIAuthorization");
-			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/clients\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditClient");
-			this.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/apigk\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditAPIGK");
-			this.setupRoute(/^\/clients\/([a-zA-Z0-9_\-:]+)$/, "viewclient");
-			this.setupRoute(/^\/new$/, "newGroup");
+					// console.log("COnfig", that.feideconnect.config);
 
 
-			this.publicapis = new PublicAPIPool(this.feideconnect);
-			this.publicClientPool = new PublicClientPool(this.feideconnect);
+					that.orgRoleSelector.on("orgRoleSelected", function(orgid) {
+						that.onLoaded()
+							.then(function() {
+								// console.log("orgRoleSelected");
 
+								if (orgid === '_new') {
+									that.newOrgController.activate();
 
-			$("#header").on("click", ".navbar-brand", function(e) {
-				e.preventDefault();
+								} else if (orgid === '_platformadmin') {
+									that.platformadminController.activate();
 
-				that.feideconnect.onAuthenticated()
-					.then(function() {
-						return that.getOrgApp(that.orgRoleSelector.getOrg())
-					})
-					.then(function(orgApp) {
-						orgApp.actMainlisting();
-						orgApp.activate();
-						that.orgRoleSelector.show();
-					})
-					.catch(function(err) {
-						console.error("err", err);
-						that.setErrorMessage("Error loading front dashboard", "danger", err);
+								} else if (that.orgApps[orgid]) {
+									that.orgApps[orgid].actMainlisting();
+									that.orgApps[orgid].activate();
+									that.setHash('/' + that.orgRoleSelector.getOrg());
+
+								}
+
+							})
+							.catch(function(err) {
+								that.setErrorMessage("Error loading client and apigk data from an organization", "danger", err);
+							});
 					});
 
-			});
-
-			this.el.on("click", ".login", function() {
-				that.feideconnect.authenticate();
-			});
-			this.el.on("click", "#logout", function(e) {
-				e.preventDefault();
-				that.feideconnect.logout();
-
-				var c = that.feideconnect.getConfig();
-				var url = c.apis.auth + '/logout';
-				window.location = url;
-
-			});
 
 
-			this.feideconnect.onAuthenticated()
-				.then(that.proxy("onLoaded"))
-				.then(function() {
-					var user = that.feideconnect.getUser();
-					var _config = that.feideconnect.getConfig();
-					var profilephoto = _config.apis.core + '/userinfo/v1/user/media/' + user.profilephoto;
 
-					$("body").addClass("stateLoggedIn");
-					$("body").removeClass("stateLoggedOut");
 
-					$("#username").empty().text(user.name);
-					$("#profilephoto").html('<img style="margin-top: -28px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" src="' + profilephoto + '" alt="Profile photo" />');
+					that.pc = new PaneController(that.el.find('#panecontainer'));
+					that.pc.add(that.newOrgController);
+					that.pc.add(that.platformadminController);
 
-					$(".loader-hideOnLoad").hide();
-					$(".loader-showOnLoad").show();
+					that.orgApps = {};
+
+					that.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)?$/, "routeMainlisting");
+					that.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/mandatory$/, "routeMandatory");
+					that.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/apiauthorization$/, "routeAPIAuthorization");
+					that.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/clients\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditClient");
+					that.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/apigk\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditAPIGK");
+					that.setupRoute(/^\/clients\/([a-zA-Z0-9_\-:]+)$/, "viewclient");
+					that.setupRoute(/^\/new$/, "newGroup");
+
+
+					that.publicapis = new PublicAPIPool(that.feideconnect);
+					that.publicClientPool = new PublicClientPool(that.feideconnect);
+
+
+					$("#header").on("click", ".navbar-brand", function(e) {
+						e.preventDefault();
+
+						that.feideconnect.onAuthenticated()
+							.then(function() {
+								return that.getOrgApp(that.orgRoleSelector.getOrg())
+							})
+							.then(function(orgApp) {
+								orgApp.actMainlisting();
+								orgApp.activate();
+								that.orgRoleSelector.show();
+							})
+							.catch(function(err) {
+								console.error("err", err);
+								that.setErrorMessage("Error loading front dashboard", "danger", err);
+							});
+
+					});
+
+					that.el.on("click", ".login", function() {
+						that.feideconnect.authenticate();
+					});
+					that.el.on("click", "#logout", function(e) {
+						e.preventDefault();
+						that.feideconnect.logout();
+
+						var c = that.feideconnect.getConfig();
+						var url = c.apis.auth + '/logout';
+						window.location = url;
+
+					});
+
+
+					that.feideconnect.onAuthenticated()
+						.then(that.proxy("onLoaded"))
+						.then(function() {
+							var user = that.feideconnect.getUser();
+							var _config = that.feideconnect.getConfig();
+							var profilephoto = _config.apis.core + '/userinfo/v1/user/media/' + user.profilephoto;
+
+							$("body").addClass("stateLoggedIn");
+							$("body").removeClass("stateLoggedOut");
+
+							$("#username").empty().text(user.name);
+							$("#profilephoto").html('<img style="margin-top: -28px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" src="' + profilephoto + '" alt="Profile photo" />');
+
+							$(".loader-hideOnLoad").hide();
+							$(".loader-showOnLoad").show();
+
+						});
+
+
+					that.initLoad();
+
+
+
+
+
 
 				});
-
-			this.initLoad();
 
 		},
 

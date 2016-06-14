@@ -8,7 +8,6 @@ define(function(require, exports, module) {
 
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		utils = require('./utils'),
-		rawconfig = require('text!../../etc/config.js'),
 		$ = require('jquery');
 
 	var template = require('text!templates/restrictedPersonalOrgApp.html');

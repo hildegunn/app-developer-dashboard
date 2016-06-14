@@ -8,13 +8,22 @@ var
 	LangNeg = require('./lib/LangNeg');
 
 var app = express();
-var developer = false;
 var env = process.argv[2] || process.env.NODE_ENV || 'production';
 
 
 var config = JSON.parse(fs.readFileSync('app/etc/config.js', 'utf8'));
 var languages = new LangNeg.Lang(config);
 
+if (process.env.OIC_CLIENTID) {
+	console.log('Overriding config from ENV Client Id', process.env.OIC_CLIENTID);
+	config.client_id = process.env.OIC_CLIENTID;
+}
+if (process.env.OIC_REDIRECT_URI) {
+	console.log('Overriding config from ENV redirect uri', process.env.OIC_REDIRECT_URI);
+	config.redirect_uri = process.env.OIC_REDIRECT_URI;
+}
+
+app.set('json spaces', 2);
 
 app.use(cookieParser());
 app.use(function(req, res, next) {
@@ -59,6 +68,10 @@ app.get('/version', function (req, res) {
 
 	res.setHeader('Content-Type', 'application/json; charset=utf-8');
 	res.send(JSON.stringify(data, undefined, 4));
+});
+app.get('/config', function (req, res) {
+	// res.setHeader('Content-Type', 'application/json; charset=utf-8');
+	res.json(config);
 });
 
 
