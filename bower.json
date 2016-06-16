@@ -19,7 +19,7 @@
 		"fontawesome": "~4.5.0",
 		"requirejs": "~2.1.14",
 		"text": "~2.0.13",
-		"feideconnectjs": "~2",
+		"feideconnectjs": "~2.8",
 		"selectize": "~0.12.1",
 		"dustjs-linkedin": "~2.5.1",
 		"momentjs": "~2.9.0",
