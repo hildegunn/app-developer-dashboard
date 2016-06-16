@@ -44,21 +44,55 @@
 
 
 			<div role="tabpanel" class="tab-pane active" id="clients">
+
+
+				<div style="margin-top: 1em">
+					<form class="" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control isearch" placeholder="Search">
+						</div>
+					</form>
+				</div>
+
 				{> pclients /}
 			</div>
 
 			<div role="tabpanel" class="tab-pane" id="apigks">
+				<div style="margin-top: 1em">
+					<form class="" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control isearch" placeholder="Search">
+						</div>
+					</form>
+				</div>
+
 				{> papis /}
 			</div>
 
 			
 			<div role="tabpanel" class="tab-pane" id="organizationsh">
+				<div style="margin-top: 1em">
+					<form class="" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control isearch" placeholder="Search">
+						</div>
+					</form>
+				</div>
+
 				{#orgs.home}
 				{> porgs /}
 				{/orgs.home}
 			</div>
 			
 			<div role="tabpanel" class="tab-pane" id="organizationss">
+				<div style="margin-top: 1em">
+					<form class="" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control isearch" placeholder="Search">
+						</div>
+					</form>
+				</div>
+
 				{#orgs.services}
 				{> porgs /}
 				{/orgs.services}

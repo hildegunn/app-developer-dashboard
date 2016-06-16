@@ -11,6 +11,8 @@ define(function(require, exports, module) {
 
 		OrganizationPool = require('../models/OrganizationPool'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
+		Waiter = require('../Waiter'),
+
 		$ = require('jquery');
 
 	var template = require('text!templates/platformadmin.html');
@@ -56,7 +58,11 @@ define(function(require, exports, module) {
 			this.ebind("click", ".clientEntry", "actClient");
 			this.ebind("click", ".apigkEntry", "actAPIGK");
 
+			this.ebind("change keyup", ".isearch", "actSearch");
 
+			this.searchWaiter = new Waiter(function(x) {
+				that.actSearch(x);
+			});
 
 		},
 
@@ -79,6 +85,25 @@ define(function(require, exports, module) {
 		},
 
 
+		"pingSearch": function(e) {
+			this.searchWaiter.ping(e);
+		},
+
+		"actSearch": function(e) {
+
+			var c = $(e.currentTarget).closest(".tab-pane");
+			var term = $(e.currentTarget).val();
+			console.log("Search for ", term, c);
+
+			c.find(".list-group-item").each(function(i,item) {
+				if (term === '' || $(item).data("searchable").toLowerCase().indexOf(term.toLowerCase()) > -1 ) {
+					$(item).show();
+				} else {
+					$(item).hide();
+				}
+			});
+
+		},
 
 		"actSelectOrgAdmin": function(e) {
 			e.preventDefault();
