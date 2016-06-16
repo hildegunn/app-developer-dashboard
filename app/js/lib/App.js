@@ -57,7 +57,7 @@ define(function(require, exports, module) {
 			var that = this;
 			return new Promise(function(resolve, reject) {
 				$.getJSON('/config', function(data) {
-					console.error("got data", data);
+					// console.error("got data", data);
 					that.config = data;
 					return resolve(data);
 				});

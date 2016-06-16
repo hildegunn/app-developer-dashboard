@@ -97,9 +97,17 @@ define(function(require, exports, module) {
 					items.push('markers=color:blue|label:' + (encodeURIComponent(this.uiinfo.geo[i].title) || i) + '|' + encodeURIComponent(this.uiinfo.geo[i].lat)+ ',' + encodeURIComponent(this.uiinfo.geo[i].lon));
 				}
 				url += items.join('&');
-			}			
+			} else {
+				return null;
+			}
 
 			return url;
+		},
+
+		"getGeoTxt": function() {
+
+			return JSON.stringify(this.uiinfo.geo, undefined, 4);
+
 		},
 
 		"getView": function() {

@@ -43,6 +43,9 @@ define(function(require, exports, module) {
 			this.ebind("click", ".actGrupper0", "actGroups");
 			this.ebind("click", ".actGrupper1", "actGroupsOff");
 			this.ebind("click", ".actGeo", "actGeo");
+			this.ebind("click", ".actSaveGeo", "actSaveGeo");
+			this.ebind("click", ".actCancelGeo", "actCancelGeo");
+			
 
 			this.el.on("dragover", ".imagezone", function(e) {
 				if (e.preventDefault) { e.preventDefault(); }
@@ -92,9 +95,44 @@ define(function(require, exports, module) {
 
 		"actGeo": function(e) {
 			e.preventDefault(); 
-			alert("Not yet implemented");
+			this.el.find("#geoeditorcontainer").show();
+
+
+			this.el.find("#geoeditor").text(this.orgstatus.getGeoTxt() );
 		},
 
+
+
+		"actCancelGeo": function(e) {
+			this.el.find("#geoeditorcontainer").hide();	
+		},
+		"actSaveGeo": function(e) {
+			
+
+			try {
+				var geotxt = this.el.find("#geoeditor").val();
+				console.log("Got text", geotxt);
+				var geo = JSON.parse(geotxt);
+
+
+				var uiinfo = this.orgstatus.uiinfo || {};
+				uiinfo.geo = geo;
+
+				console.log("GEO is", geo);
+				this.feideconnect.updateOrg(this.orgid, {
+					"uiinfo": uiinfo
+				})
+					.then(this.proxy("loadOrg"))
+					.then(this.proxy("draw"));
+
+				this.el.find("#geoeditorcontainer").hide();
+			} catch (err) {
+				console.error("err", err);
+				alert("Invalid syntax.", err.message)
+			}
+			
+
+		},
 
 		"serviceMod": function(service, add) {
 			var that = this;
@@ -209,7 +247,7 @@ define(function(require, exports, module) {
 
 			view._config = this.feideconnect.config;
 			view.isPlatformAdmin = this.usercontext.isPlatformAdmin();
-			console.error("About to render", view);
+			// console.error("About to render", view);
 			this.el.children().detach();
 			return this.tmp.render(this.el, view)
 				.then(function() {
