@@ -167,18 +167,51 @@
 				{?s.Geo}
 					<h4>Geo koordinater</h4>
 					{#uiinfo.geo}
-						<p><i class="fa fa-map-marker"></i> {lat}, {lon}</p>
+						<p><i class="fa fa-map-marker"></i> {lat}, {lon} <a target="_blank" href="http://www.google.com/maps/place/{lat},{lon}"><i class="fa fa-google"></i>-map</a></p>
 					{/uiinfo.geo}
 				{/s.Geo}
 			</div>
 			<div class="media-right">
-				<a href="#">
-
-					<img class="media-object" src="{._config.apis.core}/orgs/{id}/logo" alt="Logo of organization {name}">
-				</a>
+				<div class="imagezone" style="min-height: 128px; min-width: 128px">
+					<img class="media-object itemlogo" src="{._config.apis.core}/orgs/{id}/logo" alt="Logo of organization {name}">
+				</div>
 				<p style="text-align: center"><i>Registrert logo</i></p>
 			</div>
 		</div>
+
+		<div>
+			<img class="img-responsive img-thumbnail" src="{mapurl}">
+		</div>
+
+		{?isPlatformAdmin}
+		<div class="well">
+			<h3>Platform admin</h3>
+
+			<!-- Single button -->
+			<div class="btn-group">
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fa fa-warning"></i> Platform admin operations <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a class="actAvtale0" href="#"><i class="fa fa-fw fa-check"></i> Sett avtale</a></li>
+					<li><a class="actAvtale1" href="#"><i class="fa fa-fw fa-times"></i> Fjern avtale</a></li>
+					<li role="separator" class="divider"></li>
+
+			<!-- 		<li><a class="actSok0" href="#"><i class="fa fa-fw fa-check"></i> Sett personsøk</a></li>
+					<li><a class="actSok1" href="#"><i class="fa fa-fw fa-times"></i> Fjern personsøk</a></li>
+					<li role="separator" class="divider"></li> -->
+
+					<li><a class="actGrupper0" href="#"><i class="fa fa-fw fa-check"></i> Sett grupper fra FS</a></li>
+					<li><a class="actGrupper1" href="#"><i class="fa fa-fw fa-times"></i> Fjern grupper fra FS</a></li>
+					<li role="separator" class="divider"></li>
+
+					
+					<li><a class="actGeo" href="#"><i class="fa fa-fw fa-map-marker"></i> Edit geo-coordinates</a></li>
+				</ul>
+			</div>
+
+		</div>
+		{/isPlatformAdmin}
 
 
 	</div>

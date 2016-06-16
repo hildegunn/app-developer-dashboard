@@ -29,13 +29,14 @@ define(function(require, exports, module) {
 	 * This controller controls 
 	 */
 	var MainListing = Pane.extend({
-		"init": function(feideconnect, app, orgAdminClients, orgAdminAPIs) {
+		"init": function(feideconnect, app, orgAdminClients, orgAdminAPIs, usercontext) {
 
 			var that = this;
 			this.feideconnect = feideconnect;
 			this.app = app;
 			this.orgAdminClients = orgAdminClients;
 			this.orgAdminAPIs = orgAdminAPIs;
+			this.usercontext = usercontext;
 
 			this._super();
 
@@ -48,11 +49,9 @@ define(function(require, exports, module) {
 			this.elClients = $("<div></div>");
 			this.elAPIGKs = $("<div></div>");
 
-
 			this.templateLoaded = false;
 			this.elClientsAttached = false;
 			this.elAPIGKsAttached = false;
-
 
 			this.simpleOrgAdminView = null;
 			this.simpleOrgAdminAPI = null;
@@ -60,14 +59,14 @@ define(function(require, exports, module) {
 
 			if (orgAdminClients !== null) {
 
-				this.simpleOrgAdminView = new SimpleOrgAdminController(this.feideconnect, this.orgAdminClients);
+				this.simpleOrgAdminView = new SimpleOrgAdminController(this.feideconnect, this.orgAdminClients, this.usercontext);
 				this.simpleOrgAdminView.initLoad();
 
 				this.simpleOrgAdminView.on("manageMandatory", function() {
 					that.emit("manageMandatory");
 				});
 
-				this.orgAdminStatus = new SimpleStatusController(this.feideconnect, this.app.orgid);
+				this.orgAdminStatus = new SimpleStatusController(this.feideconnect, this.app.orgid, this.usercontext);
 				this.orgAdminStatus.initLoad();
 
 				this.orgAdminStatus.on("manageStatus", function() {

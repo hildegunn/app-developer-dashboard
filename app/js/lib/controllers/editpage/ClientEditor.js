@@ -208,6 +208,9 @@ define(function(require) {
 			};
 
 
+
+			// var stats = new Statistics(this.app.feideconnect);
+
 			var includeHidden = this.usercontext.isPlatformAdmin();
 			var scopes = item.getScopes(this.scopePolicy, includeHidden);
 

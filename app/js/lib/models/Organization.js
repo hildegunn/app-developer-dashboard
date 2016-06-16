@@ -2,7 +2,8 @@ define(function(require, exports, module) {
 	"use strict";
 
 	var
-		Model = require('./Model');
+		Model = require('./Model'),
+		OrgStatus = require('./OrgStatus');
 
 	var Organization = Model.extend({
 		
@@ -54,6 +55,22 @@ define(function(require, exports, module) {
 		}
 
 	});
+
+
+	Organization.sortScore = function(a, b) {
+
+		var a1 = new OrgStatus(a);
+		var b1 = new OrgStatus(b);
+
+		if (a1.score > b1.score) {
+			return -1;
+		}
+		if (b1.score > a1.score) {
+			return 1;
+		}
+		return 0;
+
+	};
 
 	return Organization;
 

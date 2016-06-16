@@ -15,11 +15,12 @@ define(function(require, exports, module) {
 
 
 	var SimpleOrgAdminController = Controller.extend({
-		"init": function(feideconnect, orgAdminClients) {
+		"init": function(feideconnect, orgAdminClients, usercontext) {
 
 			var that = this;
 			this.feideconnect = feideconnect;
 			this.orgAdminClients = orgAdminClients;
+			this.usercontext = usercontext;
 
 			this.showCount = 3;
 
@@ -89,6 +90,7 @@ define(function(require, exports, module) {
 		"draw": function() {
 			var that = this;
 			var view = this.processView(this.orgAdminClients.getClients());
+			view.isPlatformAdmin = this.usercontext.isPlatformAdmin();
 
 			// console.error("About to render", view);
 			return this.tmp.render(this.el, view);

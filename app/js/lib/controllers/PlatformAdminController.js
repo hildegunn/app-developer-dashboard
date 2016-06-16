@@ -7,6 +7,7 @@ define(function(require, exports, module) {
 
 		Client = require('../models/Client'),
 		APIGK = require('../models/APIGK'),
+		Organization = require('../models/Organization'),
 
 		OrganizationPool = require('../models/OrganizationPool'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
@@ -35,6 +36,8 @@ define(function(require, exports, module) {
 	var PlatformAdminController = Pane.extend({
 		"init": function(app) {
 
+			var that = this;
+
 			this.app = app;
 			this.feideconnect = this.app.feideconnect;
 
@@ -52,6 +55,8 @@ define(function(require, exports, module) {
 			this.ebind("click", ".orgEntry", "actSelectOrgAdmin");
 			this.ebind("click", ".clientEntry", "actClient");
 			this.ebind("click", ".apigkEntry", "actAPIGK");
+
+
 
 		},
 
@@ -159,18 +164,23 @@ define(function(require, exports, module) {
 
 			view.orgs = {
 				"home": {
-					"orgs": this.orgPool.getView({"type": "home_organization", "service": "avtale"})
+					"orgs": this.orgPool.getView({"type": "home_organization"})
 				},
 				"services": {
 					"orgs": this.orgPool.getView({"type": "service_provider"})	
 				}
 			};
+
+			view.orgs.home.orgs.sort(Organization.sortScore);
+			view.orgs.services.orgs.sort(Organization.sortScore);
+
 			view.clients = this.app.publicClientPool.getView();
 			view.apigks = this.app.publicapis.getView();
 			view.counts = {
 				"clients": view.clients.length,
 				"apigks": view.apigks.length,
-				"orgs": view.orgs.home.orgs.length
+				"orgs": view.orgs.home.orgs.length,
+				"sps": view.orgs.services.orgs.length,
 			};
 			// view.orgs = this.orgPool.getView();
 

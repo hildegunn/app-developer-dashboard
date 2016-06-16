@@ -33,29 +33,11 @@ define(function(require, exports, module) {
 			this.el.on("dragover", ".imagezone", function(e) {
 				if (e.preventDefault) { e.preventDefault(); }
 				return false;
-				// console.log("Drag dragover");
 			});
 			this.el.on("dragenter", ".imagezone", function(e) {
 				if (e.preventDefault) { e.preventDefault(); }
 				return false;
-				// console.log("Drag dragenter");
 			});
-
-			this.el.on("click", ".tabselector li", function(e) {
-				if (e.preventDefault) { e.preventDefault(); }
-				e.stopPropagation();
-
-				// console.error("SELECTING TAB", tabid);
-
-
-				var tabid = $(e.currentTarget).data("tabid");
-				that.selectTab(tabid);
-
-
-
-			});
-
-
 			this.el.on("drop", ".imagezone", function(e) {
 				if (e.preventDefault) { e.preventDefault(); }
 
@@ -71,6 +53,22 @@ define(function(require, exports, module) {
 				}
 				return false;
 			});
+
+
+			this.el.on("click", ".tabselector li", function(e) {
+				if (e.preventDefault) { e.preventDefault(); }
+				e.stopPropagation();
+
+				// console.error("SELECTING TAB", tabid);
+
+
+				var tabid = $(e.currentTarget).data("tabid");
+				that.selectTab(tabid);
+
+
+
+			});
+
 
 		
 		},

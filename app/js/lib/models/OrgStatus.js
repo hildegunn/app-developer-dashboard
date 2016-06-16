@@ -28,7 +28,8 @@ define(function(require, exports, module) {
 				'LDAP': 10,
 				'fsgroups': 10,
 				'Geo': 4,
-				'Logo': 4
+				'Logo': 4,
+				"idporten": 5
 			};
 
 			for(var key in scores) {
@@ -54,9 +55,11 @@ define(function(require, exports, module) {
 			}
 			return false;
 		},
+		
 		"hasService": function(s) {
 			return (this.s.hasOwnProperty(s));
 		},
+
 		"getServices": function() {
 			var services = {};
 			if (this.services) {
@@ -81,9 +84,28 @@ define(function(require, exports, module) {
 
 			return services;
 		},
+
+		"getMapURL": function() {
+			var base = "http://maps.google.com/maps/api/staticmap?zoom=12&size=512x512&maptype=roadmap&";
+			// "markers=color:blue|label:S|40.702147,-74.015794&markers=color:green|label:G|40.711614,-74.012318&markers=color:red|color:red|label:C|40.718217,-73.998284";
+			var url = base;
+			var items = [];
+
+			if (this.has("uiinfo") && this.uiinfo !== null) {
+				url += 'center=' + encodeURIComponent(this.uiinfo.geo[0].lat)+ ',' + encodeURIComponent(this.uiinfo.geo[0].lon) + '&';
+				for(var i = 0; i < this.uiinfo.geo.length; i++) {
+					items.push('markers=color:blue|label:' + (encodeURIComponent(this.uiinfo.geo[i].title) || i) + '|' + encodeURIComponent(this.uiinfo.geo[i].lat)+ ',' + encodeURIComponent(this.uiinfo.geo[i].lon));
+				}
+				url += items.join('&');
+			}			
+
+			return url;
+		},
+
 		"getView": function() {
 			var res = this._super();
 			res.s = this.getServices();
+			res.mapurl = this.getMapURL();
 			return res;
 		}
 	});

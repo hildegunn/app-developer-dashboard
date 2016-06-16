@@ -81,7 +81,7 @@ define(function(require, exports, module) {
 			}
 
 			this.pc = new PaneController(this.el);
-			this.mainlisting = new MainListing(this.feideconnect, this, this.orgAdminClients, this.orgAdminAPIs);
+			this.mainlisting = new MainListing(this.feideconnect, this, this.orgAdminClients, this.orgAdminAPIs, this.usercontext);
 			this.pc.add(this.mainlisting);
 
 			if (this.orgAdminView !== null) {
