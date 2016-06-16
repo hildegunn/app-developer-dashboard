@@ -16,10 +16,13 @@
 	"accepttou": "Dataporten Terms of Use",
 	"redirecturiinfo": "Enter the OAuth 2.0 redirect_uri of your application. This is the URL where the user will be redirected back after successfull authentication.",
 	"seedocsformore": "See documentation for more information",
+
+	"overview": "Overview",
 	"basicinfo": "Basic info",
 	"extendedinfo": "Extended info",
 	"oauthdetails": "OAuth details",
 	"authproviders": "Auth Providers",
+	"testusers": "Test users",
 	"permissions": "Permissions",
 	"thirdpartyapis": "3rd party APIs",
 	"delete": "Delete",

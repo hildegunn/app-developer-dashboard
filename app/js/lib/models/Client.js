@@ -40,6 +40,22 @@ define(function(require, exports, module) {
 		},
 
 
+		"hasEnabledTestUsers": function() {
+
+			var i;
+			for(i = 0; i < this.authproviders.length; i++) {
+				if (this.authproviders[i] === 'all') {
+					return true;
+				}
+				if (this.authproviders[i] === 'other|feidetest') {
+					return true;
+				}
+			}
+			return false;
+
+		},
+
+
 		"getAPIAuthView": function() {
 			var view = [];
 			// console.error("this.scopeauthorizations", this);

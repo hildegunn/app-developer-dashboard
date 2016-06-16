@@ -293,6 +293,8 @@ define(function(require) {
 
 			}
 
+			view.hasEnabledTestUsers = item.hasEnabledTestUsers();
+
 
 			console.error("Client view..", view);
 

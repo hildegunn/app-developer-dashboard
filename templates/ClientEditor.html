@@ -3,10 +3,14 @@
 	<div class="col-sm-2">
 			
 		<ul class="nav nav-pills nav-stacked tabselector" style="text-align:right">
+			<li role="presentation" data-tabid="tabOverview" class=""><a href="#">{_.overview}</a></li>
 			<li role="presentation" data-tabid="tabBasic" class=""><a href="#">{_.basicinfo}</a></li>
 			<li role="presentation" data-tabid="tabExtended" class=""><a href="#">{_.extendedinfo}</a></li>
 			<li role="presentation" data-tabid="tabOAuth" class=""><a href="#">{_.oauthdetails}</a></li>
 			<li role="presentation" data-tabid="tabAuthProviders" class=""><a href="#">{_.authproviders}</a></li>
+			{?hasEnabledTestUsers}
+				<li role="presentation" data-tabid="tabTestUsers" class=""><a href="#">{_.testusers}</a></li>
+			{/hasEnabledTestUsers}
 			<li role="presentation" data-tabid="tabScopes" class=""><a href="#">{_.permissions}</a></li>
 			<li role="presentation" data-tabid="tabAPI" class=""><a href="#">{_.thirdpartyapis}</a></li>
 
@@ -18,6 +22,47 @@
 
 
 	<div class="col-sm-10 tabcontainer">
+
+
+
+
+
+		<div id="tabOverview" class="row">
+
+
+			<div class="col-sm-12">
+
+
+				{#client}
+
+					<img class="itemlogo pull-right" src="{_config.apis.core}/clientadm/clients/{client.id}/logo" style="padding: 5px; border: 1px solid #ddd; border-radius: 4px; backgroud: #eee" />
+
+				<h1>{name}</h1>
+				<p>Client ID: <code>{id}</code></p>
+				<p>{descr}</p>
+				<p style="margin:0px">Redirect URLs:</p>
+				<ul style="margin-top: 0px; font-size: 85%">
+					{#redirect_uri}
+					<li><tt>{.}</tt></li>
+					{/redirect_uri}
+				</ul>
+
+				<p style="margin: 0px">
+					<span style=" color: #555">Registered {createdAgo}</span> 
+						<span style="color: #999"><i class="glyphicon glyphicon-time"></i> {createdH}</span>
+					<span style="margin-left: 2em;  color: #555">Updated {updatedAgo}</span> 
+						<span style="color: #999"><i class="glyphicon glyphicon-time"></i> {updatedH}</span>
+				</p>
+
+				{/client}
+
+
+
+			</div>
+
+		</div>
+
+
 
 
 
@@ -402,6 +447,52 @@
 		</div>
 
 
+
+
+
+
+
+		<div id="tabTestUsers" class="row">
+
+
+			<div class="col-sm-12">
+
+				<h1>Test users</h1>
+
+				<p>You have enabled test users for your application. These usernames and passwords are shared. It is reccomended to turn off access for test users in production.</p>
+				<p>You may use the following test users to develop and test your application:</p>
+
+				<table class="table table-striped">
+					
+					<thead>
+						<tr>
+							<th>Username</th>
+							<th>Password</th>
+							<th>Comment</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr><td>asbjorn_elevg</td><td>1qaz</td><td></td></tr>
+						<tr><td>bjorg_laererg</td><td>2wsx</td><td></td></tr>
+						<tr><td>cecilie_elevvgs</td><td>3edc</td><td></td></tr>
+						<tr><td>david_laerervgs</td><td>4rfv</td><td></td></tr>
+						<tr><td>eva_student</td><td>5tgb</td><td></td></tr>
+						<tr><td>frank_foreleser</td><td>6yhn</td><td></td></tr>
+
+						<tr><td>ann_elevg</td><td>1qaz</td><td>E-postadresse ann.berntsen@test.feide.no</td></tr>
+						<tr><td>alf_elevg</td><td>1qaz</td><td>Ingen E-postadresse</td></tr>
+						<tr><td>jan_elevvgs</td><td>3edc</td><td></td></tr>
+						<tr><td>anne_laerervgs</td><td>4rfv</td><td></td></tr>
+						<tr><td>daniel_laerervgs</td><td>4rfv</td><td></td></tr>
+					</tbody>
+
+				</table>
+
+
+
+			</div>
+
+		</div>
 
 
 
