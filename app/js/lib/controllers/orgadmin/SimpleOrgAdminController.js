@@ -5,6 +5,7 @@ define(function(require, exports, module) {
 		$ = require('jquery'),
 		Controller = require('../Controller'),
 		EventEmitter = require('../../EventEmitter'),
+		Dictionary = require('../../Dictionary'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine')
 
 		;
@@ -24,8 +25,8 @@ define(function(require, exports, module) {
 
 			this._super();
 
-
-			this.tmp = new TemplateEngine(template);
+			this.dict = new Dictionary();
+			this.tmp = new TemplateEngine(template, this.dict);
 
 			this.ebind("click", ".actManageMandatory", "actManageMandatory");
 

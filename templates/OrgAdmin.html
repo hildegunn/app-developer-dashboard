@@ -1,9 +1,19 @@
 
 
 <div>
-	<h1>
-		Manage mandatory clients
+	<h1 style="margin-bottom: .4em; ">
+		{_.managemandatory}
 	</h1>
+
+	<p>Nye tjenester i Dataporten faller automatisk i kateogien for privat bruk og blir tilgjengelig for brukerene basert på samtykke.</p>
+	<p>Du som adminsitrator for din utdanningsinstitusjon kan her velge å bekrefte tjenester som virksomhetsstyrt. Da vil ikke brukeren måtte bekrefte samtykke til bruk av tjenesten.</p>
+
+	<ul>
+		<li><a href="https://www.uninett.no/tjenester/dataporten/personvern-og-informasjonssikkerhet-vertsorganisasjoner">Les mer om personvern og informasjonssikkerhet for vertsorganisasjoner</a></li>
+		<li><a href="https://www.uninett.no/vertsorganisasjonens-roller-og-plikter">Les mer om vertsorganisasjonens roller og plikter</a></li>
+		<li><a href="https://www.uninett.no/tjenester/dataporten/personvern-og-informasjonssikkerhet-sluttbrukere">Les mer om personvern og informasjonssikkerhet for sluttbrukere</a></li>
+	</ul>
+
 </div>
 
 
@@ -30,9 +40,9 @@
 
 
 				{?mandatory}
-					<span class="label label-success">Mandatory</span>
+					<span class="label label-success">{_.mandatory}</span>
 				{:else}
-					<span class="label label-default">User controlled</span>
+					<span class="label label-default">{_.privateuse}</span>
 				{/mandatory}
 
 
@@ -66,10 +76,9 @@
 
 
 				{?mandatory}
-					<button class="btn btn-sm btn-warning actRemoveMandatory" style="margin-left: 2em"><i class="fa fa-times"></i> Remove mandatory</button>
+					<button class="btn btn-sm btn-warning actRemoveMandatory" style="margin-left: 2em"><i class="fa fa-times"></i> {_.removeMandatory}</button>
 				{:else}
-					<button class="btn btn-sm btn-success actSetMandatory" style="margin-left: 2em"><i class="fa fa-check"></i> Set mandatory</button>
-					
+					<button class="btn btn-sm btn-success actSetMandatory" style="margin-left: 2em"><i class="fa fa-check"></i> {_.setMandatory}</button>
 				{/mandatory}
 				<!-- <button class="btn btn-sm" style="margin-left: 2em"><i class="fa fa-list-ul"></i> Review</button> -->
 
@@ -83,7 +92,7 @@
 
 	</div>
 {:else}
-	<p>No clients are currently registered.</p>
+	<p>{_.noclients}</p>
 {/clients}
 </div>
 

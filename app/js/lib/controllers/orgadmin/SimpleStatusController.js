@@ -5,6 +5,7 @@ define(function(require, exports, module) {
 		$ = require('jquery'),
 		Controller = require('../Controller'),
 		EventEmitter = require('../../EventEmitter'),
+		Dictionary = require('../../Dictionary'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		OrgStatus = require('../../models/OrgStatus'),
 		LDAPStatus = require('../../models/LDAPStatus')
@@ -27,8 +28,9 @@ define(function(require, exports, module) {
 
 			this._super();
 
-			this.tmp = new TemplateEngine(template);
-			this.tmpLDAP = new TemplateEngine(templateldapstatus);
+			this.dict = new Dictionary();
+			this.tmp = new TemplateEngine(template, this.dict);
+			this.tmpLDAP = new TemplateEngine(templateldapstatus, this.dict);
 			this.ebind("click", ".actRepeat", "actRepeat");
 
 		},

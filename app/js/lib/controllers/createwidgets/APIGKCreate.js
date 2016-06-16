@@ -25,7 +25,7 @@ define(function(require, exports, module) {
 			this.feideconnect = feideconnect;
 			this.app = app;
 			this.dict = new Dictionary();
-			this.template = new TemplateEngine(template);
+			this.template = new TemplateEngine(template, this.dict);
 
 			this.verifiedidentifier = null;
 			this.verified = false;
@@ -73,7 +73,6 @@ define(function(require, exports, module) {
 
 		"draw": function() {
 			var view = {
-				"_": this.dict.get(),
 				"orgInfo": this.app.getOrgInfo(),
 				"_config": this.app.app.config
 			};

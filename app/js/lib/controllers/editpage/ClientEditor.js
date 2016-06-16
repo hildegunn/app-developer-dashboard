@@ -37,8 +37,8 @@ define(function(require) {
 			this.template.loadPartial("apilisting", apilistingTemplate);
 			// this.template.loadPartial("apilistingpublic", publicAPIListingTemplate);
 
-			this.apipublictemplate = new TemplateEngine(publicAPIListingTemplate);
-			this.apiowntemplate = new TemplateEngine(ownAPIListingTemplate);
+			this.apipublictemplate = new TemplateEngine(publicAPIListingTemplate, this.dict);
+			this.apiowntemplate = new TemplateEngine(ownAPIListingTemplate, this.dict);
 
 			this.ebind("click", ".actAPIadd", "actAPIadd");
 			this.ebind("click", ".actAPIScopeUpdate", "actAPIScopeUpdate");

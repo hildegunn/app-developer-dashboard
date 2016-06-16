@@ -41,6 +41,19 @@
 	"apirules": "The format of the endpoint MUST be HTTPS, a valid hostname, an optional portnumber, an optional path, and no trailing slash.",
 	"inexample": "In example:",
 
+
+	"accessdatasources": "Access to data sources",
+	"manageapiauthorizations": "Manage access to data sources (APIs)",
+
+	"madatoryapps": "Mandatory applications",
+	"managemandatory": "Manage mandatory applications",
+	"mandatory": "Mandatory",
+	"removeMandatory": "Remove mandatory",
+	"setMandatory": "Set mandatory",
+	"privateuse": "Private use",
+	"noclients": "No clients are currently registered.",
+	"nomandatory": "This organization has listed no mandatory applications",
+
 	"forquestions": "For questions",
 	"contact": "contact",
 	"reportissues": "report issues",

@@ -33,7 +33,8 @@ define(function(require, exports, module) {
 
 			this._super();
 
-			this.tmp = new TemplateEngine(template);
+			this.dict = new Dictionary();
+			this.tmp = new TemplateEngine(template, this.dict);
 
 			this.ebind("click", ".actSaveChanges", "actSaveChanges");
 
