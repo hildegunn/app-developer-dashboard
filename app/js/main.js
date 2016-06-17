@@ -18,7 +18,8 @@ requirejs.config({
 		"dict": "/dictionaries/dictionary.en.json",
 		"bootstrap": "/bower_components/bootstrap/dist/js/bootstrap.min",
 		"es6-promise": "/bower_components/es6-promise/promise",
-		"selectize": "/bower_components/selectize/dist/js/standalone/selectize"
+		"selectize": "/bower_components/selectize/dist/js/standalone/selectize",
+		"flot": "/bower_components/flot/jquery.flot.time"
 	},
 	shim: {
 		"dust": {
@@ -29,6 +30,9 @@ requirejs.config({
 		},
 		"selectize": {
 			"deps": ["jquery"]	
+		},
+		"flot": {
+			"deps": ["jquery", "/bower_components/flot/jquery.flot.js"]
 		}
 	}
 });

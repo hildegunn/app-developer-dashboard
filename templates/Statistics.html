@@ -1,0 +1,30 @@
+
+
+
+<div id="statplot" style="width:900px;height:200px; margin-top: 2em"></div>
+
+
+
+<div class="row" style="margin-top: 2em">
+	<div class="col-md-4">
+		<h1 class="text-center">{total} logins</h1>
+		<p class="text-center">last 4 days</p>
+	</div>
+	<div class="col-md-8">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Authentication source</th>
+					<th>Logins last 4 days</th>
+				</tr>
+				{#authsources}
+					<tr>
+						<td>{authsource}</td>
+						<td>{count}</td>
+					</tr>
+				{/authsources}
+			</thead>
+		</table>
+	</div>
+	
+</div>

@@ -205,9 +205,9 @@ define(function(require, exports, module) {
 
 				try {
 					var client = that.clientpool.getClient(clientid);
-					that.clienteditor.edit(client, 'tabBasic');
+					that.clienteditor.edit(client, 'tabOverview');
 					that.app.orgRoleSelector.hide();
-					that.app.setHash('/' + that.orgid + '/clients/' + clientid + '/edit/tabBasic');
+					that.app.setHash('/' + that.orgid + '/clients/' + clientid + '/edit/tabOverview');
 
 				} catch (err) {
 					that.app.setErrorMessage("Error opening client", "danger", err);

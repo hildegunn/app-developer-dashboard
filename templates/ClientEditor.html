@@ -39,13 +39,20 @@
 
 				<h1>{name}</h1>
 				<p>Client ID: <code>{id}</code></p>
+
+				
 				<p>{descr}</p>
-				<p style="margin:0px">Redirect URLs:</p>
+				<p style="margin:0px">Redirect URIs:</p>
 				<ul style="margin-top: 0px; font-size: 85%">
 					{#redirect_uri}
 					<li><tt>{.}</tt></li>
 					{/redirect_uri}
 				</ul>
+
+
+
+
+
 
 				<p style="margin: 0px">
 					<span style=" color: #555">Registered {createdAgo}</span> 
@@ -53,8 +60,18 @@
 					<span style="margin-left: 2em;  color: #555">Updated {updatedAgo}</span> 
 						<span style="color: #999"><i class="glyphicon glyphicon-time"></i> {updatedH}</span>
 				</p>
+				
+
+
+
+				<div id="stats"></div>
+
 
 				{/client}
+
+
+
+
 
 
 

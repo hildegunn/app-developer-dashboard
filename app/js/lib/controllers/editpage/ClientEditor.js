@@ -7,11 +7,15 @@ define(function(require) {
 		utils = require('../../utils'),
 		StringSet = require('../../StringSet'),
 		Dictionary = require('../../Dictionary'),
+		Waiter = require('../../Waiter'),
 
+		Statistics = require('../../data/Statistics'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		AuthProviderSelector = require('../AuthProviderSelector'),
-		Waiter = require('../../Waiter'),
+
 		$ = require('jquery');
+
+		require('flot');
 
 
 	var clientTemplate = require('text!templates/ClientEditor.html');
@@ -208,8 +212,15 @@ define(function(require) {
 			};
 
 
+			var stats = new Statistics(this.app.feideconnect, item.id);
 
-			// var stats = new Statistics(this.app.feideconnect);
+			stats.onLoaded()
+				.then(function() {
+					var s = stats.getStats(item.id);
+					console.log(s);
+				});
+
+			
 
 			var includeHidden = this.usercontext.isPlatformAdmin();
 			var scopes = item.getScopes(this.scopePolicy, includeHidden);
@@ -314,6 +325,10 @@ define(function(require) {
 						tab = setTab;
 					}
 					that.selectTab(tab);
+
+
+					that.el.find('#stats').empty().append(stats.el);
+
 
 					// console.error("Load AuthProviderSelector()", that.current.organization);
 
