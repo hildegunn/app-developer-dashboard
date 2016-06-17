@@ -23,6 +23,7 @@ node_modules/grunt-cli/bin/grunt build
 #     git clone git@scm.uninett.no:feide-connect/dataporten-resources.git
 # fi
 
+rm -rf dataporten-resources
 git clone git@scm.uninett.no:feide-connect/dataporten-resources.git
 
 cp -a dataporten-resources/fonts/* bower_components/uninett-bootstrap-theme/fonts
