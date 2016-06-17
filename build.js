@@ -10,7 +10,8 @@
 		"dict": "_",
 		"es6-promise": "../../bower_components/es6-promise/promise",
 		"bootstrap": "../../bower_components/bootstrap/dist/js/bootstrap.min",
-		"selectize": "../../bower_components/selectize/dist/js/standalone/selectize"
+		"selectize": "../../bower_components/selectize/dist/js/standalone/selectize",
+		"flot": "../../bower_components/flot/jquery.flot.time"
 	},
 	shim: {
 		"dust": {
@@ -18,6 +19,9 @@
 		},
 		"bootstrap": {
 			"deps": ["jquery"]
+		},
+		"flot": {
+			"deps": ["jquery", "../../bower_components/flot/jquery.flot.js"]
 		}
 	},
 	name: "../../bower_components/almond/almond",
