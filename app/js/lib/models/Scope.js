@@ -15,13 +15,13 @@ define(function(require, exports, module) {
 
 
 			if (props.scope) {
-				var foundbasic = props.scope.match(/^gk_([a-z0-9]+)$/);
+				var foundbasic = props.scope.match(/^gk_([a-z0-9\-]+)$/);
 				if (foundbasic) {
 					this.isBasic = true;
 					this.apigk = foundbasic[1];
 				} else {
 
-					var foundsubscope = props.scope.match(/^gk_([a-z0-9]+)_([a-z0-9]+)$/);
+					var foundsubscope = props.scope.match(/^gk_([a-z0-9\-]+)_([a-z0-9\-]+)$/);
 					if (foundsubscope) {
 						this.isBasic = false;
 						this.apigk = foundsubscope[1];
