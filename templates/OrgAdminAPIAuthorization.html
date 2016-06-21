@@ -78,8 +78,9 @@
 		{/client}
 
 		{#apis}
-			<div class="row">
+			<div class="row" style="margin-top: 10px">
 				<div class="col-md-6 col-md-offset-1">
+
 
 					<div class="media">
 						<div class="media-left">
@@ -96,12 +97,22 @@
 				</div>
 
 				<div class="col-md-5">
-					{#owner}
-						<p>
-							<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/userinfo/v1/user/media/{id}"> &nbsp;&nbsp;
-							{name}
-						</p>
-					{/owner}
+					{?apigktrustOwner}
+						{#owner}
+							<p>
+								<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/userinfo/v1/user/media/{id}"> &nbsp;&nbsp;
+								{name}
+							</p>
+						{/owner}
+					{/apigktrustOwner}
+					{?apigktrustOrg}
+						{#organization}
+							<p>
+								<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/orgs/{id}/logo"> &nbsp;&nbsp;
+								{name}
+							</p>
+						{/organization}
+					{/apigktrustOrg}
 				</div>
 			</div>
 
