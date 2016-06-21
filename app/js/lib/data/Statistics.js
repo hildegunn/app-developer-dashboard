@@ -88,7 +88,7 @@ define(function(require, exports, module) {
 			this.authsources[data.authsource] += data.login_count;
 			this.total += data.login_count;
 
-			console.log("ADDING TOTAL ", this.total);
+			// console.log("ADDING TOTAL ", this.total);
 
 			if (this.first === null) {
 				this.first = timeslot;
@@ -112,7 +112,7 @@ define(function(require, exports, module) {
 				for(var i = 0; i < that.data.length; i++) {
 					var timeslot = moment(that.data[i].timeslot);
 					var timeidx = timeslot.format('YYYY-MM-DD HH');
-					console.log("INSERT " + timeidx + that.data[i]);
+					// console.log("INSERT " + timeidx + that.data[i]);
 					that.insertProcessedItem(timeidx, moment(timeidx + ':00'), that.data[i])
 				}
 
@@ -150,10 +150,10 @@ define(function(require, exports, module) {
 			for(var i = 0; i < this.processedFilled.length; i++) {
 				var x = this.processedFilled[i];
 				dataset.push([x.timeslot.toDate(), x.total ]);
-				console.log (x.timeslot.format('YYYY-MM-DD HH') + ' ' + x.total)
+				// console.log (x.timeslot.format('YYYY-MM-DD HH') + ' ' + x.total)
 			}
-			console.log(this.processed);
-			console.log("DATASET", dataset);
+			// console.log(this.processed);
+			// console.log("DATASET", dataset);
 
 
 			var authsourcesData = [];
@@ -170,7 +170,7 @@ define(function(require, exports, module) {
 				"authsources": authsourcesData,
 				"total": this.total
 			};
-			console.log("View", view, this.authsources);
+			// console.log("View", view, this.authsources);
 			this.el.empty();
 			return this.template.render(this.el, view)
 				.then(function() {
