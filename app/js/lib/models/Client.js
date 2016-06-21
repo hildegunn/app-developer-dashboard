@@ -42,6 +42,11 @@ define(function(require, exports, module) {
 
 		"hasEnabledTestUsers": function() {
 
+
+			if (!this.authproviders) {
+				return false;
+			}
+			
 			var i;
 			for(i = 0; i < this.authproviders.length; i++) {
 				if (this.authproviders[i] === 'all') {
