@@ -285,8 +285,19 @@ define(function(require, exports, module) {
 			this.clientpool.onLoaded()
 				.then(function() {
 					var apigk = that.clientpool.getAPIGK(apigkid);
+
+
+					if (apigk === null) {
+						return that.feideconnect.getAPIGK(apigkid)
+							.then(function(data) {
+								return new APIGK(data);
+							});
+					}
+					return apigk;
+				})
+				.then(function(apigk) {
 					// console.error("About to edit ", apigkid, "on tab ", tabid, apigk);
-					that.apigkeditor.edit(apigk, tabid);
+					return that.apigkeditor.edit(apigk, tabid);
 				});
 		},
 
