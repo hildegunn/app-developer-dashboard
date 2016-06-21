@@ -212,7 +212,7 @@ define(function(require, exports, module) {
 		"addOrgAdmin": function(orgid) {
 			var that = this;
 
-			this.feideconnect.getOrg(orgid)
+			return this.feideconnect.getOrg(orgid)
 				.then(function(org) {
 
 					that.orgRoleSelector.addOrg(org);
@@ -220,8 +220,8 @@ define(function(require, exports, module) {
 					that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid));
 					that.pc.add(that.orgApps[orgid]);
 
+					return that.orgApps[orgid];
 				});
-
 
 		},
 
@@ -273,12 +273,29 @@ define(function(require, exports, module) {
 		// orgid = "_" means personal space
 		"getOrgApp": function(orgid) {
 
-			if (!this.orgApps.hasOwnProperty(orgid)) {
-				throw new Error("Could not find org app for " + orgid);
-			}
+			var that = this;
+			return that.usercontext.onLoaded()
+				.then(function() {
 
-			var orgApp = this.orgApps[orgid];
-			return orgApp.onLoaded();
+					if (!that.orgApps.hasOwnProperty(orgid)) {
+
+						if (that.usercontext.isPlatformAdmin()) {
+							console.log("Loading an platformadmin orgapp ", orgid);
+							return that.addOrgAdmin(orgid);
+						}
+
+
+						throw new Error("Could not find org app for " + orgid);
+					}
+
+					var orgApp = that.orgApps[orgid];
+					return orgApp.onLoaded();
+
+
+				});
+
+
+
 		},
 
 
