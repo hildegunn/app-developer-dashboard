@@ -210,6 +210,7 @@ define(function(require, exports, module) {
 					that.app.setHash('/' + that.orgid + '/clients/' + clientid + '/edit/tabOverview');
 
 				} catch (err) {
+					console.error("ERROR", err);
 					that.app.setErrorMessage("Error opening client", "danger", err);
 				}
 			});
@@ -261,6 +262,18 @@ define(function(require, exports, module) {
 			this.clientpool.onLoaded()
 				.then(function() {
 					var client = that.clientpool.getClient(clientid);
+
+					if (client === null) {
+						return that.feideconnect.getClient(clientid)
+							.then(function(data) {
+								return new Client(data);
+							});
+					}
+
+					return client;
+
+				})
+				.then(function(client) {
 					// console.error("About to edit ", clientid, "on tab ", tabid, client);
 					that.clienteditor.edit(client, tabid);
 				});

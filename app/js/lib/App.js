@@ -368,9 +368,13 @@ define(function(require, exports, module) {
 			var that = this;
 			this.feideconnect.onAuthenticated()
 				.then(function() {
+					return that.usercontext.onLoaded();
+				})
+				.then(function() {
 					return that.getOrgApp(orgid)
 				})
 				.then(function(orgApp) {
+
 					that.orgRoleSelector.setOrg(orgid, false);
 					that.orgRoleSelector.hide();
 					orgApp.editClient(clientid, tabid);
