@@ -447,28 +447,32 @@ define(function(require, exports, module) {
 		"routeMainlisting": function(orgid) {
 
 			var that = this;
-			if (!orgid) {
-				orgid = '_';
-				this.setHash('/' + orgid);
-			}
-			this.orgRoleSelector.setOrg(orgid, false);
-			this.orgRoleSelector.show();
-
-			if (orgid === '_neworg') {
-				return this.newOrgController.activate();
-			}
-			if (orgid === '_platformadmin') {
-				return this.platformadminController.activate();
-			}
 
 			return this.feideconnect.onAuthenticated()
+				.then(that.orgRoleSelector.onLoaded())
 				.then(function() {
+
+					if (!orgid) {
+						orgid = that.orgRoleSelector.getDefaultRole()
+						that.setHash('/' + orgid);
+					}
+					that.orgRoleSelector.setOrg(orgid, false);
+					that.orgRoleSelector.show();
+
+					if (orgid === '_neworg') {
+						return that.newOrgController.activate();
+					}
+					if (orgid === '_platformadmin') {
+						return that.platformadminController.activate();
+					}
+
 					return that.getOrgApp(orgid)
+						.then(function(orgApp) {
+							orgApp.actMainlisting();
+							orgApp.activate();
+						});
 				})
-				.then(function(orgApp) {
-					orgApp.actMainlisting();
-					orgApp.activate();
-				})
+
 				.catch(function(err) {
 					console.error("err", err);
 					that.setErrorMessage("Error loading Mainlisting", "danger", err);

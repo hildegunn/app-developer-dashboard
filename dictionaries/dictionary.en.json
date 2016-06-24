@@ -191,6 +191,7 @@
 	"regnoaccessdetails": "Only accounts associated with an authenticated Feide user is allowed to register personal applications and APIs. Since your account is not associated with Feide, you need to register your applications and APIs to a service provider account. If you are not associated with a service provider already, you may request to do so from here.",
 
 	"personalaccts": "Personal accounts",
-	"personalacctsinfo": "When users are accessing applications and APIs registered with your personal account, information about you will displayed as part of the login flow. We strongly reccomend that you register your company as a Dataporten service provider, and register your official applications to that account."
+
+	"personalacctsinfo": "When users are accessing applications and APIs registered with your personal account, information about you will displayed as part of the login flow."
 
 }
