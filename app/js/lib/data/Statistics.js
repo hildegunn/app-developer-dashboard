@@ -56,9 +56,11 @@ define(function(require, exports, module) {
 
 		"loadData": function() {
 			var that = this;
+			// console.log(" [Statistics] About to load data for " + this.clientid)
 			return this.feideconnect.getClientStats(this.clientid, {"num_days": 4})
 				.then(function(data) {
 					that.data = data;
+					// console.log(" [Statistics] Data loaded ", data)
 				})
 				.then(that.proxy("process"))
 				.then(that.proxy("draw"))
@@ -107,6 +109,7 @@ define(function(require, exports, module) {
 
 		"process": function() {
 			var that = this;
+
 			return new Promise(function(resolve, reject) {
 
 				for(var i = 0; i < that.data.length; i++) {
@@ -117,7 +120,7 @@ define(function(require, exports, module) {
 				}
 
 				if (that.first === null) {
-					return;
+					resolve()
 				}
 
 				var ix = 0;
@@ -137,8 +140,6 @@ define(function(require, exports, module) {
 					fillrunn.add(1, "hour");
 				}
 
-
-
 				// that.processed = that.data;
 				resolve();
 			});
@@ -147,10 +148,14 @@ define(function(require, exports, module) {
 		"draw": function() {
 			var that = this;
 			var dataset = [];
+
 			for(var i = 0; i < this.processedFilled.length; i++) {
 				var x = this.processedFilled[i];
 				dataset.push([x.timeslot.toDate(), x.total ]);
-				// console.log (x.timeslot.format('YYYY-MM-DD HH') + ' ' + x.total)
+				// if (x.total > 0) {
+				// 	console.log (x.timeslot.format('YYYY-MM-DD HH') + ' ' + x.total)
+				// }
+
 			}
 			// console.log(this.processed);
 			// console.log("DATASET", dataset);
