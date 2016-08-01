@@ -115,7 +115,7 @@ define(function(require, exports, module) {
 				for(var i = 0; i < that.data.length; i++) {
 					var timeslot = moment(that.data[i].timeslot);
 					var timeidx = timeslot.format('YYYY-MM-DD HH');
-					// console.log("INSERT " + timeidx + that.data[i]);
+					// console.log("INSERT ", timeidx, timeslot, that.data[i]);
 					that.insertProcessedItem(timeidx, moment(timeidx + ':00'), that.data[i])
 				}
 
@@ -180,6 +180,8 @@ define(function(require, exports, module) {
 			return this.template.render(this.el, view)
 				.then(function() {
 
+
+					// console.log(" [Statistics] Plot data", dataset)
 					$.plot(that.el.find("#statplot"), [dataset], {
 						grid: {
 						},
@@ -193,7 +195,8 @@ define(function(require, exports, module) {
 							// tickSize: 1,
 							// from: now.clone().startOf('day').valueOf(),
 							// to: now.clone().endOf('day').valueOf(),
-							mode: "time"
+							mode: "time",
+							timezone: "browser"
 						}
 					});
 				});
