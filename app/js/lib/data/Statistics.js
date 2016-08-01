@@ -125,7 +125,7 @@ define(function(require, exports, module) {
 
 				var ix = 0;
 				var fillrunn = that.first.clone();
-				while (that.last.isAfter(fillrunn)) {
+				while (!that.last.isBefore(fillrunn)) {
 					// if (ix++ > 10) { break; }
 					var fidx = fillrunn.format('YYYY-MM-DD HH');
 					if (that.processed[fidx]) {
