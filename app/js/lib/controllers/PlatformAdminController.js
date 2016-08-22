@@ -20,6 +20,7 @@ define(function(require, exports, module) {
 	var pclients = require('text!templates/partials/PClients.html');
 	var papis = require('text!templates/partials/PAPIs.html');
 	var porgs = require('text!templates/partials/POrgs.html');
+	var pstatistics = require('text!templates/partials/PStatistics.html');
 
 
 	require('selectize');
@@ -47,10 +48,15 @@ define(function(require, exports, module) {
 			this.template.loadPartial("pclients", pclients);
 			this.template.loadPartial("papis", papis);
 			this.template.loadPartial("porgs", porgs);
+			this.template.loadPartial("pstatistics", pstatistics);
 
 			this._super();
 
 			this.orgPool = new OrganizationPool(this.feideconnect);
+			var date = new Date();
+			date.setDate(date.getDate() - 1);
+			this.statisticsDate = date.toISOString().substring(0, 10);
+			this.statsPromise = this.loadStatistics();
 
 			this.selectedOrg = null;
 
@@ -66,13 +72,34 @@ define(function(require, exports, module) {
 
 		},
 
+		"loadStatistics": function() {
+			console.log('loading statistics');
+			var that = this;
+			var _config = this.feideconnect.getConfig();
+			var url = _config.apis.core + '/statistics/' + this.statisticsDate + '/';
+			var promise = that.feideconnect.jso.ajax({
+				url: url
+			});
+			promise.then(function(data) {
+				var stats = [];
+				for(var key in data) {
+					stats.push({
+						'name': key,
+						'value': data[key]
+					});
+				}
+				that.statistics = stats;
+			});
+			return promise;
+		},
 
 		"initLoad": function() {
 			var that = this;
 			return Promise.all([
 					this.app.publicClientPool.onLoaded(),
 					this.app.publicapis.onLoaded(),
-					this.orgPool.onLoaded()
+					this.orgPool.onLoaded(),
+					this.statsPromise
 				])
 				.then(that.proxy("draw"))
 				.then(that.proxy("_initLoaded"))
@@ -207,6 +234,7 @@ define(function(require, exports, module) {
 				"orgs": view.orgs.home.orgs.length,
 				"sps": view.orgs.services.orgs.length,
 			};
+			view.statistics = this.statistics;
 			// view.orgs = this.orgPool.getView();
 
 			// console.error("Platform admin view is ", view);
