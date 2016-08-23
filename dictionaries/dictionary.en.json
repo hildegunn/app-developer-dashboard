@@ -192,10 +192,10 @@
 
 	"personalaccts": "Personal accounts",
 	"personalacctsinfo": "When users are accessing applications and APIs registered with your personal account, information about you will displayed as part of the login flow. We strongly reccomend that you register your company as a Dataporten service provider, and register your official applications to that account.",
-	"stats_users": "Number of registered users",
-	"stats_clients": "Number of clients with NUM or more users",
-	"stats_apigks": "Number of api gatekeepers with NUM or more users",
-	"stats_organizations": "Number of host organizations",
+	"stats_users": "Registered users",
+	"stats_clients": "Clients with NUM or more users",
+	"stats_apigks": "API Gatekeepers with NUM or more users",
+	"stats_organizations": "Host organizations",
 	"stats_apigk_max_clients": "Maximum number of clients for an API Gatekeeper",
-	"reused_apigks": "Number of API gatekeepers used by more than one client"
+	"reused_apigks": "API Gatekeepers used by more than one client"
 }
