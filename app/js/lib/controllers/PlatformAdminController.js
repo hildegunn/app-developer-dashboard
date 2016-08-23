@@ -109,7 +109,7 @@ define(function(require, exports, module) {
 					var re = /^([^\d]+)(\d+)([^\d]*)$/;
 					var m1 = a.name.match(re);
 					var m2 = b.name.match(re);
-					if (m1 && m2 && m1[1] === m2[1] && m1[3] == m2[3]) {
+					if (m1 && m2 && m1[1] === m2[1] && m1[3] === m2[3]) {
 						return parseInt(m1[2]) - parseInt(m2[2]);
 					}
 					return a.name.localeCompare(b.name);
