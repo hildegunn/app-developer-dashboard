@@ -105,6 +105,7 @@ define(function(require, exports, module) {
 						'value': data[key]
 					});
 				}
+				stats.sort(function(a, b) {return a.name.localeCompare(b.name);});
 				that.statistics = stats;
 			});
 			return promise;
