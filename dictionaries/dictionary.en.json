@@ -197,5 +197,5 @@
 	"stats_apigks": "API Gatekeepers with NUM or more users",
 	"stats_organizations": "Host organizations",
 	"stats_apigk_max_clients": "Maximum number of clients for an API Gatekeeper",
-	"reused_apigks": "API Gatekeepers used by more than one client"
+	"stats_reused_apigks": "API Gatekeepers used by more than one client"
 }
