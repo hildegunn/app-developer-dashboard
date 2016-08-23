@@ -7,7 +7,7 @@
 	<div class="col-md-8">
 
 
-		<h4>Dataporten status for organization</h4>
+		<h4>{_.orgstatus_heading}</h4>
 
 
 
@@ -19,13 +19,13 @@
 				<td style="text-align: right">
 
 					{#s.avtale}
-						<span class="label label-success"><i class="fa fa-check-square-o"></i> OK</span>
+						<span class="label label-success"><i class="fa fa-check-square-o"></i> {_.orgstatus_ok}</span>
 					{:else}
-						<span class="label label-warning"><i class="fa fa-square-o"></i> Ikke registrert</span>
+						<span class="label label-warning"><i class="fa fa-square-o"></i> {_.orgstatus_not_registered}</span>
 					{/s.avtale}
 
 				</td>
-				<td>Databehandleravtale – signert og sendt UNINETT</td>
+				<td>{_.orgstatus_avtale_signed}</td>
 			</tr>
 
 
@@ -37,13 +37,13 @@
 				<td style="text-align: right">
 
 					{#s.auth}
-						<span class="label label-success"><i class="fa fa-check-square-o"></i> OK</span>
+						<span class="label label-success"><i class="fa fa-check-square-o"></i> {_.orgstatus_ok}</span>
 					{:else}
-						<span class="label label-warning"><i class="fa fa-square-o"></i> Nei</span>
+						<span class="label label-warning"><i class="fa fa-square-o"></i> {_.orgstatus_no}</span>
 					{/s.auth}
 
 				</td>
-				<td>Autentisering – åpnet for i Feides kundeportal</td>
+				<td>{_.orgstatus_auth}</td>
 			</tr>
 
 
@@ -53,7 +53,7 @@
 
 					{#s.LDAP}
 
-						<span class="label label-success"><i class="fa fa-check-square-o"></i> Konfigurert</span>
+						<span class="label label-success"><i class="fa fa-check-square-o"></i> {_.orgstatus_ok}</span>
 						<!--
 
 						{#ldapstatus.OK}
@@ -65,12 +65,12 @@
 						-->
 
 					{:else}
-						<span class="label label-warning"><i class="fa fa-square-o"></i> Avventer konfig</span>
+						<span class="label label-warning"><i class="fa fa-square-o"></i> {_.orgstatus_config_pendig}</span>
 					{/s.LDAP}
 
 				</td>
 
-				<td>LDAP-oppsett – Dataporten settes opp for å kommunisere med organisasjonens Feide katalog
+				<td>{_.orgstatus_ldap_setup}
 					{#ldapstatus.message}
 						<br> <span class="label label-danger"> {ldapstatus.message}</span>
 					{/ldapstatus.message}
@@ -87,13 +87,13 @@
 				<td style="text-align: right">
 
 					{#OK}
-						<span class="label label-success"><i class="fa fa-check"></i> OK</span>
+						<span class="label label-success"><i class="fa fa-check"></i> {_.orgstatus_ok}</span>
 					{:else}
-						<span class="label label-danger"><i class="fa fa-exclamation-triangle"></i> Feil</span>
+						<span class="label label-danger"><i class="fa fa-exclamation-triangle"></i> {_.orgstatus_error}</span>
 					{/OK}
 						&nbsp;
 				</td>
-				<td style="width: 100%">LDAP-endepunkt {name}
+				<td style="width: 100%">{_.orgstatus_ldap_endpoint} {name}
 					{#OK}
 					{:else}
 						<br> {result}
@@ -109,13 +109,13 @@
 				<td style="text-align: right">
 
 					{#s.PeopleSearch}
-						<span class="label label-success"><i class="fa fa-check-square-o"></i> OK</span>
+						<span class="label label-success"><i class="fa fa-check-square-o"></i> {_.orgstatus_ok}</span>
 					{:else}
-						<span class="label label-warning"><i class="fa fa-square-o"></i> Ikke åpnet</span>
+						<span class="label label-warning"><i class="fa fa-square-o"></i> {_.orgstatus_not_opened}</span>
 					{/s.PeopleSearch}
 
 				</td>
-				<td>Personsøk – Dataporten tillates Feide katalog for brukersøk</td>
+				<td>{_.orgstatus_peoplesearch}</td>
 			</tr>
 
 
@@ -124,13 +124,13 @@
 				<td style="text-align: right">
 
 					{#s.fsgroups}
-						<span class="label label-success"><i class="fa fa-check-square-o"></i> OK</span>
+						<span class="label label-success"><i class="fa fa-check-square-o"></i> {_.orgstatus_ok}</span>
 					{:else}
-						<span class="label label-warning"><i class="fa fa-square-o"></i> Ikke åpnet</span>
+						<span class="label label-warning"><i class="fa fa-square-o"></i> {_.orgstatus_not_opened}</span>
 					{/s.fsgroups}
 
 				</td>
-				<td>FS integrasjon – Dataporten tillates uttrekk av grupper fra institusjonens FS database.</td>
+				<td>{_.orgstatus_fsgroups}</td>
 			</tr>
 
 
@@ -139,13 +139,13 @@
 				<td style="text-align: right">
 
 					{#s.Geo}
-						<span class="label label-success"><i class="fa fa-check-square-o"></i> OK</span>
+						<span class="label label-success"><i class="fa fa-check-square-o"></i> {_.orgstatus_ok}</span>
 					{:else}
-						<span class="label label-warning"><i class="fa fa-square-o"></i> Ikke registrert</span>
+						<span class="label label-warning"><i class="fa fa-square-o"></i> {_.orgstatus_not_registered}</span>
 					{/s.Geo}
 
 				</td>
-				<td>Geografisk posisjon registrert – Dataporten registrerer koordinater for en eller flere Campus for å gjøre det enklere å finne riktig institusjon.</td>
+				<td>{_.orgstatus_geo_status}</td>
 			</tr>
 
 
@@ -162,10 +162,10 @@
 
 			<div class="media-body">
 				<h3 class="media-heading">{name}</h3>
-				<p>The registered realm is <tt>{realm}</tt>.</p>
+				<p>{_.orgstatus_realm_is} <tt>{realm}</tt>.</p>
 
 				{?s.Geo}
-					<h4>Geo koordinater</h4>
+					<h4>{_.orgstatus_geo_coordinates}</h4>
 					{#uiinfo.geo}
 						<p><i class="fa fa-map-marker"></i> {lat}, {lon} <a target="_blank" href="//www.google.com/maps/place/{lat},{lon}"><i class="fa fa-google"></i>-map</a></p>
 					{/uiinfo.geo}
@@ -173,9 +173,9 @@
 			</div>
 			<div class="media-right">
 				<div class="imagezone" style="min-height: 128px; min-width: 128px">
-					<img class="media-object itemlogo" src="{._config.apis.core}/orgs/{id}/logo" alt="Logo of organization {name}">
+					<img class="media-object itemlogo" src="{._config.apis.core}/orgs/{id}/logo" alt="{_.orgstatus_logo_of} {name}">
 				</div>
-				<p style="text-align: center"><i>Registrert logo</i></p>
+				<p style="text-align: center"><i>{_.orgstatus_registered_logo}</i></p>
 			</div>
 		</div>
 
