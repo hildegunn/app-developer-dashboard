@@ -93,9 +93,10 @@ define(function(require, exports, module) {
 				var stats = [];
 				for(var key in data) {
 					var match = key.match(/^(.*)_(\d+)$/);
+					var name = '';
 					if (match) {
 						var template = that.app.dict.getItem("stats_" + match[1]) || key;
-						var name = template.replace("NUM", match[2]);
+						name = template.replace("NUM", match[2]);
 					} else {
 						name = that.app.dict.getItem("stats_" + key) || key;
 					}
