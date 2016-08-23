@@ -12,6 +12,8 @@ define(function(require, exports, module) {
 		OrganizationPool = require('../models/OrganizationPool'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		Waiter = require('../Waiter'),
+		dp = require('bower/bootstrap-datepicker/dist/js/bootstrap-datepicker'),
+		moment = require('bower/momentjs/moment'),
 
 		$ = require('jquery');
 
@@ -53,10 +55,9 @@ define(function(require, exports, module) {
 			this._super();
 
 			this.orgPool = new OrganizationPool(this.feideconnect);
-			var date = new Date();
-			date.setDate(date.getDate() - 1);
-			this.statisticsDate = date.toISOString().substring(0, 10);
-			this.statsPromise = this.loadStatistics();
+			var date = moment();
+			date.subtract(1, 'days');
+			this.statsPromise = this.setStatisticsDate(date);
 
 			this.selectedOrg = null;
 
@@ -70,6 +71,11 @@ define(function(require, exports, module) {
 				that.actSearch(x);
 			});
 
+		},
+
+		"setStatisticsDate": function(moment) {
+			this.statisticsDate = moment.format('YYYY-MM-DD');
+			return this.loadStatistics();
 		},
 
 		"loadStatistics": function() {
@@ -203,6 +209,7 @@ define(function(require, exports, module) {
 		},
 
 		"draw": function() {
+			var that = this;
 			var view = {
 				"_": this.app.dict.get(),
 				"_config": this.feideconnect.getConfig()
@@ -235,11 +242,18 @@ define(function(require, exports, module) {
 				"sps": view.orgs.services.orgs.length,
 			};
 			view.statistics = this.statistics;
+			view.statsDate = this.statisticsDate;
 			// view.orgs = this.orgPool.getView();
 
 			// console.error("Platform admin view is ", view);
 			this.el.children().detach();
-			return this.template.render(this.el, view);
+			return this.template.render(this.el, view).then(function() {
+				$('.date').datepicker({
+					format: 'yyyy-mm-dd'
+				}).on('changeDate', function(e) {
+					that.setStatisticsDate(moment(e.date)).then(function() {that.draw();});
+				});
+			});
 		}
 
 	});

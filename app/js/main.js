@@ -16,6 +16,7 @@ requirejs.config({
 		"class": "class",
 		"jquery": "/bower_components/jquery/dist/jquery.min",
 		"dict": "/dictionaries/dictionary.en.json",
+		"bootstrap-datepicker": "/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min",
 		"bootstrap": "/bower_components/bootstrap/dist/js/bootstrap.min",
 		"es6-promise": "/bower_components/es6-promise/promise",
 		"selectize": "/bower_components/selectize/dist/js/standalone/selectize",
@@ -27,6 +28,9 @@ requirejs.config({
 		},
 		"bootstrap": {
 			"deps": ["jquery"]
+		},
+		"bootstrap-datepicker": {
+			"deps": ["jquery", "bootstrap"]
 		},
 		"selectize": {
 			"deps": ["jquery"]	
