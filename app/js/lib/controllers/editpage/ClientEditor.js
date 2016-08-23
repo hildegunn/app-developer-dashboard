@@ -133,6 +133,7 @@ define(function(require) {
 
 		"initLoad": function() {
 
+
 			return Promise.all([
 					this.loadScopeDef(),
 					this.publicapis.onLoaded()
@@ -217,10 +218,13 @@ define(function(require) {
 			stats.onLoaded()
 				.then(function() {
 					var s = stats.getStats(item.id);
-					console.log(s);
-				});
+					// console.log(s);
+				})
+				.catch(function(err) {
+					console.error("Error loading statistics for this client ", err);
+				})
 
-			
+
 
 			var includeHidden = this.usercontext.isPlatformAdmin();
 			var scopes = item.getScopes(this.scopePolicy, includeHidden);
@@ -245,7 +249,7 @@ define(function(require) {
 			]);
 
 			/*
-			 * From the list of API GK oriented scopes, such as gk_preferanse_foo 
+			 * From the list of API GK oriented scopes, such as gk_preferanse_foo
 			 * it will obtain a list of API model objects from the referring APIs
 			 * into the list myapis.
 			 */
@@ -310,7 +314,7 @@ define(function(require) {
 			view.hasEnabledTestUsers = item.hasEnabledTestUsers();
 
 
-			console.error("Client view..", view);
+			// console.error("Client view..", view);
 
 
 
@@ -319,6 +323,8 @@ define(function(require) {
 				.then(this.proxy("drawAPIs"))
 				.then(this.proxy("drawOwnAPIs"))
 				.then(function() {
+
+					// console.log(" ===> INIT LOAD ClientEditor")
 
 					var tab = that.currentTab;
 					if (setTab) {
@@ -346,10 +352,10 @@ define(function(require) {
 						});
 
 
-				})
-				.catch(function(err) {
-					that.app.app.setErrorMessage("Error loading client editor", "danger", err);
-				});
+					})
+					.catch(function(err) {
+						that.app.app.setErrorMessage("Error loading client editor", "danger", err);
+					});
 
 
 		},

@@ -33,6 +33,8 @@ define(function(require, exports, module) {
 			this.roles = {};
 			this.currentRole = '_';
 
+			this.defaultRole = '_';
+
 			this.tmp = new TemplateEngine(template, this.app.dict);
 
 			this.ebind("click", ".orgSelector a", "actSelect");
@@ -62,6 +64,7 @@ define(function(require, exports, module) {
 
 					for (var orgid in that.usercontext.groups) {
 
+						that.defaultRole = orgid;
 						that.roles[orgid] = new GroupOption({
 							"group": that.usercontext.groups[orgid]
 						});
@@ -96,6 +99,11 @@ define(function(require, exports, module) {
 				.catch(function(err) {
 					console.error("err", err);
 				})
+		},
+
+		"getDefaultRole": function() {
+			console.error("ROLE", this.roles);
+			return this.defaultRole;
 		},
 
 		"getRole": function(orgid) {

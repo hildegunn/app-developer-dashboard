@@ -55,12 +55,12 @@ app.use('/', express.static('app', {maxAge: '2 days'}));
 app.get('/version', function (req, res) {
 
 	var bowerlist = JSON.parse(fs.readFileSync('app/etc/bower-list.json', 'utf8'));
-	var gittag = fs.readFileSync('app/etc/version-git.txt', 'utf8').trim();
+	// var gittag = fs.readFileSync('app/etc/version-git.txt', 'utf8').trim();
 	var pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 
 	var data = {
 		"app": {
-			"git": gittag,
+			// "git": gittag,
 			"pkg": pkg
 		},
 		"bower": bowerlist

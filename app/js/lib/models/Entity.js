@@ -25,9 +25,9 @@ define(function(require, exports, module) {
 	var Entity = Model.extend({
 
 		/**
-		 * Takes a scope definition as input and returns all scopes that is defined in the 
+		 * Takes a scope definition as input and returns all scopes that is defined in the
 		 * scopedef, sorted into available, requested and accepted lists.
-		 * 
+		 *
 		 * @param  {[type]} scopedef Typically a global scope definition.
 		 * @return {[type]}          [description]
 		 */
@@ -56,7 +56,7 @@ define(function(require, exports, module) {
 			res.requested.sort(ssorter);
 			res.accepted.sort(ssorter);
 
-			console.error("Scope list", res);
+			// console.error("Scope list", res);
 
 			return res;
 		},
@@ -69,7 +69,7 @@ define(function(require, exports, module) {
 		"setDescr": function(descr) {
 			this.descr = descr;
 		},
-		
+
 		"addScopes": function(scopes) {
 			for (var i = 0; i < scopes.length; i++) {
 				this.addScope(scopes[i]);

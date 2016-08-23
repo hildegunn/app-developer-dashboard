@@ -56,9 +56,11 @@ define(function(require, exports, module) {
 
 		"loadData": function() {
 			var that = this;
+			// console.log(" [Statistics] About to load data for " + this.clientid)
 			return this.feideconnect.getClientStats(this.clientid, {"num_days": 4})
 				.then(function(data) {
 					that.data = data;
+					// console.log(" [Statistics] Data loaded ", data)
 				})
 				.then(that.proxy("process"))
 				.then(that.proxy("draw"))
@@ -107,22 +109,23 @@ define(function(require, exports, module) {
 
 		"process": function() {
 			var that = this;
+
 			return new Promise(function(resolve, reject) {
 
 				for(var i = 0; i < that.data.length; i++) {
 					var timeslot = moment(that.data[i].timeslot);
 					var timeidx = timeslot.format('YYYY-MM-DD HH');
-					// console.log("INSERT " + timeidx + that.data[i]);
+					// console.log("INSERT ", timeidx, timeslot, that.data[i]);
 					that.insertProcessedItem(timeidx, moment(timeidx + ':00'), that.data[i])
 				}
 
 				if (that.first === null) {
-					return;
+					resolve()
 				}
 
 				var ix = 0;
 				var fillrunn = that.first.clone();
-				while (that.last.isAfter(fillrunn)) {
+				while (!that.last.isBefore(fillrunn)) {
 					// if (ix++ > 10) { break; }
 					var fidx = fillrunn.format('YYYY-MM-DD HH');
 					if (that.processed[fidx]) {
@@ -137,8 +140,6 @@ define(function(require, exports, module) {
 					fillrunn.add(1, "hour");
 				}
 
-
-
 				// that.processed = that.data;
 				resolve();
 			});
@@ -147,10 +148,14 @@ define(function(require, exports, module) {
 		"draw": function() {
 			var that = this;
 			var dataset = [];
+
 			for(var i = 0; i < this.processedFilled.length; i++) {
 				var x = this.processedFilled[i];
 				dataset.push([x.timeslot.toDate(), x.total ]);
-				// console.log (x.timeslot.format('YYYY-MM-DD HH') + ' ' + x.total)
+				// if (x.total > 0) {
+				// 	console.log (x.timeslot.format('YYYY-MM-DD HH') + ' ' + x.total)
+				// }
+
 			}
 			// console.log(this.processed);
 			// console.log("DATASET", dataset);
@@ -175,6 +180,8 @@ define(function(require, exports, module) {
 			return this.template.render(this.el, view)
 				.then(function() {
 
+
+					// console.log(" [Statistics] Plot data", dataset)
 					$.plot(that.el.find("#statplot"), [dataset], {
 						grid: {
 						},
@@ -188,7 +195,8 @@ define(function(require, exports, module) {
 							// tickSize: 1,
 							// from: now.clone().startOf('day').valueOf(),
 							// to: now.clone().endOf('day').valueOf(),
-							mode: "time"
+							mode: "time",
+							timezone: "browser"
 						}
 					});
 				});
