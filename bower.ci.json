@@ -26,6 +26,7 @@
 		"almond": "~0.3.0",
 		"es6-promise": "*",
 		"js-cookie": "~2.0.4",
-		"flot": "*"
+		"flot": "*",
+		"bootstrap-datepicker": "*"
 	}
 }
