@@ -54,6 +54,8 @@ define(function(require, exports, module) {
 
 			this._super();
 
+			this.activeTab = "#clients";
+
 			this.orgPool = new OrganizationPool(this.feideconnect);
 			var date = moment();
 			date.subtract(1, 'days');
@@ -66,6 +68,7 @@ define(function(require, exports, module) {
 			this.ebind("click", ".apigkEntry", "actAPIGK");
 
 			this.ebind("change keyup", ".isearch", "actSearch");
+			this.ebind("shown.bs.tab", "", "tabChanged");
 
 			this.searchWaiter = new Waiter(function(x) {
 				that.actSearch(x);
@@ -207,6 +210,10 @@ define(function(require, exports, module) {
 
 		},
 
+		"tabChanged": function(e) {
+			this.activeTab = e.target.hash;
+		},
+
 		"activate": function() {
 			this.initLoad();
 			this._super();
@@ -226,6 +233,8 @@ define(function(require, exports, module) {
 			var _config = this.feideconnect.getConfig();
 			user.profile = _config.apis.core + '/userinfo/v1/user/media/' + user.profilephoto;
 
+			view.activeTabClass = {};
+			view.activeTabClass[this.activeTab.substring(1)] = "active";
 			view.userinfo = user;
 
 			view.orgs = {

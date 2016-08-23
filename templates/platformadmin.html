@@ -8,7 +8,6 @@
 		<div class="media-body">
 			<h4 class="media-heading">Platform administrasjon</h4>
 			<p>Kun for platform-adminitratorer av Dataporten. Vær varsom med hva du gjør.</p>
-			{> pstatistics /}
 		</div>
 
 		<!-- 	
@@ -27,15 +26,17 @@
 	<div>
 
 		<!-- Nav tabs -->
-		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active">
+		<ul id="patabs" class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="{activeTabClass.clients}">
 				<a href="#clients" aria-controls="clients" role="tab" data-toggle="tab">Clients <span class="badge">{counts.clients}</span></a></li>
-			<li role="presentation">
+			<li role="presentation" class="{activeTabClass.apigks}">
 				<a href="#apigks" aria-controls="apigks" role="tab" data-toggle="tab">API Gatekeepers <span class="badge">{counts.apigks}</span></a></li>
-			<li role="presentation">
+			<li role="presentation" class="{activeTabClass.organizationsh}">
 				<a href="#organizationsh" aria-controls="organizationsh" role="tab" data-toggle="tab">Organizations <span class="badge">{counts.orgs}</span></a></li>
-			<li role="presentation">
+			<li role="presentation" class="{activeTabClass.organizationss}">
 				<a href="#organizationss" aria-controls="organizationss" role="tab" data-toggle="tab">Service Providers <span class="badge">{counts.sps}</span></a></li>
+			<li role="presentation" class="{activeTabClass.statistics}">
+				<a href="#statistics" aria-controls="statistics" role="tab" data-toggle="tab">Statistics</span></a></li>
 			<!-- <li role="presentation">
 				<a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li> -->
 		</ul>
@@ -44,7 +45,7 @@
 		<div class="tab-content">
 
 
-			<div role="tabpanel" class="tab-pane active" id="clients">
+			<div role="tabpanel" class="tab-pane {activeTabClass.clients}" id="clients">
 
 
 				<div style="margin-top: 1em">
@@ -58,7 +59,7 @@
 				{> pclients /}
 			</div>
 
-			<div role="tabpanel" class="tab-pane" id="apigks">
+			<div role="tabpanel" class="tab-pane {activeTabClass.apigks}" id="apigks">
 				<div style="margin-top: 1em">
 					<form class="" role="search">
 						<div class="form-group">
@@ -71,7 +72,7 @@
 			</div>
 
 			
-			<div role="tabpanel" class="tab-pane" id="organizationsh">
+			<div role="tabpanel" class="tab-pane {activeTabClass.organizationsh}" id="organizationsh">
 				<div style="margin-top: 1em">
 					<form class="" role="search">
 						<div class="form-group">
@@ -85,7 +86,7 @@
 				{/orgs.home}
 			</div>
 			
-			<div role="tabpanel" class="tab-pane" id="organizationss">
+			<div role="tabpanel" class="tab-pane {activeTabClass.organizationss}" id="organizationss">
 				<div style="margin-top: 1em">
 					<form class="" role="search">
 						<div class="form-group">
@@ -98,7 +99,11 @@
 				{> porgs /}
 				{/orgs.services}
 			</div>
-			
+
+			<div role="tabpanel" class="tab-pane {activeTabClass.statistics}" id="statistics">
+			    {> pstatistics /}
+			</div>
+
 			<!-- <div role="tabpanel" class="tab-pane" id="settings">...</div> -->
 		</div>
 
