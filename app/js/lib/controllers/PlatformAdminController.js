@@ -89,8 +89,15 @@ define(function(require, exports, module) {
 			promise.then(function(data) {
 				var stats = [];
 				for(var key in data) {
+					var match = key.match(/^(.*)_(\d+)$/);
+					if (match) {
+						var template = that.app.dict.getItem("stats_" + match[1]) || key;
+						var name = template.replace("NUM", match[2]);
+					} else {
+						name = that.app.dict.getItem("stats_" + key) || key;
+					}
 					stats.push({
-						'name': key,
+						'name': name,
 						'value': data[key]
 					});
 				}
