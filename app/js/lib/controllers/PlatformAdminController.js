@@ -265,7 +265,8 @@ define(function(require, exports, module) {
 			this.el.children().detach();
 			return this.template.render(this.el, view).then(function() {
 				$('.date').datepicker({
-					format: 'yyyy-mm-dd'
+					format: 'yyyy-mm-dd',
+					autoclose: true
 				}).on('changeDate', function(e) {
 					that.setStatisticsDate(moment(e.date)).then(function() {that.draw();});
 				});
