@@ -20,8 +20,8 @@ define(function(require, exports, module) {
 
 	var 
 		template = require('text!templates/MainListing.html'),
-		templateC = require('text!templates/MainListingClients.html'),
-		templateA = require('text!templates/MainListingAPIGKs.html')
+		templateClients = require('text!templates/MainListingClients.html'),
+		templateAPIGKs = require('text!templates/MainListingAPIGKs.html')
 		;
 
 
@@ -43,8 +43,8 @@ define(function(require, exports, module) {
 			this.dict = new Dictionary();
 
 			dust.loadSource(dust.compile(template, "mainlisting"));
-			dust.loadSource(dust.compile(templateC, "mainlistingC"));
-			dust.loadSource(dust.compile(templateA, "mainlistingA"));
+			dust.loadSource(dust.compile(templateClients, "mainlistingClients"));
+			dust.loadSource(dust.compile(templateAPIGKs, "mainlistingAPIGKs"));
 
 			this.elClients = $("<div></div>");
 			this.elAPIGKs = $("<div></div>");
@@ -154,7 +154,7 @@ define(function(require, exports, module) {
 				"_": that.dict.get()
 			};
 
-			dust.render("mainlistingC", view, function(err, out) {
+			dust.render("mainlistingClients", view, function(err, out) {
 				that.elClients.empty().append(out);
 				if (!that.elClientsAttached && that.templateLoaded) {
 					that.el.find('#listingClients').append(that.elClients);
@@ -196,7 +196,7 @@ define(function(require, exports, module) {
 				"_": that.dict.get()
 			};
 
-			dust.render("mainlistingA", view, function(err, out) {
+			dust.render("mainlistingAPIGKs", view, function(err, out) {
 				that.elAPIGKs.empty().append(out);
 				if (!that.elAPIGKsAttached && that.templateLoaded) {
 					that.el.find('#listingAPIGKs').append(that.elAPIGKs);
