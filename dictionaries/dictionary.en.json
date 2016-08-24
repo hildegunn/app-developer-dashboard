@@ -114,6 +114,7 @@
 
 	"created": "Created",
 	"updated": "Updated",
+	"registered": "Registered",
 	"public": "Public",
 	"publicdescr": "By setting a group to be public, it means that anyone can search for and know about the existence of this group. Users may also use the group to setup access control. However whether a group is public or not does not impact who can be member or not.",
 

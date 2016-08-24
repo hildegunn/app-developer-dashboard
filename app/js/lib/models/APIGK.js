@@ -85,13 +85,11 @@ define(function(require, exports, module) {
 
 			if (this.created) {
 				res.created = parseDate(this.created);
-				res.createdAgo = res.created.fromNow();
 				res.createdH = res.created.format('D. MMM YYYY');
 			}
 
 			if (this.updated) {
 				res.updated = parseDate(this.updated);
-				res.updatedAgo = res.updated.fromNow();
 				res.updatedH = res.updated.format('D. MMM YYYY');
 			}
 
