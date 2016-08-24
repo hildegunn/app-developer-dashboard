@@ -7,7 +7,7 @@
 
 
 		<p>
-			<button class="btn btn-primary pull-right actScopesSaveChanges"><i class="fa fa-check"></i>&nbsp;Save changes</button>
+			<button class="btn btn-primary pull-right actScopesSaveChanges"><i class="fa fa-check"></i>&nbsp;{_.savechanges}</button>
 		</p>
 
 
@@ -36,22 +36,22 @@
 						{#existing.scopedef.policy.auto}
 							<span class="label label-success">
 								<i class="fa fa-check"></i>&nbsp;
-								Accept</span>
+								{_.accept}</span>
 						{:else}
 							<span class="label label-danger">
 								<i class="fa fa-check-square-o"></i>&nbsp;
-								Moderate</span>
+								{_.moderate}</span>
 						{/existing.scopedef.policy.auto}
 					</td>
 					<td>
 						{#existing.scopedef.policy.orgadmin.moderate}
 							<span class="label label-danger">
 								<i class="fa fa-check-square-o"></i>&nbsp;
-								Moderate</span>
+								{_.moderate}</span>
 						{:else}
 							<span class="label label-success">
 								<i class="fa fa-check"></i>&nbsp;
-								Accept</span>
+								{_.accept}</span>
 						{/existing.scopedef.policy.orgadmin.moderate}
 					</td>
 				</tr>
@@ -66,29 +66,29 @@
 							{#policy.auto}
 								<span class="label label-success">
 									<i class="fa fa-check"></i>&nbsp;
-									Accept</span>
+									{_.accept}</span>
 							{:else}
 								<span class="label label-danger">
 									<i class="fa fa-check-square-o"></i>&nbsp;
-									Moderate</span>
+									{_.moderate}</span>
 							{/policy.auto}
 						</td>
 						<td>
 							{#policy.orgadmin.moderate}
 								<span class="label label-danger">
 									<i class="fa fa-check-square-o"></i>&nbsp;
-									Moderate</span>
+									{_.moderate}</span>
 							{:else}
 								<span class="label label-success">
 									<i class="fa fa-check"></i>&nbsp;
-									Accept</span>
+									{_.accept}</span>
 
 							{/policy.orgadmin.moderate}
 						</td>
 					</tr>
 
 				{:else}
-					<tr><td colspan="4">No subscopes</td></tr>
+					<tr><td colspan="4">{_.no_subscopes}</td></tr>
 				{/existing.scopedef.subscopes}
 
 

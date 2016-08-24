@@ -14,7 +14,7 @@
 			<li role="presentation" data-tabid="tabScopes" class=""><a href="#">{_.permissions}</a></li>
 			<li role="presentation" data-tabid="tabAPI" class=""><a href="#">{_.thirdpartyapis}</a></li>
 
-			<!-- <li role="presentation" data-tabid="tabStatistics" class=""><a href="#">Usage statistics</a></li> -->
+			<!-- <li role="presentation" data-tabid="tabStatistics" class=""><a href="#">{_.usage_statistics}</a></li> -->
 			<li role="presentation" data-tabid="tabDelete" class=""><a href="#">{_.delete}</a></li>
 		</ul>
 
@@ -96,7 +96,7 @@
 
 					<div class="form-group">
 						<label for="name">{_.name}</label>
-						<input style="font-size: 150%" type="text" class="form-control" id="name" placeholder="Name of client application" value="{name}">
+						<input style="font-size: 150%" type="text" class="form-control" id="name" placeholder="{_.name_of_client_application}" value="{name}">
 					</div>
 
 					<div class="form-group">
@@ -173,7 +173,7 @@
 					<img class="itemlogo" src="{_config.apis.core}/clientadm/clients/{client.id}/logo" style="padding: 5px; border: 1px solid #ddd; border-radius: 4px; backgroud: #eee" />
 				</div>
 
-				<p>Drag a new square (1:1) PNG logo over the current one to replace it. <br /><span style="font-size: 90%">Minimum 128px</span></p>
+				<p>{_.drag_replace_png} <br /><span style="font-size: 90%">{_.minimum_128px}</span></p>
 			</div>
 
 		</div>
@@ -249,9 +249,9 @@
 			<div style="" class="row gutter">
 				<div class="col-sm-12">
 
-					<h1>OAuth 2.0 and OpenID Connect</h1>
+					<h1>{_.oauth20_and_oidc}</h1>
 
-					<p>All APIs at Dataporten are protected with OAuth 2.0. The first thing you would need to configure in your client is the OAuth 2.0 flow to let your client obtain an OAuth token for the current user, and then your client may use this token to access the various APIs.</p>
+					<p>{_.client_configure_oauth2}</p>
 
 					<p><a target="_blank" href="http://docs.dataporten.no/docs/authorization/">{_.seedocsformore}</a></p>
 
@@ -280,7 +280,7 @@
 
 					</dl>
 
-					<h3>Authorized Scopes</h3>
+					<h3>{_.authorized_scopes}</h3>
 
 					<p><code>
 					{#scopes}
@@ -305,10 +305,10 @@
 
 					<h3>OpenID Connect</h3>
 
-					<p>In order to use OpenID Connect, your client would need to have the <tt>openid</tt> scope authorized.</p>
+					<p>{@formatMessage _key="openid_connect_scope_info" scope="<tt>openid</tt>"/}</p>
 
 					<dl>
-						<dt>OpenID Connect Auto configuration</dt>
+						<dt>{_.openid_connect_auto_configuration}</dt>
 						<dd><code>{_config.apis.auth}/.well-known/openid-configuration</code></dd>
 					</dl>
 
@@ -332,20 +332,20 @@
 
 			<div class="authproviders " style="clear: both">
 
-				<h1>Auth providers</h1>
-				<p>Here you may select which authentication providers that are allowed to authenticate users to your application.</p>
+				<h1>{_.authproviders}</h1>
+				<p>{_.select_auth_providers}</p>
 
 
 				<!-- <pre class="debug"></pre> -->
 
 
 				<p style="text-align: right"><button class="btn btn-success actSaveChanges" class="">
-					<i class="glyphicon glyphicon-ok"></i> Save changes</button></p>
+					<i class="glyphicon glyphicon-ok"></i> {_.savechanges}</button></p>
 
 
 				<div class="checkbox">
 					<label>
-						<input class="selectgroup" data-val="all" type="checkbox"> Accept all providers (except IDporten)
+						<input class="selectgroup" data-val="all" type="checkbox"> {_.accept_all_providers}
 					</label>
 				</div>
 
@@ -371,7 +371,7 @@
 
 							<div class="checkbox">
 								<label>
-									<input class="selectgroup" data-val="social|all" type="checkbox"> Accept all social networks
+									<input class="selectgroup" data-val="social|all" type="checkbox"> {_.accept_all_social_networks}
 								</label>
 							</div>
 
@@ -474,17 +474,17 @@
 
 			<div class="col-sm-12">
 
-				<h1>Test users</h1>
+				<h1>{_.testusers}</h1>
 
-				<p>You have enabled test users for your application. These usernames and passwords are shared. It is reccomended to turn off access for test users in production.</p>
-				<p>You may use the following test users to develop and test your application:</p>
+				<p>{_.testusers_warning}</p>
+				<p>{_.testuser_list_descr}</p>
 
 				<table class="table table-striped">
 					
 					<thead>
 						<tr>
-							<th>Username</th>
-							<th>Password</th>
+							<th>{_.username}</th>
+							<th>{_.password}</th>
 							<th>Comment</th>
 						</tr>
 					</thead>
@@ -531,7 +531,7 @@
 
 				<div class="col-sm-6">
 
-					<h3>Accepted scopes</h3>
+					<h3>{_.accepted_scopes}</h3>
 
 					<div class="list-group">
 						{#scopelist.accepted}
@@ -544,7 +544,7 @@
 									<p class="pull-right">
 									{^policy.auto}
 											<span class="label label-default">
-												<i class="fa fa-check" aria-hidden="true"></i> Moderated</span>
+												<i class="fa fa-check" aria-hidden="true"></i> {_.moderated}</span>
 									{/policy.auto}
 									{^public}
 											<span class="label label-default">
@@ -554,19 +554,19 @@
 									
 										<button class="btn btn-xs btn-danger actScopeRemove">
 											<i class="glyphicon glyphicon-remove"></i>
-											Remove scope 
+											{_.remove_scope} 
 											</button>
 								</div>
 								<p class="clearfix"></p>
 							</div>
 						{:else}
-							<p>No available scopes</p>
+							<p>{_.no_available_scopes}</p>
 						{/scopelist.accepted}
 						
 					</div>
 
 
-					<h3 style="margin-top: 1.5em">Requested scopes</h3>
+					<h3 style="margin-top: 1.5em">{_.requested_scopes}</h3>
 
 					<div class="list-group">
 						{#scopelist.requested}
@@ -578,13 +578,13 @@
 								<div class="" style="margin-top: .3em; margin-bottom: 0px">
 									<button class="btn btn-xs btn-default actScopeRemove">
 										<i class="glyphicon glyphicon-remove"></i>
-										Remove scope 
+										{_.remove_scope} 
 										</button>
 								</div>
 								<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
 							</div>
 						{:else}
-							<p>No requested scopes</p>
+							<p>{_.no_requested_scopes}</p>
 						{/scopelist.requested}
 					</div>
 
@@ -594,7 +594,7 @@
 
 				<div class="col-sm-6">
 
-					<h3>Available scopes</h3>
+					<h3>{_.available_scopes}</h3>
 
 
 					<div class="list-group">
@@ -608,7 +608,7 @@
 								<p class="pull-right">
 								{^policy.auto}
 										<span class="label label-default">
-											<i class="fa fa-exclamation" aria-hidden="true"></i> Moderated</span>
+											<i class="fa fa-exclamation" aria-hidden="true"></i> {_.moderated}</span>
 								{/policy.auto}
 								{^public}
 										<span class="label label-default">
@@ -619,12 +619,12 @@
 									{?policy.auto}
 										<button class="btn btn-sm btn-primary actScopeAdd">
 											<i class="glyphicon glyphicon-chevron-left"></i>
-											Add scope</button>
+											{_.add_scope}</button>
 									{/policy.auto}
 									{^policy.auto}
 										<button class="btn btn-sm btn-warning actScopeAdd">
 											<i class="glyphicon glyphicon-chevron-left"></i>
-											Request scope</button>
+											{_.request_scope}</button>
 									{/policy.auto}
 
 								</p>
@@ -632,7 +632,7 @@
 
 							</div>
 						{:else}
-							<p>No available scopes</p>
+							<p>{_.no_available_scopes}</p>
 						{/scopelist.available}
 					</div>
 
@@ -652,10 +652,10 @@
 
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs" role="tablist" id="apilisttabs" >
-					<li role="presentation" class="active"><a href="#apilistaccepted" aria-controls="apilistaccepted" role="tab" data-toggle="tab">Accepted APIs</a></li>
-					<li role="presentation"><a href="#apilistrequested" aria-controls="apilistrequested" role="tab" data-toggle="tab">Requested APIs</a></li>
-					<li role="presentation"><a href="#apilistavailableown" aria-controls="apilistavailableown" role="tab" data-toggle="tab">My APIs</a></li>
-					<li role="presentation"><a href="#apilistavailable" aria-controls="apilistavailable" role="tab" data-toggle="tab">3rd party available APIs</a></li>
+					<li role="presentation" class="active"><a href="#apilistaccepted" aria-controls="apilistaccepted" role="tab" data-toggle="tab">{_.accepted_apis}</a></li>
+					<li role="presentation"><a href="#apilistrequested" aria-controls="apilistrequested" role="tab" data-toggle="tab">{_.requested_apis}</a></li>
+					<li role="presentation"><a href="#apilistavailableown" aria-controls="apilistavailableown" role="tab" data-toggle="tab">{_.my_apis}</a></li>
+					<li role="presentation"><a href="#apilistavailable" aria-controls="apilistavailable" role="tab" data-toggle="tab">{_.third_party_available_apis}</a></li>
 				</ul>
 
 				{> apilisting /}
@@ -677,7 +677,7 @@
 
 			<div class="col-sm-12">
 
-				<h3>Usage statistics</h3>
+				<h3>{_.usage_statistics}</h3>
 
 				<p></p>
 
@@ -692,12 +692,12 @@
 
 			<div class="col-sm-12">
 
-				<p>Are you really sure that you want to delete this client?</p>
-				<p>You will not be able to recreate a client with the same identifier, and all issued tokens and authorizations will be reset.</p>
+				<p>{_.del_client_question}</p>
+				<p>{_.del_client_descr}</p>
 
 				<div><button class="btn btn-lg btn-danger actDelete">
 					<i class="glyphicon glyphicon-warning-sign"></i> 
-					Delete this client, I know what I am doing</button></div>
+					{_.del_client_button}</button></div>
 
 
 			</div>

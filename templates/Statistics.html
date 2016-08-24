@@ -7,15 +7,15 @@
 
 <div class="row" style="margin-top: 2em">
 	<div class="col-md-4">
-		<h1 class="text-center">{total} logins</h1>
-		<p class="text-center">last 4 days</p>
+		<h1 class="text-center">{@formatMessage _key="logins_num" num=total /}</h1>
+		<p class="text-center">{@formatMessage _key="last_days" days=4 /}</p>
 	</div>
 	<div class="col-md-8">
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>Authentication source</th>
-					<th>Logins last 4 days</th>
+					<th>{_.authentication_source}</th>
+					<th>{@formatMessage _key="logins_days" days=4 /}</th>
 				</tr>
 				{#authsources}
 					<tr>

@@ -5,12 +5,12 @@
 			<li role="presentation" data-tabid="tabBasic" class=""><a href="#">{_.basicinfo}</a></li>
 			<li role="presentation" data-tabid="tabExtended" class=""><a href="#">{_.extendedinfo}</a></li>
 			<li role="presentation" data-tabid="tabScopesClient" class=""><a href="#">{_.permissions}</a></li>
-			<li role="presentation" data-tabid="tabScopes" class=""><a href="#">API Scopes</a></li>
-			<li role="presentation" data-tabid="tabAccess" class=""><a href="#">API Access</a></li>
+			<li role="presentation" data-tabid="tabScopes" class=""><a href="#">{_.api_scopes}</a></li>
+			<li role="presentation" data-tabid="tabAccess" class=""><a href="#">{_.api_access}</a></li>
 			<li role="presentation" data-tabid="tabRequests" class="">
 				<a href="#"><span class="label label-danger queuecount pull-left"></span> {_.requests}</a></li>
 			<li role="presentation" data-tabid="tabClients" class=""><a href="#">{_.applications}</a></li>
-			<!-- <li role="presentation" data-tabid="tabStatistics" class=""><a href="#">Usage statistics</a></li> -->
+			<!-- <li role="presentation" data-tabid="tabStatistics" class=""><a href="#">{_.usage_statistics}</a></li> -->
 			<li role="presentation" data-tabid="tabDelete" class=""><a href="#">{_.delete}</a></li>
 		</ul>
 
@@ -49,9 +49,9 @@
 					<div class="form-group">
 
 						<label>
-							<input id="ispublic" class="" type="checkbox" {#statuses.public} checked="checked" {/statuses.public} /> Public API
+							<input id="ispublic" class="" type="checkbox" {#statuses.public} checked="checked" {/statuses.public} /> {_.public_api}
 						</label>
-						<p>Only public APIs will be visible to developers and may be requested. Do not check the API as public until it is well tested and ready to be consumer by third party developers.</p>
+						<p>{_.public_api_info}</p>
 						
 					</div>
 
@@ -68,7 +68,7 @@
 
 					<div class="form-group">
 						<label for="endpoint">{_.apiendpoint}</label>
-						<p>This is the base URL endpoint of your API. The endpoints on your side that will receive all the requests.</p>
+						<p>{_.apigk_endpoint_descr}</p>
 						
 						<input type="text" class="form-control" id="endpoint" placeholder="https://example.org/api" value="{endpoints[0]}" >
 
@@ -110,7 +110,7 @@
 					<img class="itemlogo"  src="{_config.apis.core}/apigkadm/apigks/{id}/logo" style="padding: 5px; border: 1px solid #ddd; border-radius: 4px; backgroud: #eee" />
 				</div>
 
-				<p>Drag a new square (1:1) PNG logo over the current one to replace it. <br /><span style="font-size: 90%">Minimum 128px</span></p>
+				<p>{_.drag_replace_png} <br /><span style="font-size: 90%">{_.minimum_128px}</span></p>
 			</div>
 
 		</div>
@@ -127,7 +127,7 @@
 				<form class="" style="">
 
 					<div class="form-group">
-						<label for="systemdescr">Description for system administrators and developers</label>
+						<label for="systemdescr">{_.description_for_system_administrators_and_developers}</label>
 						<textarea class="form-control" id="systemdescr" rows="5">{systemdescr}</textarea>
 					</div>
 
@@ -140,7 +140,7 @@
 
 
 					<div class="form-group">
-						<label for="docurl">API Documentation</label>
+						<label for="docurl">{_.api_documentation}</label>
 						<input class="form-control" id="docurl" 
 							placeholder="http://" value="{docurl}" />
 					</div>
@@ -186,16 +186,16 @@
 
 					{#trust}
 
-					<p>These credentials are used when Dataporten is accessing your API.</p>
+					<p>{_.apigk_creds_info}</p>
 
 					<dl>
-						<dt>Trust type</dt>
+						<dt>{_.trust_type}</dt>
 						<dd><code>{type}</code></dd>
 
-						<dt>Username</dt>
+						<dt>{_.username}</dt>
 						<dd><code>{username}</code></dd>
 
-						<dt>Password</dt>
+						<dt>{_.password}</dt>
 						
 						<dd><code>{password}</code></dd>
 						
@@ -207,7 +207,7 @@
 				<div class="col-sm-7">
 					
 
-					<p>Your API may be accessed on this API Gatekeeper base URL:</p>
+					<p>{_.apigk_baseurl_info}</p>
 
 					<p><code>https://{id}.{_appconfig.gkdomain}</code></p>
 					
@@ -232,7 +232,7 @@ X-Dataporten-userid: 76a7a061-3c55-430d-8ee0-6f82ec42501f{~n}
 X-Dataporten-userid-sec: feide:xxxx@uninett.no
 </code></pre>
 
-					<p>Note that http headers should be treated case insensitively</p>
+					<p>{_.http_header_casing_note}</p>
 
 				</div>
 
@@ -245,7 +245,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 		<div id="tabScopesClient"  style="" class="row">
 			<div class="col-sm-12">
-				<h3>Client Scopes</h3>
+				<h3>{_.client_scopes}</h3>
 				<div id="scopedef"></div>
 			</div>
 		</div>
@@ -266,7 +266,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 			<div class="row">
 				<div class="col-sm-6">
 
-					<h3>Accepted scopes</h3>
+					<h3>{_.accepted_scopes}</h3>
 
 					<div class="list-group">
 						{#scopelist.accepted}
@@ -278,19 +278,19 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 								<div class="">
 										<button class="btn btn-xs btn-danger actScopeRemove">
 											<i class="glyphicon glyphicon-remove"></i>
-											Remove scope 
+											{_.remove_scope} 
 											</button>
 								</div>
 								<p class="clearfix"></p>
 							</div>
 						{:else}
-							<p>No available scopes</p>
+							<p>{_.no_available_scopes}</p>
 						{/scopelist.accepted}
 						
 					</div>
 
 
-					<h3 style="margin-top: 1.5em">Requested scopes</h3>
+					<h3 style="margin-top: 1.5em">{_.requested_scopes}</h3>
 
 					<div class="list-group">
 						{#scopelist.requested}
@@ -302,13 +302,13 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 								<div class="" style="margin-top: .3em; margin-bottom: 0px">
 									<button class="btn btn-xs btn-default actScopeRemove">
 										<i class="glyphicon glyphicon-remove"></i>
-										Remove scope 
+										{_.remove_scope} 
 										</button>
 								</div>
 								<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
 							</div>
 						{:else}
-							<p>No requested scopes</p>
+							<p>{_.no_requested_scopes}</p>
 						{/scopelist.requested}
 					</div>
 
@@ -318,7 +318,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 				<div class="col-sm-6">
 
-					<h3>Available scopes</h3>
+					<h3>{_.available_scopes}</h3>
 
 
 
@@ -335,19 +335,19 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 									{?policy.auto}
 										<button class="btn btn-sm btn-primary actScopeAdd">
 											<i class="glyphicon glyphicon-chevron-left"></i>
-											Add scope</button>
+											{_.add_scope}</button>
 									{/policy.auto}
 									{^policy.auto}
 										<button class="btn btn-sm btn-warning actScopeAdd">
 											<i class="glyphicon glyphicon-chevron-left"></i>
-											Request scope</button>
+											{_.request_scope}</button>
 									{/policy.auto}
 								</p>
 								<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
 
 							</div>
 						{:else}
-							<p>No available scopes</p>
+							<p>{_.no_available_scopes}</p>
 						{/scopelist.available}
 					</div>
 
@@ -364,7 +364,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 			<div class="col-sm-12">
 
-				<h3>Clients requesting access</h3>
+				<h3>{_.clients_requesting_access}</h3>
 
 
 
@@ -381,7 +381,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 									<div class="media">
 										
 										<div class="media-left">
-											<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/clientadm/clients/{id}/logo" alt="Logo of client">
+											<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/clientadm/clients/{id}/logo" alt="{_.logo_of_client}">
 										</div>
 
 										<div class="media-body">
@@ -446,15 +446,15 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 							<div style="margin-top: 1.4em">
 								{?systemdescr}
-								<h5>Extended description for system administrators</h5>
+								<h5>{_.extended_description_for_system_administrators}</h5>
 								<p class="list-group-item-text">{systemdescr|s|h|acceptnewline}</p>
 								{/systemdescr}
 
 								<ul style="margin-top: .6em">
-									{?homepageurl}<li><a target="_blank" href="{homepageurl}">Application homepage</a></li>{/homepageurl}
-									{?loginurl}<li><a target="_blank" href="{loginurl}">Application login</a></li>{/loginurl}
-									{?privacypolicyurl}<li><a target="_blank" href="{privacypolicyurl}">Privacy policy</a></li>{/privacypolicyurl}
-									{?supporturl}<li><a target="_blank" href="{supporturl}">Application Support</a></li>{/supporturl}
+									{?homepageurl}<li><a target="_blank" href="{homepageurl}">{_.apphomepage}</a></li>{/homepageurl}
+									{?loginurl}<li><a target="_blank" href="{loginurl}">{_.application_login}</a></li>{/loginurl}
+									{?privacypolicyurl}<li><a target="_blank" href="{privacypolicyurl}">{_.privacypolicy}</a></li>{/privacypolicyurl}
+									{?supporturl}<li><a target="_blank" href="{supporturl}">{_.application_support}</a></li>{/supporturl}
 								</ul>
 							</div>
 
@@ -465,7 +465,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 								<thead>
 									<tr>
 										
-										<td>Scope name</td>
+										<td>{_.scope_name}</td>
 										<td>Scope</td>
 										<td>Policy</td>
 										<td>Status</td>
@@ -483,11 +483,11 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 											{#sd.policy.auto}
 												<span class="label label-success">
 													<i class="fa fa-check"></i>&nbsp;
-													Accept</span>
+													{_.accept}</span>
 											{:else}
 												<span class="label label-danger">
 													<i class="fa fa-check-square-o"></i>&nbsp;
-													Moderate</span>
+													{_.moderate}</span>
 											{/sd.policy.auto}
 										</td>
 
@@ -496,13 +496,13 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 											{#sd.authz}
 												<span class="label label-success">
 													<i class="fa fa-check"></i>&nbsp;
-													Accepted</span>
+													{_.accepted}</span>
 											{:else}
 
 												{#sd.req}
 													<span class="label label-danger">
 														<i class="fa fa-check-square-o"></i>&nbsp;
-														Requested</span>
+														{_.requested}</span>
 												{/sd.req}
 
 											{/sd.authz}
@@ -513,7 +513,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 											{#sd.authz}
 												<label>
-													<input class="authscope" data-scopemoderate="gk_{sd.apigkid}" type="checkbox" checked="checked" />  Accepted
+													<input class="authscope" data-scopemoderate="gk_{sd.apigkid}" type="checkbox" checked="checked" />  {_.accepted}
 												</label>
 											{:else}
 
@@ -523,13 +523,13 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 														<div class="radio">
 															<label>
 																<input type="radio" name="gk_{sd.apigkid}" value="reject" class="radioscopeauthz">
-																<i class="fa fa-times"></i>&nbsp; Reject
+																<i class="fa fa-times"></i>&nbsp; {_.reject}
 															</label>
 														</div>
 														<div class="radio">
 															<label>
 																<input type="radio" name="gk_{sd.apigkid}" value="accept" class="radioscopeauthz">
-																<i class="fa fa-check"></i>&nbsp; Accept
+																<i class="fa fa-check"></i>&nbsp; {_.accept}
 															</label>
 														</div>
 
@@ -556,11 +556,11 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 												{?policy.auto}
 													<span class="label label-success">
 														<i class="fa fa-check"></i>&nbsp;
-														Accept</span>
+														{_.accept}</span>
 												{:else}
 													<span class="label label-danger">
 														<i class="fa fa-check-square-o"></i>&nbsp;
-														Moderate</span>
+														{_.moderate}</span>
 												{/policy.auto}
 											</td>
 											<td>
@@ -568,13 +568,13 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 												{?status.accepted}
 													<span class="label label-success">
 														<i class="fa fa-check"></i>&nbsp;
-														Accepted</span>
+														{_.accepted}</span>
 												{/status.accepted}
 
 												{?status.requested}
 													<span class="label label-danger">
 														<i class="fa fa-check-square-o"></i>&nbsp;
-														Requested</span>
+														{_.requested}</span>
 												{/status.requested}
 
 
@@ -583,7 +583,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 												{?status.accepted}
 													<label>
-													<input class="authscope" type="checkbox" data-scopemoderate="gk_{sd.apigkid}_{scope}" checked="checked" /> Accepted</label>
+													<input class="authscope" type="checkbox" data-scopemoderate="gk_{sd.apigkid}_{scope}" checked="checked" /> {_.accepted}</label>
 												{/status.accepted}
 
 												{?status.requested}
@@ -593,13 +593,13 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 													<div class="radio">
 														<label>
 															<input type="radio" name="gk_{sd.apigkid}_{scope}"  value="reject" class="radioscopeauthz">
-															<i class="fa fa-times"></i> Reject
+															<i class="fa fa-times"></i> {_.reject}
 														</label>
 													</div>
 													<div class="radio">
 														<label>
 															<input type="radio" name="gk_{sd.apigkid}_{scope}" value="accept" class="radioscopeauthz">
-															<i class="fa fa-check"></i> Accept
+															<i class="fa fa-check"></i> {_.accept}
 														</label>
 													</div>
 												{/status.requested}
@@ -614,7 +614,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 										</tr>
 
 									{:else}
-										<tr><td colspan="5">No subscopes</td></tr>
+										<tr><td colspan="5">{_.no_subscopes}</td></tr>
 									{/sd.subscopes}
 
 
@@ -624,7 +624,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 							<div class="pull-right">
 								
-							<button class="btn btn-primary btn-sm actUpdateAuthz">Update authorizations</button>
+							<button class="btn btn-primary btn-sm actUpdateAuthz">{_.update_authorizations}</button>
 
 							</div>
 
@@ -645,7 +645,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 			<div class="col-sm-12">
 
-				<h3>Authorized clients</h3>
+				<h3>{_.authorized_clients}</h3>
 
 
 				{#clients}
@@ -660,7 +660,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 									<div class="media">
 										
 										<div class="media-left">
-											<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/clientadm/clients/{id}/logo" alt="Logo of client">
+											<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/clientadm/clients/{id}/logo" alt="{_.logo_of_client}">
 										</div>
 										<div class="media-body">
 
@@ -721,7 +721,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 
 							<div>
-								<p class="list-group-item-text" style="margin-top: 15px">Authorized scopes &nbsp;
+								<p class="list-group-item-text" style="margin-top: 15px">{_.authorized_scopes_not_heading} &nbsp;
 								
 									{#scopes}
 										<code>{.}</code> &nbsp;
@@ -733,15 +733,15 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 							<div style="margin-top: 1.4em">
 								{?systemdescr}
-								<h5>Extended description for system administrators</h5>
+								<h5>{_.extended_description_for_system_administrators}</h5>
 								<p class="list-group-item-text">{systemdescr|s|h|acceptnewline}</p>
 								{/systemdescr}
 
 								<ul style="margin-top: .6em">
-									{?homepageurl}<li><a target="_blank" href="{homepageurl}">Application homepage</a></li>{/homepageurl}
-									{?loginurl}<li><a target="_blank" href="{loginurl}">Application login</a></li>{/loginurl}
-									{?privacypolicyurl}<li><a target="_blank" href="{privacypolicyurl}">Privacy policy</a></li>{/privacypolicyurl}
-									{?supporturl}<li><a target="_blank" href="{supporturl}">Application Support</a></li>{/supporturl}
+									{?homepageurl}<li><a target="_blank" href="{homepageurl}">{_.apphomepage}</a></li>{/homepageurl}
+									{?loginurl}<li><a target="_blank" href="{loginurl}">{_.application_login}</a></li>{/loginurl}
+									{?privacypolicyurl}<li><a target="_blank" href="{privacypolicyurl}">{_.privacypolicy}</a></li>{/privacypolicyurl}
+									{?supporturl}<li><a target="_blank" href="{supporturl}">{_.application_support}</a></li>{/supporturl}
 								</ul>
 							</div>
 
@@ -752,7 +752,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 								<thead>
 									<tr>
 										
-										<td>Scope name</td>
+										<td>{_.scope_name}</td>
 										<td>Scope</td>
 										<td>Policy</td>
 										<td>Status</td>
@@ -770,11 +770,11 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 											{#sd.policy.auto}
 												<span class="label label-success">
 													<i class="fa fa-check"></i>&nbsp;
-													Accept</span>
+													{_.accept}</span>
 											{:else}
 												<span class="label label-danger">
 													<i class="fa fa-check-square-o"></i>&nbsp;
-													Moderate</span>
+													{_.moderate}</span>
 											{/sd.policy.auto}
 										</td>
 
@@ -783,13 +783,13 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 											{#sd.authz}
 												<span class="label label-success">
 													<i class="fa fa-check"></i>&nbsp;
-													Accepted</span>
+													{_.accepted}</span>
 											{:else}
 
 												{#sd.req}
 													<span class="label label-danger">
 														<i class="fa fa-check-square-o"></i>&nbsp;
-														Requested</span>
+														{_.requested}</span>
 												{/sd.req}
 
 											{/sd.authz}
@@ -826,11 +826,11 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 												{?policy.auto}
 													<span class="label label-success">
 														<i class="fa fa-check"></i>&nbsp;
-														Accept</span>
+														{_.accept}</span>
 												{:else}
 													<span class="label label-danger">
 														<i class="fa fa-check-square-o"></i>&nbsp;
-														Moderate</span>
+														{_.moderate}</span>
 												{/policy.auto}
 											</td>
 											<td>
@@ -838,13 +838,13 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 												{?status.accepted}
 													<span class="label label-success">
 														<i class="fa fa-check"></i>&nbsp;
-														Accepted</span>
+														{_.accepted}</span>
 												{/status.accepted}
 
 												{?status.requested}
 													<span class="label label-danger">
 														<i class="fa fa-check-square-o"></i>&nbsp;
-														Requested</span>
+														{_.requested}</span>
 												{/status.requested}
 
 
@@ -864,7 +864,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 										</tr>
 
 									{:else}
-										<tr><td colspan="5">No subscopes</td></tr>
+										<tr><td colspan="5">{_.no_subscopes}</td></tr>
 									{/sd.subscopes}
 
 
@@ -877,11 +877,11 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 							{#orgadminscopematrix}
 								<div style="margin-top: 2em">
-									<p><strong>API Authorization by Organizations</strong></p>
+									<p><strong>{_.api_authorization_by_organizations}</strong></p>
 									<table class="table table-striped" style="margin-bottom: 3em">
 									<thead>
 										<tr>
-											<td>Organization</td>
+											<td>{_.organization}</td>
 											{#scopes}
 												<td>{descr.title}</td>
 											{/scopes}
@@ -897,11 +897,11 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 												{?.}
 													<span class="label label-success">
 														<i class="fa fa-check-square-o"></i>&nbsp;
-														Accepted</span>
+														{_.accepted}</span>
 												{:else}
 													<span class="label label-danger">
 														<i class="fa fa-square-o"></i>&nbsp;
-														Requested</span>
+														{_.requested}</span>
 												{/.}
 												</td>
 											{/scopes}
@@ -916,7 +916,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 							<div class="pull-right">
 								
-								<button class="btn btn-primary btn-sm actUpdateAuthz">Update authorizations</button>
+								<button class="btn btn-primary btn-sm actUpdateAuthz">{_.update_authorizations}</button>
 
 							</div>
 
@@ -937,7 +937,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 			<div class="col-sm-12">
 
-				<h3>Usage statistics</h3>
+				<h3>{_.usage_statistics}</h3>
 
 				<p></p>
 
@@ -949,11 +949,11 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 			<div class="col-sm-12">
 
-				<p>Are you really sure that you want to delete this API Gatekeeper?</p>
+				<p>{_.del_apigk_question}</p>
 
 				<div><button class="btn btn-lg btn-danger actDelete">
 					<i class="glyphicon glyphicon-warning-sign"></i> 
-					Delete this API gatekeeper, I know what I am doing</button></div>
+					{_.del_apigk_button}</button></div>
 
 			</div>
 
