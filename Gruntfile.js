@@ -115,7 +115,7 @@ module.exports = function(grunt) {
 	shell.rjs.command = [];
 	for (var i = 0; i < cfg.languages.length; i++) {
 		lang = cfg.languages[i];
-		shell.rjs.command.push("node_modules/requirejs/bin/r.js -o build.js paths.dict=../../dictionaries/build/dictionary." + lang + ".json out=app/dist/app.min.js." + lang + "");
+		shell.rjs.command.push("node_modules/requirejs/bin/r.js -o build.js paths.dict=../../dictionaries/build/dictionary." + lang + ".json paths.DustIntlData=../../bower_components/dust-helper-intl/dist/locale-data/" + lang + " out=app/dist/app.min.js." + lang + "");
 	}
 	// We comment out this, because it overrides the langauge negotiation 
 	// when enabled.

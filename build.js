@@ -5,6 +5,7 @@
 		"text": '../../bower_components/text/text',
 		"templates": '../../templates/',
 		"dust": '../../bower_components/dustjs-linkedin/dist/dust-full.min',
+		"DustIntl": '../../bower_components/dust-helper-intl/dist/dust-intl',
 		"class": "lib/class",
 		"jquery": "../../bower_components/jquery/dist/jquery.min",
 		"dict": "_",
@@ -16,6 +17,12 @@
 	shim: {
 		"dust": {
 			"exports": "dust"
+		},
+		"DustIntl": {
+			"exports": "DustIntl"
+		},
+		"DustIntlData": {
+			"deps": ["DustIntl"]
 		},
 		"bootstrap": {
 			"deps": ["jquery"]

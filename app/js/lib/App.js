@@ -30,6 +30,9 @@ define(function(require, exports, module) {
 		Dictionary = require('./Dictionary'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		utils = require('./utils'),
+		dust = require('dust'),
+		DustIntl = require('DustIntl'),
+		DustIntlData = require('DustIntlData'),
 		// rawconfig = require('text!../../etc/config.js'),
 		$ = require('jquery');
 
@@ -54,6 +57,8 @@ define(function(require, exports, module) {
 
 
 		"loadConfig": function() {
+			DustIntl.registerWith(dust);
+//			dust.debugLevel = "DEBUG";
 			var that = this;
 			return new Promise(function(resolve, reject) {
 				$.getJSON('/config', function(data) {

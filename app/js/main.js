@@ -12,6 +12,8 @@ requirejs.config({
 		"bower": '/bower_components',
 		"text": '/bower_components/text/text',
 		"templates": '/templates/',
+		"DustIntl": '/bower_components/dust-helper-intl/dist/dust-intl',
+		"DustIntlData": '/bower_components/dust-helper-intl/dist/locale-data/nb',
 		"dust": '/bower_components/dustjs-linkedin/dist/dust-full.min',
 		"class": "class",
 		"jquery": "/bower_components/jquery/dist/jquery.min",
@@ -25,6 +27,12 @@ requirejs.config({
 	shim: {
 		"dust": {
 			"exports": "dust"
+		},
+		"DustIntl": {
+			"exports": "DustIntl"
+		},
+		"DustIntlData": {
+			"deps": ["DustIntl"]
 		},
 		"bootstrap": {
 			"deps": ["jquery"]
