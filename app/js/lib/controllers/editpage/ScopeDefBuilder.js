@@ -2,7 +2,8 @@ define(function(require, exports, module) {
 	"use strict";
 
 	var
-		dust = require('dust'),
+		Dictionary = require('../../Dictionary'),
+		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		Controller = require('../Controller'),
 
 		ScopeDef = require('../../models/ScopeDef'),
@@ -33,7 +34,8 @@ define(function(require, exports, module) {
 			this.orglistselector = null;
 			this.orgselection = [];
 
-			dust.loadSource(dust.compile(template, "ScopeDefBuilder"));
+			this.dict = new Dictionary();
+			this.template = new TemplateEngine(template, this.dict, true);
 
 			this.ebind("click", ".actAddSubScope", "actAddSubScope");
 			this.ebind("click", ".actRemoveSubscope", "actRemoveSubscope");
@@ -197,10 +199,7 @@ define(function(require, exports, module) {
 				"updated": this.apigkUpdated.getView()
 			};
 
-			dust.render("ScopeDefBuilder", view, function(err, out) {
-
-				that.el.empty();
-				that.el.append(out);
+			this.template.render(this.el, view).then(function(e) {
 
 				that.updateOrgScopeControllers();
 				that.updateOrgList();
