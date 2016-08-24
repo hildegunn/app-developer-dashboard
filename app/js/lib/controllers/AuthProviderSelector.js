@@ -4,15 +4,8 @@
 		var
 			$ = require('jquery'),
 			Controller = require('./Controller'),
-			dust = require('dust'),
 
-			// Model = require('../models/Model'),
-			// Group = require('../models/Group'),
 			EventEmitter = require('../EventEmitter');
-
-		// var template = require('text!templates/OrgRoleSelector.html');
-
-
 
 		var AuthProviderSelector = Controller.extend({
 
@@ -56,26 +49,16 @@
 					e.preventDefault();
 					e.stopPropagation();
 					var t = $(e.currentTarget);
-					// var ti = t.find('input');
-					// ti.prop('checked', !ti.prop('checked'));
-					// console.log("Changed input group!");
 					that.updateDataFromInputControls();
 				});
 
 				this.el.on("click", "button.actSaveChanges", function(e) {
 					e.preventDefault();
 					e.stopPropagation();
-					// var t = $(e.currentTarget);
-					// var ti = t.find('input');
-					// ti.prop('checked', !ti.prop('checked'));
-					// console.log("SAVE CHANGES!");
 					that.updateDataFromInputControls();
 					that.emit("save", that.selectedProviders);
 				});
 
-
-				// dust.loadSource(dust.compile(template, "OrgRoleSelector"));
-				// this.ebind("click", ".orgSelector a", "actSelect");
 
 			},
 
