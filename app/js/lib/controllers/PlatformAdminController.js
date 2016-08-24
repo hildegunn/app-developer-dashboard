@@ -235,7 +235,6 @@ define(function(require, exports, module) {
 		"draw": function() {
 			var that = this;
 			var view = {
-				"_": this.app.dict.get(),
 				"_config": this.feideconnect.getConfig()
 			};
 

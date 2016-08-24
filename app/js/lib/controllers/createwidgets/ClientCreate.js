@@ -47,7 +47,6 @@ define(function(require, exports, module) {
 
 		"draw": function() {
 			var view = {
-				// "_": this.dict.get(),
 				"orgInfo": this.app.getOrgInfo()
 			};
 			this.el.children().detach();

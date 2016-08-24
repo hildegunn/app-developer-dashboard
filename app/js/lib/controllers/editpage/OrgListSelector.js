@@ -130,7 +130,6 @@ define(function(require, exports, module) {
 				columns[i % noc].orgs.push(this.providerdata.orgs[i]);
 			}
 			var view = {
-				"_": this.dict.get(),
 				"columns": columns
 			};
 			// console.error("colmn", columns);
