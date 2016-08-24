@@ -3,7 +3,6 @@ define(function(require, exports, module) {
 
 
 	var
-		dust = require('dust'),
 		utils = require('../../utils'),
 		Dictionary = require('../../Dictionary'),
 		Controller = require('../Controller'),

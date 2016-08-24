@@ -2,8 +2,6 @@ define(function(require, exports, module) {
 	"use strict";
 
 	var
-		dust = require('dust'),
-		Pane = require('../Pane'),
 		Client = require('../../models/Client'),
 		Dictionary = require('../../Dictionary'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),

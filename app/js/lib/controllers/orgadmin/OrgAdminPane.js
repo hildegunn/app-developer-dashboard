@@ -2,7 +2,6 @@ define(function(require, exports, module) {
 	"use strict";	
 
 	var 
-		dust = require('dust'),
 		Pane = require('../Pane'),
 
 		Dictionary = require('../../Dictionary'),
