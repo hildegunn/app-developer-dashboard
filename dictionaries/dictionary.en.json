@@ -40,6 +40,7 @@
 	"enterapiendpoint": "Enter the API endpoint of the base URL of the API on your side.",
 	"apirules": "The format of the endpoint MUST be HTTPS, a valid hostname, an optional portnumber, an optional path, and no trailing slash.",
 	"inexample": "In example:",
+	"noapigks": "No API Gatekeepers are currently registered.",
 
 
 	"accessdatasources": "Access to data sources",
