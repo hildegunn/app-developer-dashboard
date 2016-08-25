@@ -1,33 +1,33 @@
 {
-	"name": "feideconnect-app-developer-dashboard",
-	"version": "0.1.0",
-	"description": "Dataporten Developer Dashboard",
-	"authors": [
-		"Andreas Åkre Solberg"
-	],
-	"homepage": "http://feideconnect.no",
-	"private": true,
-	"ignore": [
-		"**/.*",
-		"node_modules",
-		"bower_components",
-		"test",
-		"tests"
-	],
-	"dependencies": {
-		"uninett-bootstrap-theme": "*",
-		"fontawesome": "~4.5.0",
-		"requirejs": "~2.1.14",
-		"text": "~2.0.13",
-		"feideconnectjs": "~2.10",
-		"selectize": "~0.12.1",
-		"dustjs-linkedin": "~2.5.1",
-		"momentjs": "~2.9.0",
-		"almond": "~0.3.0",
-		"es6-promise": "*",
-		"js-cookie": "~2.0.4",
-		"flot": "*",
-		"bootstrap-datepicker": "*",
-		"dust-helper-intl": "*"
-	}
+  "name": "feideconnect-app-developer-dashboard",
+  "version": "0.1.0",
+  "description": "Dataporten Developer Dashboard",
+  "authors": [
+    "Andreas Åkre Solberg"
+  ],
+  "homepage": "http://feideconnect.no",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "uninett-bootstrap-theme": "*",
+    "fontawesome": "~4.5.0",
+    "requirejs": "~2.1.14",
+    "text": "~2.0.13",
+    "feideconnectjs": "~2.10",
+    "selectize": "~0.12.1",
+    "dustjs-linkedin": "~2.7.3",
+    "momentjs": "~2.9.0",
+    "almond": "~0.3.0",
+    "es6-promise": "*",
+    "js-cookie": "~2.0.4",
+    "flot": "*",
+    "bootstrap-datepicker": "*",
+    "dust-helper-intl": "*"
+  }
 }

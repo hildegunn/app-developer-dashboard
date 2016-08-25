@@ -15,10 +15,8 @@
 		"flot": "../../bower_components/flot/jquery.flot.time"
 	},
 	shim: {
-		"dust": {
-			"exports": "dust"
-		},
 		"DustIntl": {
+			"deps": ["dust"],
 			"exports": "DustIntl"
 		},
 		"DustIntlData": {

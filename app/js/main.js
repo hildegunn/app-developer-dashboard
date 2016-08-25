@@ -25,10 +25,8 @@ requirejs.config({
 		"flot": "/bower_components/flot/jquery.flot.time"
 	},
 	shim: {
-		"dust": {
-			"exports": "dust"
-		},
 		"DustIntl": {
+			"deps": ["dust"],
 			"exports": "DustIntl"
 		},
 		"DustIntlData": {
@@ -49,6 +47,7 @@ requirejs.config({
 	}
 });
 
+define.amd.dust = true;
 // Configure 
 if (!window.console) {
 	window.console = {
