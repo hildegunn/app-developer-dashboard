@@ -73,6 +73,25 @@ define(function(require, exports, module) {
 		"init": function() {
 			var that = this;
 
+			dust.helpers.blockTrans = function(chunk, context, bodies, params) {
+				var template = context.get('_')[params.key];
+				var subContext = {};
+				for (var key in bodies) {
+					subContext[key] = "";
+				}
+				for (var key in bodies) {
+					chunk.tap(function(data) {
+						subContext[key] += data;
+						return "";
+					}).render(bodies[key], context).untap();
+				}
+				for (var key in bodies) {
+					template = template.replace('{' + key + '}', subContext[key]);
+				}
+				chunk.write(template);
+				return chunk;
+			};
+
 			// Call contructor of the AppController(). Takes no parameters.
 			that._super(undefined, false);
 

@@ -304,8 +304,12 @@
 					</dl>
 
 					<h3>OpenID Connect</h3>
-
-					<p>{@formatMessage _key="openid_connect_scope_info" scope="<tt>openid</tt>"/}</p>
+					<p>
+						{@blockTrans key="openid_connect_scope_info"}
+						{:scope}
+						<tt>openid</tt>
+						{/blockTrans}
+					</p>
 
 					<dl>
 						<dt>{_.openid_connect_auto_configuration}</dt>
