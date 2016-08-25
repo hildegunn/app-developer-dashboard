@@ -13,7 +13,7 @@ requirejs.config({
 		"text": '/bower_components/text/text',
 		"templates": '/templates/',
 		"DustIntl": '/bower_components/dust-helper-intl/dist/dust-intl',
-		"DustIntlData": '/bower_components/dust-helper-intl/dist/locale-data/nb',
+		"DustIntlData": '/bower_components/dust-helper-intl/dist/locale-data/en',
 		"dust": '/bower_components/dustjs-linkedin/dist/dust-full.min',
 		"class": "class",
 		"jquery": "/bower_components/jquery/dist/jquery.min",
