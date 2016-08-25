@@ -175,31 +175,7 @@
 		</div>
 
 		{?isPlatformAdmin}
-		<div class="well">
-			<h3>Platform admin</h3>
-
-			<p>To update organization logo, drag and drop a new logo over the existing one.</p>
-
-			<!-- Single button -->
-			<div class="btn-group">
-				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class="fa fa-warning"></i> Platform admin operations <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					<li><a class="actAvtale0" href="#"><i class="fa fa-fw fa-check"></i> Sett avtale</a></li>
-					<li><a class="actAvtale1" href="#"><i class="fa fa-fw fa-times"></i> Fjern avtale</a></li>
-					<li role="separator" class="divider"></li>
-
-					<li><a class="actGrupper0" href="#"><i class="fa fa-fw fa-check"></i> Sett grupper fra FS</a></li>
-					<li><a class="actGrupper1" href="#"><i class="fa fa-fw fa-times"></i> Fjern grupper fra FS</a></li>
-					<li role="separator" class="divider"></li>
-
-
-					<li><a class="actGeo" href="#"><i class="fa fa-fw fa-map-marker"></i> Edit geo-coordinates</a></li>
-				</ul>
-			</div>
-
-		</div>
+		{>porgoperations/}
 		{/isPlatformAdmin}
 
 

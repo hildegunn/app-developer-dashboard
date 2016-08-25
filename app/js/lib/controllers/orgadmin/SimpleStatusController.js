@@ -15,6 +15,7 @@ define(function(require, exports, module) {
 
 	var template = require('text!templates/SimpleStatus.html');
 	var templateldapstatus = require('text!templates/ldapstatus.html');
+	var porgoperations = require('text!templates/partials/POrgOperations.html');
 
 
 
@@ -32,6 +33,7 @@ define(function(require, exports, module) {
 
 			this.dict = new Dictionary();
 			this.tmp = new TemplateEngine(template, this.dict);
+			this.tmp.loadPartial("porgoperations", porgoperations);
 			this.tmpLDAP = new TemplateEngine(templateldapstatus, this.dict);
 			
 			this.ebind("click", ".actRepeat", "actRepeat");
