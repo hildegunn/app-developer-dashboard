@@ -5,22 +5,26 @@
 <button class="btn btn-primary pull-right actManageMandatory"><i class="fa fa-list-ul"></i> {_.managemandatory}</button>
 
 {?hasClients}
-	<p>This organization has listed some mandatory clients, such as 
-
-	{#clients}
-		<strong>{name}</strong>, 
-	{/clients}
-
-	{?hasMore}
-		and {rest} more.
-	{/hasMore}
-
+<p>
+    {?hasMore}
+        {@blockTrans key="mandatory_clients_overview_more"}
+            {:clients}
+        	    {#clients}
+	                <strong>{name}</strong>, 
+            	{/clients}
+            {:rest}
+                {rest}
+                    {/blockTrans}
+    {:else}
+        {@blockTrans key="mandatory_clients_overview"}
+             {:clients}
+        	     {#clients}
+	                 <strong>{name}</strong>, 
+        	     {/clients}
+         {/blockTrans}
+    {/hasMore}
 	</p>
 
 {:else}
 	<p>{_.nomandatory}</p>
 {/hasClients}
-
-
-
-

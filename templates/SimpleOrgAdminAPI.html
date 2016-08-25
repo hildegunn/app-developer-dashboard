@@ -7,21 +7,30 @@
 
 {?hasClients}
 
-	<p>A number of clients has access to or requested APIs which is moderated by the administrator of this organization, such as 
+<p>
+    {?hasMore}
+        {@blockTrans key="orgadmin_apigk_overview_more"}
+            {:clients}
+        	    {#clients}
+	                <strong>{name}</strong>, 
+            	{/clients}
+            {:rest}
+                {rest}
+                    {/blockTrans}
+    {:else}
+        {@blockTrans key="orgadmin_apigk_overview"}
+             {:clients}
+        	     {#clients}
+	                 <strong>{name}</strong>, 
+        	     {/clients}
+         {/blockTrans}
+    {/hasMore}
 
-	{#clients}
-		<strong>{name}</strong>, 
-	{/clients}
-
-	{?hasMore}
-		and {rest} more.
-	{/hasMore}
-
-	</p>
+</p>
 
 {:else}
 
-	<p>This organization has not yet managed access to any clients.</p>
+	<p>{_.org_no_managed_clients}</p>
 
 {/hasClients}
 

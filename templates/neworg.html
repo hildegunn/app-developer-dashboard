@@ -49,7 +49,7 @@
 
 				<div class="form-group">
 					<select id="newselectorg">
-						<option value="">Select organization, or create new</option>
+						<option value="">{_.select_org_or_create}</option>
 						{#orgs}
 							<option value="{id}">{name}</option>
 						{/orgs}				
@@ -60,9 +60,13 @@
 				<div style="display: none" id="neworgregister">
 
 					<div class="form-group">
-						<p>Register a new organization only if you cannot find your organization in the dropdown above.</p>
+						<p>{_.new_org_dropdown_check_info}</p>
 
-						<p>To request registration of a new service provider organization within Dataporten, please drop an email to <tt>kontakt@uninett.no</tt>, including name, org number, email address and a 128x128px transparent PNG for your logo.</p>
+						<p>
+							{@blockTrans key="new_org_request_info"}
+								{:email}<tt>kontakt@uninett.no</tt>
+							{/blockTrans}
+						</p>
 					</div>
 
 				</div>

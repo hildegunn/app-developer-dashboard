@@ -2,7 +2,7 @@
 	<div class="col-sm-5">
 			
 		<p>
-			Scopes can be used to control different access levels between set of clients. 
+			{_.scopes_usage_info} 
 		</p>
 
 
@@ -13,16 +13,16 @@
 
 		<p class="clearfix"></p>
 
-		<h3 style="margin-top: 2em" >Current scope definitions</h3>
+		<h3 style="margin-top: 2em" >{_.current_scope_definitions}</h3>
 
 		<table style="font-size: 85%" class="table table-striped">
 
 			<thead>
 				<tr>
-					<th>Title</th>
-					<th>Scope</th>
-					<th>API Owner policy</th>
-					<th>Org policy</th>
+					<th>{_.title}</th>
+					<th>{_.scope}</th>
+					<th>{_.api_owner_policy}</th>
+					<th>{_.org_policy}</th>
 				</tr>
 
 			</thead>
@@ -114,45 +114,45 @@
 
 		<div class="panel panel-primary sectBasicScope">
 			<div class="panel-heading">
-				<h3 class="panel-title">Primary scope</h3>
+				<h3 class="panel-title">{_.primary_scope}</h3>
 			</div>
 			<div class="panel-body">
 
 				<form class="form-horizontal">
 
-					<p>This scope is required by all client in order to even get in contact with the API.</p>
+					<p>{_.primary_scope_info}</p>
 
 					<div class="form-group">
-						<label for="basicTitle" class="col-sm-3 control-label">Name</label>
+						<label for="basicTitle" class="col-sm-3 control-label">{_.name}</label>
 						<div class="col-sm-9">
-							<input style="" id="basicTitle" type="text" class="form-control input" placeholder="Name of basic access" value="{updated.scopedef.title}" />	
+							<input style="" id="basicTitle" type="text" class="form-control input" placeholder="{_.name_of_basic_access}" value="{updated.scopedef.title}" />	
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label for="basicDescr"  class="col-sm-3 control-label">Description</label>
+						<label for="basicDescr"  class="col-sm-3 control-label">{_.descr}</label>
 						<div class="col-sm-9">
-							<textarea style="" class="form-control" id="basicDescr" placeholder="Description of basic access...">{updated.scopedef.descr}</textarea>
+							<textarea style="" class="form-control" id="basicDescr" placeholder="{_.basic_access_descr}">{updated.scopedef.descr}</textarea>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label for="basicPolicy" class="col-sm-3 control-label">API Owner Accept policy </label>
+						<label for="basicPolicy" class="col-sm-3 control-label">{_.api_owner_accept_policy} </label>
 
 						<div class="checkbox col-sm-9">
 							<label><input id="basicPolicy" type="checkbox"
 									{#updated.scopedef.policy.auto}
 										checked="checked"
 									{/updated.scopedef.policy.auto}
-								> Auto-accept</label>
+								> {_.auto_accept}</label>
 
-							<p style="font-size: 90%">If auto-accept is not enabled, you will have to manually moderate and explicitly accept all new access requests from clients.</p>
+							<p style="font-size: 90%">{_.auto_accept_info}</p>
 						</div>
 
 					</div>
 
 					<div class="form-group">
-						<label for="basicOrgAdminPolicy" class="col-sm-3 control-label">Organization Accept Policy </label>
+						<label for="basicOrgAdminPolicy" class="col-sm-3 control-label">{_.organization_accept_policy} </label>
 
 						<div class="checkbox col-sm-9">
 
@@ -160,15 +160,18 @@
 									{^updated.scopedef.policy.orgadmin.moderate}
 										checked="checked"
 									{/updated.scopedef.policy.orgadmin.moderate}
-								> Auto-accept</label>
+								> {_.auto_accept}</label>
 
-							<div class="orgadmintarget" style="margin: 10px 14px 14px 14px"><p>Target organizations: </p>
-								<p><button class="btn btn-xs btn-warning actorgadmintarget"><i class="fa fa-list-ul"></i> Select …</button>
-									<span class="shortorglist"  style="font-weight: bold; margin-left: 2em">0</span> selected 
+							<div class="orgadmintarget" style="margin: 10px 14px 14px 14px"><p>{_.target_orgs} </p>
+								<p><button class="btn btn-xs btn-warning actorgadmintarget"><i class="fa fa-list-ul"></i> {_.select_dots}</button>
+									{@blockTrans key="num_selected"}
+									{:num}
+									<span class="shortorglist"  style="font-weight: bold; margin-left: 2em">0</span>
+									{/blockTrans}
 								</p>
 							</div>
 
-							<p style="font-size: 90%">If auto-accept is not enabled, administrators from the users institution will have to moderate access before any of their users gain access through this client.</p>
+							<p style="font-size: 90%">{_.orgadmin_policy_info}</p>
 						</div>
 
 					</div>
@@ -190,7 +193,7 @@
 					<form class="form-horizontal">
 
 						<div class="form-group">
-							<label for="newAPIid"  class="col-sm-3 control-label">Identifier</label>
+							<label for="newAPIid"  class="col-sm-3 control-label">{_.identifier}</label>
 							<div class="col-sm-9">
 								<div class="input-group " style="">
 									<div class="input-group-addon">gk_{existing.id}_</div>
@@ -201,46 +204,50 @@
 						
 
 						<div class="form-group">
-							<label for="{id}_scopeTitle" class="col-sm-3 control-label">Name</label>
+							<label for="{id}_scopeTitle" class="col-sm-3 control-label">{_.name}</label>
 							<div class="col-sm-9">
-								<input style="" id="{id}_scopeTitle" type="text" class="scopeTitle form-control input" placeholder="Name of basic access" value="{title}" />	
+								<input style="" id="{id}_scopeTitle" type="text" class="scopeTitle form-control input" placeholder="{_.name_of_basic_access}" value="{title}" />	
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="{id}_scopeDescr"  class="col-sm-3 control-label">Description</label>
+							<label for="{id}_scopeDescr"  class="col-sm-3 control-label">{_.descr}</label>
 							<div class="col-sm-9">
-								<textarea style="" class="scopeDescr form-control" id="{id}_scopeDescr" placeholder="Description of basic access...">{descr}</textarea>
+								<textarea style="" class="scopeDescr form-control" id="{id}_scopeDescr" placeholder="{_.basic_access_descr}">{descr}</textarea>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="{id}_scopePolicy" class="col-sm-6 control-label">API Owner Accept policy </label>
+							<label for="{id}_scopePolicy" class="col-sm-6 control-label">{_.api_owner_accept_policy} </label>
 
 							<div class="checkbox col-sm-6">
 								<label><input id="{id}_scopePolicy" class="scopePolicy"
 									{#policy.auto}
 										checked="checked"
 									{/policy.auto}
-									type="checkbox"> Auto-accept</label>
+									type="checkbox"> {_.auto_accept}</label>
 
 							</div>
 
 						</div>
 
 						<div class="form-group">
-							<label for="{id}_scopePolicyOrgAdmin" class="col-sm-6 control-label">Organization Accept Policy </label>
+							<label for="{id}_scopePolicyOrgAdmin" class="col-sm-6 control-label">{_.organization_accept_policy} </label>
 
 							<div class="checkbox col-sm-6">
 								<label><input id="{id}_scopePolicyOrgAdmin" class="scopePolicyOrgAdmin"
 									{^policy.orgadmin.moderate}
 										checked="checked"
 									{/policy.orgadmin.moderate}
-									type="checkbox"> Auto-accept</label>
+									type="checkbox"> {_.auto_accept}</label>
 
-								<div class="orgadmintarget" style="margin: 10px 14px 14px 14px"><p>Target organizations: </p>
-									<p><button class="btn btn-xs btn-warning actorgadmintarget"><i class="fa fa-list-ul"></i> Select …</button>
-										<span class="shortorglist"  style="font-weight: bold; margin-left: 2em">0</span> selected 
+								<div class="orgadmintarget" style="margin: 10px 14px 14px 14px"><p>{_.target_orgs} </p>
+									<p><button class="btn btn-xs btn-warning actorgadmintarget"><i class="fa fa-list-ul"></i> {_.select_dots}</button>
+
+										{@blockTrans key="num_selected"}
+										{:num}
+										<span class="shortorglist"  style="font-weight: bold; margin-left: 2em">0</span>
+										{/blockTrans}
 									</p>
 								</div>
 
@@ -248,7 +255,7 @@
 
 						</div>
 
-						<div><button class="btn btn-sm btn-danger pull-right actRemoveSubscope"><i class="fa fa-times"></i>&nbsp;Remove this subscope</button></div>
+						<div><button class="btn btn-sm btn-danger pull-right actRemoveSubscope"><i class="fa fa-times"></i>&nbsp;{_.remove_this_subscope}</button></div>
 
 					</form>
 				</div>
@@ -259,7 +266,7 @@
 
 
 		{:else}
-			<div>No subscopes is currently defined</div>
+			<div>{_.no_subscopes_defined}</div>
 		{/updated.scopedef.subscopes}
 
 
@@ -270,7 +277,7 @@
 
 
 		<p>
-			<button class="btn btn-default pull-right actAddSubScope"><i class="fa fa-plus"></i>&nbsp;Add subscope</button>
+			<button class="btn btn-default pull-right actAddSubScope"><i class="fa fa-plus"></i>&nbsp;{_.add_subscope}</button>
 		</p>
 
 
