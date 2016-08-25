@@ -212,7 +212,7 @@
 					<p><code>https://{id}.{_appconfig.gkdomain}</code></p>
 					
 
-					<p>OAuth protected API requests that are sent to in example </p>
+					<p>OAuth protected API requests that are sent to e.g </p>
 
 					<p><code>https://{id}.{_appconfig.gkdomain}/foo/bar</code>, like this:</p>
 
@@ -222,10 +222,11 @@ Host: {id}.{_appconfig.gkdomain}{~n}
 Authorization: Bearer a005656a-8510-4d34-8897-f10638bb7b05
 </code></pre>	
 
-					<p>is forwarded to your API, <code>{endpoints[0]}/foo/bar</code>, like this:</p>
+					<p>will be forwarded to your API, <code>{endpoints[0]}/foo/bar</code>, like this:</p>
 
 <pre><code class="language-http">
-GET /foo/bar HTTP/1.1{~n}
+GET {examplePathPrefix}/foo/bar HTTP/1.1{~n}
+Host: {exampleHost}{~n}
 Authorization: Basic XXXXXXXX{~n}
 X-Dataporten-clientid: 42b0c02e-0dda-4882-9da0-882a4b1abad6{~n}
 X-Dataporten-userid: 76a7a061-3c55-430d-8ee0-6f82ec42501f{~n}
