@@ -35,11 +35,6 @@ define(function(require, exports, module) {
 
 		"processView": function(clients) {
 
-			// var clients = [];
-			// for(var key in clientsobj) {
-			// 	clients.push(clientsobj[key]);
-			// }
-
 			var data = {
 				"clients": [],
 				"hasClients": false,

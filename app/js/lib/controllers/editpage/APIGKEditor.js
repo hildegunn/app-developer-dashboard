@@ -143,10 +143,6 @@ define(function(require, exports, module) {
 			]);
 
 
-
-			// that.feideconnect.clientsByScope(this.current.getBasicScope()).
-			// 	then(function(clients) {
-
 			that.app.getClientRequests()
 				.then(function(clients) {
 
@@ -157,10 +153,6 @@ define(function(require, exports, module) {
 					var reqClientsReq = [];
 
 					for (i = 0; i < clients.length; i++) {
-
-						// clients[i].orgauthorization = {
-						// 	"uninett.no": ["gk_scopetestapi"]
-						// };
 
 						nc = new Client(clients[i]);
 						that.clients[nc.id] = nc;
@@ -177,9 +169,6 @@ define(function(require, exports, module) {
 						}
 
 					}
-
-
-					// $("#debug").append("<pre style='background-color: #cc7; margin-bottom: 5em'>" + JSON.stringify(view, undefined, 4) + "</pre>");
 
 
 					that.el.children().detach();

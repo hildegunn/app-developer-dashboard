@@ -5,10 +5,7 @@ define(function(require, exports, module) {
 		Pane = require('../Pane'),
 
 		Dictionary = require('../../Dictionary'),
-		// ClientCreate = require('../createwidgets/ClientCreate'),
-		// APIGKCreate = require('../createwidgets/APIGKCreate'),
 		EventEmitter = require('../../EventEmitter'),
-		// OrgRoleSelector = require('./OrgRoleSelector'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		utils = require('../../utils'),
 		$ = require('jquery')
@@ -62,16 +59,6 @@ define(function(require, exports, module) {
 			for(var key in this.clients) {
 				this.clients[key].mandatory = mandIndex.hasOwnProperty(key);
 			}
-
-			// this.clients = this.publicClientPool.getClients();
-			// var mand = this.orgAdminClients.getClients();
-			// for(var i = 0; i < mand.length; i++) {
-			// 	if (this.clients.hasOwnProperty(mand[i].id)) {
-			// 		this.clients[mand[i].id].mandatory = true;
-			// 	} else {
-			// 		console.error("Cannot find a mandatory client in public list.");
-			// 	}
-			// }
 
 		},
 

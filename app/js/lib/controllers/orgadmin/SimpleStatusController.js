@@ -210,7 +210,6 @@ define(function(require, exports, module) {
 					// console.error("ORGSTATUS", orgstatus)
 					that.orgstatus = new OrgStatus(orgstatus);
 
-					// that.loadLDAPstatus();
 				});
 		},
 
@@ -228,7 +227,6 @@ define(function(require, exports, module) {
 					};
 					// console.error("Data fra ldapstatus", ldapstatus);
 					return that.tmpLDAP.render(that.elLDAP.empty(), view);
-					// return templateldapstatus.render($("body").empty(), view);
 				});
 
 		},
@@ -243,7 +241,6 @@ define(function(require, exports, module) {
 			// console.error("About to render", view);
 			var that = this;
 			var view = this.orgstatus.getView();
-			// view.ldapstatus = this.ldapstatus.getView();
 
 			view._config = this.feideconnect.config;
 			view.isPlatformAdmin = this.usercontext.isPlatformAdmin();

@@ -106,10 +106,8 @@ define(function(require, exports, module) {
 			}
 
 			if (this.organization && this.organization !== null) {
-				// res.trustOrg = true;
 				res.apigktrustOrg = true;
 			} else if (this.owner && this.owner !== null && typeof this.owner !== 'string') {
-				// res.trustOwner = true;
 				res.apigktrustOwner = true;
 			}
 
@@ -246,11 +244,6 @@ define(function(require, exports, module) {
 
 
 		"getClientView": function(client) {
-			// console.error("Client ", client);
-			// if (typeof client !== 'object') throw new Error("Cannot getClientView without providing a valid Client object");
-			// if (new Client()  instanceof Client.prototype) {
-			// 	throw new Error("Cannot getClientView without providing a valid Client object.");
-			// }
 
 			var that = this;
 			var bs = this.getBasicScope();
@@ -258,7 +251,6 @@ define(function(require, exports, module) {
 			var v = this.getView();
 
 			v.sd = $.extend({}, v.scopedef);
-			// v.sd.clientid = apigk.id;
 			v.sd.authz = authz;
 
 			v.sd.req = false;

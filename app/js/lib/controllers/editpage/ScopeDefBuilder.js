@@ -153,8 +153,6 @@ define(function(require, exports, module) {
 			};
 			this.setAPIGK(this.apigk);
 
-			// console.error("Save API GK", JSON.stringify(obj, undefined, 2)); 
-			// return;
 			this.emit("save", obj);
 
 		},
@@ -181,10 +179,6 @@ define(function(require, exports, module) {
 
 		"updateOrgList": function() {
 			var that = this;
-			// var list = [];
-			// if (this.apigkUpdated.scopedef.policy.orgadmin && this.apigkUpdated.scopedef.policy.orgadmin.target) {
-			// 	list = this.apigkUpdated.scopedef.policy.orgadmin.target;
-			// }
 			this.el.find(".shortorglist").each(function(i, item) {
 				$(item).empty().append(that.orgselection.length);
 			});
@@ -207,8 +201,6 @@ define(function(require, exports, module) {
 				var list = that.apigkUpdated.scopedef.getOrgList();
 
 				that.orglistselector = new OrgListSelector(that.feideconnect, that.app.providerdata, list);
-				// that.orglistselector.makeSelection()
-				// 	.then($.proxy(that.setOrgSelection, that));
 
 			});
 

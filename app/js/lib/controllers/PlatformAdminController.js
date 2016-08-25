@@ -268,7 +268,6 @@ define(function(require, exports, module) {
 			};
 			view.statistics = this.statistics;
 			view.statsDate = this.statisticsDate;
-			// view.orgs = this.orgPool.getView();
 
 			// console.error("Platform admin view is ", view);
 			this.el.children().detach();

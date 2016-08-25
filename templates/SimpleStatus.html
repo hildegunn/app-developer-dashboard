@@ -54,15 +54,6 @@
 					{#s.LDAP}
 
 						<span class="label label-success"><i class="fa fa-check-square-o"></i> {_.orgstatus_ok}</span>
-						<!--
-
-						{#ldapstatus.OK}
-							<span class="label label-success"><i class="fa fa-check-square-o"></i> OK</span>
-						{:else}
-							<span class="label label-danger"><i class="fa fa-exclamation-triangle"></i> Feil</span>
-						{/ldapstatus.OK}
-
-						-->
 
 					{:else}
 						<span class="label label-warning"><i class="fa fa-square-o"></i> {_.orgstatus_config_pendig}</span>
@@ -199,10 +190,6 @@
 					<li><a class="actAvtale1" href="#"><i class="fa fa-fw fa-times"></i> Fjern avtale</a></li>
 					<li role="separator" class="divider"></li>
 
-			<!-- 		<li><a class="actSok0" href="#"><i class="fa fa-fw fa-check"></i> Sett personsøk</a></li>
-					<li><a class="actSok1" href="#"><i class="fa fa-fw fa-times"></i> Fjern personsøk</a></li>
-					<li role="separator" class="divider"></li> -->
-
 					<li><a class="actGrupper0" href="#"><i class="fa fa-fw fa-check"></i> Sett grupper fra FS</a></li>
 					<li><a class="actGrupper1" href="#"><i class="fa fa-fw fa-times"></i> Fjern grupper fra FS</a></li>
 					<li role="separator" class="divider"></li>
@@ -242,11 +229,3 @@
 	</pre>
 
 </div>
-
-<!--
-<div>
-	<button class="btn btn-primary actManageStatus disabled">
-		<i class="fa fa-wrench"></i> Configure my organization (coming soon)
-	</button>
-</div>
--->

@@ -10,7 +10,6 @@
 			<li role="presentation" data-tabid="tabRequests" class="">
 				<a href="#"><span class="label label-danger queuecount pull-left"></span> {_.requests}</a></li>
 			<li role="presentation" data-tabid="tabClients" class=""><a href="#">{_.applications}</a></li>
-			<!-- <li role="presentation" data-tabid="tabStatistics" class=""><a href="#">{_.usage_statistics}</a></li> -->
 			<li role="presentation" data-tabid="tabDelete" class=""><a href="#">{_.delete}</a></li>
 		</ul>
 
@@ -517,8 +516,6 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 											{:else}
 
 												{#sd.req}
-													<!-- <input class="authscope" data-scopemoderate="gk_{sd.apigkid}" type="checkbox"  />  -->
-
 														<div class="radio">
 															<label>
 																<input type="radio" name="gk_{sd.apigkid}" value="reject" class="radioscopeauthz">
@@ -586,9 +583,6 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 												{/status.accepted}
 
 												{?status.requested}
-													<!-- <input class="authscope" type="checkbox" data-scopemoderate="gk_{sd.apigkid}_{scope}" />  -->
-
-
 													<div class="radio">
 														<label>
 															<input type="radio" name="gk_{sd.apigkid}_{scope}"  value="reject" class="radioscopeauthz">
@@ -929,20 +923,6 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 			</div>
 		</div>
-
-
-		<div id="tabStatistics"  style="" class="row">
-
-
-			<div class="col-sm-12">
-
-				<h3>{_.usage_statistics}</h3>
-
-				<p></p>
-
-			</div>
-		</div>
-
 
 		<div id="tabDelete"  style="" class="row">
 

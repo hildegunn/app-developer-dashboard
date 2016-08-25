@@ -3,7 +3,6 @@ define(function(require, exports, module) {
 
 
 	var 
-		// $ = require('jquery'),
 		Controller = require('../controllers/Controller'),
 		EventEmitter = require('../EventEmitter'),
 
@@ -44,12 +43,6 @@ define(function(require, exports, module) {
 
 			// console.error("ABOUT TO LOAD client pool with org ", orgid);
 
-
-			// if (orgid === this.orgid) {
-			// 	return new Promise(function(resolve) {
-			// 		resolve();
-			// 	});
-			// }
 
 			return Promise.all([
 				that.loadClients(),
@@ -105,8 +98,6 @@ define(function(require, exports, module) {
 
 			for(var apigkid in this.apigks) {
 
-				// var api = new APIGK(this.apigks[apigkid]);
-
 
 				for (i = 0; i < this.clientRequests.length; i++) {
 					var x = this.clientRequests[i];
@@ -115,15 +106,10 @@ define(function(require, exports, module) {
 					// console.error("Processing API GK View", cv);	
 
 					if (cv.sd.req) {
-						// if (!this.clientRequestsStructured.hasOwnProperty(apigkid)) {
-						// 	this.clientRequestsStructured[apigkid] = 0;
-						// }
-						// this.clientRequestsStructured[apigkid]++;
 
 						this.apigks[apigkid].increaseClientRequestCounter();
 						
 						// console.error("Processing API GK View", cv);	
-						// view.clientsReq.push($.extend({}, cv));
 					}
 
 

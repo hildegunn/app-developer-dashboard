@@ -39,7 +39,6 @@ define(function(require) {
 			this.dict = new Dictionary();
 			this.template = new TemplateEngine(clientTemplate, this.dict);
 			this.template.loadPartial("apilisting", apilistingTemplate);
-			// this.template.loadPartial("apilistingpublic", publicAPIListingTemplate);
 
 			this.apipublictemplate = new TemplateEngine(publicAPIListingTemplate, this.dict);
 			this.apiowntemplate = new TemplateEngine(ownAPIListingTemplate, this.dict);
@@ -160,13 +159,6 @@ define(function(require) {
 
 				$.getJSON(endpoint, function(scopePolicy) {
 					that.scopePolicy = scopePolicy;
-					// that.scopePolicy.email = {
-					// 	"title": "EMAILSD FSLDKF ",
-					// 	"public": true,
-					// 	"policy": {
-					// 		"auto": false
-					// 	}
-					// }
 					resolve();
 				});
 
@@ -665,10 +657,6 @@ define(function(require) {
 				"privacypolicyurl", "homepageurl", "loginurl", "supporturl",
 				"redirect_uri"
 			]);
-
-			// obj = this.current.getStorable();
-			// obj.authproviders = [];
-			// console.error("UPDATE", obj);
 
 			this.feideconnect.clientsUpdate(obj)
 				.then(function(savedClient) {
