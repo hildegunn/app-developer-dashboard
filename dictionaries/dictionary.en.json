@@ -30,6 +30,7 @@
 	"apigk_baseurl_info": "Your API may be accessed on this API Gatekeeper base URL:",
 	"apigk_creds_info": "These credentials are used when Dataporten is accessing your API.",
 	"apigk_endpoint_descr": "This is the base URL endpoint of your API. The endpoints on your side that will receive all the requests.",
+    "apigk_request_example": "OAuth protected API requests that are sent to e.g {inurl}, like this: {inrequest} will be forwarded to your API, {outurl}, like this: {outrequest}",
 	"apigks": "API Gatekeepers",
 	"apigksnew": "Register new API Gatekeeper",
 	"apiref": "API Reference",

@@ -212,18 +212,16 @@
 					<p><code>https://{id}.{_appconfig.gkdomain}</code></p>
 					
 
-					<p>OAuth protected API requests that are sent to e.g </p>
-
-					<p><code>https://{id}.{_appconfig.gkdomain}/foo/bar</code>, like this:</p>
-
+					{@blockTrans key="apigk_request_example"}
+						{:inurl}<code>https://{id}.{_appconfig.gkdomain}/foo/bar</code>
+						{:inrequest}
 <pre><code class="language-http">
 GET /foo/bar HTTP/1.1{~n}
 Host: {id}.{_appconfig.gkdomain}{~n}
 Authorization: Bearer a005656a-8510-4d34-8897-f10638bb7b05
 </code></pre>	
-
-					<p>will be forwarded to your API, <code>{endpoints[0]}/foo/bar</code>, like this:</p>
-
+						{:outurl}<code>{endpoints[0]}/foo/bar</code>
+						{:outrequest}
 <pre><code class="language-http">
 GET {examplePathPrefix}/foo/bar HTTP/1.1{~n}
 Host: {exampleHost}{~n}
@@ -232,7 +230,7 @@ X-Dataporten-clientid: 42b0c02e-0dda-4882-9da0-882a4b1abad6{~n}
 X-Dataporten-userid: 76a7a061-3c55-430d-8ee0-6f82ec42501f{~n}
 X-Dataporten-userid-sec: feide:xxxx@uninett.no
 </code></pre>
-
+					{/blockTrans}
 					<p>{_.http_header_casing_note}</p>
 
 				</div>
