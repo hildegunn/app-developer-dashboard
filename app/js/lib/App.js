@@ -79,13 +79,13 @@ define(function(require, exports, module) {
 				for (var key in bodies) {
 					subContext[key] = "";
 				}
-				for (var key in bodies) {
+				for (key in bodies) {
 					chunk.tap(function(data) {
 						subContext[key] += data;
 						return "";
 					}).render(bodies[key], context).untap();
 				}
-				for (var key in bodies) {
+				for (key in bodies) {
 					template = template.replace('{' + key + '}', subContext[key]);
 				}
 				chunk.write(template);
