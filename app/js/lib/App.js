@@ -79,11 +79,12 @@ define(function(require, exports, module) {
 				for (var key in bodies) {
 					subContext[key] = "";
 				}
+				var tap = function(data) {
+					subContext[key] += data;
+					return "";
+				};
 				for (key in bodies) {
-					chunk.tap(function(data) {
-						subContext[key] += data;
-						return "";
-					}).render(bodies[key], context).untap();
+					chunk.tap(tap).render(bodies[key], context).untap();
 				}
 				for (key in bodies) {
 					template = template.replace('{' + key + '}', subContext[key]);
