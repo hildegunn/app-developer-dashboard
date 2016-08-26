@@ -57,10 +57,10 @@
 					<div class="form-group">
 
 						<label>
-							<input class="fieldrequireuser" type="checkbox" {#requireuser} checked="checked" {/requireuser} /> Require authenticated user
+							<input class="fieldrequireuser" type="checkbox" {#requireuser} checked="checked" {/requireuser} /> Disallow system to system usage
 						</label>
 
-						<p>Uncheck this if clients should be allowed to interact with this API without any authenticated user.</p>
+						<p>Uncheck this if clients authenticated using OAuth 2.0 Client Credentials flow should be allowed to interact with this API. These API calls can not be linked to an authenticated user.</p>
 					</div>
 
 
