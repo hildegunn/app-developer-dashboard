@@ -86,7 +86,7 @@ define(function(require, exports, module) {
 		},
 
 		"getMapURL": function() {
-			var base = "//maps.google.com/maps/api/staticmap?zoom=12&size=512x512&maptype=roadmap&";
+			var base = "//maps.google.com/maps/api/staticmap?zoom=12&size=512x512&maptype=roadmap&key=AIzaSyAqU9D4WPi8kGHJhPDxSHVEMfVq_ZGQx5g&";
 			// "markers=color:blue|label:S|40.702147,-74.015794&markers=color:green|label:G|40.711614,-74.012318&markers=color:red|color:red|label:C|40.718217,-73.998284";
 			var url = base;
 			var items = [];
