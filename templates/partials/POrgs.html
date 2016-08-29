@@ -2,7 +2,7 @@
 {#orgs}
 	<a href="#" data-orgid="{id}" class="list-group-item media orgEntry" data-searchable="{name}">
 		<div class="media-left">
-			<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/orgs/{id}/logo" alt="logo of org {name}">
+			<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/orgs/{id}/logo" alt="{@formatMessage _key="org_logo_alt" orgname=name/}">
 		</div>
 		<div class="media-body">
 
