@@ -47,7 +47,7 @@ define(function(require, exports, module) {
 			that.roles = {};
 			that.roles._ = new GroupOption({
 				"id": "_",
-				"title": "Personal"
+				"title": that.app.dict.get().personal
 			});
 
 			this.setOrg(this.currentRole, false);

@@ -240,6 +240,7 @@
 	"owner": "Owner",
 	"password": "Password",
 	"permissions": "Permissions",
+	"personal": "Personal",
 	"personalaccts": "Personal accounts",
 	"personalacctsinfo": "When users are accessing applications and APIs registered with your personal account, information about you will displayed as part of the login flow.",
 	"platform_admin": "Platform admin",
