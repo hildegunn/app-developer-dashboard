@@ -485,7 +485,7 @@
 						<tr>
 							<th>{_.username}</th>
 							<th>{_.password}</th>
-							<th>Comment</th>
+							<th>{_.comment}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -548,7 +548,7 @@
 									{/policy.auto}
 									{^public}
 											<span class="label label-default">
-												<i class="fa fa-eye-slash" aria-hidden="true"></i> Hidden</span>
+												<i class="fa fa-eye-slash" aria-hidden="true"></i> {_.hidden}</span>
 									{/public}
 									</p>
 									
@@ -612,7 +612,7 @@
 								{/policy.auto}
 								{^public}
 										<span class="label label-default">
-											<i class="fa fa-eye-slash" aria-hidden="true"></i> Hidden</span>
+											<i class="fa fa-eye-slash" aria-hidden="true"></i> {_.hidden}</span>
 								{/public}
 								</p>
 								<p style="margin-top: .3em; margin-bottom: 0px">
