@@ -31,6 +31,7 @@ define(function(require, exports, module) {
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		utils = require('./utils'),
 		dust = require('dust'),
+		dust_helpers = require('dustjs-helpers'),
 		DustIntl = require('DustIntl'),
 		DustIntlData = require('DustIntlData'),
 		// rawconfig = require('text!../../etc/config.js'),

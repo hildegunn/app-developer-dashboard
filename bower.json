@@ -28,6 +28,7 @@
     "js-cookie": "~2.0.4",
     "flot": "*",
     "bootstrap-datepicker": "*",
-    "dust-helper-intl": "*"
+    "dust-helper-intl": "*",
+    "dustjs-helpers": "~1.7.3"
   }
 }

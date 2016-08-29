@@ -5,6 +5,7 @@
 		"text": '../../bower_components/text/text',
 		"templates": '../../templates/',
 		"dust": '../../bower_components/dustjs-linkedin/dist/dust-full.min',
+		"dustjs-helpers": '../../bower_components/dustjs-helpers/dist/dust-helpers.min',
 		"DustIntl": '../../bower_components/dust-helper-intl/dist/dust-intl',
 		"class": "lib/class",
 		"jquery": "../../bower_components/jquery/dist/jquery.min",
