@@ -145,7 +145,7 @@ define(function(require, exports, module) {
 
 							})
 							.catch(function(err) {
-								that.setErrorMessage("Error loading client and apigk data from an organization", "danger", err);
+								that.setErrorMessage(that.dict.get().error_loading_client_and_apigk_data_from_an_organization, "danger", err);
 							});
 					});
 
@@ -186,7 +186,7 @@ define(function(require, exports, module) {
 							})
 							.catch(function(err) {
 								console.error("err", err);
-								that.setErrorMessage("Error loading front dashboard", "danger", err);
+								that.setErrorMessage(that.dict.get().error_loading_front_dashboard, "danger", err);
 							});
 
 					});
@@ -407,7 +407,7 @@ define(function(require, exports, module) {
 					orgApp.activate();
 				})
 				.catch(function(err) {
-					that.setErrorMessage("Error loading client", "danger", err);
+					that.setErrorMessage(that.dict.get().error_loading_client, "danger", err);
 				});
 
 		},
@@ -425,7 +425,7 @@ define(function(require, exports, module) {
 				})
 				.catch(function(err) {
 					console.error("err", err);
-					that.setErrorMessage("Error loading API Gatekeeper", "danger", err);
+					that.setErrorMessage(that.dict.get().error_loading_api_gatekeeper, "danger", err);
 				});
 
 		},
@@ -446,7 +446,7 @@ define(function(require, exports, module) {
 				})
 				.catch(function(err) {
 					console.error("err", err);
-					that.setErrorMessage("Error loading Mandatory view", "danger", err);
+					that.setErrorMessage(that.dict.get().error_loading_mandatory_view, "danger", err);
 				});
 
 		},
@@ -466,7 +466,7 @@ define(function(require, exports, module) {
 				})
 				.catch(function(err) {
 					console.error("err", err);
-					that.setErrorMessage("Error loading Mandatory view", "danger", err);
+					that.setErrorMessage(that.dict.get().error_loading_mandatory_view, "danger", err);
 				});
 		},
 
@@ -501,7 +501,7 @@ define(function(require, exports, module) {
 
 				.catch(function(err) {
 					console.error("err", err);
-					that.setErrorMessage("Error loading Mainlisting", "danger", err);
+					that.setErrorMessage(that.dict.get().error_loading_mainlisting, "danger", err);
 				});
 		}
 

@@ -88,7 +88,7 @@ define(function(require, exports, module) {
 				})
 				.catch(function(err) {
 					// console.error(err);
-					that.app.app.setErrorMessage("Error uploading logo", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_uploading_logo, "danger", err);
 				});
 		},
 

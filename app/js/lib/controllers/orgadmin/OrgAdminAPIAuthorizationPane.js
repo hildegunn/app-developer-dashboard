@@ -80,10 +80,10 @@ define(function(require, exports, module) {
 					return that.feideconnect.updateOrgAuthorizations(orgid, client.client, client.scopes);
 				}, Promise.resolve())
 				.then(function() {
-					that.orgapp.app.setErrorMessage("Successfully updated API authorizations.", "success");
+					that.orgapp.app.setErrorMessage(that.dict.get().updated_api_authz_success, "success");
 				})
 				.catch(function(err) {
-					that.orgapp.app.setErrorMessage("Failed to update API Authorizations", "danger", err);
+					that.orgapp.app.setErrorMessage(that.dict.get().failed_to_update_api_authorizations, "danger", err);
 				})
 				.then(function() {
 					return that.reload();

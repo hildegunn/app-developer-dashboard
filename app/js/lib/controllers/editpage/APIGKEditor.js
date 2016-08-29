@@ -58,7 +58,7 @@ define(function(require, exports, module) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error saving API Gatekeeper", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_saving_api_gatekeeper, "danger", err);
 				});
 		},
 
@@ -97,7 +97,7 @@ define(function(require, exports, module) {
 					that.emit("saved", that.current);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error uploading logo", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_uploading_logo, "danger", err);
 				});
 		},
 
@@ -245,7 +245,7 @@ define(function(require, exports, module) {
 					that.edit(that.current);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error authorize API scopes", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_authorize_api_scopes, "danger", err);
 				});
 
 		},
@@ -293,7 +293,7 @@ define(function(require, exports, module) {
 					that.emit("deleted", that.current.id);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error deleting API Gatekeeper", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_deleting_api_gatekeeper, "danger", err);
 				});
 		}
 
