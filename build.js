@@ -39,7 +39,7 @@
 			"deps": ["jquery", "../../bower_components/flot/jquery.flot.js"]
 		}
 	},
-	name: "../../bower_components/almond/almond",
+	name: "../../bower_components/requirejs/require",
 	include: "main",
 	insertRequire: ["main"],
 	out: "app/dist/app.min.js"
