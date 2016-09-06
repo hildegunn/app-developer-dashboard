@@ -125,7 +125,8 @@ define(function(require, exports, module) {
 
 			// console.error("Scope policy", this.scopePolicy);
 
-			var scopes = item.getScopes(this.scopePolicy);
+			var includeHidden = this.usercontext.isPlatformAdmin();
+			var scopes = item.getScopes(this.scopePolicy, includeHidden);
 
 			if (this.feideconnect) {
 				$.extend(view, {
