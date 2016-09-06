@@ -95,7 +95,7 @@
 			"updateDataFromInputControls": function() {
 
 				var providers = [];
-
+				var key;
 				var props = {};
 				var listselections = {
 					"idportenlist": [],
@@ -119,16 +119,16 @@
 				var xfunc = function(i, item) {
 					var e = $(item);
 					var ep = e.closest('.providerentry');
-					// console.log("Found list entry ", key, ep.data('id'), e.prop("checked"));	
+					// console.log("Found list entry ", key, ep.data('id'), e.prop("checked"));
 					if (e.prop("checked")) {
-						// console.log("Found list entry CHECKED ", key, ep.data('id'));	
+						// console.log("Found list entry CHECKED ", key, ep.data('id'));
 						listselections[key].push(ep.data('id'));
 					}
 
 				};
 
 
-				for (var key in listselections) {
+				for (key in listselections) {
 					this.el.find('.' + key + ' .providerentry input').each(xfunc);
 				}
 
