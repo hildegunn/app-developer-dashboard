@@ -6,6 +6,7 @@
 		"templates": '../../templates/',
 
 		"dust": '../../bower_components/dustjs-linkedin/dist/dust-full.min',
+		"dust.core": '/bower_components/dustjs-linkedin/dist/dust-core.min',
 		"dustjs-helpers": '../../bower_components/dustjs-helpers/dist/dust-helpers.min',
 		"DustIntl": '../../bower_components/dust-helper-intl/dist/dust-intl',
 
