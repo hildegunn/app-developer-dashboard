@@ -46,13 +46,6 @@ define(function(require, exports, module) {
 			return false;
 		}
 
-
-
-		// "getView": function() {
-		// 	var res = this._super();
-		// 	return res;
-		// }
-		
 	});
 
 	return Scope;

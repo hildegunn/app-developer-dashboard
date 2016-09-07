@@ -39,7 +39,6 @@ define(function(require) {
 			this.dict = new Dictionary();
 			this.template = new TemplateEngine(clientTemplate, this.dict);
 			this.template.loadPartial("apilisting", apilistingTemplate);
-			// this.template.loadPartial("apilistingpublic", publicAPIListingTemplate);
 
 			this.apipublictemplate = new TemplateEngine(publicAPIListingTemplate, this.dict);
 			this.apiowntemplate = new TemplateEngine(ownAPIListingTemplate, this.dict);
@@ -160,13 +159,6 @@ define(function(require) {
 
 				$.getJSON(endpoint, function(scopePolicy) {
 					that.scopePolicy = scopePolicy;
-					// that.scopePolicy.email = {
-					// 	"title": "EMAILSD FSLDKF ",
-					// 	"public": true,
-					// 	"policy": {
-					// 		"auto": false
-					// 	}
-					// }
 					resolve();
 				});
 
@@ -198,7 +190,7 @@ define(function(require) {
 				})
 				.catch(function(err) {
 					// console.error(err);
-					that.app.app.setErrorMessage("Error uploading logo", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_uploading_logo, "danger", err);
 				});
 		},
 
@@ -354,7 +346,7 @@ define(function(require) {
 
 					})
 					.catch(function(err) {
-						that.app.app.setErrorMessage("Error loading client editor", "danger", err);
+						that.app.app.setErrorMessage(that.dict.get().error_loading_client_editor, "danger", err);
 					});
 
 
@@ -463,10 +455,10 @@ define(function(require) {
 					that.edit(x);
 					that.emit("saved", x);
 
-					that.app.app.setErrorMessage("Successfully updated list of authentication providers", "success");
+					that.app.app.setErrorMessage(that.dict.get().successfully_updated_list_of_authentication_providers, "success");
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error updating auth providers", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_updating_auth_providers, "danger", err);
 				});
 
 		},
@@ -528,7 +520,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error adding third party API", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_adding_third_party_api, "danger", err);
 				});
 
 		},
@@ -568,7 +560,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error third party API scope update", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_third_party_api_scope_update, "danger", err);
 				});
 
 
@@ -613,7 +605,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error adding scope", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_adding_scope, "danger", err);
 				});
 		},
 
@@ -666,10 +658,6 @@ define(function(require) {
 				"redirect_uri"
 			]);
 
-			// obj = this.current.getStorable();
-			// obj.authproviders = [];
-			// console.error("UPDATE", obj);
-
 			this.feideconnect.clientsUpdate(obj)
 				.then(function(savedClient) {
 					var x = new Client(savedClient);
@@ -677,7 +665,7 @@ define(function(require) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error updating client", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_updating_client, "danger", err);
 				});
 
 		},
@@ -690,7 +678,7 @@ define(function(require) {
 					that.emit("deleted", that.current.id);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error deleting client", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_deleting_client, "danger", err);
 				});
 		}
 

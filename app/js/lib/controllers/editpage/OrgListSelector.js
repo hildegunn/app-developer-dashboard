@@ -2,7 +2,6 @@ define(function(require, exports, module) {
 	"use strict";
 
 	var
-		dust = require('dust'),
 		Dictionary = require('../../Dictionary'),
 		Controller = require('../Controller'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
@@ -131,7 +130,6 @@ define(function(require, exports, module) {
 				columns[i % noc].orgs.push(this.providerdata.orgs[i]);
 			}
 			var view = {
-				"_": this.dict.get(),
 				"columns": columns
 			};
 			// console.error("colmn", columns);

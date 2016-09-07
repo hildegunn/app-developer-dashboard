@@ -3,6 +3,8 @@ module.exports = function(grunt) {
 
 	"use strict";
 
+	var cfg
+
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -110,14 +112,14 @@ module.exports = function(grunt) {
 
 	// ---- Section on building locale based app builds.
 	var shell = grunt.config.get("shell");
-	var cfg = grunt.config.get("config");
+	cfg = grunt.config.get("config");
 	var lang;
 	shell.rjs.command = [];
 	for (var i = 0; i < cfg.languages.length; i++) {
 		lang = cfg.languages[i];
-		shell.rjs.command.push("node_modules/requirejs/bin/r.js -o build.js paths.dict=../../dictionaries/build/dictionary." + lang + ".json out=app/dist/app.min.js." + lang + "");
+		shell.rjs.command.push("node_modules/requirejs/bin/r.js -o build.js paths.dict=../../dictionaries/build/dictionary." + lang + ".json paths.DustIntlData=../../bower_components/dust-helper-intl/dist/locale-data/" + lang + " out=app/dist/app.min.js." + lang + "");
 	}
-	// We comment out this, because it overrides the langauge negotiation 
+	// We comment out this, because it overrides the langauge negotiation
 	// when enabled.
 	// shell.rjs.command.push("cp dist/app.min.js.en dist/app.min.js");
 

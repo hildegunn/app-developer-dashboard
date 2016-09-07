@@ -20,13 +20,11 @@ define(function(require, exports, module) {
 			var res = this._super();
 			if (this.created) {
 				res.created = parseDate(this.created);
-				res.createdAgo = res.created.fromNow();
 				res.createdH = res.created.format('D. MMM YYYY');
 			}
 
 			if (this.updated) {
 				res.updated = parseDate(this.updated);
-				res.updatedAgo = res.updated.fromNow();
 				res.updatedH = res.updated.format('D. MMM YYYY');
 			}
 
@@ -109,16 +107,6 @@ define(function(require, exports, module) {
 				});
 			}
 
-			// if(this.id === '541bc151-4a34-47c6-b9fb-15947dbf54ae' && apigk.id === 'scopetestapi') {
-			// 	console.error("Client " + this.name + " wants access to " + apigk.name);
-			// 	console.error("Org authorizations", orgauthorization);
-			// }
-
-			// console.error("Orgs", orgs);
-
-			// console.error("All Scopes", allScopes);
-			// console.error("Scopes", scopes);		
-
 			for (i = 0; i < orgs.length; i++) {
 				var org = orgs[i];
 				var orgentry = {
@@ -128,9 +116,6 @@ define(function(require, exports, module) {
 				// console.error("ORGentry", orgentry);
 
 				for (j = 0; j < scopes.length; j++) {
-					// if(this.id === '541bc151-4a34-47c6-b9fb-15947dbf54ae' && apigk.id === 'scopetestapi') {
-					// console.error("Check scopes ", org, scopes[j], this.hasOrgAuthorized(org, scopes[j]))
-					// }
 					orgentry.scopes.push(this.hasOrgAuthorized(org, scopes[j]));
 				}
 				data.orgs.push(orgentry);

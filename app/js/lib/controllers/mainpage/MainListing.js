@@ -2,7 +2,7 @@ define(function(require, exports, module) {
 	"use strict";	
 
 	var 
-		dust = require('dust'),
+		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		Pane = require('../Pane'),
 
 		Dictionary = require('../../Dictionary'),
@@ -20,8 +20,8 @@ define(function(require, exports, module) {
 
 	var 
 		template = require('text!templates/MainListing.html'),
-		templateC = require('text!templates/MainListingClients.html'),
-		templateA = require('text!templates/MainListingAPIGKs.html')
+		templateClients = require('text!templates/MainListingClients.html'),
+		templateAPIGKs = require('text!templates/MainListingAPIGKs.html')
 		;
 
 
@@ -41,10 +41,9 @@ define(function(require, exports, module) {
 			this._super();
 
 			this.dict = new Dictionary();
-
-			dust.loadSource(dust.compile(template, "mainlisting"));
-			dust.loadSource(dust.compile(templateC, "mainlistingC"));
-			dust.loadSource(dust.compile(templateA, "mainlistingA"));
+			this.template = new TemplateEngine(template, this.dict, true);
+			this.templateClients = new TemplateEngine(templateClients, this.dict, true);
+			this.templateAPIGKs = new TemplateEngine(templateAPIGKs, this.dict, true);
 
 			this.elClients = $("<div></div>");
 			this.elAPIGKs = $("<div></div>");
@@ -150,12 +149,10 @@ define(function(require, exports, module) {
 			view = {
 				"clients": clientlist,
 				"random": utils.guid(),
-				"_config": that.feideconnect.getConfig(),
-				"_": that.dict.get()
+				"_config": that.feideconnect.getConfig()
 			};
 
-			dust.render("mainlistingC", view, function(err, out) {
-				that.elClients.empty().append(out);
+			this.templateClients.render(this.elClients, view).then(function() {
 				if (!that.elClientsAttached && that.templateLoaded) {
 					that.el.find('#listingClients').append(that.elClients);
 					that.elClientsAttached = true;
@@ -192,12 +189,10 @@ define(function(require, exports, module) {
 			view = {
 				"apigks": apigklist,
 				"random": utils.guid(),
-				"_config": that.feideconnect.getConfig(),
-				"_": that.dict.get()
+				"_config": that.feideconnect.getConfig()
 			};
 
-			dust.render("mainlistingA", view, function(err, out) {
-				that.elAPIGKs.empty().append(out);
+			this.templateAPIGKs.render(this.elAPIGKs, view).then(function() {
 				if (!that.elAPIGKsAttached && that.templateLoaded) {
 					that.el.find('#listingAPIGKs').append(that.elAPIGKs);
 					that.elAPIGKsAttached = true;
@@ -219,16 +214,12 @@ define(function(require, exports, module) {
 			return new Promise(function(resolve, reject) {
 
 				var view = {
-					"_": that.dict.get(),
 					"personal": that.app.isPersonal(),
 					"simpleOrgAdminStatus": (that.simpleOrgAdminView !== null),
 					"simpleOrgAdminAPI": (that.simpleOrgAdminAPI !== null),
 					"orgAdminStatus": (that.orgAdminStatus !== null)
 				};
-				dust.render("mainlisting", view, function(err, out) {
-
-					that.el.children().detach();
-					that.el.append(out);
+				that.template.render(that.el, view).then(function() {
 					that.el.find('#listingClients').append(that.elClients);
 					that.el.find('#listingAPIGKs').append(that.elAPIGKs);
 

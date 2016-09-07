@@ -134,10 +134,10 @@ define(function(require, exports, module) {
 						that.app.setHash('/' + that.orgid + '/clients/' + client.id + '/edit/tabBasic');
 					})
 					.then(function() {
-						that.app.setErrorMessage("Successfully created new client", "success");
+						that.app.setErrorMessage(that.dict.get().successfully_created_new_client, "success");
 					})
 					.catch(function(err) {
-						that.app.setErrorMessage("Error creating new client", "danger", err);
+						that.app.setErrorMessage(that.dict.get().error_creating_new_client, "danger", err);
 					});
 			});
 
@@ -156,10 +156,10 @@ define(function(require, exports, module) {
 						that.app.publicapis.load();
 					})
 					.then(function() {
-						that.app.setErrorMessage("Successfully created new API Gatekeeper", "success");
+						that.app.setErrorMessage(that.dict.get().successfully_created_new_api_gatekeeper, "success");
 					})
 					.catch(function(err) {
-						that.app.setErrorMessage("Error creating new API Gatekeeper", "danger", err);
+						that.app.setErrorMessage(that.dict.get().error_creating_new_api_gatekeeper, "danger", err);
 					});
 			});
 
@@ -211,7 +211,7 @@ define(function(require, exports, module) {
 
 				} catch (err) {
 					console.error("ERROR", err);
-					that.app.setErrorMessage("Error opening client", "danger", err);
+					that.app.setErrorMessage(that.dict.get().error_opening_client, "danger", err);
 				}
 			});
 			this.mainlisting.on('apigkSelected', function(apigkid) {
@@ -222,7 +222,7 @@ define(function(require, exports, module) {
 					that.app.orgRoleSelector.hide();
 					that.app.setHash('/' + that.orgid + '/apigk/' + apigkid + '/edit/tabBasic');
 				} catch (err) {
-					that.app.setErrorMessage("Error opening apigk", "danger", err);
+					that.app.setErrorMessage(that.dict.get().error_opening_apigk, "danger", err);
 				}
 			});
 

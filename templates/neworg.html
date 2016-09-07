@@ -21,7 +21,6 @@
 						</div>
 						<div class="media-body">
 							<p>{userinfo.name}</p>
-							<!-- <p>{userinfo.userid}</p> -->
 						</div>
 					</div>
 				</div>
@@ -50,7 +49,7 @@
 
 				<div class="form-group">
 					<select id="newselectorg">
-						<option value="">Select organization, or create new</option>
+						<option value="">{_.select_org_or_create}</option>
 						{#orgs}
 							<option value="{id}">{name}</option>
 						{/orgs}				
@@ -61,43 +60,19 @@
 				<div style="display: none" id="neworgregister">
 
 					<div class="form-group">
-						<p>Register a new organization only if you cannot find your organization in the dropdown above.</p>
+						<p>{_.new_org_dropdown_check_info}</p>
 
-						<p>To request registration of a new service provider organization within Dataporten, please drop an email to <tt>kontakt@uninett.no</tt>, including name, org number, email address and a 128x128px transparent PNG for your logo.</p>
+						<p>
+							{@blockTrans key="new_org_request_info"}
+								{:email}<tt>kontakt@uninett.no</tt>
+							{/blockTrans}
+						</p>
 					</div>
-					<!--
-					<div class="form-group">
-						<label for="newOrgName">Organization name</label>
-						<input style="" id="newOrgName" type="text" class="form-control input" placeholder="">
-					</div>
-
-					<div class="form-group">
-						<label for="newOrgNumber">Organization number</label>
-						<input style="" id="newOrgNumber" type="text" class="form-control input" placeholder="">
-					</div>
-
-					<div class="form-group">
-						<label for="email">Contact e-mail</label>
-						<input style="" id="email" type="text" class="form-control input" placeholder="">
-					</div>
-
-					<div class="form-group">
-						<label for="message">Optional message</label>
-						<textarea style="" class="form-control" id="message" placeholder=""></textarea>
-					</div>
-
-					<div class="form-group">
-						<p>We would also like to register logos for service provider organizations. Please send us an 128x128px transparent PNG to <tt>kontakt@uninett.no</tt>.</p>
-					</div>
-						-->
 
 				</div>
 				<div id="orgresult">
 					
 				</div>
-				<!--
-				<button class="btn btn-primary btn-lg actSubmit">Request </button>
-				-->
 
 
 			</form>

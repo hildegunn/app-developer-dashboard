@@ -3,7 +3,6 @@ define(function(require, exports, module) {
 
 
 	var
-		dust = require('dust'),
 		utils = require('../../utils'),
 		Dictionary = require('../../Dictionary'),
 		Controller = require('../Controller'),
@@ -48,7 +47,6 @@ define(function(require, exports, module) {
 
 		"draw": function() {
 			var view = {
-				// "_": this.dict.get(),
 				"orgInfo": this.app.getOrgInfo()
 			};
 			this.el.children().detach();
@@ -68,7 +66,6 @@ define(function(require, exports, module) {
 
 			var obj = {};
 
-			// obj.id = $(this.element).find("#newClientIdentifier").val();
 			obj.name = $(this.el).find("#newClientName").val();
 			obj.descr = $(this.el).find("#newClientDescr").val();
 			obj.redirect_uri = [$(this.el).find("#newClientRedirectURI").val()];

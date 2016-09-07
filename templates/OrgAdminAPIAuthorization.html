@@ -9,14 +9,14 @@
 		{_.accessdatasources}
 	</h1>
 
-	<p>Below is listed all clients that requests access to one or more API scopes that needs to be moderated by you or another administrator at your organizations, in order for your users to be able to use that client with the requested APIs.</p>	
+	<p>{_.orgadmin_apigk_request_descr}</p>	
 
 
 </div>
 
 
 <div style="text-align: right">
-	<button class="btn btn-primary btn-lg actSaveChanges">Save changes</button>
+	<button class="btn btn-primary btn-lg actSaveChanges">{_.savechanges}</button>
 </div>
 
 
@@ -32,7 +32,7 @@
 				<div class="col-md-7">
 
 					<div class="media-left">
-						<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/clientadm/clients/{id}/logo" alt="Client logo">
+						<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/clientadm/clients/{id}/logo" alt="{_.logo_of_client}">
 					</div>
 					<div class="media-body">
 
@@ -49,8 +49,6 @@
 					{?trustOwner}
 						{#owner}
 							
-							<!--<p></p>
-							<p>{id}</p>-->
 							<p>
 								<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/userinfo/v1/user/media/{id}"> &nbsp;&nbsp;
 								{name}
@@ -84,11 +82,10 @@
 
 					<div class="media">
 						<div class="media-left">
-							<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/apigkadm/apigks/{id}/logo" alt="Logo of 3rd party API">
+							<img style="max-width: 48px; max-height: 48px" class="media-object" src="{_config.apis.core}/apigkadm/apigks/{id}/logo" alt="{_.logo_of_3rd_party_api}">
 						</div>
 						<div class="media-body">
 
-							<!-- <div class="pull-right"><code class="">gk_{id}</code></div> -->
 							<h4 class="list-group-item-heading">{name}</h4>
 							<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
 
@@ -125,16 +122,16 @@
 					<div class="col-md-2">
 						<p>
 							{?authorized}
-								<span class="label label-success">Accepted</span>
+								<span class="label label-success">{_.accepted}</span>
 							{:else}
-								<span class="label label-danger">Not accepted</span>
+								<span class="label label-danger">{_.not_accepted}</span>
 							{/authorized}
 						</p>
 					</div>
 					<div class="col-md-2 ">
 						<div class="checkbox" style="margin:0px; padding:0px">
 						<label>
-							<input type="checkbox" class="scopeauthentry" data-clientid="{client.id}" data-scopeid="{scope.id}" {?authorized}checked="checked"{/authorized}> Accept
+							<input type="checkbox" class="scopeauthentry" data-clientid="{client.id}" data-scopeid="{scope.id}" {?authorized}checked="checked"{/authorized}> {_.accept}
 						</label>
 						</div>
 					</div>
@@ -153,7 +150,7 @@
 
 	
 {:else}
-	<p>No clients are currently registered.</p>
+	<p>{_.noclients}</p> <!-- TODO copy paste wrong string? -->
 {/clients}
 </div>
 

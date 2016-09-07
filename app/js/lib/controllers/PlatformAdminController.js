@@ -105,6 +105,15 @@ define(function(require, exports, module) {
 						'value': data[key]
 					});
 				}
+				stats.sort(function(a, b) {
+					var re = /^([^\d]+)(\d+)([^\d]*)$/;
+					var m1 = a.name.match(re);
+					var m2 = b.name.match(re);
+					if (m1 && m2 && m1[1] === m2[1] && m1[3] === m2[3]) {
+						return parseInt(m1[2]) - parseInt(m2[2]);
+					}
+					return a.name.localeCompare(b.name);
+				});
 				that.statistics = stats;
 			});
 			return promise;
@@ -226,7 +235,6 @@ define(function(require, exports, module) {
 		"draw": function() {
 			var that = this;
 			var view = {
-				"_": this.app.dict.get(),
 				"_config": this.feideconnect.getConfig()
 			};
 
@@ -260,7 +268,6 @@ define(function(require, exports, module) {
 			};
 			view.statistics = this.statistics;
 			view.statsDate = this.statisticsDate;
-			// view.orgs = this.orgPool.getView();
 
 			// console.error("Platform admin view is ", view);
 			this.el.children().detach();

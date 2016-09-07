@@ -2,7 +2,8 @@ define(function(require, exports, module) {
 	"use strict";
 
 	var
-		dust = require('dust'),
+		Dictionary = require('../../Dictionary'),
+		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		Controller = require('../Controller'),
 
 		ScopeDef = require('../../models/ScopeDef'),
@@ -33,7 +34,8 @@ define(function(require, exports, module) {
 			this.orglistselector = null;
 			this.orgselection = [];
 
-			dust.loadSource(dust.compile(template, "ScopeDefBuilder"));
+			this.dict = new Dictionary();
+			this.template = new TemplateEngine(template, this.dict, true);
 
 			this.ebind("click", ".actAddSubScope", "actAddSubScope");
 			this.ebind("click", ".actRemoveSubscope", "actRemoveSubscope");
@@ -151,8 +153,6 @@ define(function(require, exports, module) {
 			};
 			this.setAPIGK(this.apigk);
 
-			// console.error("Save API GK", JSON.stringify(obj, undefined, 2)); 
-			// return;
 			this.emit("save", obj);
 
 		},
@@ -179,10 +179,6 @@ define(function(require, exports, module) {
 
 		"updateOrgList": function() {
 			var that = this;
-			// var list = [];
-			// if (this.apigkUpdated.scopedef.policy.orgadmin && this.apigkUpdated.scopedef.policy.orgadmin.target) {
-			// 	list = this.apigkUpdated.scopedef.policy.orgadmin.target;
-			// }
 			this.el.find(".shortorglist").each(function(i, item) {
 				$(item).empty().append(that.orgselection.length);
 			});
@@ -197,10 +193,7 @@ define(function(require, exports, module) {
 				"updated": this.apigkUpdated.getView()
 			};
 
-			dust.render("ScopeDefBuilder", view, function(err, out) {
-
-				that.el.empty();
-				that.el.append(out);
+			this.template.render(this.el, view).then(function(e) {
 
 				that.updateOrgScopeControllers();
 				that.updateOrgList();
@@ -208,8 +201,6 @@ define(function(require, exports, module) {
 				var list = that.apigkUpdated.scopedef.getOrgList();
 
 				that.orglistselector = new OrgListSelector(that.feideconnect, that.app.providerdata, list);
-				// that.orglistselector.makeSelection()
-				// 	.then($.proxy(that.setOrgSelection, that));
 
 			});
 

@@ -4,15 +4,8 @@
 		var
 			$ = require('jquery'),
 			Controller = require('./Controller'),
-			dust = require('dust'),
 
-			// Model = require('../models/Model'),
-			// Group = require('../models/Group'),
 			EventEmitter = require('../EventEmitter');
-
-		// var template = require('text!templates/OrgRoleSelector.html');
-
-
 
 		var AuthProviderSelector = Controller.extend({
 
@@ -56,26 +49,16 @@
 					e.preventDefault();
 					e.stopPropagation();
 					var t = $(e.currentTarget);
-					// var ti = t.find('input');
-					// ti.prop('checked', !ti.prop('checked'));
-					// console.log("Changed input group!");
 					that.updateDataFromInputControls();
 				});
 
 				this.el.on("click", "button.actSaveChanges", function(e) {
 					e.preventDefault();
 					e.stopPropagation();
-					// var t = $(e.currentTarget);
-					// var ti = t.find('input');
-					// ti.prop('checked', !ti.prop('checked'));
-					// console.log("SAVE CHANGES!");
 					that.updateDataFromInputControls();
 					that.emit("save", that.selectedProviders);
 				});
 
-
-				// dust.loadSource(dust.compile(template, "OrgRoleSelector"));
-				// this.ebind("click", ".orgSelector a", "actSelect");
 
 			},
 
@@ -112,7 +95,7 @@
 			"updateDataFromInputControls": function() {
 
 				var providers = [];
-
+				var key;
 				var props = {};
 				var listselections = {
 					"idportenlist": [],
@@ -136,16 +119,16 @@
 				var xfunc = function(i, item) {
 					var e = $(item);
 					var ep = e.closest('.providerentry');
-					// console.log("Found list entry ", key, ep.data('id'), e.prop("checked"));	
+					// console.log("Found list entry ", key, ep.data('id'), e.prop("checked"));
 					if (e.prop("checked")) {
-						// console.log("Found list entry CHECKED ", key, ep.data('id'));	
+						// console.log("Found list entry CHECKED ", key, ep.data('id'));
 						listselections[key].push(ep.data('id'));
 					}
 
 				};
 
 
-				for (var key in listselections) {
+				for (key in listselections) {
 					this.el.find('.' + key + ' .providerentry input').each(xfunc);
 				}
 

@@ -6,10 +6,6 @@ define(function(require, exports, module) {
 		Controller = require('./Controller'),
 		EventEmitter = require('../EventEmitter');
 
-	// var template = require('text!templates/OrgRoleSelector.html');
-
-
-
 	var ProviderData = Controller.extend({
 
 		"init": function(app) {
@@ -35,7 +31,6 @@ define(function(require, exports, module) {
 				$.getJSON(ep, function(orgs) {
 					that.orgs = [];
 					for (var i = 0; i < orgs.length; i++) {
-						// that.orgs.push(new NorwegianOrg(orgs[i]));
 						that.orgs.push(orgs[i]);
 					}
 					resolve();
@@ -56,7 +51,6 @@ define(function(require, exports, module) {
 				$.getJSON(ep, function(extra) {
 					that.extra = [];
 					for (var i = 0; i < extra.length; i++) {
-						// that.extra.push(new Provider(extra[i]));
 						that.extra.push(extra[i]);
 					}
 					resolve();

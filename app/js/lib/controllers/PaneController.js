@@ -28,9 +28,6 @@ define(function(require, exports, module) {
 				throw new Error('Cannot add items to a pane controller that is not a Pane instance');
 			}
 			var paneID = pane.identifier;
-			// var paneEl = $('<div class="pane"></div>')
-			// 	.data('paneID', paneID)
-			// 	.appendTo(this.panesEl);
 
 			pane.el.hide().appendTo(this.panesEl);
 

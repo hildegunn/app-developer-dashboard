@@ -2,8 +2,6 @@ define(function(require, exports, module) {
 	"use strict";
 
 	var
-		dust = require('dust'),
-		Pane = require('../Pane'),
 		Client = require('../../models/Client'),
 		Dictionary = require('../../Dictionary'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
@@ -60,7 +58,7 @@ define(function(require, exports, module) {
 					that.emit("saved", x);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error saving API Gatekeeper", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_saving_api_gatekeeper, "danger", err);
 				});
 		},
 
@@ -99,7 +97,7 @@ define(function(require, exports, module) {
 					that.emit("saved", that.current);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error uploading logo", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_uploading_logo, "danger", err);
 				});
 		},
 
@@ -127,7 +125,8 @@ define(function(require, exports, module) {
 
 			// console.error("Scope policy", this.scopePolicy);
 
-			var scopes = item.getScopes(this.scopePolicy);
+			var includeHidden = this.usercontext.isPlatformAdmin();
+			var scopes = item.getScopes(this.scopePolicy, includeHidden);
 
 			if (this.feideconnect) {
 				$.extend(view, {
@@ -145,10 +144,6 @@ define(function(require, exports, module) {
 			]);
 
 
-
-			// that.feideconnect.clientsByScope(this.current.getBasicScope()).
-			// 	then(function(clients) {
-
 			that.app.getClientRequests()
 				.then(function(clients) {
 
@@ -159,10 +154,6 @@ define(function(require, exports, module) {
 					var reqClientsReq = [];
 
 					for (i = 0; i < clients.length; i++) {
-
-						// clients[i].orgauthorization = {
-						// 	"uninett.no": ["gk_scopetestapi"]
-						// };
 
 						nc = new Client(clients[i]);
 						that.clients[nc.id] = nc;
@@ -179,9 +170,6 @@ define(function(require, exports, module) {
 						}
 
 					}
-
-
-					// $("#debug").append("<pre style='background-color: #cc7; margin-bottom: 5em'>" + JSON.stringify(view, undefined, 4) + "</pre>");
 
 
 					that.el.children().detach();
@@ -258,7 +246,7 @@ define(function(require, exports, module) {
 					that.edit(that.current);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error authorize API scopes", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_authorize_api_scopes, "danger", err);
 				});
 
 		},
@@ -306,7 +294,7 @@ define(function(require, exports, module) {
 					that.emit("deleted", that.current.id);
 				})
 				.catch(function(err) {
-					that.app.app.setErrorMessage("Error deleting API Gatekeeper", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_deleting_api_gatekeeper, "danger", err);
 				});
 		}
 

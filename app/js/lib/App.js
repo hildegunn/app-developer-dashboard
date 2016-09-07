@@ -30,6 +30,10 @@ define(function(require, exports, module) {
 		Dictionary = require('./Dictionary'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 		utils = require('./utils'),
+		dust = require('dust'),
+		dust_helpers = require('dustjs-helpers'),
+		DustIntl = require('DustIntl'),
+		DustIntlData = require('DustIntlData'),
 		// rawconfig = require('text!../../etc/config.js'),
 		$ = require('jquery');
 
@@ -54,6 +58,8 @@ define(function(require, exports, module) {
 
 
 		"loadConfig": function() {
+			DustIntl.registerWith(dust);
+//			dust.debugLevel = "DEBUG";
 			var that = this;
 			return new Promise(function(resolve, reject) {
 				$.getJSON('/config', function(data) {
@@ -67,6 +73,26 @@ define(function(require, exports, module) {
 
 		"init": function() {
 			var that = this;
+
+			dust.helpers.blockTrans = function(chunk, context, bodies, params) {
+				var template = context.get('_')[params.key];
+				var subContext = {};
+				for (var key in bodies) {
+					subContext[key] = "";
+				}
+				var tap = function(data) {
+					subContext[key] += data;
+					return "";
+				};
+				for (key in bodies) {
+					chunk.tap(tap).render(bodies[key], context).untap();
+				}
+				for (key in bodies) {
+					template = template.replace('{' + key + '}', subContext[key]);
+				}
+				chunk.write(template);
+				return chunk;
+			};
 
 			// Call contructor of the AppController(). Takes no parameters.
 			that._super(undefined, false);
@@ -119,7 +145,7 @@ define(function(require, exports, module) {
 
 							})
 							.catch(function(err) {
-								that.setErrorMessage("Error loading client and apigk data from an organization", "danger", err);
+								that.setErrorMessage(that.dict.get().error_loading_client_and_apigk_data_from_an_organization, "danger", err);
 							});
 					});
 
@@ -160,7 +186,7 @@ define(function(require, exports, module) {
 							})
 							.catch(function(err) {
 								console.error("err", err);
-								that.setErrorMessage("Error loading front dashboard", "danger", err);
+								that.setErrorMessage(that.dict.get().error_loading_front_dashboard, "danger", err);
 							});
 
 					});
@@ -344,7 +370,7 @@ define(function(require, exports, module) {
 			}
 
 			var str = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' +
-				' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+				' <button type="button" class="close" data-dismiss="alert" aria-label=' + that.dict.get().close + '><span aria-hidden="true">&times;</span></button>' +
 				(title ? '<strong>' + utils.escape(title, false).replace("\n", "<br />") + '</strong>' : '') +
 				pmsg +
 				'</div>';
@@ -381,7 +407,7 @@ define(function(require, exports, module) {
 					orgApp.activate();
 				})
 				.catch(function(err) {
-					that.setErrorMessage("Error loading client", "danger", err);
+					that.setErrorMessage(that.dict.get().error_loading_client, "danger", err);
 				});
 
 		},
@@ -399,7 +425,7 @@ define(function(require, exports, module) {
 				})
 				.catch(function(err) {
 					console.error("err", err);
-					that.setErrorMessage("Error loading API Gatekeeper", "danger", err);
+					that.setErrorMessage(that.dict.get().error_loading_api_gatekeeper, "danger", err);
 				});
 
 		},
@@ -420,7 +446,7 @@ define(function(require, exports, module) {
 				})
 				.catch(function(err) {
 					console.error("err", err);
-					that.setErrorMessage("Error loading Mandatory view", "danger", err);
+					that.setErrorMessage(that.dict.get().error_loading_mandatory_view, "danger", err);
 				});
 
 		},
@@ -440,7 +466,7 @@ define(function(require, exports, module) {
 				})
 				.catch(function(err) {
 					console.error("err", err);
-					that.setErrorMessage("Error loading Mandatory view", "danger", err);
+					that.setErrorMessage(that.dict.get().error_loading_mandatory_view, "danger", err);
 				});
 		},
 
@@ -475,7 +501,7 @@ define(function(require, exports, module) {
 
 				.catch(function(err) {
 					console.error("err", err);
-					that.setErrorMessage("Error loading Mainlisting", "danger", err);
+					that.setErrorMessage(that.dict.get().error_loading_mainlisting, "danger", err);
 				});
 		}
 

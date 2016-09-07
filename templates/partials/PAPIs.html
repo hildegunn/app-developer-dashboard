@@ -18,8 +18,6 @@
 						<span style="margin-left: .7em" class="label label-danger queuecount pull-right">{clientRequests} pending requests</span>
 					{/hasClientRequests}
 
-					<!-- <p class="pull-right" style="clear: right; color: #666; font-size: 82%">Updated {updatedAgo}</p> -->
-
 					<h4 class="list-group-item-heading">{name} 
 
 					</h4>
@@ -80,6 +78,6 @@
 
 	</a>
 {:else}
-	<p>No API Gatekeepers are currently registered.</p>
+	<p>{_.noapigks}</p>
 {/apigks}
 </div>

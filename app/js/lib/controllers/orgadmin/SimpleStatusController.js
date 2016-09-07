@@ -15,6 +15,7 @@ define(function(require, exports, module) {
 
 	var template = require('text!templates/SimpleStatus.html');
 	var templateldapstatus = require('text!templates/ldapstatus.html');
+	var porgoperations = require('text!templates/partials/POrgOperations.html');
 
 
 
@@ -32,6 +33,7 @@ define(function(require, exports, module) {
 
 			this.dict = new Dictionary();
 			this.tmp = new TemplateEngine(template, this.dict);
+			this.tmp.loadPartial("porgoperations", porgoperations);
 			this.tmpLDAP = new TemplateEngine(templateldapstatus, this.dict);
 			
 			this.ebind("click", ".actRepeat", "actRepeat");
@@ -86,7 +88,7 @@ define(function(require, exports, module) {
 				})
 				.catch(function(err) {
 					// console.error(err);
-					that.app.app.setErrorMessage("Error uploading logo", "danger", err);
+					that.app.app.setErrorMessage(that.dict.get().error_uploading_logo, "danger", err);
 				});
 		},
 
@@ -210,7 +212,6 @@ define(function(require, exports, module) {
 					// console.error("ORGSTATUS", orgstatus)
 					that.orgstatus = new OrgStatus(orgstatus);
 
-					// that.loadLDAPstatus();
 				});
 		},
 
@@ -228,7 +229,6 @@ define(function(require, exports, module) {
 					};
 					// console.error("Data fra ldapstatus", ldapstatus);
 					return that.tmpLDAP.render(that.elLDAP.empty(), view);
-					// return templateldapstatus.render($("body").empty(), view);
 				});
 
 		},
@@ -243,7 +243,6 @@ define(function(require, exports, module) {
 			// console.error("About to render", view);
 			var that = this;
 			var view = this.orgstatus.getView();
-			// view.ldapstatus = this.ldapstatus.getView();
 
 			view._config = this.feideconnect.config;
 			view.isPlatformAdmin = this.usercontext.isPlatformAdmin();

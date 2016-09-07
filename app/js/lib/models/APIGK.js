@@ -14,6 +14,12 @@ define(function(require, exports, module) {
 		return moment(x);
 	}
 
+	function parseURL(url) {
+		var l = document.createElement("a");
+		l.href = url;
+		return l;
+	}
+
 
 
 	var APIGK = Entity.extend({
@@ -85,13 +91,11 @@ define(function(require, exports, module) {
 
 			if (this.created) {
 				res.created = parseDate(this.created);
-				res.createdAgo = res.created.fromNow();
 				res.createdH = res.created.format('D. MMM YYYY');
 			}
 
 			if (this.updated) {
 				res.updated = parseDate(this.updated);
-				res.updatedAgo = res.updated.fromNow();
 				res.updatedH = res.updated.format('D. MMM YYYY');
 			}
 
@@ -102,10 +106,8 @@ define(function(require, exports, module) {
 			}
 
 			if (this.organization && this.organization !== null) {
-				// res.trustOrg = true;
 				res.apigktrustOrg = true;
 			} else if (this.owner && this.owner !== null && typeof this.owner !== 'string') {
-				// res.trustOwner = true;
 				res.apigktrustOwner = true;
 			}
 
@@ -122,6 +124,15 @@ define(function(require, exports, module) {
 			if (this.clientRequestCounter && this.clientRequestCounter > 0) {
 				res.clientRequests = this.clientRequestCounter;
 				res.hasClientRequests = true;
+			}
+			if (this.endpoints) {
+				var url = parseURL(this.endpoints[0]);
+				res.exampleHost = url.hostname;
+				var path = url.pathname;
+				if (path.substring(path.length - 1, 1) === '/') {
+					path = path.substring(0, path.length - 1);
+				}
+				res.examplePathPrefix = path;
 			}
 
 			return res;
@@ -233,11 +244,6 @@ define(function(require, exports, module) {
 
 
 		"getClientView": function(client) {
-			// console.error("Client ", client);
-			// if (typeof client !== 'object') throw new Error("Cannot getClientView without providing a valid Client object");
-			// if (new Client()  instanceof Client.prototype) {
-			// 	throw new Error("Cannot getClientView without providing a valid Client object.");
-			// }
 
 			var that = this;
 			var bs = this.getBasicScope();
@@ -245,7 +251,6 @@ define(function(require, exports, module) {
 			var v = this.getView();
 
 			v.sd = $.extend({}, v.scopedef);
-			// v.sd.clientid = apigk.id;
 			v.sd.authz = authz;
 
 			v.sd.req = false;

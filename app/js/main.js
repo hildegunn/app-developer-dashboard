@@ -12,19 +12,29 @@ requirejs.config({
 		"bower": '/bower_components',
 		"text": '/bower_components/text/text',
 		"templates": '/templates/',
+
 		"dust": '/bower_components/dustjs-linkedin/dist/dust-full.min',
+		"dust.core": '/bower_components/dustjs-linkedin/dist/dust-core.min',
+		"dustjs-helpers": '/bower_components/dustjs-helpers/dist/dust-helpers.min',
+		"DustIntl": '/bower_components/dust-helper-intl/dist/dust-intl',
+		"DustIntlData": '/bower_components/dust-helper-intl/dist/locale-data/en',
+
 		"class": "class",
 		"jquery": "/bower_components/jquery/dist/jquery.min",
 		"dict": "/dictionaries/dictionary.en.json",
-		"bootstrap-datepicker": "/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min",
-		"bootstrap": "/bower_components/bootstrap/dist/js/bootstrap.min",
 		"es6-promise": "/bower_components/es6-promise/promise",
+		"bootstrap": "/bower_components/bootstrap/dist/js/bootstrap.min",
+		"bootstrap-datepicker": "/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min",
 		"selectize": "/bower_components/selectize/dist/js/standalone/selectize",
 		"flot": "/bower_components/flot/jquery.flot.time"
 	},
 	shim: {
-		"dust": {
-			"exports": "dust"
+		"DustIntl": {
+			"deps": ["dust"],
+			"exports": "DustIntl"
+		},
+		"DustIntlData": {
+			"deps": ["DustIntl"]
 		},
 		"bootstrap": {
 			"deps": ["jquery"]
@@ -33,7 +43,7 @@ requirejs.config({
 			"deps": ["jquery", "bootstrap"]
 		},
 		"selectize": {
-			"deps": ["jquery"]	
+			"deps": ["jquery"]
 		},
 		"flot": {
 			"deps": ["jquery", "/bower_components/flot/jquery.flot.js"]
@@ -41,7 +51,8 @@ requirejs.config({
 	}
 });
 
-// Configure 
+define.amd.dust = true;
+// Configure
 if (!window.console) {
 	window.console = {
 		"log": function() {},

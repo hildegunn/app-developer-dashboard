@@ -10,9 +10,6 @@ define(function(require, exports, module) {
 
 		moment = require('bower/momentjs/moment');
 
-	// var template = require('text!templates/OrgRoleSelector.html');
-
-
 	var xsort = function(a, b) {
 		if (a.count > b.count) {
 			return -1;
@@ -126,7 +123,6 @@ define(function(require, exports, module) {
 				var ix = 0;
 				var fillrunn = that.first.clone();
 				while (!that.last.isBefore(fillrunn)) {
-					// if (ix++ > 10) { break; }
 					var fidx = fillrunn.format('YYYY-MM-DD HH');
 					if (that.processed[fidx]) {
 						that.processedFilled.push(that.processed[fidx]);
@@ -140,7 +136,6 @@ define(function(require, exports, module) {
 					fillrunn.add(1, "hour");
 				}
 
-				// that.processed = that.data;
 				resolve();
 			});
 		},
@@ -152,9 +147,6 @@ define(function(require, exports, module) {
 			for(var i = 0; i < this.processedFilled.length; i++) {
 				var x = this.processedFilled[i];
 				dataset.push([x.timeslot.toDate(), x.total ]);
-				// if (x.total > 0) {
-				// 	console.log (x.timeslot.format('YYYY-MM-DD HH') + ' ' + x.total)
-				// }
 
 			}
 			// console.log(this.processed);

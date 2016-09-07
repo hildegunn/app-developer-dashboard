@@ -21,12 +21,14 @@
 		"text": "~2.0.13",
 		"feideconnectjs": "~2",
 		"selectize": "~0.12.1",
-		"dustjs-linkedin": "~2.5.1",
+		"dustjs-linkedin": "~2.7.3",
 		"momentjs": "~2.9.0",
 		"almond": "~0.3.0",
 		"es6-promise": "*",
 		"js-cookie": "~2.0.4",
 		"flot": "*",
-		"bootstrap-datepicker": "*"
+		"bootstrap-datepicker": "*",
+		"dust-helper-intl": "*",
+		"dustjs-helpers": "~1.7.3"
 	}
 }
