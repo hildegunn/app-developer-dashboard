@@ -180,7 +180,7 @@ define(function(require, exports, module) {
 
 
 
-			this.apigkeditor = new APIGKEditor(this, this.feideconnect);
+			this.apigkeditor = new APIGKEditor(this, this.feideconnect, this.usercontext);
 			this.pc.add(this.apigkeditor);
 			this.apigkeditor.on("saved", function(apigk) {
 				// console.log("APIGK is saved, updatge client pool and mainlisting");

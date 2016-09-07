@@ -1,0 +1,111 @@
+			<div class="row">
+
+				<div class="col-sm-6">
+
+					<h3>{_.accepted_scopes}</h3>
+
+					<div class="list-group">
+						{#scopelist.accepted}
+							<div class="list-group-item scopeEntry {^policy.auto}optConfirm{/policy.auto}" data-scopeid="{scope}">
+								<div class="pull-right"><code class="">{scope}</code></div>
+								<h4 class="list-group-item-heading">{title}</h4>
+								<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
+
+								<div class="">
+									<p class="pull-right">
+									{^policy.auto}
+											<span class="label label-default">
+												<i class="fa fa-check" aria-hidden="true"></i> {_.moderated}</span>
+									{/policy.auto}
+									{^public}
+											<span class="label label-default">
+												<i class="fa fa-eye-slash" aria-hidden="true"></i> {_.hidden}</span>
+									{/public}
+									</p>
+									
+										<button class="btn btn-xs btn-danger actScopeRemove">
+											<i class="glyphicon glyphicon-remove"></i>
+											{_.remove_scope} 
+											</button>
+								</div>
+								<p class="clearfix"></p>
+							</div>
+						{:else}
+							<p>{_.no_available_scopes}</p>
+						{/scopelist.accepted}
+						
+					</div>
+
+
+					<h3 style="margin-top: 1.5em">{_.requested_scopes}</h3>
+
+					<div class="list-group">
+						{#scopelist.requested}
+							<div class="list-group-item scopeEntry" data-scopeid="{scope}">
+								<div class="pull-right"><code class="">{scope}</code></div>
+								<h4 class="list-group-item-heading">{title}</h4>
+								<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
+
+								<div class="" style="margin-top: .3em; margin-bottom: 0px">
+									<button class="btn btn-xs btn-default actScopeRemove">
+										<i class="glyphicon glyphicon-remove"></i>
+										{_.remove_scope} 
+										</button>
+								</div>
+								<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
+							</div>
+						{:else}
+							<p>{_.no_requested_scopes}</p>
+						{/scopelist.requested}
+					</div>
+
+				</div>
+
+
+
+				<div class="col-sm-6">
+
+					<h3>{_.available_scopes}</h3>
+
+
+					<div class="list-group">
+						{#scopelist.available}
+							<div class="list-group-item scopeEntry" data-scopeid="{scope}">
+								<div class="pull-right"><code class="">{scope}</code></div>
+								<h4 class="list-group-item-heading">{title}</h4>
+								<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
+
+
+								<p class="pull-right">
+								{^policy.auto}
+										<span class="label label-default">
+											<i class="fa fa-exclamation" aria-hidden="true"></i> {_.moderated}</span>
+								{/policy.auto}
+								{^public}
+										<span class="label label-default">
+											<i class="fa fa-eye-slash" aria-hidden="true"></i> {_.hidden}</span>
+								{/public}
+								</p>
+								<p style="margin-top: .3em; margin-bottom: 0px">
+									{?policy.auto}
+										<button class="btn btn-sm btn-primary actScopeAdd">
+											<i class="glyphicon glyphicon-chevron-left"></i>
+											{_.add_scope}</button>
+									{/policy.auto}
+									{^policy.auto}
+										<button class="btn btn-sm btn-warning actScopeAdd">
+											<i class="glyphicon glyphicon-chevron-left"></i>
+											{_.request_scope}</button>
+									{/policy.auto}
+
+								</p>
+								<p style=" padding: 0px; margin: 0px" class="clearfix"></p>
+
+							</div>
+						{:else}
+							<p>{_.no_available_scopes}</p>
+						{/scopelist.available}
+					</div>
+
+				</div>
+			</div>

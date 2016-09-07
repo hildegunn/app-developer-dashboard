@@ -14,17 +14,20 @@ define(function(require, exports, module) {
 
 
 	var apigkTemplate = require('text!templates/APIGKEditor.html');
+	var scopeListingTemplate = require('text!templates/partials/ScopeListing.html');
 
 	var APIGKEditor = Editor.extend({
 
-		"init": function(app, feideconnect) {
+		"init": function(app, feideconnect, usercontext) {
 
 			var that = this;
+			this.usercontext = usercontext;
 			this.editor = "apigk";
 			this._super(app, feideconnect);
 
 			this.dict = new Dictionary();
 			this.template = new TemplateEngine(apigkTemplate, this.dict);
+			this.template.loadPartial("scopelisting", scopeListingTemplate);
 
 			this.clients = {};
 
