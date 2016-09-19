@@ -24,7 +24,7 @@
     "dustjs-linkedin": "~2.7.3",
     "momentjs": "~2.9.0",
     "almond": "~0.3.0",
-    "es6-promise": "*",
+    "es6-promise": "3.2.2",
     "js-cookie": "~2.0.4",
     "flot": "*",
     "bootstrap-datepicker": "*",
