@@ -22,6 +22,8 @@
 	"addedreject": "Reject, and leave group",
 	"admin": "Admin",
 	"admins_in_feide_kp_info": "Adding new administrators can be done using the Feide kundeportal.",
+	"allow_unauthenticated": "Allow unauthenticated requests",
+	"allow_unauthenticated_info": "Enable this if your API has some public endpoints. Requests without a bearer token will be forwarded to the backend API without the Authorization header and any of the X-Dataporten-headers, so the backend API must determine itself whether a given request should require authentication or not",
 	"already_feideorg_info": "Since your organization is already registrered as a service provider to Feide, you may contact your local admin to add you as an administrator to get permission to submit new applications and API in dataporten.",
 	"api_access": "API Access",
 	"api_authorization_by_organizations": "API Authorization by Organizations",

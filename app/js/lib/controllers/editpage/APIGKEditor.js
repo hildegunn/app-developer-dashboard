@@ -280,10 +280,11 @@ define(function(require, exports, module) {
 			}
 
 			this.current.requireuser = this.el.find('.fieldrequireuser').prop("checked");
+			this.current.allow_unauthenticated = this.el.find('.fieldallow_unauthenticated').prop("checked");
 			this.current.setStatusPublic(this.el.find('#ispublic').prop("checked"));
 
 			return this.save(["id", "name", "descr", "endpoints", "systemdescr",
-				"privacypolicyurl", "docurl", "status", "requireuser"
+			                  "privacypolicyurl", "docurl", "status", "requireuser", "allow_unauthenticated"
 			]);
 
 		},
