@@ -94,7 +94,6 @@ define(function(require, exports, module) {
 				return chunk;
 			};
 
-			// Call contructor of the AppController(). Takes no parameters.
 			that._super(undefined, false);
 
 			this.loadConfig()
