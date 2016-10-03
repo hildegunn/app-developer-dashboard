@@ -217,8 +217,7 @@ define(function(require, exports, module) {
 
 		"loadLDAPstatus": function() {
 			var that = this;
-			var path = '/orgs/' + that.orgid + '/ldap_status';
-			that.feideconnect._request('core', path, null, ['orgadmin'])
+			that.feideconnect.orgLDAPStatus(this.orgid)
 				.then(function(ldapstatus) {
 
 					that.ldapstatus = new LDAPStatus({
