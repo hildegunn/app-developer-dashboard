@@ -207,7 +207,7 @@ define(function(require, exports, module) {
 
 		"loadOrg": function() {
 			var that = this;
-			return this.feideconnect._requestPublic('core', '/orgs/' + this.orgid)
+			return this.feideconnect.getOrg(this.orgid)
 				.then(function(orgstatus) {
 					// console.error("ORGSTATUS", orgstatus)
 					that.orgstatus = new OrgStatus(orgstatus);
