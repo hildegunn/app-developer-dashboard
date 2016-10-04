@@ -77,9 +77,7 @@
 				this.el.find('#orgresult').empty();
 			},
 			"showOrg": function(org) {
-				var _config = this.app.feideconnect.getConfig();
 				var view = {
-					"_config": _config,
 					"org": org
 				};
 				this.el.find('#neworgregister').hide();
@@ -129,7 +127,6 @@
 				};
 
 				var user = this.app.feideconnect.getUser();
-				user.profile = this.app.feideconnect.profilePhotoURL(user);
 
 				view.userinfo = user;
 

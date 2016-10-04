@@ -102,6 +102,13 @@ define(function(require, exports, module) {
 				.then(function() {
 
 					that.feideconnect = new FeideConnect(that.config);
+					var feideconnect = that.feideconnect;
+					dust.helpers.profilePhotoURL = function(chunk, context, bodies, params) {
+						var userid = dust.helpers.tap(params.userid, chunk, context);
+						var url = feideconnect.profilePhotoURL(userid);
+						chunk.write(url);
+						return chunk;
+					};
 
 					that.dict = new Dictionary();
 
@@ -212,8 +219,7 @@ define(function(require, exports, module) {
 						.then(that.proxy("onLoaded"))
 						.then(function() {
 							var user = that.feideconnect.getUser();
-							var _config = that.feideconnect.getConfig();
-							var profilephoto = that.feideconnect.profilePhotoURL(user);
+							var profilephoto = that.feideconnect.profilePhotoURL(user.profilephoto);
 
 							$("body").addClass("stateLoggedIn");
 							$("body").removeClass("stateLoggedOut");
