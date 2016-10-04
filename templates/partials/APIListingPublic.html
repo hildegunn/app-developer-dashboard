@@ -25,35 +25,7 @@
 		</div>
 
 		<div class="col-md-4">
-			
-			{?apigktrustOwner}
-				{#owner}
-					
-					<div class="media">
-						<div class="media-left">
-							<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/userinfo/v1/user/media/{id}">
-						</div>
-						<div class="media-body">
-							<p>{name}
-							</p>
-						</div>
-					</div>
-				{/owner}
-			{/apigktrustOwner}
-
-			{?apigktrustOrg}
-				{#organization}
-					<div class="media">
-						<div class="media-left">
-							<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/orgs/{id}/logo">
-						</div>
-						<div class="media-body">
-							<p>{name}
-							</p>
-						</div>
-					</div>
-				{/organization}
-			{/apigktrustOrg}
+			{>trustblock/}
 		</div>
 
 	</div><!-- end row -->
