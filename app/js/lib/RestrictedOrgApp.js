@@ -3,39 +3,17 @@ define(function(require, exports, module) {
 	"use strict";
 
 	var
-		FeideConnect = require('bower/feideconnectjs/src/FeideConnect').FeideConnect,
 		Pane = require('./controllers/Pane'),
 
-		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
-		utils = require('./utils'),
-		$ = require('jquery');
+		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine');
 
 	var template = require('text!templates/restrictedPersonalOrgApp.html');
-
-	/**
-	 * Here is what happens when the page loads:
-	 *
-	 * Check for existing authentication.
-	 * When authenticated setup clientpool.
-	 * After that, check routing...
-	 * Load frontpage
-	 * 
-	 * 
-	 */
 
 	var RestrictedOrgApp = Pane.extend({
 
 		"init": function(feideconnect, app, usercontext, publicClientPool, publicapis, role) {
-			var that = this;
-
-			this.feideconnect = feideconnect;
-			this.app = app;
-			this.usercontext = usercontext;
-
-			this.template = new TemplateEngine(template, this.app.dict);
-
+			this.template = new TemplateEngine(template, app.dict);
 			this._super();
-
 			this.initLoad();
 
 		},
@@ -46,16 +24,7 @@ define(function(require, exports, module) {
 		},
 
 		"getBCItem": function() {
-			var title = 'Main overview personal';
-			if (this.orgid !== '_') {
-				title = 'Main overview ' + this.orgid;
-			}
-			var item = {
-				"href": "#!/" + this.orgid,
-				"title": title,
-				"active": false
-			};
-			return item;
+			throw new Error('Not available with restricted OrgApp');
 		},
 
 		"editClient": function(clientid, tabid) {
@@ -71,24 +40,12 @@ define(function(require, exports, module) {
 		},
 
 		"getOrgInfo": function() {
-			// console.error("Looking up getOrgInfo for " + this.orgid); //, this.app.orgRoleSelector.getOrgInfo(this.orgid));
-			return this.usercontext.getOrgInfo(this.orgid);
+			throw new Error('Not available with restricted OrgApp');
 		},
 
-		/**
-		 * A draw function that draws the header and footer template.
-		 * Supports promises
-		 * @return {[type]} [description]
-		 */
 		"draw": function() {
 			var view = {};
 
-			var user = this.app.feideconnect.getUser();
-			user.profile = this.app.feideconnect.profilePhotoURL(user);
-
-			view.userinfo = user;
-
-			// console.error("VIEW is ", view);
 			this.el.children().detach();
 			return this.template.render(this.el, view);
 		},
