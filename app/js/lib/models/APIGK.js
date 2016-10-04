@@ -106,9 +106,9 @@ define(function(require, exports, module) {
 			}
 
 			if (this.organization && this.organization !== null) {
-				res.apigktrustOrg = true;
+				res.trustOrg = true;
 			} else if (this.owner && this.owner !== null && typeof this.owner !== 'string') {
-				res.apigktrustOwner = true;
+				res.trustOwner = true;
 			}
 
 			// console.error("typeo f", typeof this.owner, this.owner);

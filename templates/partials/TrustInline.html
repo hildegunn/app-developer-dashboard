@@ -17,21 +17,3 @@
 	</p>
 {/organization}
 {/trustOrg}
-
-{?apigktrustOwner}
-	{#owner}
-		<p>
-			<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/userinfo/v1/user/media/{id}"> &nbsp;&nbsp;
-			{name}
-		</p>
-	{/owner}
-{/apigktrustOwner}
-
-{?apigktrustOrg}
-	{#organization}
-		<p>
-			<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/orgs/{id}/logo"> &nbsp;&nbsp;
-			{name}
-		</p>
-	{/organization}
-{/apigktrustOrg}
