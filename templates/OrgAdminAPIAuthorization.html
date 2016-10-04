@@ -45,28 +45,7 @@
 				</div>
 
 				<div class="col-md-5">
-
-					{?trustOwner}
-						{#owner}
-							
-							<p>
-								<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/userinfo/v1/user/media/{id}"> &nbsp;&nbsp;
-								{name}
-							</p>
-
-						{/owner}
-					{/trustOwner}
-
-					{?trustOrg}
-						{#organization}
-							<p>
-								<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/orgs/{id}/logo"> &nbsp;&nbsp;
-								{name}
-							</p>
-						{/organization}
-					{/trustOrg}
-
-
+					{>trustinline/}
 				</div>
 
 
@@ -94,23 +73,9 @@
 				</div>
 
 				<div class="col-md-5">
-					{?apigktrustOwner}
-						{#owner}
-							<p>
-								<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/userinfo/v1/user/media/{id}"> &nbsp;&nbsp;
-								{name}
-							</p>
-						{/owner}
-					{/apigktrustOwner}
-					{?apigktrustOrg}
-						{#organization}
-							<p>
-								<img style="max-height: 48px; max-width: 48px" class="img-thumbnail" src="{_config.apis.core}/orgs/{id}/logo"> &nbsp;&nbsp;
-								{name}
-							</p>
-						{/organization}
-					{/apigktrustOrg}
+					{>trustinline/}
 				</div>
+
 			</div>
 
 			{#scopeauths}

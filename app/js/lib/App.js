@@ -40,6 +40,7 @@ define(function(require, exports, module) {
 	var tmpHeader = require('text!templates/header.html');
 	var tmpFooter = require('text!templates/footer.html');
 	var trustblock = require('text!templates/partials/TrustBlock.html');
+	var trustinline = require('text!templates/partials/TrustInline.html');
 
 	require("bootstrap");
 	require('es6-promise').polyfill();
@@ -107,6 +108,7 @@ define(function(require, exports, module) {
 					that.tmpHeader = new TemplateEngine(tmpHeader);
 					that.tmpFooter = new TemplateEngine(tmpFooter);
 					TemplateEngine.prototype.loadPartial("trustblock", trustblock);
+					TemplateEngine.prototype.loadPartial("trustinline", trustinline);
 
 					that.providerdata = new ProviderData(that);
 
