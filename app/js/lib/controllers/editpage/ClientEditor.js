@@ -213,8 +213,11 @@ define(function(require) {
 			var scopes = item.getScopes(this.scopePolicy, includeHidden);
 
 			if (that.feideconnect) {
+				var _config = that.feideconnect.getConfig();
 				$.extend(view, {
-					"_config": that.feideconnect.getConfig(),
+					"authorization_endpoint": _config.authorization,
+					"token_endpoint": _config.token,
+					"openid_connect_configuration_endpoint": _config.apis.auth + "/.well-known/openid-configuration",
 					"scopelist": scopes
 				});
 			}
