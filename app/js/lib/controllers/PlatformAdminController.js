@@ -239,8 +239,7 @@ define(function(require, exports, module) {
 			};
 
 			var user = this.feideconnect.getUser();
-			var _config = this.feideconnect.getConfig();
-			user.profile = _config.apis.core + '/userinfo/v1/user/media/' + user.profilephoto;
+			user.profile = this.feideconnect.profilePhotoURL(user);
 
 			view.activeTabClass = {};
 			view.activeTabClass[this.activeTab.substring(1)] = "active";

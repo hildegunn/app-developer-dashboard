@@ -129,8 +129,7 @@
 				};
 
 				var user = this.app.feideconnect.getUser();
-				var _config = this.app.feideconnect.getConfig();
-				user.profile = _config.apis.core + '/userinfo/v1/user/media/' + user.profilephoto;
+				user.profile = this.app.feideconnect.profilePhotoURL(user);
 
 				view.userinfo = user;
 

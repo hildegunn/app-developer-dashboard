@@ -209,7 +209,7 @@ define(function(require, exports, module) {
 						.then(function() {
 							var user = that.feideconnect.getUser();
 							var _config = that.feideconnect.getConfig();
-							var profilephoto = _config.apis.core + '/userinfo/v1/user/media/' + user.profilephoto;
+							var profilephoto = that.feideconnect.profilePhotoURL(user);
 
 							$("body").addClass("stateLoggedIn");
 							$("body").removeClass("stateLoggedOut");
