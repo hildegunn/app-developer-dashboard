@@ -109,6 +109,12 @@ define(function(require, exports, module) {
 						chunk.write(url);
 						return chunk;
 					};
+					dust.helpers.orgLogoURL = function(chunk, context, bodies, params) {
+						var id = dust.helpers.tap(params.id, chunk, context);
+						var url = feideconnect.orgLogoURL(id);
+						chunk.write(url);
+						return chunk;
+					};
 
 					that.dict = new Dictionary();
 

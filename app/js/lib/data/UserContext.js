@@ -128,7 +128,7 @@ define(function(require, exports, module) {
 			var orgInfo = {
 				"id": orgid,
 				"displayName": orgtitle,
-				"logoURL": c.apis.core + '/orgs/' + orgid + '/logo'
+				"logoURL": this.feideconnect.orgLogoURL(orgid)
 			};
 
 			return orgInfo;
