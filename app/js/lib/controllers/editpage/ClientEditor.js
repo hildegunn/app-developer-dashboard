@@ -152,21 +152,11 @@ define(function(require) {
 		},
 
 		"loadScopeDef": function() {
-
-			var fcc = this.feideconnect.getConfig();
-			var endpoint = fcc.apis.core + '/clientadm/scopes/';
 			var that = this;
 
-			return new Promise(function(resolve, reject) {
-
-				$.getJSON(endpoint, function(scopePolicy) {
-					that.scopePolicy = scopePolicy;
-					resolve();
-				});
-
+			return this.feideconnect.getScopeDef().then(function(scopePolicy) {
+				that.scopePolicy = scopePolicy;
 			});
-
-
 		},
 
 
