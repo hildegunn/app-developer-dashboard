@@ -176,8 +176,7 @@ define(function(require) {
 			// console.log("About to upload image", this.current.id, data);
 			that.feideconnect.clientsUpdateLogo(this.current.id, data)
 				.then(function() {
-					var _config = that.feideconnect.getConfig();
-					var url = _config.apis.core + "/clientadm/clients/" + that.current.id + "/logo?r=" + utils.guid();
+					var url = that.feideconnect.clientLogoURL(that.current.id) + "?r=" + utils.guid();
 					that.el.find('.itemlogo').attr("src", url);
 				})
 				.catch(function(err) {

@@ -34,7 +34,7 @@
 
 				{#client}
 
-					<img class="itemlogo pull-right" src="{_config.apis.core}/clientadm/clients/{client.id}/logo" style="padding: 5px; border: 1px solid #ddd; border-radius: 4px; backgroud: #eee" />
+					<img class="itemlogo pull-right" src="{@clientLogoURL id="{client.id}" /}" style="padding: 5px; border: 1px solid #ddd; border-radius: 4px; backgroud: #eee" />
 
 				<h1>{name}</h1>
 				<p>Client ID: <code>{id}</code></p>
@@ -169,7 +169,7 @@
 			<div class="col-sm-3 ">
 				
 				<div class="imagezone" style="min-height: 128px; min-width: 128px">
-					<img class="itemlogo" src="{_config.apis.core}/clientadm/clients/{client.id}/logo" style="padding: 5px; border: 1px solid #ddd; border-radius: 4px; backgroud: #eee" />
+					<img class="itemlogo" src="{@clientLogoURL id="{client.id}" /}" style="padding: 5px; border: 1px solid #ddd; border-radius: 4px; backgroud: #eee" />
 				</div>
 
 				<p>{_.drag_replace_png} <br /><span style="font-size: 90%">{_.minimum_128px}</span></p>
