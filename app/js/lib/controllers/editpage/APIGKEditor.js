@@ -121,7 +121,6 @@ define(function(require, exports, module) {
 
 			if (this.feideconnect) {
 				$.extend(view, {
-					"_config": that.feideconnect.getConfig(),
 					"_appconfig": that.app.app.config,
 					"scopelist": scopes
 				});

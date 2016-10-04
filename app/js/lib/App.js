@@ -365,8 +365,7 @@ define(function(require, exports, module) {
 			var that = this;
 
 			var view = {
-				"_": that.dict.get(),
-				"_config": that.feideconnect.getConfig()
+				"_": that.dict.get()
 			};
 
 			return Promise.all([

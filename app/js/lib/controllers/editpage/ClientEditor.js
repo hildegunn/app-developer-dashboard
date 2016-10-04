@@ -360,11 +360,6 @@ define(function(require) {
 			var view = {
 				"apis": []
 			};
-			if (this.feideconnect) {
-				$.extend(view, {
-					"_config": that.feideconnect.getConfig()
-				});
-			}
 
 			var apis = this.publicapis.apigks;
 			var apiids = this.current.getAPIscopes();
@@ -399,13 +394,6 @@ define(function(require) {
 			var view = {
 				"apis": []
 			};
-			if (this.feideconnect) {
-				$.extend(view, {
-					"_config": that.feideconnect.getConfig()
-				});
-			}
-
-
 
 			var apis = this.clientpool.apigks;
 			var apiids = this.current.getAPIscopes();

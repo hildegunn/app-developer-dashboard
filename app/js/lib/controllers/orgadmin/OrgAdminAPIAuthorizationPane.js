@@ -116,7 +116,6 @@ define(function(require, exports, module) {
 			var that = this;
 			var clientview = this.apiscopeset.getClientView();
 			var view = {
-				"_config": that.feideconnect.getConfig(),
 				"clients": clientview
 			};
 

@@ -18,7 +18,6 @@ define(function(require, exports, module) {
 			// console.error("org list selector..", providerdata);
 
 			var that = this;
-			this.feideconnect = feideconnect;
 			this.providerdata = providerdata;
 			this.dict = new Dictionary();
 			this.template = new TemplateEngine(template, this.dict);
@@ -135,8 +134,6 @@ define(function(require, exports, module) {
 			// console.error("colmn", columns);
 
 			this.el.children().detach();
-
-			view._config = this.feideconnect.config;
 
 			// console.error("Draw clientcreate", view);
 			return this.template.render(this.el, view);

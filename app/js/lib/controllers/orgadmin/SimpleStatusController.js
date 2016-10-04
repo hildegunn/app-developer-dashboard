@@ -242,7 +242,6 @@ define(function(require, exports, module) {
 			var that = this;
 			var view = this.orgstatus.getView();
 
-			view._config = this.feideconnect.config;
 			view.isPlatformAdmin = this.usercontext.isPlatformAdmin();
 			// console.error("About to render", view);
 			this.el.children().detach();

@@ -117,7 +117,6 @@ define(function(require, exports, module) {
 
 
 			var view = {
-				"_config": that.feideconnect.getConfig(),
 				"clients": clientview
 			};
 			// console.error("View is", view);

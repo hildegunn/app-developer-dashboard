@@ -148,8 +148,7 @@ define(function(require, exports, module) {
 
 			view = {
 				"clients": clientlist,
-				"random": utils.guid(),
-				"_config": that.feideconnect.getConfig()
+				"random": utils.guid()
 			};
 
 			this.templateClients.render(this.elClients, view).then(function() {
@@ -188,8 +187,7 @@ define(function(require, exports, module) {
 
 			view = {
 				"apigks": apigklist,
-				"random": utils.guid(),
-				"_config": that.feideconnect.getConfig()
+				"random": utils.guid()
 			};
 
 			this.templateAPIGKs.render(this.elAPIGKs, view).then(function() {
