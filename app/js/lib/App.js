@@ -121,6 +121,12 @@ define(function(require, exports, module) {
 						chunk.write(url);
 						return chunk;
 					};
+					dust.helpers.apigkLogoURL = function(chunk, context, bodies, params) {
+						var id = dust.helpers.tap(params.id, chunk, context);
+						var url = feideconnect.apigkLogoURL(id);
+						chunk.write(url);
+						return chunk;
+					};
 
 					that.dict = new Dictionary();
 
