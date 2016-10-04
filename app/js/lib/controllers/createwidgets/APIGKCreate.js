@@ -73,7 +73,7 @@ define(function(require, exports, module) {
 		"draw": function() {
 			var view = {
 				"orgInfo": this.app.getOrgInfo(),
-				"_config": this.app.app.config
+				"gkdomain": this.app.app.config.gkdomain
 			};
 			// console.error("View", view);
 			this.el.children().detach();
