@@ -18,21 +18,6 @@ define(function(require, exports, module) {
 
 		"getView": function() {
 			var res = this._super();
-			if (this.created) {
-				res.created = parseDate(this.created);
-				res.createdH = res.created.format('D. MMM YYYY');
-			}
-
-			if (this.updated) {
-				res.updated = parseDate(this.updated);
-				res.updatedH = res.updated.format('D. MMM YYYY');
-			}
-
-			if (this.organization && this.organization !== null) {
-				res.trustOrg = true;
-			} else if (this.owner && this.owner !== null) {
-				res.trustOwner = true;
-			}
 
 			return res;
 		},
