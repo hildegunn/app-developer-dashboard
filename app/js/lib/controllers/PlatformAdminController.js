@@ -238,12 +238,8 @@ define(function(require, exports, module) {
 				"_config": this.feideconnect.getConfig()
 			};
 
-			var user = this.feideconnect.getUser();
-			user.profile = this.feideconnect.profilePhotoURL(user);
-
 			view.activeTabClass = {};
 			view.activeTabClass[this.activeTab.substring(1)] = "active";
-			view.userinfo = user;
 
 			view.orgs = {
 				"home": {
