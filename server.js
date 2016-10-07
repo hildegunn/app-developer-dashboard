@@ -82,10 +82,3 @@ var server = app.listen(port, function () {
 
 	console.log('Running app at http://%s:%s', host, port);
 });
-
-
-
-// app.configure('development', function(){
-//     app.use(express.static(__dirname + '/public1'));
-//     app.use(express.static(__dirname + '/public2'));
-// });
