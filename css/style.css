@@ -355,4 +355,7 @@ input[type=button]:hover {
     color: #5bc0de;
 }
 
-
+.logo {
+    max-width: 48px;
+    max-height: 48px;
+}
