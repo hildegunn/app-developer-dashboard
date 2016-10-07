@@ -1,6 +1,4 @@
 <p style="margin: 0px">
-	<span>{_.registered} {@formatRelative val=created/}</span>
-		<span style="color: #999"><i class="glyphicon glyphicon-time"></i> {@formatDate val=created formatName="short"/}</span>
-	<span style="margin-left: 2em">{_.updated} {@formatRelative val=updated/}</span>
-		<span style="color: #999"><i class="glyphicon glyphicon-time"></i> {@formatDate val=created formatName="short"/}</span>
+	<span data-toggle="tooltip" data-placement="top" title="{@formatDate val=created formatName="short"/}">{_.registered} {@formatRelative val=created/}</span>
+	<span data-toggle="tooltip" data-placement="top" title="{@formatDate val=updated formatName="short"/}" style="margin-left: 2em">{_.updated} {@formatRelative val=updated/}</span>
 </p>
