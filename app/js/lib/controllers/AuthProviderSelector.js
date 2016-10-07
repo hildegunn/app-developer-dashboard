@@ -241,7 +241,7 @@
 
 				var iconImage = '';
 				if (item.iconImage) {
-					iconImage = '<img class="media-object" style="width: 32px; height: 32px" src="' + authbase + '/static/media/disco/' + item.iconImage + '" alt="...">';
+					iconImage = '<img class="media-object logo-small" src="' + authbase + '/static/media/disco/' + item.iconImage + '" alt="...">';
 				} else if (item.icon) {
 					iconImage = '<i style="margin-left: 6px" class="' + item.icon + '"></i>';
 				}
@@ -275,7 +275,7 @@
 				txt += '<div data-id="' + id + '" class="list-group-item providerentry ' + classes.join(' ') + '" >' +
 					'<div class="pull-left"><input type="checkbox" ' + checked + '/></div>' +
 					'<div style="margin-left: 24px" class="media"><div class="media-left media-middle">' +
-					'<img class="media-object" style="width: 32px; height: 32px" src="' + orgLogo + '" alt="...">' +
+					'<img class="media-object logo-small" src="' + orgLogo + '" alt="...">' +
 					'</div>' +
 					'<div class="media-body"><p>' + item.title + '</p></div>' +
 					'</div>' +

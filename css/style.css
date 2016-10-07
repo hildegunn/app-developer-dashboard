@@ -359,3 +359,8 @@ input[type=button]:hover {
     max-width: 48px;
     max-height: 48px;
 }
+
+.logo-small {
+    width: 32px;
+    height: 32px;
+}
