@@ -205,7 +205,7 @@ define(function(require, exports, module) {
 
 						that.feideconnect.onAuthenticated()
 							.then(function() {
-								return that.getOrgApp(that.orgRoleSelector.getOrg())
+								return that.getOrgApp(that.orgRoleSelector.getOrg());
 							})
 							.then(function(orgApp) {
 								orgApp.actMainlisting();
