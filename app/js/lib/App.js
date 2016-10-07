@@ -245,7 +245,7 @@ define(function(require, exports, module) {
 							$("body").removeClass("stateLoggedOut");
 
 							$("#username").empty().text(user.name);
-							$("#profilephoto").html('<img style="margin-top: -28px; max-height: 48px; max-width: 48px; border: 0px solid #b6b6b6; border-radius: 32px; box-shadow: 1px 1px 4px #aaa;" src="' + profilephoto + '" alt="Profile photo" />');
+							$("#profilephoto").html('<img src="' + profilephoto + '" alt="Profile photo" />');
 
 							$(".loader-hideOnLoad").hide();
 							$(".loader-showOnLoad").show();
