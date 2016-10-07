@@ -37,7 +37,15 @@ if (env === 'development') {
 
 	app.use('/css/', express.static('css'));
 	app.use('/templates/', express.static('templates'));
-	app.use('/dictionaries/', express.static('dictionaries'));
+	app.use('/dictionaries', LangNeg.neg(languages), function(req, res) {
+		var lang = res.getHeader('Content-Language');
+		console.log("Serving dictionary in language: " + lang);
+		if (lang === 'en') {
+			res.sendFile(__dirname + '/dictionaries/dictionary.en.json');
+		} else {
+			res.sendFile(__dirname + '/dictionaries/build/dictionary.' + lang + '.json');
+		}
+	});
 
 	app.use('/', function(req, res, next) {
 		if (req.url === '/') {
