@@ -250,13 +250,7 @@ define(function(require, exports, module) {
 
 						});
 
-
 					that.initLoad();
-
-
-
-
-
 
 				});
 
