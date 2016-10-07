@@ -31,5 +31,5 @@ RUN node_modules/grunt-cli/bin/grunt build
 COPY dataporten-resources/fonts bower_components/uninett-bootstrap-theme/fonts
 
 EXPOSE 8091
-CMD [ "npm", "start" ]
+CMD [ "node", "server.js" ]
 

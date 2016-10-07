@@ -88,6 +88,10 @@ app.get('/config', function (req, res) {
 
 
 var port = process.env.VCAP_APP_PORT || 3000;
+process.on('SIGTERM', function() {
+	console.log("Aborting on SIGTERM");
+	process.abort();
+});
 var server = app.listen(port, function () {
 	var host = server.address().address;
 	var port = server.address().port;
