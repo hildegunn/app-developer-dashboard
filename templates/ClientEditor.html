@@ -48,20 +48,7 @@
 					{/redirect_uri}
 				</ul>
 
-
-
-
-
-
-				<p style="margin: 0px">
-					<span>{_.registered} {@formatRelative val=created/}</span>
-						<span style="color: #999"><i class="glyphicon glyphicon-time"></i> {createdH}</span>
-					<span style="margin-left: 2em">{_.updated} {@formatRelative val=updated/}</span>
-						<span style="color: #999"><i class="glyphicon glyphicon-time"></i> {updatedH}</span>
-				</p>
-				
-
-
+				{>timeinfo/}
 
 				<div id="stats"></div>
 
@@ -154,13 +141,7 @@
 					<p>{_.regpublicinfo}</p>
 				</div>
 
-
-				<p style="margin: 0px">
-					<span>{_.registered} {@formatRelative val=created/}</span>
-						<span style="color: #999"><i class="glyphicon glyphicon-time"></i> {createdH}</span>
-					<span style="margin-left: 2em">{_.updated} {@formatRelative val=updated/}</span>
-						<span style="color: #999"><i class="glyphicon glyphicon-time"></i> {updatedH}</span>
-				</p>
+				{>timeinfo/}
 
 				{/client}
 
@@ -222,12 +203,7 @@
 
 				</form>
 
-				<p style="margin: 0px">
-					<span>{_.registered} {@formatRelative val=created/}</span>
-						<span style="color: #999"><i class="glyphicon glyphicon-time"></i> {createdH}</span>
-					<span style="margin-left: 2em">{_.updated} {@formatRelative val=updated/}</span>
-						<span style="color: #999"><i class="glyphicon glyphicon-time"></i> {updatedH}</span>
-				</p>
+				{>timeinfo/}
 
 				{/client}
 
