@@ -47,6 +47,10 @@ if (env === 'development') {
 		}
 	});
 
+	app.use('/intldata', LangNeg.neg(languages), function(req, res) {
+		var lang = res.getHeader('Content-Language');
+		res.sendFile(__dirname + '/bower_components/dust-helper-intl/dist/locale-data/' + lang + '.js');
+	});
 	app.use('/', function(req, res, next) {
 		if (req.url === '/') {
 			req.url = '/index.dev.html';

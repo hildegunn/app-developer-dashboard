@@ -17,7 +17,7 @@ requirejs.config({
 		"dust.core": '/bower_components/dustjs-linkedin/dist/dust-core.min',
 		"dustjs-helpers": '/bower_components/dustjs-helpers/dist/dust-helpers.min',
 		"DustIntl": '/bower_components/dust-helper-intl/dist/dust-intl',
-		"DustIntlData": '/bower_components/dust-helper-intl/dist/locale-data/en',
+		"DustIntlData": '/intldata/data',
 
 		"class": "class",
 		"jquery": "/bower_components/jquery/dist/jquery.min",
