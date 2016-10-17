@@ -4,6 +4,10 @@
 @import url("../bower_components/selectize/dist/css/selectize.bootstrap3.css");
 
 
+.uninett-font-green {
+    color: #006c48;
+}
+
 body.stateLoggedIn  .showOnLoggedIn { display: block !important; }
 body.stateLoggedIn  .showOnLoggedOut { display: none; }
 
