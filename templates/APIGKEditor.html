@@ -349,15 +349,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 										<td style="font-size: 90%"><code>gk_{sd.apigkid}</code></td>
 
 										<td>
-											{#sd.policy.auto}
-												<span class="label label-success">
-													<i class="fa fa-check"></i>&nbsp;
-													{_.accept}</span>
-											{:else}
-												<span class="label label-danger">
-													<i class="fa fa-check-square-o"></i>&nbsp;
-													{_.moderate}</span>
-											{/sd.policy.auto}
+											{#sd}{>sdpolicyinfo/}{/sd}
 										</td>
 
 										<td>
@@ -420,15 +412,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 											<td style="font-size: 90%"><code>gk_{sd.apigkid}_{scope}</code></td>
 
 											<td>
-												{?policy.auto}
-													<span class="label label-success">
-														<i class="fa fa-check"></i>&nbsp;
-														{_.accept}</span>
-												{:else}
-													<span class="label label-danger">
-														<i class="fa fa-check-square-o"></i>&nbsp;
-														{_.moderate}</span>
-												{/policy.auto}
+												{>sdpolicyinfo/}
 											</td>
 											<td>
 
@@ -549,15 +533,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 										<td style="font-size: 90%"><code>gk_{sd.apigkid}</code></td>
 
 										<td>
-											{#sd.policy.auto}
-												<span class="label label-success">
-													<i class="fa fa-check"></i>&nbsp;
-													{_.accept}</span>
-											{:else}
-												<span class="label label-danger">
-													<i class="fa fa-check-square-o"></i>&nbsp;
-													{_.moderate}</span>
-											{/sd.policy.auto}
+											{>sdpolicyinfo/}
 										</td>
 
 										<td>
@@ -605,15 +581,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 											<td style="font-size: 90%"><code>gk_{sd.apigkid}_{scope}</code></td>
 
 											<td>
-												{?policy.auto}
-													<span class="label label-success">
-														<i class="fa fa-check"></i>&nbsp;
-														{_.accept}</span>
-												{:else}
-													<span class="label label-danger">
-														<i class="fa fa-check-square-o"></i>&nbsp;
-														{_.moderate}</span>
-												{/policy.auto}
+												{>sdpolicyinfo/}
 											</td>
 											<td>
 

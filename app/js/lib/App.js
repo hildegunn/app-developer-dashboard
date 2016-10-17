@@ -43,6 +43,7 @@ define(function(require, exports, module) {
 	var trustinline = require('text!templates/partials/TrustInline.html');
 	var timeinfo = require('text!templates/partials/timeinfo.html');
 	var apigkinfo = require('text!templates/partials/APIGKInfo.html');
+	var sdpolicyinfo = require('text!templates/partials/SDPolicyInfo.html');
 
 	require("bootstrap");
 	require('es6-promise').polyfill();
@@ -138,6 +139,7 @@ define(function(require, exports, module) {
 					TemplateEngine.prototype.loadPartial("trustinline", trustinline);
 					TemplateEngine.prototype.loadPartial("timeinfo", timeinfo);
 					TemplateEngine.prototype.loadPartial("apigkinfo", apigkinfo);
+					TemplateEngine.prototype.loadPartial("sdpolicyinfo", sdpolicyinfo);
 
 					that.providerdata = new ProviderData(that);
 
