@@ -44,6 +44,7 @@ define(function(require, exports, module) {
 	var timeinfo = require('text!templates/partials/timeinfo.html');
 	var apigkinfo = require('text!templates/partials/APIGKInfo.html');
 	var sdpolicyinfo = require('text!templates/partials/SDPolicyInfo.html');
+	var sdstatus = require('text!templates/partials/SDStatus.html');
 
 	require("bootstrap");
 	require('es6-promise').polyfill();
@@ -140,6 +141,7 @@ define(function(require, exports, module) {
 					TemplateEngine.prototype.loadPartial("timeinfo", timeinfo);
 					TemplateEngine.prototype.loadPartial("apigkinfo", apigkinfo);
 					TemplateEngine.prototype.loadPartial("sdpolicyinfo", sdpolicyinfo);
+					TemplateEngine.prototype.loadPartial("sdstatus", sdstatus);
 
 					that.providerdata = new ProviderData(that);
 
