@@ -268,71 +268,66 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 				<h3>{_.clients_requesting_access}</h3>
 
+				{<gkClientBasicInfo}
+					<div class="row">
 
+						<div class="col-md-8">
 
+							<div class="media">
+										
+								<div class="media-left">
+									<img class="media-object logo" src="{@clientLogoURL id="{id}" /}" alt="{_.logo_of_client}">
+								</div>
+
+								<div class="media-body">
+
+									<h4 class="list-group-item-heading">{name}</h4>
+									<p class="list-group-item-text" style="font-size: 80%">
+										<i class="glyphicon glyphicon-chevron-right"></i> {id}
+									</p>
+									<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
+
+									<p class="list-group-item-text" style="margin-top: 15px">Redirect URIs
+										<ul class="list-group-item-text" style="margin: 0px;">
+											{#redirect_uri}
+												<li style="margin: 0px; padding: 0px"><code>{.}</code></li>
+											{/redirect_uri}
+										</ul>
+									</p>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							{>trustblock/}
+						</div>
+
+					</div>
+				{/gkClientBasicInfo}
+
+				{<gkClientExtendedInfo}
+					<div style="margin-top: 1.4em">
+						{?systemdescr}
+						<h5>{_.extended_description_for_system_administrators}</h5>
+						<p class="list-group-item-text">{systemdescr|s|h|acceptnewline}</p>
+						{/systemdescr}
+
+						<ul style="margin-top: .6em">
+							{?homepageurl}<li><a target="_blank" href="{homepageurl}">{_.apphomepage}</a></li>{/homepageurl}
+							{?loginurl}<li><a target="_blank" href="{loginurl}">{_.application_login}</a></li>{/loginurl}
+							{?privacypolicyurl}<li><a target="_blank" href="{privacypolicyurl}">{_.privacypolicy}</a></li>{/privacypolicyurl}
+							{?supporturl}<li><a target="_blank" href="{supporturl}">{_.application_support}</a></li>{/supporturl}
+						</ul>
+					</div>
+				{/gkClientExtendedInfo}
 
 				{#clientsReq}
 
 					<div class="panel panel-default authzClient" data-clientid="{id}">
 						<div class="panel-body">
-
-							<div class="row">
-
-								<div class="col-md-8">
-
-									<div class="media">
-										
-										<div class="media-left">
-											<img class="media-object logo" src="{@clientLogoURL id="{id}" /}" alt="{_.logo_of_client}">
-										</div>
-
-										<div class="media-body">
-
-											<h4 class="list-group-item-heading">{name}</h4>
-											<p class="list-group-item-text" style="font-size: 80%">
-												<i class="glyphicon glyphicon-chevron-right"></i> {id}
-											</p>
-											<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
-
-											<p class="list-group-item-text" style="margin-top: 15px">Redirect URIs
-												<ul class="list-group-item-text" style="margin: 0px;">
-													{#redirect_uri}
-														<li style="margin: 0px; padding: 0px"><code>{.}</code></li>
-													{/redirect_uri}
-												</ul>
-											</p>
-										</div>
-
-									</div>
-
-								</div>
-
-								<div class="col-md-4">
-									{>trustblock/}
-								</div>
-
-							</div>
-
-
-
-
-
-
-							<div style="margin-top: 1.4em">
-								{?systemdescr}
-								<h5>{_.extended_description_for_system_administrators}</h5>
-								<p class="list-group-item-text">{systemdescr|s|h|acceptnewline}</p>
-								{/systemdescr}
-
-								<ul style="margin-top: .6em">
-									{?homepageurl}<li><a target="_blank" href="{homepageurl}">{_.apphomepage}</a></li>{/homepageurl}
-									{?loginurl}<li><a target="_blank" href="{loginurl}">{_.application_login}</a></li>{/loginurl}
-									{?privacypolicyurl}<li><a target="_blank" href="{privacypolicyurl}">{_.privacypolicy}</a></li>{/privacypolicyurl}
-									{?supporturl}<li><a target="_blank" href="{supporturl}">{_.application_support}</a></li>{/supporturl}
-								</ul>
-							</div>
-
-
+							{+gkClientBasicInfo/}
+							{+gkClientExtendedInfo/}
 
 							<table style="font-size: 95%; margin-top: 2em" class="table table-striped">
 
@@ -521,45 +516,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 					<div class="panel panel-default authzClient" data-clientid="{id}">
 						<div class="panel-body">
-
-
-							<div class="row">
-								
-								<div class="col-md-8">
-									<div class="media">
-										
-										<div class="media-left">
-											<img class="media-object logo" src="{@clientLogoURL id="{id}" /}" alt="{_.logo_of_client}">
-										</div>
-										<div class="media-body">
-
-											<h4 class="list-group-item-heading">{name}</h4>
-											<p class="list-group-item-text" style="font-size: 80%">
-												<i class="glyphicon glyphicon-chevron-right"></i> {id}
-											</p>
-											<p class="list-group-item-text">{descr|s|h|acceptnewline}</p>
-
-											<p class="list-group-item-text" style="margin-top: 15px">Redirect URIs
-												<ul class="list-group-item-text" style="margin: 0px;">
-													{#redirect_uri}
-														<li style="margin: 0px; padding: 0px"><code>{.}</code></li>
-													{/redirect_uri}
-												</ul>
-											</p>
-										</div>
-
-									</div>
-								</div>
-
-								<div class="col-md-4">
-									{>trustblock/}
-								</div>
-
-							</div><!-- end row -->
-
-
-
-
+							{+gkClientBasicInfo/}
 
 							<div>
 								<p class="list-group-item-text" style="margin-top: 15px">{_.authorized_scopes_not_heading} &nbsp;
@@ -570,23 +527,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 								</p>
 							</div>
 
-
-
-							<div style="margin-top: 1.4em">
-								{?systemdescr}
-								<h5>{_.extended_description_for_system_administrators}</h5>
-								<p class="list-group-item-text">{systemdescr|s|h|acceptnewline}</p>
-								{/systemdescr}
-
-								<ul style="margin-top: .6em">
-									{?homepageurl}<li><a target="_blank" href="{homepageurl}">{_.apphomepage}</a></li>{/homepageurl}
-									{?loginurl}<li><a target="_blank" href="{loginurl}">{_.application_login}</a></li>{/loginurl}
-									{?privacypolicyurl}<li><a target="_blank" href="{privacypolicyurl}">{_.privacypolicy}</a></li>{/privacypolicyurl}
-									{?supporturl}<li><a target="_blank" href="{supporturl}">{_.application_support}</a></li>{/supporturl}
-								</ul>
-							</div>
-
-
+							{+gkClientExtendedInfo/}
 
 							<table style="font-size: 95%; margin-top: 2em" class="table table-striped">
 
