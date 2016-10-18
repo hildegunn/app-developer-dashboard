@@ -20,8 +20,7 @@ define(function(require) {
 
 	var clientTemplate = require('text!templates/ClientEditor.html');
 	var apilistingTemplate = require('text!templates/partials/APIListing.html');
-	var publicAPIListingTemplate = require('text!templates/partials/APIListingPublic.html');
-	var ownAPIListingTemplate = require('text!templates/partials/APIListingOwn.html');
+	var availableAPIsListingTemplate = require('text!templates/partials/AvailableAPIsListing.html');
 	var scopeListingTemplate = require('text!templates/partials/ScopeListing.html');
 
 	var ClientEditor = Editor.extend({
@@ -42,8 +41,7 @@ define(function(require) {
 			this.template.loadPartial("apilisting", apilistingTemplate);
 			this.template.loadPartial("scopelisting", scopeListingTemplate);
 
-			this.apipublictemplate = new TemplateEngine(publicAPIListingTemplate, this.dict);
-			this.apiowntemplate = new TemplateEngine(ownAPIListingTemplate, this.dict);
+			this.availableapistemplate = new TemplateEngine(availableAPIsListingTemplate, this.dict);
 
 			this.ebind("click", ".actAPIadd", "actAPIadd");
 			this.ebind("click", ".actAPIScopeUpdate", "actAPIScopeUpdate");
@@ -354,14 +352,19 @@ define(function(require) {
 		},
 
 
-		"drawAPIs": function() {
-
+		"_drawAPIs": function(own) {
 			var that = this;
 			var view = {
 				"apis": []
 			};
+			var apis;
 
-			var apis = this.publicapis.apigks;
+			if (!own) {
+				apis = this.publicapis.apigks;
+			} else {
+				apis = this.clientpool.apigks;
+				view.auto = true;
+			}
 			var apiids = this.current.getAPIscopes();
 			var clientAPIkeys = new StringSet(apiids);
 
@@ -381,43 +384,17 @@ define(function(require) {
 					view.apis.push(apis[key].getView());
 				}
 			}
+			return view;
+		},
 
-
-			// console.error("VIew public", view);
-			return this.apipublictemplate.render(this.el.find("#publicapicontainer").empty(), view);
-
+		"drawAPIs": function() {
+			var view = this._drawAPIs(false);
+			return this.availableapistemplate.render(this.el.find("#publicapicontainer").empty(), view);
 		},
 
 		"drawOwnAPIs": function() {
-
-			var that = this;
-			var view = {
-				"apis": []
-			};
-
-			var apis = this.clientpool.apigks;
-			var apiids = this.current.getAPIscopes();
-			var clientAPIkeys = new StringSet(apiids);
-
-			for (var key in apis) {
-				if (apis.hasOwnProperty(key)) {
-					// console.log("About to process ", apis[key].name, clientAPIkeys.has(apis[key].id));
-					if (clientAPIkeys.has(apis[key].id)) {
-						continue;
-					}
-
-					if (this.searchTerm !== null) {
-						if (!apis[key].searchMatch(this.searchTerm)) {
-							continue;
-						}
-					}
-
-					view.apis.push(apis[key].getView());
-				}
-			}
-
-			return this.apiowntemplate.render(this.el.find("#apicontainerown").empty(), view);
-
+			var view = this._drawAPIs(true);
+			return this.availableapistemplate.render(this.el.find("#apicontainerown").empty(), view);
 		},
 
 
