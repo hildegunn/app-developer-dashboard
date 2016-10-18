@@ -202,8 +202,6 @@ define(function(require, exports, module) {
 					that.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/apiauthorization$/, "routeAPIAuthorization");
 					that.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/clients\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditClient");
 					that.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/apigk\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditAPIGK");
-					that.setupRoute(/^\/clients\/([a-zA-Z0-9_\-:]+)$/, "viewclient");
-					that.setupRoute(/^\/new$/, "newGroup");
 
 
 					that.publicapis = new PublicAPIPool(that.feideconnect);
