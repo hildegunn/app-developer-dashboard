@@ -322,6 +322,46 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 					</div>
 				{/gkClientExtendedInfo}
 
+				{<gkReqScopeLine}
+					<td>{title}</td>
+					<td style="font-size: 90%"><code>{fullid}</code></td>
+
+					<td>
+						{>sdpolicyinfo/}
+					</td>
+
+					<td>
+						{>sdstatus/}
+					</td>
+
+					<td>
+
+						{#status.accepted}
+							<label>
+								<input class="authscope" data-scopemoderate="{fullid}" type="checkbox" checked="checked" />  {_.accepted}
+							</label>
+						{:else}
+
+							{#status.requested}
+							<div class="radio">
+								<label>
+									<input type="radio" name="{fullid}" value="reject" class="radioscopeauthz">
+									<i class="fa fa-times"></i>&nbsp; {_.reject}
+								</label>
+							</div>
+							<div class="radio">
+								<label>
+									<input type="radio" name="{fullid}" value="accept" class="radioscopeauthz">
+									<i class="fa fa-check"></i>&nbsp; {_.accept}
+								</label>
+							</div>
+
+
+							{/status.requested}
+
+						{/status.accepted}
+					</td>
+				{/gkReqScopeLine}
 				{#clientsReq}
 
 					<div class="panel panel-default authzClient" data-clientid="{id}">
@@ -346,93 +386,16 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 								<tbody>
 									<tr>
 										{#sd}
-										<td>{title}</td>
-										<td style="font-size: 90%"><code>{fullid}</code></td>
-
-										<td>
-											{>sdpolicyinfo/}
-										</td>
-
-										<td>
-											{>sdstatus/}
-										</td>
-
-										<td>
-
-											{#status.accepted}
-												<label>
-													<input class="authscope" data-scopemoderate="{fullid}" type="checkbox" checked="checked" />  {_.accepted}
-												</label>
-											{:else}
-
-												{#status.requested}
-														<div class="radio">
-															<label>
-																<input type="radio" name="{fullid}" value="reject" class="radioscopeauthz">
-																<i class="fa fa-times"></i>&nbsp; {_.reject}
-															</label>
-														</div>
-														<div class="radio">
-															<label>
-																<input type="radio" name="{fullid}" value="accept" class="radioscopeauthz">
-																<i class="fa fa-check"></i>&nbsp; {_.accept}
-															</label>
-														</div>
-
-
-												{/status.requested}
-
-											{/status.accepted}
-
-
+										{+gkReqScopeLine/}
 										{/sd}
-										</td>
 									</tr>
 
 
 
 
 									{#sd.subscopes}
-
 										<tr>
-											<td>{title}</td>
-											<td style="font-size: 90%"><code>{fullid}</code></td>
-
-											<td>
-												{>sdpolicyinfo/}
-											</td>
-											<td>
-												{>sdstatus/}
-											</td>
-											<td>
-
-												{?status.accepted}
-													<label>
-													<input class="authscope" type="checkbox" data-scopemoderate="{fullid}" checked="checked" /> {_.accepted}</label>
-												{/status.accepted}
-
-												{?status.requested}
-													<div class="radio">
-														<label>
-															<input type="radio" name="{fullid}"  value="reject" class="radioscopeauthz">
-															<i class="fa fa-times"></i> {_.reject}
-														</label>
-													</div>
-													<div class="radio">
-														<label>
-															<input type="radio" name="{fullid}" value="accept" class="radioscopeauthz">
-															<i class="fa fa-check"></i> {_.accept}
-														</label>
-													</div>
-												{/status.requested}
-
-
-
-
-
-
-
-											</td>
+											{+gkReqScopeLine/}
 										</tr>
 
 									{:else}
@@ -469,7 +432,33 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 				<h3>{_.authorized_clients}</h3>
 
+				{<gkAcceptedScopeLine}
+					<td>{title}</td>
+					<td style="font-size: 90%"><code>{fullid}</code></td>
 
+					<td>
+						{>sdpolicyinfo/}
+					</td>
+
+					<td>
+						{>sdstatus/}
+					</td>
+
+					<td>
+
+						{#status.accepted}
+						<input class="authscope" data-scopemoderate="{fullid}" type="checkbox" checked="checked" />
+						{:else}
+
+						{#status.requested}
+						<input class="authscope" data-scopemoderate="{fullid}" type="checkbox"  />
+						{/status.requested}
+
+						{/status.accepted}
+
+
+					</td>
+				{/gkAcceptedScopeLine}
 				{#clients}
 
 					<div class="panel panel-default authzClient" data-clientid="{id}">
@@ -504,61 +493,14 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 								<tbody>
 									<tr>
 										{#sd}
-										<td>{title}</td>
-										<td style="font-size: 90%"><code>{fullid}</code></td>
-
-										<td>
-											{>sdpolicyinfo/}
-										</td>
-
-										<td>
-											{>sdstatus/}
-										</td>
-
-										<td>
-
-											{#status.accepted}
-												<input class="authscope" data-scopemoderate="{fullid}" type="checkbox" checked="checked" />
-											{:else}
-
-												{#status.requested}
-													<input class="authscope" data-scopemoderate="{fullid}" type="checkbox"  />
-												{/status.requested}
-
-											{/status.accepted}
-
-
+											{+gkAcceptedScopeLine/}
 										{/sd}
-										</td>
 									</tr>
-
-
-
 
 									{#sd.subscopes}
 
 										<tr>
-											<td>{title}</td>
-											<td style="font-size: 90%"><code>gk_{sd.apigkid}_{scope}</code></td>
-
-											<td>
-												{>sdpolicyinfo/}
-											</td>
-											<td>
-												{>sdstatus/}
-											</td>
-											<td>
-
-												{?status.accepted}
-													<input class="authscope" type="checkbox" data-scopemoderate="{fullid}" checked="checked" />
-												{/status.accepted}
-
-												{?status.requested}
-													<input class="authscope" type="checkbox" data-scopemoderate="{fullid}" />
-												{/status.requested}
-
-
-											</td>
+											{+gkAcceptedScopeLine/}
 										</tr>
 
 									{:else}
