@@ -298,7 +298,7 @@ define(function(require, exports, module) {
 					that.orgApps._ = new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole('_'));
 					that.pc.add(that.orgApps._);
 				} else {
-					that.orgApps._ = new RestrictedOrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole('_'));
+					that.orgApps._ = new RestrictedOrgApp(that);
 					that.pc.add(that.orgApps._);
 				}
 

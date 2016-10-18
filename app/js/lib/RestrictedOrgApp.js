@@ -11,7 +11,7 @@ define(function(require, exports, module) {
 
 	var RestrictedOrgApp = Pane.extend({
 
-		"init": function(feideconnect, app, usercontext, publicClientPool, publicapis, role) {
+		"init": function(app) {
 			this.template = new TemplateEngine(template, app.dict);
 			this._super();
 			this.initLoad();
