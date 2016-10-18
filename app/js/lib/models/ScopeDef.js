@@ -140,6 +140,7 @@ define(function(require, exports, module) {
 			var bs = apigk.getBasicScope();
 			var sd = this.getView();
 			sd.apigkid = apigk.id;
+			sd.fullid = bs;
 			sd.status = {};
 			if (client.scopeIsAccepted(bs)) {
 				sd.status.accepted = true;
@@ -153,6 +154,7 @@ define(function(require, exports, module) {
 				for (var i = 0; i < sd.subscopes.length; i++) {
 					sd.subscopes[i].status = {};
 					var siq = bs + '_' + sd.subscopes[i].scope;
+					sd.subscopes[i].fullid = siq;
 					if (client.scopeIsAccepted(siq)) {
 						sd.subscopes[i].status.accepted = true;
 						sd.subscopes[i].status.checked = true;

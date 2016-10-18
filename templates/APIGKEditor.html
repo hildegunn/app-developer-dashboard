@@ -347,7 +347,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 									<tr>
 										{#sd}
 										<td>{title}</td>
-										<td style="font-size: 90%"><code>gk_{apigkid}</code></td>
+										<td style="font-size: 90%"><code>{fullid}</code></td>
 
 										<td>
 											{>sdpolicyinfo/}
@@ -361,20 +361,20 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 											{#status.accepted}
 												<label>
-													<input class="authscope" data-scopemoderate="gk_{sd.apigkid}" type="checkbox" checked="checked" />  {_.accepted}
+													<input class="authscope" data-scopemoderate="{fullid}" type="checkbox" checked="checked" />  {_.accepted}
 												</label>
 											{:else}
 
 												{#status.requested}
 														<div class="radio">
 															<label>
-																<input type="radio" name="gk_{sd.apigkid}" value="reject" class="radioscopeauthz">
+																<input type="radio" name="{fullid}" value="reject" class="radioscopeauthz">
 																<i class="fa fa-times"></i>&nbsp; {_.reject}
 															</label>
 														</div>
 														<div class="radio">
 															<label>
-																<input type="radio" name="gk_{sd.apigkid}" value="accept" class="radioscopeauthz">
+																<input type="radio" name="{fullid}" value="accept" class="radioscopeauthz">
 																<i class="fa fa-check"></i>&nbsp; {_.accept}
 															</label>
 														</div>
@@ -396,7 +396,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 										<tr>
 											<td>{title}</td>
-											<td style="font-size: 90%"><code>gk_{sd.apigkid}_{scope}</code></td>
+											<td style="font-size: 90%"><code>{fullid}</code></td>
 
 											<td>
 												{>sdpolicyinfo/}
@@ -408,19 +408,19 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 												{?status.accepted}
 													<label>
-													<input class="authscope" type="checkbox" data-scopemoderate="gk_{sd.apigkid}_{scope}" checked="checked" /> {_.accepted}</label>
+													<input class="authscope" type="checkbox" data-scopemoderate="{fullid}" checked="checked" /> {_.accepted}</label>
 												{/status.accepted}
 
 												{?status.requested}
 													<div class="radio">
 														<label>
-															<input type="radio" name="gk_{sd.apigkid}_{scope}"  value="reject" class="radioscopeauthz">
+															<input type="radio" name="{fullid}"  value="reject" class="radioscopeauthz">
 															<i class="fa fa-times"></i> {_.reject}
 														</label>
 													</div>
 													<div class="radio">
 														<label>
-															<input type="radio" name="gk_{sd.apigkid}_{scope}" value="accept" class="radioscopeauthz">
+															<input type="radio" name="{fullid}" value="accept" class="radioscopeauthz">
 															<i class="fa fa-check"></i> {_.accept}
 														</label>
 													</div>
@@ -505,7 +505,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 									<tr>
 										{#sd}
 										<td>{title}</td>
-										<td style="font-size: 90%"><code>gk_{apigkid}</code></td>
+										<td style="font-size: 90%"><code>{fullid}</code></td>
 
 										<td>
 											{>sdpolicyinfo/}
@@ -518,11 +518,11 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 										<td>
 
 											{#status.accepted}
-												<input class="authscope" data-scopemoderate="gk_{apigkid}" type="checkbox" checked="checked" /> 
+												<input class="authscope" data-scopemoderate="{fullid}" type="checkbox" checked="checked" />
 											{:else}
 
 												{#status.requested}
-													<input class="authscope" data-scopemoderate="gk_{apigkid}" type="checkbox"  /> 
+													<input class="authscope" data-scopemoderate="{fullid}" type="checkbox"  />
 												{/status.requested}
 
 											{/status.accepted}
@@ -550,11 +550,11 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 											<td>
 
 												{?status.accepted}
-													<input class="authscope" type="checkbox" data-scopemoderate="gk_{sd.apigkid}_{scope}" checked="checked" /> 
+													<input class="authscope" type="checkbox" data-scopemoderate="{fullid}" checked="checked" />
 												{/status.accepted}
 
 												{?status.requested}
-													<input class="authscope" type="checkbox" data-scopemoderate="gk_{sd.apigkid}_{scope}" /> 
+													<input class="authscope" type="checkbox" data-scopemoderate="{fullid}" />
 												{/status.requested}
 
 
