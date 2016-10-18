@@ -2,11 +2,10 @@
 	<span class="label label-success">
 		<i class="fa fa-check"></i>&nbsp;
 		{_.accepted}</span>
+{:else}
+	{?status.requested}
+		<span class="label label-danger">
+			<i class="fa fa-check-square-o"></i>&nbsp;
+			{_.requested}</span>
+	{/status.requested}
 {/status.accepted}
-
-{?status.requested}
-	<span class="label label-danger">
-		<i class="fa fa-check-square-o"></i>&nbsp;
-		{_.requested}</span>
-{/status.requested}
-
