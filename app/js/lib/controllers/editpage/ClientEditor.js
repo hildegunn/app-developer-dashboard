@@ -401,9 +401,7 @@ define(function(require) {
 		"actUpdateAuthProviders": function(providers) {
 
 			var that = this;
-			var fullobj = this.current.getStorable();
-			var obj = {};
-			obj.id = fullobj.id;
+			var obj = this.current.getStorable(['id']);
 			obj.authproviders = providers;
 
 
@@ -460,10 +458,7 @@ define(function(require) {
 
 			this.current.addScopes(newscopes);
 
-			var fullobj = this.current.getStorable();
-			var obj = {};
-			obj.id = fullobj.id;
-			obj.scopes_requested = fullobj.scopes_requested;
+			var obj = this.current.getStorable(['id', 'scopes_requested']);
 
 			this._save(obj).catch(function(err) {
 				that.app.app.setErrorMessage(that.dict.get().error_adding_third_party_api, "danger", err);
@@ -494,10 +489,7 @@ define(function(require) {
 				}
 			}
 
-			var fullobj = this.current.getStorable();
-			var obj = {};
-			obj.id = fullobj.id;
-			obj.scopes_requested = fullobj.scopes_requested;
+			var obj = this.current.getStorable(['id', 'scopes_requested']);
 
 			this._save(obj).catch(function(err) {
 				that.app.app.setErrorMessage(that.dict.get().error_third_party_api_scope_update, "danger", err);
