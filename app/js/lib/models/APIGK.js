@@ -231,15 +231,16 @@ define(function(require, exports, module) {
 
 			var that = this;
 			var bs = this.getBasicScope();
-			var authz = client.scopeIsAccepted(bs);
 			var v = this.getView();
 
 			v.sd = $.extend({}, v.scopedef);
-			v.sd.authz = authz;
-
-			v.sd.req = false;
-			if (!client.scopeIsAccepted(bs) && client.scopeIsRequested(bs)) {
-				v.sd.req = true;
+			v.sd.status = {};
+			if (client.scopeIsAccepted(bs)) {
+				v.sd.status.accepted = true;
+				v.sd.status.checked = true;
+			} else if (client.scopeIsRequested(bs)) {
+				v.sd.status.requested = true;
+				v.sd.status.checked = true;
 			}
 
 			if (v.sd.subscopes) {
@@ -252,7 +253,7 @@ define(function(require, exports, module) {
 					} else if (client.scopeIsRequested(siq)) {
 						v.sd.subscopes[i].status.requested = true;
 						v.sd.subscopes[i].status.checked = true;
-						v.sd.req = true;
+						v.sd.status.requested = true;
 					}
 
 				}

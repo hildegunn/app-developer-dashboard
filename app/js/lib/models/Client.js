@@ -116,17 +116,17 @@ define(function(require, exports, module) {
 
 			var that = this;
 			var bs = apigk.getBasicScope();
-			var authz = this.scopeIsAccepted(bs);
 			var v = this.getView();
 
 
 			v.sd = apigk.scopedef.getView();
 			v.sd.apigkid = apigk.id;
-			v.sd.authz = authz;
 
-			v.sd.req = false;
-			if (!this.scopeIsAccepted(bs) && this.scopeIsRequested(bs)) {
-				v.sd.req = true;
+			v.sd.status = {};
+			if (this.scopeIsAccepted(bs)) {
+				v.sd.status.accepted = true;
+			} else if (this.scopeIsRequested(bs)) {
+				v.sd.status.requested = true;
 			}
 
 			if (v.sd.subscopes) {
@@ -137,7 +137,7 @@ define(function(require, exports, module) {
 						v.sd.subscopes[i].status.accepted = true;
 					} else if (this.scopeIsRequested(siq)) {
 						v.sd.subscopes[i].status.requested = true;
-						v.sd.req = true;
+						v.sd.requested = true;
 					}
 				}
 			}

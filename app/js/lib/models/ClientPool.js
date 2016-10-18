@@ -105,7 +105,7 @@ define(function(require, exports, module) {
 					
 					// console.error("Processing API GK View", cv);	
 
-					if (cv.sd.req) {
+					if (cv.sd.status.requested) {
 
 						this.apigks[apigkid].increaseClientRequestCounter();
 						

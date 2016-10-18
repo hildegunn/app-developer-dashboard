@@ -345,40 +345,27 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 								<tbody>
 									<tr>
-										<td>{sd.title}</td>
-										<td style="font-size: 90%"><code>gk_{sd.apigkid}</code></td>
+										{#sd}
+										<td>{title}</td>
+										<td style="font-size: 90%"><code>gk_{apigkid}</code></td>
 
 										<td>
-											{#sd}{>sdpolicyinfo/}{/sd}
+											{>sdpolicyinfo/}
+										</td>
+
+										<td>
+											{>sdstatus/}
 										</td>
 
 										<td>
 
-											{#sd.authz}
-												<span class="label label-success">
-													<i class="fa fa-check"></i>&nbsp;
-													{_.accepted}</span>
-											{:else}
-
-												{#sd.req}
-													<span class="label label-danger">
-														<i class="fa fa-check-square-o"></i>&nbsp;
-														{_.requested}</span>
-												{/sd.req}
-
-											{/sd.authz}
-
-										</td>
-
-										<td>
-
-											{#sd.authz}
+											{#status.accepted}
 												<label>
 													<input class="authscope" data-scopemoderate="gk_{sd.apigkid}" type="checkbox" checked="checked" />  {_.accepted}
 												</label>
 											{:else}
 
-												{#sd.req}
+												{#status.requested}
 														<div class="radio">
 															<label>
 																<input type="radio" name="gk_{sd.apigkid}" value="reject" class="radioscopeauthz">
@@ -393,12 +380,12 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 														</div>
 
 
-												{/sd.req}
+												{/status.requested}
 
-											{/sd.authz}
+											{/status.accepted}
 
 
-
+										{/sd}
 										</td>
 									</tr>
 
@@ -516,45 +503,32 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 								<tbody>
 									<tr>
-										<td>{sd.title}</td>
-										<td style="font-size: 90%"><code>gk_{sd.apigkid}</code></td>
+										{#sd}
+										<td>{title}</td>
+										<td style="font-size: 90%"><code>gk_{apigkid}</code></td>
 
 										<td>
 											{>sdpolicyinfo/}
 										</td>
 
 										<td>
-
-											{#sd.authz}
-												<span class="label label-success">
-													<i class="fa fa-check"></i>&nbsp;
-													{_.accepted}</span>
-											{:else}
-
-												{#sd.req}
-													<span class="label label-danger">
-														<i class="fa fa-check-square-o"></i>&nbsp;
-														{_.requested}</span>
-												{/sd.req}
-
-											{/sd.authz}
-
+											{>sdstatus/}
 										</td>
 
 										<td>
 
-											{#sd.authz}
-												<input class="authscope" data-scopemoderate="gk_{sd.apigkid}" type="checkbox" checked="checked" /> 
+											{#status.accepted}
+												<input class="authscope" data-scopemoderate="gk_{apigkid}" type="checkbox" checked="checked" /> 
 											{:else}
 
-												{#sd.req}
-													<input class="authscope" data-scopemoderate="gk_{sd.apigkid}" type="checkbox"  /> 
-												{/sd.req}
+												{#status.requested}
+													<input class="authscope" data-scopemoderate="gk_{apigkid}" type="checkbox"  /> 
+												{/status.requested}
 
-											{/sd.authz}
+											{/status.accepted}
 
 
-
+										{/sd}
 										</td>
 									</tr>
 

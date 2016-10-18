@@ -288,10 +288,10 @@ define(function(require) {
 
 				aapiview = myapis[i].getClientView(that.current);
 				// console.error("Get client view is ", JSON.stringify(aapiview, undefined, 2));
-				if (aapiview.sd.authz) {
+				if (aapiview.sd.status.accepted) {
 					view.authorizedAPIs.push(aapiview);
 				}
-				if (aapiview.sd.req) {
+				if (aapiview.sd.status.requested) {
 					view.requestedAPIs.push(aapiview);
 				}
 

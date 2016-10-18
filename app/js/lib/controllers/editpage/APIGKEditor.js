@@ -152,10 +152,10 @@ define(function(require, exports, module) {
 						// console.error("Processing API GK View of a client", JSON.stringify(cv, undefined, 2));
 						// console.error("Orgauthorizations", cv.name, nc.orgauthorization);
 
-						if (cv.sd.authz) {
+						if (cv.sd.status.accepted) {
 							view.clients.push(cv);
 						}
-						if (cv.sd.req) {
+						if (cv.sd.status.requested) {
 							view.clientsReq.push($.extend({}, cv));
 						}
 
