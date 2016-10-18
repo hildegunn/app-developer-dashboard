@@ -64,7 +64,7 @@ define(function(require, exports, module) {
 				this.orgAdminAPIs = new OrgAdminAPIs(this.feideconnect, orgid2);
 				this.orgAdminAPIs.initLoad();
 
-				this.orgAdminAPIAuthorization = new OrgAdminAPIAuthorizationPane(this.feideconnect, this, this.orgAdminAPIs, this.publicapis); // , this.publicClientPool, this.orgAdminClients);
+				this.orgAdminAPIAuthorization = new OrgAdminAPIAuthorizationPane(this.feideconnect, this, this.orgAdminAPIs, this.publicapis);
 				this.orgAdminAPIAuthorization.initLoad();
 
 			}
