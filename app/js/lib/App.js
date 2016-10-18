@@ -427,7 +427,7 @@ define(function(require, exports, module) {
 					return that.usercontext.onLoaded();
 				})
 				.then(function() {
-					return that.getOrgApp(orgid)
+					return that.getOrgApp(orgid);
 				})
 				.then(function(orgApp) {
 
@@ -445,7 +445,7 @@ define(function(require, exports, module) {
 			var that = this;
 			this.feideconnect.onAuthenticated()
 				.then(function() {
-					return that.getOrgApp(orgid)
+					return that.getOrgApp(orgid);
 				})
 				.then(function(orgApp) {
 					that.orgRoleSelector.setOrg(orgid, false);
@@ -467,7 +467,7 @@ define(function(require, exports, module) {
 
 			this.feideconnect.onAuthenticated()
 				.then(function() {
-					return that.getOrgApp(orgid)
+					return that.getOrgApp(orgid);
 				})
 				.then(function(orgApp) {
 					orgApp.actMandatory();
@@ -487,7 +487,7 @@ define(function(require, exports, module) {
 
 			this.feideconnect.onAuthenticated()
 				.then(function() {
-					return that.getOrgApp(orgid)
+					return that.getOrgApp(orgid);
 				})
 				.then(function(orgApp) {
 					orgApp.actAPIAuth();
@@ -509,7 +509,7 @@ define(function(require, exports, module) {
 				.then(function() {
 
 					if (!orgid) {
-						orgid = that.orgRoleSelector.getDefaultRole()
+						orgid = that.orgRoleSelector.getDefaultRole();
 						that.setHash('/' + orgid);
 					}
 					that.orgRoleSelector.setOrg(orgid, false);

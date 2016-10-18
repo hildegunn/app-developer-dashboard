@@ -107,7 +107,7 @@ define(function(require) {
 			 * Handle tabs under 3rd party APIs.
 			 */
 			this.el.on('click', '#apilisttabs a', function(e) {
-				e.preventDefault()
+				e.preventDefault();
 				var x = $(e.currentTarget);
 				var href = x.attr("href");
 
@@ -203,7 +203,7 @@ define(function(require) {
 				})
 				.catch(function(err) {
 					console.error("Error loading statistics for this client ", err);
-				})
+				});
 
 
 
