@@ -25,17 +25,6 @@ define(function(require, exports, module) {
 		$ = require('jquery');
 
 
-	/**
-	 * Here is what happens when the page loads:
-	 *
-	 * Check for existing authentication.
-	 * When authenticated setup clientpool.
-	 * After that, check routing...
-	 * Load frontpage
-	 * 
-	 * 
-	 */
-
 	var OrgApp = Pane.extend({
 
 		"init": function(feideconnect, app, usercontext, publicClientPool, publicapis, role) {
