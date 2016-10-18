@@ -113,34 +113,8 @@ define(function(require, exports, module) {
 
 
 		"getAPIGKview": function(apigk) {
-
-			var that = this;
-			var bs = apigk.getBasicScope();
 			var v = this.getView();
-
-
-			v.sd = apigk.scopedef.getView();
-			v.sd.apigkid = apigk.id;
-
-			v.sd.status = {};
-			if (this.scopeIsAccepted(bs)) {
-				v.sd.status.accepted = true;
-			} else if (this.scopeIsRequested(bs)) {
-				v.sd.status.requested = true;
-			}
-
-			if (v.sd.subscopes) {
-				for (var i = 0; i < v.sd.subscopes.length; i++) {
-					v.sd.subscopes[i].status = {};
-					var siq = bs + '_' + v.sd.subscopes[i].scope;
-					if (this.scopeIsAccepted(siq)) {
-						v.sd.subscopes[i].status.accepted = true;
-					} else if (this.scopeIsRequested(siq)) {
-						v.sd.subscopes[i].status.requested = true;
-						v.sd.requested = true;
-					}
-				}
-			}
+			v.sd = apigk.scopedef.getRequestView(apigk, this);
 
 			v.orgadminscopematrix = this.getOrgAdminScopeMatrix(apigk);
 

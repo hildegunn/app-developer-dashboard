@@ -134,6 +134,38 @@ define(function(require, exports, module) {
 			}
 			res.subscopes = s;
 			return res;
+		},
+
+		"getRequestView": function(apigk, client) {
+			var bs = apigk.getBasicScope();
+			var sd = this.getView();
+			sd.apigkid = apigk.id;
+			sd.status = {};
+			if (client.scopeIsAccepted(bs)) {
+				sd.status.accepted = true;
+				sd.status.checked = true;
+			} else if (client.scopeIsRequested(bs)) {
+				sd.status.requested = true;
+				sd.status.checked = true;
+			}
+
+			if (sd.subscopes) {
+				for (var i = 0; i < sd.subscopes.length; i++) {
+					sd.subscopes[i].status = {};
+					var siq = bs + '_' + sd.subscopes[i].scope;
+					if (client.scopeIsAccepted(siq)) {
+						sd.subscopes[i].status.accepted = true;
+						sd.subscopes[i].status.checked = true;
+					} else if (client.scopeIsRequested(siq)) {
+						sd.subscopes[i].status.requested = true;
+						sd.subscopes[i].status.checked = true;
+						sd.status.requested = true;
+					}
+
+				}
+
+			}
+			return sd;
 		}
 	});
 

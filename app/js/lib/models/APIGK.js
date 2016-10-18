@@ -228,37 +228,8 @@ define(function(require, exports, module) {
 
 
 		"getClientView": function(client) {
-
-			var that = this;
-			var bs = this.getBasicScope();
 			var v = this.getView();
-
-			v.sd = $.extend({}, v.scopedef);
-			v.sd.status = {};
-			if (client.scopeIsAccepted(bs)) {
-				v.sd.status.accepted = true;
-				v.sd.status.checked = true;
-			} else if (client.scopeIsRequested(bs)) {
-				v.sd.status.requested = true;
-				v.sd.status.checked = true;
-			}
-
-			if (v.sd.subscopes) {
-				for (var i = 0; i < v.sd.subscopes.length; i++) {
-					v.sd.subscopes[i].status = {};
-					var siq = bs + '_' + v.sd.subscopes[i].scope;
-					if (client.scopeIsAccepted(siq)) {
-						v.sd.subscopes[i].status.accepted = true;
-						v.sd.subscopes[i].status.checked = true;
-					} else if (client.scopeIsRequested(siq)) {
-						v.sd.subscopes[i].status.requested = true;
-						v.sd.subscopes[i].status.checked = true;
-						v.sd.status.requested = true;
-					}
-
-				}
-
-			}
+			v.sd = this.scopedef.getRequestView(this, client);
 
 			v.orgadminscopematrix = this.getOrgAdminScopeMatrix(client);
 
