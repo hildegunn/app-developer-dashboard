@@ -156,7 +156,7 @@ define(function(require, exports, module) {
 			this.clienteditor = new ClientEditor(this, this.feideconnect, this.publicapis, this.clientpool, this.usercontext);
 			this.pc.add(this.clienteditor);
 			this.clienteditor.on("saved", function(client) {
-				// console.log("Client is saved, updatge client pool and mainlisting");
+				// console.log("Client is saved, update client pool and mainlisting");
 				that.clientpool.setClient(client);
 			});
 			this.clienteditor.on("deleted", function(id) {
