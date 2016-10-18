@@ -52,11 +52,6 @@ define(function(require, exports, module) {
 			return items;
 		},
 
-
-		"ready": function(callback) {
-			throw new Error("Ready() deprecated");
-		},
-
 		"setOrg": function(org) {
 			this.orgs[org.id] = org;
 			this.emit("orgChange", this.orgs);

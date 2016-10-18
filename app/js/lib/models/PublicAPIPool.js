@@ -50,10 +50,6 @@ define(function(require, exports, module) {
 		},
 
 
-		"ready": function(callback) {
-			throw new Error("Ready() deprecated");
-		},
-
 		"setAPIGK": function(apigk) {
 			this.apigks[apigk.id] = apigk;
 			this.emit("apigkChange", this.apigks);
