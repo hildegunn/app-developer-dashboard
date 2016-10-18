@@ -60,63 +60,11 @@ define(function(require, exports, module) {
 			return view;
 		},
 
-
-		/**
-		 * Feed this with a the clients orgauthorizations, and it will return a matrix
-		 * containing rows of organizations, and which scopes they have authorized.
-		 * 
-		 * @param  {[type]} orgauthorizations [description]
-		 * @return {[type]}                   [description]
-		 */
-		"getOrgAdminScopeMatrix": function(apigk) {
-			var i, j;
-			var data = {
-				"scopes": [],
-				"orgs": []
-			};
-
-			var orgauthorization = this.orgauthorization;
-			var orgs = apigk.scopedef.getRealmList();
-			var allScopes = this.getScopesObjects();
-			var scopes = apigk.getOrgTargetedScopes(allScopes);
-
-			if (scopes.length === 0) {
-				// console.error("   ====> No orgadmin scopes here. ", this.name);
-				return null;
-			}
-
-			for (i = 0; i < scopes.length; i++) {
-				data.scopes.push({
-					"scope": scopes[i],
-					"descr": apigk.scopedef.getScopeDescr(scopes[i])
-				});
-			}
-
-			for (i = 0; i < orgs.length; i++) {
-				var org = orgs[i];
-				var orgentry = {
-					"org": org,
-					"scopes": []
-				};
-				// console.error("ORGentry", orgentry);
-
-				for (j = 0; j < scopes.length; j++) {
-					orgentry.scopes.push(this.hasOrgAuthorized(org, scopes[j]));
-				}
-				data.orgs.push(orgentry);
-
-			}
-
-			return data;
-		},
-
-
-
 		"getAPIGKview": function(apigk) {
 			var v = this.getView();
 			v.sd = apigk.scopedef.getRequestView(apigk, this);
 
-			v.orgadminscopematrix = this.getOrgAdminScopeMatrix(apigk);
+			v.orgadminscopematrix = Entity.getOrgAdminScopeMatrix(apigk, this);
 
 			return v;
 

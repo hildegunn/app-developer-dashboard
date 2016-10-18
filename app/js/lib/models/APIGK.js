@@ -167,71 +167,11 @@ define(function(require, exports, module) {
 
 		},
 
-		/**
-		 * Feed this with a the clients orgauthorizations, and it will return a matrix
-		 * containing rows of organizations, and which scopes they have authorized.
-		 * 
-		 * @param  {[type]} orgauthorizations [description]
-		 * @return {[type]}                   [description]
-		 */
-		"getOrgAdminScopeMatrix": function(client) {
-			var i, j;
-			var data = {
-				"scopes": [],
-				"orgs": []
-			};
-			var orgauthorization = client.orgauthorization;
-			var orgs = this.scopedef.getRealmList();
-			var allScopes = client.getScopesObjects();
-			var scopes = this.getOrgTargetedScopes(allScopes);
-
-			// console.error("-----");
-			if (scopes.length === 0) {
-				// console.error("   ====> No orgadmin scopes here. ", this.name);
-				return null;
-			}
-
-
-			for (i = 0; i < scopes.length; i++) {
-				data.scopes.push({
-					"scope": scopes[i],
-					"descr": this.scopedef.getScopeDescr(scopes[i])
-				});
-			}
-
-			// console.error("Client " + client.name + " wants access to " + this.name);
-			// console.error("Orgs", orgs);
-			// console.error("Org authorizations", orgauthorization);
-			// console.error("All Scopes", allScopes);
-			// console.error("Scopes", scopes);				
-
-
-			for (i = 0; i < orgs.length; i++) {
-				var org = orgs[i];
-				var orgentry = {
-					"org": org,
-					"scopes": []
-				};
-
-				for (j = 0; j < scopes.length; j++) {
-					orgentry.scopes.push(client.hasOrgAuthorized(org, scopes[j]));
-				}
-				data.orgs.push(orgentry);
-
-			}
-
-			return data;
-
-
-		},
-
-
-
 		"getClientView": function(client) {
 			var v = this.getView();
 			v.sd = this.scopedef.getRequestView(this, client);
 
-			v.orgadminscopematrix = this.getOrgAdminScopeMatrix(client);
+			v.orgadminscopematrix = Entity.getOrgAdminScopeMatrix(this, client);
 
 			// console.error("Get client view of API Gatekeeper", JSON.stringify(v.scopematrix, undefined, 4));
 			// console.error("Get client view of API Gatekeeper", JSON.stringify(v, undefined, 4));

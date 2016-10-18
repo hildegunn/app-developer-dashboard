@@ -187,6 +187,50 @@ define(function(require, exports, module) {
 
 	});
 
+	/**
+	 * Given an api gatekeeper and a client compute a matrix
+	 * containing rows of organizations, and which scopes they have authorized.
+	 */
+	Entity.getOrgAdminScopeMatrix = function(apigk, client) {
+		var i, j;
+		var data = {
+			"scopes": [],
+			"orgs": []
+		};
+
+		var orgauthorization = client.orgauthorization;
+		var orgs = apigk.scopedef.getRealmList();
+		var allScopes = client.getScopesObjects();
+		var scopes = apigk.getOrgTargetedScopes(allScopes);
+
+		if (scopes.length === 0) {
+			return null;
+		}
+
+		for (i = 0; i < scopes.length; i++) {
+			data.scopes.push({
+				"scope": scopes[i],
+				"descr": apigk.scopedef.getScopeDescr(scopes[i])
+			});
+		}
+
+		for (i = 0; i < orgs.length; i++) {
+			var org = orgs[i];
+			var orgentry = {
+				"org": org,
+				"scopes": []
+			};
+
+			for (j = 0; j < scopes.length; j++) {
+				orgentry.scopes.push(client.hasOrgAuthorized(org, scopes[j]));
+			}
+			data.orgs.push(orgentry);
+
+		}
+
+		return data;
+	};
+
 	return Entity;
 
 
