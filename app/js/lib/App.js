@@ -168,7 +168,7 @@ define(function(require, exports, module) {
 							.then(function() {
 								// console.log("orgRoleSelected");
 
-								if (orgid === '_new') {
+								if (orgid === '_neworg') {
 									that.newOrgController.activate();
 
 								} else if (orgid === '_platformadmin') {
