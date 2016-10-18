@@ -407,13 +407,8 @@ define(function(require) {
 			obj.authproviders = providers;
 
 
-			this.feideconnect.clientsUpdate(obj)
+			this._save(obj)
 				.then(function(savedClient) {
-					var x = new Client(savedClient);
-
-					that.edit(x);
-					that.emit("saved", x);
-
 					that.app.app.setErrorMessage(that.dict.get().successfully_updated_list_of_authentication_providers, "success");
 				})
 				.catch(function(err) {
@@ -470,17 +465,9 @@ define(function(require) {
 			obj.id = fullobj.id;
 			obj.scopes_requested = fullobj.scopes_requested;
 
-
-			this.feideconnect.clientsUpdate(obj)
-				.then(function(savedClient) {
-					var x = new Client(savedClient);
-
-					that.edit(x);
-					that.emit("saved", x);
-				})
-				.catch(function(err) {
-					that.app.app.setErrorMessage(that.dict.get().error_adding_third_party_api, "danger", err);
-				});
+			this._save(obj).catch(function(err) {
+				that.app.app.setErrorMessage(that.dict.get().error_adding_third_party_api, "danger", err);
+			});
 
 		},
 
@@ -512,15 +499,9 @@ define(function(require) {
 			obj.id = fullobj.id;
 			obj.scopes_requested = fullobj.scopes_requested;
 
-			this.feideconnect.clientsUpdate(obj)
-				.then(function(savedClient) {
-					var x = new Client(savedClient);
-					that.edit(x);
-					that.emit("saved", x);
-				})
-				.catch(function(err) {
-					that.app.app.setErrorMessage(that.dict.get().error_third_party_api_scope_update, "danger", err);
-				});
+			this._save(obj).catch(function(err) {
+				that.app.app.setErrorMessage(that.dict.get().error_third_party_api_scope_update, "danger", err);
+			});
 
 
 
@@ -553,19 +534,22 @@ define(function(require) {
 
 		},
 
-
-		"save": function(properties) {
-			var obj = this.current.getStorable(properties);
+		"_save": function(obj) {
 			var that = this;
 			return this.feideconnect.clientsUpdate(obj)
 				.then(function(savedClient) {
 					var x = new Client(savedClient);
 					that.edit(x);
 					that.emit("saved", x);
-				})
-				.catch(function(err) {
-					that.app.app.setErrorMessage(that.dict.get().error_adding_scope, "danger", err);
 				});
+		},
+
+		"save": function(properties) {
+			var that = this;
+			var obj = this.current.getStorable(properties);
+			return this._save(obj).catch(function(err) {
+				that.app.app.setErrorMessage(that.dict.get().error_adding_scope, "danger", err);
+			});
 		},
 
 
@@ -617,15 +601,9 @@ define(function(require) {
 				"redirect_uri"
 			]);
 
-			this.feideconnect.clientsUpdate(obj)
-				.then(function(savedClient) {
-					var x = new Client(savedClient);
-					that.edit(x);
-					that.emit("saved", x);
-				})
-				.catch(function(err) {
-					that.app.app.setErrorMessage(that.dict.get().error_updating_client, "danger", err);
-				});
+			this._save(obj).catch(function(err) {
+				that.app.app.setErrorMessage(that.dict.get().error_updating_client, "danger", err);
+			});
 
 		},
 
