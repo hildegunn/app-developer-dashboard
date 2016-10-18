@@ -45,6 +45,7 @@ define(function(require, exports, module) {
 	var apigkinfo = require('text!templates/partials/APIGKInfo.html');
 	var sdpolicyinfo = require('text!templates/partials/SDPolicyInfo.html');
 	var sdstatus = require('text!templates/partials/SDStatus.html');
+	var orgadminscopematrix = require('text!templates/partials/OrgAdminScopeMatrix.html');
 
 	require("bootstrap");
 	require('es6-promise').polyfill();
@@ -142,6 +143,7 @@ define(function(require, exports, module) {
 					TemplateEngine.prototype.loadPartial("apigkinfo", apigkinfo);
 					TemplateEngine.prototype.loadPartial("sdpolicyinfo", sdpolicyinfo);
 					TemplateEngine.prototype.loadPartial("sdstatus", sdstatus);
+					TemplateEngine.prototype.loadPartial("orgadminscopematrix", orgadminscopematrix);
 
 					that.providerdata = new ProviderData(that);
 
