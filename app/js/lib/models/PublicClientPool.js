@@ -7,9 +7,7 @@ define(function(require, exports, module) {
 		Controller = require('../controllers/Controller'),
 		EventEmitter = require('../EventEmitter'),
 
-		Client = require('./Client'),
-		APIGK = require('./APIGK')
-		;
+		Client = require('./Client');
 
 
 	var PublicClientPool = Controller.extend({
@@ -58,21 +56,8 @@ define(function(require, exports, module) {
 
 		},
 
-		"setClient": function(apigk) {
-			this.apigks[apigk.id] = apigk;
-			this.emit("clientsChange", this.apigks);
-		},
 		"getClients": function() {
 			return this.clients;
-		},
-		"getClient": function(id) {
-			if (this.apigks.hasOwnProperty(id)) { return this.apigks[id]; }
-			return null;
-		},
-		"removeClient": function(id) {
-			delete this.clients[id];
-			// console.error("DELETE APIGK", id);
-			this.emit("clientsChange", this.apigks);
 		}
 
 	}).extend(EventEmitter);
