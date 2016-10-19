@@ -142,6 +142,9 @@ define(function(require, exports, module) {
 			this.searchWaiter.ping(e);
 		},
 
+		"actMain": function() {
+		},
+
 		"actSearch": function(e) {
 
 			var c = $(e.currentTarget).closest(".tab-pane");
@@ -183,7 +186,7 @@ define(function(require, exports, module) {
 				.then(function(data) {
 					client = new Client(data);
 					console.error("CLIENT IS ", client.getView());
-					return that.app.getOrgApp('_');
+					return that.app.getApp('_');
 				})
 				.then(function(app) {
 
@@ -207,7 +210,7 @@ define(function(require, exports, module) {
 				.then(function(data) {
 					apigk = new APIGK(data);
 					console.error("APIGK IS ", apigk.getView());
-					return that.app.getOrgApp('_');
+					return that.app.getApp('_');
 				})
 				.then(function(app) {
 

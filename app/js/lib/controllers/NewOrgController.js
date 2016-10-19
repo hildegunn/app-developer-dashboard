@@ -37,6 +37,9 @@
 				this.ebind('click', '.actSubmit', 'actSubmit');
 			},
 
+			"actMain": function() {
+			},
+
 			"actSubmit": function(e) {
 				e.preventDefault();
 				e.stopPropagation();

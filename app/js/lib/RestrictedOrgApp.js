@@ -35,7 +35,7 @@ define(function(require, exports, module) {
 			throw new Error('Cannot edit item with restricted OrgApp');
 		},
 
-		"actMainlisting": function() {
+		"actMain": function() {
 			// No operation...
 		},
 

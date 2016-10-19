@@ -154,8 +154,11 @@ define(function(require, exports, module) {
 					that.orgRoleSelector.initLoad();
 
 
-					that.newOrgController = new NewOrgController(that);
-					that.platformadminController = new PlatformAdminController(that);
+					that.pc = new PaneController(that.el.find('#panecontainer'));
+					that.apps = {};
+
+					that.addApp('_neworg', new NewOrgController(that));
+					that.addApp('_platformadmin', new PlatformAdminController(that));
 
 					that.bccontroller = new BCController($("#breadcrumb"));
 					that.languageselector = new LanguageController(that);
@@ -163,39 +166,19 @@ define(function(require, exports, module) {
 					// console.log("COnfig", that.feideconnect.config);
 
 
-					that.orgRoleSelector.on("orgRoleSelected", function(orgid) {
+					that.orgRoleSelector.on("orgRoleSelected", function(appid) {
 						that.onLoaded()
 							.then(function() {
-								// console.log("orgRoleSelected");
-
-								if (orgid === '_neworg') {
-									that.newOrgController.activate();
-
-								} else if (orgid === '_platformadmin') {
-									that.platformadminController.activate();
-
-								} else if (that.orgApps[orgid]) {
-									that.orgApps[orgid].actMainlisting();
-									that.orgApps[orgid].activate();
-									that.setHash('/' + that.orgRoleSelector.getOrg());
-
-								}
-
+								console.log("App " + appid + " selected");
+								var app = that.apps[appid];
+								app.actMain();
+								app.activate();
+								that.setHash('/' + appid);
 							})
 							.catch(function(err) {
 								that.setErrorMessage(that.dict.get().error_loading_client_and_apigk_data_from_an_organization, "danger", err);
 							});
 					});
-
-
-
-
-
-					that.pc = new PaneController(that.el.find('#panecontainer'));
-					that.pc.add(that.newOrgController);
-					that.pc.add(that.platformadminController);
-
-					that.orgApps = {};
 
 					that.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)?$/, "routeMainlisting");
 					that.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/mandatory$/, "routeMandatory");
@@ -213,10 +196,10 @@ define(function(require, exports, module) {
 
 						that.feideconnect.onAuthenticated()
 							.then(function() {
-								return that.getOrgApp(that.orgRoleSelector.getOrg());
+								return that.getApp(that.orgRoleSelector.getOrg());
 							})
 							.then(function(orgApp) {
-								orgApp.actMainlisting();
+								orgApp.actMain();
 								orgApp.activate();
 								that.orgRoleSelector.show();
 							})
@@ -264,6 +247,11 @@ define(function(require, exports, module) {
 
 		},
 
+		"addApp": function(appid, app) {
+			this.apps[appid] = app;
+			this.pc.add(app);
+		},
+
 		"addOrgAdmin": function(orgid) {
 			var that = this;
 
@@ -272,10 +260,9 @@ define(function(require, exports, module) {
 
 					that.orgRoleSelector.addOrg(org);
 
-					that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid));
-					that.pc.add(that.orgApps[orgid]);
+					that.addApp(orgid, new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid)));
 
-					return that.orgApps[orgid];
+					return that.apps[orgid];
 				});
 
 		},
@@ -295,28 +282,23 @@ define(function(require, exports, module) {
 			// Then setup all the orgApps.
 			.then(function() {
 				if (that.usercontext.policy.register) {
-					that.orgApps._ = new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole('_'));
-					that.pc.add(that.orgApps._);
+					that.addApp('_', new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole('_')));
 				} else {
-					that.orgApps._ = new RestrictedOrgApp(that);
-					that.pc.add(that.orgApps._);
+					that.addApps('_', new RestrictedOrgApp(that));
 				}
 
 				that.usercontext.getOrgIdentifiers().map(function(orgid) {
 					// console.error(" ››› Setting up a new orgapp for " + orgid);
-					that.orgApps[orgid] = new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid));
-					that.pc.add(that.orgApps[orgid]);
+					that.addApp(orgid, new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, that.orgRoleSelector.getRole(orgid)));
 				});
 
 			})
 
 			// Then activate one of them
 			.then(function() {
-					that.orgApps._.activate();
+					that.apps._.activate();
 					// now route.
 					that.route(true);
-
-					// that.addOrgAdmin('fc:org:ntnu.no');
 				})
 				.then(this.proxy("_initLoaded"))
 				.catch(function(err) {
@@ -325,25 +307,25 @@ define(function(require, exports, module) {
 
 		},
 
-		// orgid = "_" means personal space
-		"getOrgApp": function(orgid) {
+		// appid = "_" means personal space
+		"getApp": function(appid) {
 
 			var that = this;
 			return that.usercontext.onLoaded()
 				.then(function() {
 
-					if (!that.orgApps.hasOwnProperty(orgid)) {
+					if (!that.apps.hasOwnProperty(appid)) {
 
-						if (that.usercontext.isPlatformAdmin()) {
-							console.log("Loading an platformadmin orgapp ", orgid);
-							return that.addOrgAdmin(orgid);
+						if (that.usercontext.isPlatformAdmin() && appid[0] !== '_') {
+							console.log("Loading an platformadmin orgapp ", appid);
+							return that.addOrgAdmin(appid);
 						}
 
-						throw new Error("Could not find org app for " + orgid);
+						throw new Error("Could not find app for " + appid);
 					}
 
-					var orgApp = that.orgApps[orgid];
-					return orgApp.onLoaded();
+					var app = that.apps[appid];
+					return app.onLoaded();
 
 				});
 		},
@@ -420,7 +402,7 @@ define(function(require, exports, module) {
 					return that.usercontext.onLoaded();
 				})
 				.then(function() {
-					return that.getOrgApp(orgid);
+					return that.getApp(orgid);
 				})
 				.then(function(orgApp) {
 
@@ -438,7 +420,7 @@ define(function(require, exports, module) {
 			var that = this;
 			this.feideconnect.onAuthenticated()
 				.then(function() {
-					return that.getOrgApp(orgid);
+					return that.getApp(orgid);
 				})
 				.then(function(orgApp) {
 					that.orgRoleSelector.setOrg(orgid, false);
@@ -460,7 +442,7 @@ define(function(require, exports, module) {
 
 			this.feideconnect.onAuthenticated()
 				.then(function() {
-					return that.getOrgApp(orgid);
+					return that.getApp(orgid);
 				})
 				.then(function(orgApp) {
 					orgApp.actMandatory();
@@ -480,7 +462,7 @@ define(function(require, exports, module) {
 
 			this.feideconnect.onAuthenticated()
 				.then(function() {
-					return that.getOrgApp(orgid);
+					return that.getApp(orgid);
 				})
 				.then(function(orgApp) {
 					orgApp.actAPIAuth();
@@ -508,16 +490,9 @@ define(function(require, exports, module) {
 					that.orgRoleSelector.setOrg(orgid, false);
 					that.orgRoleSelector.show();
 
-					if (orgid === '_neworg') {
-						return that.newOrgController.activate();
-					}
-					if (orgid === '_platformadmin') {
-						return that.platformadminController.activate();
-					}
-
-					return that.getOrgApp(orgid)
+					return that.getApp(orgid)
 						.then(function(orgApp) {
-							orgApp.actMainlisting();
+							orgApp.actMain();
 							orgApp.activate();
 						});
 				})

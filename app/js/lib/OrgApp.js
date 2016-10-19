@@ -290,7 +290,7 @@ define(function(require, exports, module) {
 				});
 		},
 
-		"actMainlisting": function() {
+		"actMain": function() {
 			this.app.setHash('/' + this.orgid);
 			this.app.bccontroller.hide();
 			this.mainlisting.activate();
