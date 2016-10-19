@@ -48,8 +48,7 @@ define(function(require, exports, module) {
 
 			this.el.children().detach();
 			return this.template.render(this.el, view);
-		},
-
+		}
 
 	});
 

@@ -25,7 +25,7 @@ define(function(require, exports, module) {
 		"registerOnLoaded": function(func) {
 			this.onLoadedCallbacks.push(func);
 		},
-		"onLoaded": function(title) {
+		"onLoaded": function() {
 
 			var num = Math.floor(Math.random()*900 + 100);
 

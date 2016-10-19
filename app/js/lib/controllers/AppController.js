@@ -21,10 +21,6 @@ define(function(require, exports, module) {
 			}
 			this.routingEnabled = false;
 			$(window).bind('hashchange', $.proxy(this.route, this));
-			$(window).bind('load', function() {
-				// console.log("====> onload");
-			});
-
 		},
 
 		"setupRoute": function(match, func) {

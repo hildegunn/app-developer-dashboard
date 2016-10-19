@@ -3,7 +3,6 @@ define(function(require, exports, module) {
 	"use strict";
 
 	var
-		FeideConnect = require('bower/feideconnectjs/src/FeideConnect').FeideConnect,
 		Pane = require('./controllers/Pane'),
 		ClientEditor = require('./controllers/editpage/ClientEditor'),
 		APIGKEditor = require('./controllers/editpage/APIGKEditor'),

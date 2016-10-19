@@ -261,7 +261,7 @@ define(function(require, exports, module) {
 				"clients": view.clients.length,
 				"apigks": view.apigks.length,
 				"orgs": view.orgs.home.orgs.length,
-				"sps": view.orgs.services.orgs.length,
+				"sps": view.orgs.services.orgs.length
 			};
 			view.statistics = this.statistics;
 			view.statsDate = this.statisticsDate;
