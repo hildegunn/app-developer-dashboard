@@ -363,7 +363,8 @@ define(function(require) {
 				apis = this.publicapis.apigks;
 			} else {
 				apis = this.clientpool.apigks;
-				view.auto = true;
+				view.canadd = true;
+				view.own = true;
 			}
 			var apiids = this.current.getAPIscopes();
 			var clientAPIkeys = new StringSet(apiids);
@@ -380,8 +381,11 @@ define(function(require) {
 							continue;
 						}
 					}
-
-					view.apis.push(apis[key].getView());
+					var apiview = apis[key].getView();
+					if (apiview.scopedef.policy.auto) {
+						apiview.canadd = true;
+					}
+					view.apis.push(apiview);
 				}
 			}
 			return view;

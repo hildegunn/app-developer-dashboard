@@ -76,17 +76,17 @@
 
 
 		<p style="margin-top: .3em; margin-bottom: 0px">
-			{#scopedef.policy}
-				{?auto}
+			{?canadd}
 				<button class="btn btn-sm btn-primary actAPIadd">
 					<i class="glyphicon glyphicon-chevron-left"></i>
-					{_.add_access}</button>
-				{:else}
+					{_.add_access}
+				</button>
+			{:else}
 				<button class="btn btn-sm btn-warning actAPIadd">
 					<i class="glyphicon glyphicon-chevron-left"></i>
-					{_.request_access}</button>
-				{/auto}
-			{/scopedef.policy}
+					{_.request_access}
+				</button>
+			{/canadd}
 		</p>
 
 
