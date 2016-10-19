@@ -27,7 +27,8 @@ define(function(require, exports, module) {
 			this._super();
 
 			this.dict = new Dictionary();
-			this.tmp = new TemplateEngine(template, this.dict);
+			this.tmp = new TemplateEngine(template, this.dict, true);
+			this.orgAdminClients.on('clientsChange', function() { that.draw(); });
 
 			this.ebind("click", ".actManageMandatory", "actManageMandatory");
 

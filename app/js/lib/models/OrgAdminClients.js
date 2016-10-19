@@ -45,6 +45,7 @@ define(function(require, exports, module) {
 					for (var i = 0; i < clients.length; i++) {
 						that.clients.push(new Client(clients[i]));
 					}
+					that.emit('clientsChange');
 				});
 		}
 
