@@ -221,8 +221,7 @@ define(function(require, exports, module) {
 		},
 
 		"initLoad": function() {
-			return this.draw()
-				.then(this.proxy("_initLoaded"));
+			this._initLoaded();
 		},
 
 		"isPersonal": function() {
@@ -321,27 +320,7 @@ define(function(require, exports, module) {
 				return this.feideconnect.apigkClientRequests();
 			}
 			return this.feideconnect.apigkClientRequestsByOrg(this.orgid);
-		},
-
-
-
-		/**
-		 * A draw function that draws the header and footer template.
-		 * Supports promises
-		 * @return {[type]} [description]
-		 */
-		"draw": function() {
-			var that = this;
-
-			return new Promise(function(resolve) {
-				// that.el.append('<div> This is the pane of orgapp ' + that.orgid);
-				resolve();
-			});
-
-
 		}
-
-
 
 	});
 
