@@ -90,27 +90,6 @@ define(function(require, exports, module) {
 
 
 		"submit": function(e) {
-
-			/*
-			CREATE TABLE feideconnect.apigk (
-			    id text PRIMARY KEY,
-			    created timestamp,
-			    descr text,
-			    endpoints list<text>,
-			    expose text,
-			    httpscertpinned text,
-			    logo blob,
-			    name text,
-			    owner uuid,
-			    requireuser boolean,
-			    scopedef text,
-			    status set<text>,
-			    trust text,
-			    updated timestamp
-			 */
-
-
-
 			e.preventDefault();
 			var obj = {};
 
