@@ -158,6 +158,7 @@ define(function(require, exports, module) {
 			this.clienteditor.on("saved", function(client) {
 				// console.log("Client is saved, update client pool and mainlisting");
 				that.clientpool.setClient(client);
+				that.publicClientPool.load();
 			});
 			this.clienteditor.on("deleted", function(id) {
 				// console.log("Client is removed, update client pool and mainlisting");

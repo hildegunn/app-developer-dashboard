@@ -32,6 +32,7 @@ define(function(require, exports, module) {
 			this.feideconnect = feideconnect;
 			this.orgapp = orgapp;
 			this.publicClientPool = publicClientPool;
+			this.publicClientPool.on('clientsChange', function(clients) {that.process();that.draw();});
 			this.orgAdminClients = orgAdminClients;
 
 			this._super();
