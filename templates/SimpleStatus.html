@@ -71,31 +71,6 @@
 				</td>
 			</tr>
 
-			{#ldapstatus.endpoints}
-			<tr>
-			<tr>
-			  <td/>
-				<td style="text-align: right">
-
-					{#OK}
-						<span class="label label-success"><i class="fa fa-check"></i> {_.orgstatus_ok}</span>
-					{:else}
-						<span class="label label-danger"><i class="fa fa-exclamation-triangle"></i> {_.orgstatus_error}</span>
-					{/OK}
-						&nbsp;
-				</td>
-				<td style="width: 100%">{_.orgstatus_ldap_endpoint} {name}
-					{#OK}
-					{:else}
-						<br> {result}
-						{#message}
-							– {message}</span>
-						{/message}
-					{/OK}
-				</td>
-			</tr>
-			{/ldapstatus.endpoints}
-
 			<tr>
 				<td style="text-align: right">
 
