@@ -180,12 +180,9 @@ define(function(require, exports, module) {
 							});
 					});
 
-					that.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)?$/, "routeMainlisting");
-					that.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/mandatory$/, "routeMandatory");
-					that.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/apiauthorization$/, "routeAPIAuthorization");
-					that.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/clients\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditClient");
-					that.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)\/apigk\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "routeEditAPIGK");
-
+					that.setupRoute(/^\/([a-zA-Z0-9_\-:.]+)((\/(.*))?)$/, "routeApp");
+					that.setupRoute(/^[^/].*$/, "routeDefault");
+					that.setupRoute(/^\/$/, "routeDefault");
 
 					that.publicapis = new PublicAPIPool(that.feideconnect);
 					that.publicClientPool = new PublicClientPool(that.feideconnect);
@@ -298,7 +295,7 @@ define(function(require, exports, module) {
 			.then(function() {
 					that.apps._.activate();
 					// now route.
-					that.route(true);
+					that.loadRoute(true);
 				})
 				.then(this.proxy("_initLoaded"))
 				.catch(function(err) {
@@ -325,8 +322,7 @@ define(function(require, exports, module) {
 					}
 
 					var app = that.apps[appid];
-					return app.onLoaded();
-
+					return app;
 				});
 		},
 
@@ -392,117 +388,32 @@ define(function(require, exports, module) {
 
 		},
 
-		
-
-
-		"routeEditClient": function(orgid, clientid, tabid) {
+		"routeApp": function(appid, subpath) {
 			var that = this;
 			this.feideconnect.onAuthenticated()
+				.then(that.orgRoleSelector.onLoaded())
 				.then(function() {
 					return that.usercontext.onLoaded();
 				})
 				.then(function() {
-					return that.getApp(orgid);
-				})
-				.then(function(orgApp) {
-
-					that.orgRoleSelector.setOrg(orgid, false);
-					that.orgRoleSelector.hide();
-					orgApp.editClient(clientid, tabid);
-					orgApp.activate();
-				})
-				.catch(function(err) {
-					that.setErrorMessage(that.dict.get().error_loading_client, "danger", err);
-				});
-
-		},
-		"routeEditAPIGK": function(orgid, apigkid, tabid) {
-			var that = this;
-			this.feideconnect.onAuthenticated()
-				.then(function() {
-					return that.getApp(orgid);
-				})
-				.then(function(orgApp) {
-					that.orgRoleSelector.setOrg(orgid, false);
-					that.orgRoleSelector.hide();
-					orgApp.editAPIGK(apigkid, tabid);
-					orgApp.activate();
-				})
-				.catch(function(err) {
-					console.error("err", err);
-					that.setErrorMessage(that.dict.get().error_loading_api_gatekeeper, "danger", err);
-				});
-
-		},
-
-		"routeMandatory": function(orgid) {
-
-			var that = this;
-			this.orgRoleSelector.setOrg(orgid, false);
-
-			this.feideconnect.onAuthenticated()
-				.then(function() {
-					return that.getApp(orgid);
-				})
-				.then(function(orgApp) {
-					orgApp.actMandatory();
-					orgApp.activate();
-					that.orgRoleSelector.hide();
-				})
-				.catch(function(err) {
-					console.error("err", err);
-					that.setErrorMessage(that.dict.get().error_loading_mandatory_view, "danger", err);
-				});
-
-		},
-
-		"routeAPIAuthorization": function(orgid) {
-			var that = this;
-			this.orgRoleSelector.setOrg(orgid, false);
-
-			this.feideconnect.onAuthenticated()
-				.then(function() {
-					return that.getApp(orgid);
-				})
-				.then(function(orgApp) {
-					orgApp.actAPIAuth();
-					orgApp.activate();
-					that.orgRoleSelector.hide();
-				})
-				.catch(function(err) {
-					console.error("err", err);
-					that.setErrorMessage(that.dict.get().error_loading_mandatory_view, "danger", err);
-				});
-		},
-
-		"routeMainlisting": function(orgid) {
-
-			var that = this;
-
-			return this.feideconnect.onAuthenticated()
-				.then(that.orgRoleSelector.onLoaded())
-				.then(function() {
-
-					if (!orgid) {
-						orgid = that.orgRoleSelector.getDefaultRole();
-						that.setHash('/' + orgid);
-					}
-					that.orgRoleSelector.setOrg(orgid, false);
-					that.orgRoleSelector.show();
-
-					return that.getApp(orgid)
-						.then(function(orgApp) {
-							orgApp.actMain();
-							orgApp.activate();
-						});
-				})
-
-				.catch(function(err) {
+					that.orgRoleSelector.setOrg(appid, false);
+					that.getApp(appid).then(function(app) {
+						app.activate();
+						app.route(subpath);
+					});
+				}).catch(function(err) {
 					console.error("err", err);
 					that.setErrorMessage(that.dict.get().error_loading_mainlisting, "danger", err);
-				});
-		}
 
+				});
+
+		},
+
+		"routeDefault": function() {
+			var appid = this.orgRoleSelector.getDefaultRole();
+			this.setHash('/' + appid);
+			this.routeApp(appid, '/');
+		}
 	});
 
 

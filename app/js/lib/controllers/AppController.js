@@ -4,31 +4,22 @@ define(function(require, exports, module) {
 	var 
 		$ = require('jquery'),
 
-		Controller = require('./Controller')
+		Pane = require('./Pane')
 
 		;
 
 	
-	var AppController = Controller.extend({
+	var AppController = Pane.extend({
 
 		"init": function() {
 
 			this._super($("body"));
 
-			// Routing
-			if (!this.routes) {
-				this.routes = [];
-			}
 			this.routingEnabled = false;
-			$(window).bind('hashchange', $.proxy(this.route, this));
+			$(window).bind('hashchange', $.proxy(this.loadRoute, this));
 		},
 
-		"setupRoute": function(match, func) {
-			if (!this.routes) {this.routes = [];}
-			this.routes.push([match, func]);
-		},
-
-		"route": function(enable) {
+		"loadRoute": function(enable) {
 			
 			if (enable === true) {
 				this.routingEnabled = true;
@@ -44,20 +35,7 @@ define(function(require, exports, module) {
 			}
 			hash = hash.substr(2);
 
-			var parameters;
-
-			for(var i = 0; i < this.routes.length; i++) {
-				parameters = hash.match(this.routes[i][0]);
-				if (parameters) {
-					// console.log("Found a route match on ", this.routes[i], parameters);
-					if (typeof this[this.routes[i][1]] === 'function') {
-						var args = Array.prototype.slice.call(parameters, 1);
-						this[this.routes[i][1]].apply(this, args);
-					}
-					return;
-				} 
-
-			}
+			this.route(hash);
 
 		},
 

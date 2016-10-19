@@ -40,6 +40,11 @@ define(function(require, exports, module) {
 
 			this._super();
 
+			this.setupRoute(/^\/?$/, "actMain");
+			this.setupRoute(/^\/mandatory$/, "actMandatory");
+			this.setupRoute(/^\/apiauthorization$/, "actAPIAuth");
+			this.setupRoute(/^\/clients\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "editClient");
+			this.setupRoute(/^\/apigk\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "editAPIGK");
 
 			this.orgid = this.role.getID();
 			var orgid2 = (this.role.getID() === '_' ? null : this.role.getID());
@@ -245,7 +250,7 @@ define(function(require, exports, module) {
 		},
 
 		"editClient": function(clientid, tabid) {
-
+			this.app.orgRoleSelector.hide();
 			var that = this;
 			this.clientpool.onLoaded()
 				.then(function() {
@@ -268,7 +273,7 @@ define(function(require, exports, module) {
 		},
 
 		"editAPIGK": function(apigkid, tabid) {
-
+			this.app.orgRoleSelector.hide();
 			var that = this;
 			this.clientpool.onLoaded()
 				.then(function() {
@@ -293,6 +298,7 @@ define(function(require, exports, module) {
 			this.app.setHash('/' + this.orgid);
 			this.app.bccontroller.hide();
 			this.mainlisting.activate();
+			this.app.orgRoleSelector.show();
 		},
 
 		"actMandatory": function() {
