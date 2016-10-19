@@ -339,18 +339,13 @@ define(function(require, exports, module) {
 							return that.addOrgAdmin(orgid);
 						}
 
-
 						throw new Error("Could not find org app for " + orgid);
 					}
 
 					var orgApp = that.orgApps[orgid];
 					return orgApp.onLoaded();
 
-
 				});
-
-
-
 		},
 
 

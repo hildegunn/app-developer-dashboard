@@ -33,6 +33,7 @@ define(function(require, exports, module) {
 			});
 			return p;
 		},
+
 		"getKeys": function(obj) {
 			var list = [];
 			if (typeof obj !== "object") {
@@ -54,6 +55,7 @@ define(function(require, exports, module) {
 	        }
 	        return x;
 	    },
+
 	    "stok" : function(str) {
 	        // console.log("STR", str);
 	        if (str === null) {return true;}

@@ -49,15 +49,16 @@ define(function(require, exports, module) {
 			return items;
 		},
 
-
 		"setAPIGK": function(apigk) {
 			this.apigks[apigk.id] = apigk;
 			this.emit("apigkChange", this.apigks);
 		},
+
 		"getAPIGK": function(id) {
 			if (this.apigks.hasOwnProperty(id)) {return this.apigks[id];}
 			return null;
 		},
+
 		"removeAPIGK": function(id) {
 			delete this.apigks[id];
 			this.emit("apigkChange", this.apigks);
