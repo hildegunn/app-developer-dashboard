@@ -43,7 +43,7 @@ define(function(require, exports, module) {
 				// console.log("Drop event object", e);
 
 				var files = e.originalEvent.dataTransfer.files;
-				for (var i=0; i<files.length; i++) {
+				for (var i=0; i < files.length; i++) {
 					var file = files[i];
 
 					that.logoUploaded(file);
