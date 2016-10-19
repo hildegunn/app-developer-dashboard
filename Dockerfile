@@ -17,7 +17,6 @@ COPY build.js .
 COPY Gruntfile.js .
 COPY .jshintrc .
 COPY app app
-COPY js js
 COPY lib lib
 COPY server.js .
 COPY config.js .
