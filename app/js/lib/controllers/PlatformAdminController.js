@@ -57,9 +57,6 @@ define(function(require, exports, module) {
 			this.activeTab = "#clients";
 
 			this.orgPool = new OrganizationPool(this.feideconnect);
-			var date = moment();
-			date.subtract(1, 'days');
-			this.statsPromise = this.setStatisticsDate(date);
 
 			this.selectedOrg = null;
 
@@ -121,11 +118,13 @@ define(function(require, exports, module) {
 
 		"initLoad": function() {
 			var that = this;
+			var date = moment();
+			date.subtract(1, 'days');
 			return Promise.all([
 					this.app.publicClientPool.onLoaded(),
 					this.app.publicapis.onLoaded(),
 					this.orgPool.onLoaded(),
-					this.statsPromise
+					this.setStatisticsDate(date)
 				])
 				.then(that.proxy("draw"))
 				.then(that.proxy("_initLoaded"))
