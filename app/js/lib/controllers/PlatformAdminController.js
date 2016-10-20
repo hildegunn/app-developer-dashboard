@@ -143,6 +143,7 @@ define(function(require, exports, module) {
 		},
 
 		"actMain": function() {
+			this.app.orgRoleSelector.show();
 		},
 
 		"actSearch": function(e) {

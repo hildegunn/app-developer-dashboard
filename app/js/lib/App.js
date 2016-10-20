@@ -169,11 +169,7 @@ define(function(require, exports, module) {
 					that.orgRoleSelector.on("orgRoleSelected", function(appid) {
 						that.onLoaded()
 							.then(function() {
-								console.log("App " + appid + " selected");
-								var app = that.apps[appid];
-								app.actMain();
-								app.activate();
-								that.setHash('/' + appid);
+								that.selectApp(appid);
 							})
 							.catch(function(err) {
 								that.setErrorMessage(that.dict.get().error_loading_client_and_apigk_data_from_an_organization, "danger", err);
@@ -193,12 +189,7 @@ define(function(require, exports, module) {
 
 						that.feideconnect.onAuthenticated()
 							.then(function() {
-								return that.getApp(that.orgRoleSelector.getOrg());
-							})
-							.then(function(orgApp) {
-								orgApp.actMain();
-								orgApp.activate();
-								that.orgRoleSelector.show();
+								that.selectApp(that.orgRoleSelector.getOrg());
 							})
 							.catch(function(err) {
 								console.error("err", err);
@@ -329,6 +320,14 @@ define(function(require, exports, module) {
 
 		"getOrg": function() {
 			return this.orgRoleSelector.getOrg();
+		},
+
+		"selectApp": function(appid) {
+			console.log("App " + appid + " selected");
+			var app = this.apps[appid];
+			app.actMain();
+			app.activate();
+			this.setHash('/' + appid);
 		},
 
 		/**
