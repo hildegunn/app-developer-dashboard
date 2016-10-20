@@ -308,8 +308,14 @@ define(function(require, exports, module) {
 		},
 
 		"getOrgInfo": function() {
-			return this.usercontext.getOrgInfo(this.orgid);
-
+			if (!this.org) {
+				return null;
+			}
+			return {
+				"id": this.orgid,
+				"displayName": this.org.name,
+				"logoURL": this.feideconnect.orgLogoURL(this.orgid)
+			};
 		},
 
 		"getClientRequests": function() {

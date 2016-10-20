@@ -117,26 +117,6 @@ define(function(require, exports, module) {
 				keys.push(key);
 			}
 			return keys;
-		},
-
-
-		"getOrgInfo": function(orgid) {
-			if (orgid === '_') {
-				return null;
-			}
-
-			var c = this.feideconnect.getConfig();
-			var orgtitle = orgid;
-			if (this.groups[orgid]) {
-				orgtitle = this.groups[orgid].getTitle();
-			}
-			var orgInfo = {
-				"id": orgid,
-				"displayName": orgtitle,
-				"logoURL": this.feideconnect.orgLogoURL(orgid)
-			};
-
-			return orgInfo;
 		}
 
 
