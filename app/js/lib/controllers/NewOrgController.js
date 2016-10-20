@@ -13,17 +13,6 @@
 
 		require('selectize');
 
-
-		var sf = function(a, b) {
-			if (a.name > b.name) {
-				return 1;
-			}
-			if (a.name < b.name) {
-				return -1;
-			}
-			return 0;
-		};
-
 		var NewOrgController = Pane.extend({
 			"init": function(id, app) {
 				this.id = id;
@@ -113,7 +102,7 @@
 				var that = this;
 				return this.app.feideconnect.getOrgs()
 					.then(function(orgs) {
-						that.orgs = orgs.sort(sf);
+						that.orgs = orgs.sort(function(a, b) {return a.name.localeCompare(b.name);});
 					});
 			},
 
