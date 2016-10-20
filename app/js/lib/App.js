@@ -187,7 +187,7 @@ define(function(require, exports, module) {
 					$("#header").on("click", ".navbar-brand", function(e) {
 						e.preventDefault();
 
-						that.feideconnect.onAuthenticated()
+						that.onLoaded()
 							.then(function() {
 								that.selectApp(that.orgRoleSelector.getOrg());
 							})
@@ -299,7 +299,7 @@ define(function(require, exports, module) {
 		"getApp": function(appid) {
 
 			var that = this;
-			return that.usercontext.onLoaded()
+			return that.onLoaded()
 				.then(function() {
 
 					if (!that.apps.hasOwnProperty(appid)) {
@@ -389,11 +389,7 @@ define(function(require, exports, module) {
 
 		"routeApp": function(appid, subpath) {
 			var that = this;
-			this.feideconnect.onAuthenticated()
-				.then(that.orgRoleSelector.onLoaded())
-				.then(function() {
-					return that.usercontext.onLoaded();
-				})
+			this.onLoaded()
 				.then(function() {
 					that.orgRoleSelector.setOrg(appid, false);
 					that.getApp(appid).then(function(app) {
@@ -409,9 +405,13 @@ define(function(require, exports, module) {
 		},
 
 		"routeDefault": function() {
-			var appid = this.orgRoleSelector.getDefaultRole();
-			this.setHash('/' + appid);
-			this.routeApp(appid, '/');
+			var that = this;
+			this.onLoaded()
+				.then(function() {
+					var appid = that.orgRoleSelector.getDefaultRole();
+					that.setHash('/' + appid);
+					that.routeApp(appid, '/');
+				});
 		}
 	});
 
