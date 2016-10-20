@@ -64,14 +64,6 @@ define(function(require, exports, module) {
             this.show();
         },
 
-        "hide": function() {
-            this.el.hide();
-        },
-
-        "show": function() {
-            this.el.show();
-        },
-
         "actLangSelection": function(e) {
             e.preventDefault(); e.stopPropagation();
             var lang = $(e.currentTarget).data("lang");

@@ -25,15 +25,6 @@ define(function(require, exports, module) {
 			};
 			this.tmp.render(this.el.empty(), view);
 			this.show();
-		},
-
-
-		"hide": function() {
-			this.el.hide();
-		},
-
-		"show": function() {
-			this.el.show();
 		}
 
 
