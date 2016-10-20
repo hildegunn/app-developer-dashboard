@@ -231,6 +231,16 @@ define(function(require, exports, module) {
 		return data;
 	};
 
+	Entity.sortAge = function(a, b) {
+		if (a.updated < b.updated) {
+			return 1;
+		}
+		if (a.updated > b.updated) {
+			return -1;
+		}
+		return 0;
+	};
+
 	return Entity;
 
 

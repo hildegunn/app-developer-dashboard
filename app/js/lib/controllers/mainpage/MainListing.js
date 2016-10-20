@@ -14,6 +14,7 @@ define(function(require, exports, module) {
 		SimpleOrgAdminAPIAuth = require('../orgadmin/SimpleOrgAdminAPIAuth'),
 		SimpleStatusController = require('../orgadmin/SimpleStatusController'),
 
+		Entity = require('../../models/Entity'),
 		utils = require('../../utils'),
 		$ = require('jquery')
 		;
@@ -136,15 +137,7 @@ define(function(require, exports, module) {
 				}
 			}
 
-			clientlist.sort(function(a, b) {
-				if (a.updated < b.updated) {
-					return 1;
-				}
-				if (a.updated > b.updated) {
-					return -1;
-				}
-				return 0;
-			});
+			clientlist.sort(Entity.sortAge);
 
 			view = {
 				"clients": clientlist,
@@ -175,15 +168,7 @@ define(function(require, exports, module) {
 				}
 			}
 
-			apigklist.sort(function(a, b) {
-				if (a.updated < b.updated) {
-					return 1;
-				}
-				if (a.updated > b.updated) {
-					return -1;
-				}
-				return 0;
-			});
+			apigklist.sort(Entity.sortAge);
 
 			view = {
 				"apigks": apigklist,
