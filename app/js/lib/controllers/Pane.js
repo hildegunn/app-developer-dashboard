@@ -62,6 +62,18 @@ define(function(require, exports, module) {
 				}
 
 			}
+		},
+
+		"getSelectorIcon": function() {
+			return 'fa fa-circle-o';
+		},
+
+		"getID": function() {
+			throw new Error("Unimplemented");
+		},
+
+		"getTitle": function() {
+			throw new Error("Unimplemented");
 		}
 
 	});

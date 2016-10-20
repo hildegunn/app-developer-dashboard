@@ -11,7 +11,9 @@ define(function(require, exports, module) {
 
 	var RestrictedOrgApp = Pane.extend({
 
-		"init": function(app) {
+		"init": function(id, app) {
+			this.id = id;
+			this.app = app;
 			this.template = new TemplateEngine(template, app.dict);
 			this._super();
 			this.initLoad();
@@ -48,6 +50,18 @@ define(function(require, exports, module) {
 
 			this.el.children().detach();
 			return this.template.render(this.el, view);
+		},
+
+		"getSelectorIcon": function() {
+			return 'fa fa-user';
+		},
+
+		"getID": function() {
+			return this.id;
+		},
+
+		"getTitle": function() {
+			return this.app.dict.get().personal;
 		}
 
 	});

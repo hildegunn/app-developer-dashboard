@@ -4,7 +4,7 @@ define(function(require, exports, module) {
 	var
 		$ = require('jquery'),
 		Controller = require('../controllers/Controller'),
-		Model = require('../models/Model'),
+		Organiation = require('../models/Organization'),
 		Group = require('../models/Group'),
 		EventEmitter = require('../EventEmitter');
 
@@ -102,7 +102,12 @@ define(function(require, exports, module) {
 			if (that.orgcache.hasOwnProperty(orgid)) {
 				return Promise.resolve(that.orgcache[orgid]);
 			}
-			return that.feideconnect.getOrg(orgid);
+			return that.feideconnect.getOrg(orgid)
+				.then(function(org) {
+					var orgModel = new Organiation(org);
+					that.orgcache[orgid] = orgModel;
+					return orgModel;
+				});
 		},
 
 		"getOrgIdentifiers": function() {

@@ -39,10 +39,10 @@ define(function(require, exports, module) {
 	};
 
 	var PlatformAdminController = Pane.extend({
-		"init": function(app) {
+		"init": function(id, app) {
 
 			var that = this;
-
+			this.id = id;
 			this.app = app;
 			this.feideconnect = this.app.feideconnect;
 
@@ -142,7 +142,7 @@ define(function(require, exports, module) {
 		},
 
 		"actMain": function() {
-			this.app.orgRoleSelector.show();
+			this.app.appSelector.show();
 		},
 
 		"actSearch": function(e) {
@@ -192,7 +192,7 @@ define(function(require, exports, module) {
 
 					app.clienteditor.edit(client);
 					app.activate();
-					that.app.orgRoleSelector.hide();
+					that.app.appSelector.hide();
 
 				});
 
@@ -216,7 +216,7 @@ define(function(require, exports, module) {
 
 					app.apigkeditor.edit(apigk);
 					app.activate();
-					that.app.orgRoleSelector.hide();
+					that.app.appSelector.hide();
 
 				});
 
@@ -276,6 +276,18 @@ define(function(require, exports, module) {
 					that.setStatisticsDate(moment(e.date)).then(function() {that.draw();});
 				});
 			});
+		},
+
+		"getSelectorIcon": function() {
+			return 'fa fa-asterisk';
+		},
+
+		"getTitle": function() {
+			return "Platform admin"; // TODO translate!
+		},
+
+		"getID": function() {
+			return this.id;
 		}
 
 	});

@@ -26,7 +26,7 @@ define(function(require, exports, module) {
 
 	var OrgApp = Pane.extend({
 
-		"init": function(feideconnect, app, usercontext, publicClientPool, publicapis, role) {
+		"init": function(feideconnect, app, usercontext, publicClientPool, publicapis, orgid, org) {
 			var that = this;
 
 			this.publicClientPool = publicClientPool;
@@ -34,7 +34,6 @@ define(function(require, exports, module) {
 			this.feideconnect = feideconnect;
 			this.app = app;
 			this.usercontext = usercontext;
-			this.role = role;
 
 			this.dict = new Dictionary();
 
@@ -46,8 +45,12 @@ define(function(require, exports, module) {
 			this.setupRoute(/^\/clients\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "editClient");
 			this.setupRoute(/^\/apigk\/([a-zA-Z0-9_\-:]+)\/edit\/([a-zA-Z]+)$/, "editAPIGK");
 
-			this.orgid = this.role.getID();
-			var orgid2 = (this.role.getID() === '_' ? null : this.role.getID());
+			this.orgid = orgid;
+			this.org = org;
+			var orgid2 = null;
+			if (this.orgid !== '_') {
+				orgid2 = orgid;
+			}
 
 			this.clientpool = new ClientPool(this.feideconnect, orgid2);
 
@@ -57,34 +60,28 @@ define(function(require, exports, module) {
 			this.orgAdminAPIs = null;
 			this.orgAdminAPIAuthorization = null;
 
-			if (this.role.isOrgType("home_organization")) {
+			this.pc = new PaneController(this.el);
+
+			if (this.isOrgType("home_organization")) {
 
 				this.orgAdminClients = new OrgAdminClients(this.feideconnect, orgid2);
 				this.orgAdminClients.initLoad();
 
 				this.orgAdminView = new OrgAdminPane(this.feideconnect, this, this.publicClientPool, this.orgAdminClients);
 				this.orgAdminView.initLoad();
+				this.pc.add(this.orgAdminView);
 
 				this.orgAdminAPIs = new OrgAdminAPIs(this.feideconnect, orgid2);
 				this.orgAdminAPIs.initLoad();
 
 				this.orgAdminAPIAuthorization = new OrgAdminAPIAuthorizationPane(this.feideconnect, this, this.orgAdminAPIs, this.publicapis);
 				this.orgAdminAPIAuthorization.initLoad();
+				this.pc.add(this.orgAdminAPIAuthorization);
 
 			}
 
-			this.pc = new PaneController(this.el);
 			this.mainlisting = new MainListing(this.feideconnect, this, this.orgAdminClients, this.orgAdminAPIs, this.usercontext);
 			this.pc.add(this.mainlisting);
-
-			if (this.orgAdminView !== null) {
-				this.pc.add(this.orgAdminView);
-			}
-			if (this.orgAdminAPIAuthorization !== null) {
-				this.pc.add(this.orgAdminAPIAuthorization);
-			}
-
-
 
 			this.clientpool.on('clientChange', function(clients) {
 				that.mainlisting.updateClients(clients);
@@ -123,7 +120,7 @@ define(function(require, exports, module) {
 						that.clienteditor.edit(client, 'tabBasic');
 
 						that.activate();
-						that.app.orgRoleSelector.hide();
+						that.app.appSelector.hide();
 						that.app.setHash('/' + that.orgid + '/clients/' + client.id + '/edit/tabBasic');
 					})
 					.then(function() {
@@ -142,7 +139,7 @@ define(function(require, exports, module) {
 
 						that.apigkeditor.edit(apigk, 'tabBasic');
 						that.activate();
-						that.app.orgRoleSelector.hide();
+						that.app.appSelector.hide();
 						that.app.setHash('/' + that.orgid + '/apigk/' + apigk.id + '/edit/tabBasic');
 
 						// When creating a new API GK, reload the list of available 3rd party APIs.
@@ -168,7 +165,7 @@ define(function(require, exports, module) {
 				// console.log("Client is removed, update client pool and mainlisting");
 				that.clientpool.removeClient(id);
 				that.mainlisting.activate();
-				that.app.orgRoleSelector.show();
+				that.app.appSelector.show();
 				that.app.setHash('/' + that.orgid);
 			});
 
@@ -187,7 +184,7 @@ define(function(require, exports, module) {
 				// console.log("APIGK is removed, update apigk pool and mainlisting");
 				that.clientpool.removeAPIGK(id);
 				that.mainlisting.activate();
-				that.app.orgRoleSelector.show();
+				that.app.appSelector.show();
 				that.app.setHash('/' + that.orgid);
 
 				// When deleting a API GK, reload the list of available 3rd party APIs.
@@ -200,7 +197,7 @@ define(function(require, exports, module) {
 				try {
 					var client = that.clientpool.getClient(clientid);
 					that.clienteditor.edit(client, 'tabOverview');
-					that.app.orgRoleSelector.hide();
+					that.app.appSelector.hide();
 					that.app.setHash('/' + that.orgid + '/clients/' + clientid + '/edit/tabOverview');
 
 				} catch (err) {
@@ -213,7 +210,7 @@ define(function(require, exports, module) {
 				try {
 					var apigk = that.clientpool.getAPIGK(apigkid);
 					that.apigkeditor.edit(apigk, 'tabBasic');
-					that.app.orgRoleSelector.hide();
+					that.app.appSelector.hide();
 					that.app.setHash('/' + that.orgid + '/apigk/' + apigkid + '/edit/tabBasic');
 				} catch (err) {
 					that.app.setErrorMessage(that.dict.get().error_opening_apigk, "danger", err);
@@ -235,11 +232,8 @@ define(function(require, exports, module) {
 		"getBCItem": function() {
 			var title = this.dict.getItem('mainoverviewpersonal');
 			var groupname = 'na';
-			if (this.orgid !== '_') {
-				if (this.role && this.role.group && this.role.group.orgName ) {
-					groupname = this.role.group.orgName;
-				}
-				title = this.dict.getItem('mainoverview') + ' ' + groupname;
+			if (this.org) {
+				title = this.dict.getItem('mainoverview') + ' ' + this.org.name;
 			}
 			var item = {
 				"href": "#!/" + this.orgid,
@@ -250,7 +244,7 @@ define(function(require, exports, module) {
 		},
 
 		"editClient": function(clientid, tabid) {
-			this.app.orgRoleSelector.hide();
+			this.app.appSelector.hide();
 			var that = this;
 			this.clientpool.onLoaded()
 				.then(function() {
@@ -273,7 +267,7 @@ define(function(require, exports, module) {
 		},
 
 		"editAPIGK": function(apigkid, tabid) {
-			this.app.orgRoleSelector.hide();
+			this.app.appSelector.hide();
 			var that = this;
 			this.clientpool.onLoaded()
 				.then(function() {
@@ -298,23 +292,22 @@ define(function(require, exports, module) {
 			this.app.setHash('/' + this.orgid);
 			this.app.bccontroller.hide();
 			this.mainlisting.activate();
-			this.app.orgRoleSelector.show();
+			this.app.appSelector.show();
 		},
 
 		"actMandatory": function() {
 			this.app.setHash('/' + this.orgid + '/mandatory');
 			this.orgAdminView.activate();
-			this.app.orgRoleSelector.hide();
+			this.app.appSelector.hide();
 		},
 
 		"actAPIAuth": function() {
 			this.app.setHash('/' + this.orgid + '/apiauthorization');
 			this.orgAdminAPIAuthorization.activate();
-			this.app.orgRoleSelector.hide();
+			this.app.appSelector.hide();
 		},
 
 		"getOrgInfo": function() {
-			// console.error("Looking up getOrgInfo for " + this.orgid); //, this.app.orgRoleSelector.getOrgInfo(this.orgid));
 			return this.usercontext.getOrgInfo(this.orgid);
 
 		},
@@ -325,6 +318,36 @@ define(function(require, exports, module) {
 				return this.feideconnect.apigkClientRequests();
 			}
 			return this.feideconnect.apigkClientRequestsByOrg(this.orgid);
+		},
+
+		"isOrgType": function(type) {
+			if (!this.org) {
+				return false;
+			}
+			return this.org.matchType(type);
+		},
+
+		"getSelectorIcon": function() {
+			if (this.orgid === '_') {
+				return 'fa fa-user';
+			} else if (this.isOrgType("home_organization")) {
+				return 'fa fa-home';
+			} else if (this.isOrgType("service_provider")) {
+				return 'fa fa-suitcase';
+			} else {
+				return 'fa fa-circle-o';
+			}
+		},
+
+		"getID": function() {
+			return this.orgid;
+		},
+
+		"getTitle": function() {
+			if (this.org) {
+				return this.org.name;
+			}
+			return this.dict.get().personal;
 		}
 
 	});

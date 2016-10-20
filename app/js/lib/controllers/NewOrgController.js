@@ -25,7 +25,8 @@
 		};
 
 		var NewOrgController = Pane.extend({
-			"init": function(app) {
+			"init": function(id, app) {
+				this.id = id;
 				this.app = app;
 				this.template = new TemplateEngine(template, this.app.dict);
 				this.orginfotemplate = new TemplateEngine(orginfotemplate, this.app.dict);
@@ -143,6 +144,18 @@
 					create: true,
 					sortField: 'text'
 				});
+			},
+
+			"getID": function() {
+				return this.id;
+			},
+
+			"getTitle": function() {
+				return this.app.dict.get().organization;
+			},
+
+			"getSelectorIcon": function() {
+				return "fa fa-plus";
 			}
 
 		});
