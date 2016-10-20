@@ -200,7 +200,7 @@ define(function(require, exports, module) {
 
 		"initLoad": function() {
 
-			this.draw(true)
+			this.draw(false)
 				.then(this.proxy("_initLoaded"));
 				
 		},
