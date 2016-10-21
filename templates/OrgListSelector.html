@@ -1,50 +1,50 @@
 <div class="modal fade" >
-  <div class="modal-dialog" style="width: 80%">
-    <div class="modal-content">
+	<div class="modal-dialog" style="width: 80%">
+		<div class="modal-content">
 
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">{_.select_a_set_of_organizations}</h4>
-      </div>
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">{_.select_a_set_of_organizations}</h4>
+			</div>
 
-      <div class="modal-body">
+			<div class="modal-body">
 
-		<p>{_.select_api_organizations}</p>
+				<p>{_.select_api_organizations}</p>
 
-			<form class="registerform" role="form">  
+				<form class="registerform" role="form">  
 
-				<div class="row">
+					<div class="row">
 
-					{#columns}
-					<div class="col-md-3">
-						<div class="list-group">
-						{#orgs}
-							<div data-id="{id}" class="list-group-item providerentry {#selected}active{/selected}" >
-								<div class="pull-left">
-									<input type="checkbox" {#selected}checked="checked"{/selected} />
-								</div>
-								<div style="margin-left: 24px" class="media">
-									<div class="media-left media-middle">
-										<img class="media-object logo-small"
-										src="{@orgLogoURL id="fc:org:{id}" /}" alt="...">
+						{#columns}
+						<div class="col-md-3">
+							<div class="list-group">
+								{#orgs}
+								<div data-id="{id}" class="list-group-item providerentry {#selected}active{/selected}" >
+									<div class="pull-left">
+										<input type="checkbox" {#selected}checked="checked"{/selected} />
 									</div>
-									<div class="media-body"><p>{title}</p></div>
+									<div style="margin-left: 24px" class="media">
+										<div class="media-left media-middle">
+											<img class="media-object logo-small"
+												 src="{@orgLogoURL id="fc:org:{id}" /}" alt="...">
+										</div>
+										<div class="media-body"><p>{title}</p></div>
+									</div>
 								</div>
+								{/orgs}
 							</div>
-						{/orgs}
 						</div>
+						{/columns}
+
 					</div>
-					{/columns}
 
-				</div>
+				</form>
 
-			</form>
-
-      </div>
-      <div class="modal-footer">
-		<a href="#" class="btn" data-dismiss="modal">{_.cancel}</a>
-		<a href="#" class="actSaveChanges btn btn-primary">{_.set_organizations}</a>
-      </div>
-    </div>
-  </div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal">{_.cancel}</a>
+				<a href="#" class="actSaveChanges btn btn-primary">{_.set_organizations}</a>
+			</div>
+		</div>
+	</div>
 </div>

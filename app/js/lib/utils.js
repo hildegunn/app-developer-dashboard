@@ -30,21 +30,21 @@ define(function(require, exports, module) {
 			return list;
 		},
 		
-	    // Normalize search term.
-	    "normalizeST": function(searchTerm) {
-	        var x = searchTerm.toLowerCase().replace(/[^a-zæøåA-ZÆØÅ ]/g, '');
-	        if (x === '') {
-	            return null;
-	        }
-	        return x;
-	    },
+		// Normalize search term.
+		"normalizeST": function(searchTerm) {
+			var x = searchTerm.toLowerCase().replace(/[^a-zæøåA-ZÆØÅ ]/g, '');
+			if (x === '') {
+				return null;
+			}
+			return x;
+		},
 
-	    "stok" : function(str) {
-	        // console.log("STR", str);
-	        if (str === null) {return true;}
-	        if (str.length > 2) { return true; }
-	        return false;
-	    },
+		"stok" : function(str) {
+			// console.log("STR", str);
+			if (str === null) {return true;}
+			if (str.length > 2) { return true; }
+			return false;
+		}
 	};
 
 

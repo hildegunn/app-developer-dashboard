@@ -1,30 +1,27 @@
-
-
-
 <p style="margin-top: 1em; margin-bottom: 2px">{_.ldap_test_results}</p>
 
 <table class="table table-condensed table-striped" style="margin-top: 2px; margin-bottom: 10px">
 {#ldapstatus.endpoints}
 <tr>
-    <td/>
-    <td style="text-align: right">
+	<td/>
+	<td style="text-align: right">
 
-        {#OK}
-            <span class="label label-success"><i class="fa fa-check"></i> OK</span>
-        {:else}
-            <span class="label label-danger"><i class="fa fa-exclamation-triangle"></i> Feil</span>
-        {/OK}
-            &nbsp;
-    </td>
-    <td style="width: 100%">{_.orgstatus_ldap_endpoint} {name}
-        {#OK}
-        {:else}
-            <br> {result}
-            {#message}
-                – {message}</span>
-            {/message}
-        {/OK}
-    </td>
+		{#OK}
+			<span class="label label-success"><i class="fa fa-check"></i> OK</span>
+		{:else}
+			<span class="label label-danger"><i class="fa fa-exclamation-triangle"></i> Feil</span>
+		{/OK}
+			&nbsp;
+	</td>
+	<td style="width: 100%">{_.orgstatus_ldap_endpoint} {name}
+		{#OK}
+		{:else}
+			<br> {result}
+			{#message}
+				– {message}</span>
+			{/message}
+		{/OK}
+	</td>
 </tr>
 {/ldapstatus.endpoints}
 

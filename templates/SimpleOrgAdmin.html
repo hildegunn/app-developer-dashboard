@@ -6,23 +6,23 @@
 
 {?hasClients}
 <p>
-    {?hasMore}
-        {@blockTrans key="mandatory_clients_overview_more"}
-            {:clients}
-        	    {#clients}
-	                <strong>{name}</strong>{@sep}, {/sep}
-            	{/clients}
-            {:rest}
-                {rest}
-        {/blockTrans}
-    {:else}
-        {@blockTrans key="mandatory_clients_overview"}
-             {:clients}
-        	     {#clients}
-	                 <strong>{name}</strong>{@sep}, {/sep}
-        	     {/clients}
-         {/blockTrans}
-    {/hasMore}
+	{?hasMore}
+		{@blockTrans key="mandatory_clients_overview_more"}
+			{:clients}
+				{#clients}
+					<strong>{name}</strong>{@sep}, {/sep}
+				{/clients}
+			{:rest}
+				{rest}
+		{/blockTrans}
+	{:else}
+		{@blockTrans key="mandatory_clients_overview"}
+			 {:clients}
+				 {#clients}
+					 <strong>{name}</strong>{@sep}, {/sep}
+				 {/clients}
+		 {/blockTrans}
+	{/hasMore}
 	</p>
 
 {:else}

@@ -1,19 +1,19 @@
 <div class="pstatistics list-group" style="margin-top: 1em">
-    <h4>{_.system_statistics}</h4>
-    <table class="table">
+	<h4>{_.system_statistics}</h4>
+	<table class="table">
 {#statistics}
-        <tr>
-            <td>{name}</td>
-            <td>{value}</td>
-        </tr>
+		<tr>
+			<td>{name}</td>
+			<td>{value}</td>
+		</tr>
 {:else}
 	<p>{_.no_valid_stats}</p>
 {/statistics}
-    </table>
-    <form class="form-inline">
-        <div class="form-group">
-            <label for="statisticsDate">Dato</label>
-            <input type="text" class="form-control date" id="statisticsDate" value="{statsDate}">
-        </div>
-    </form>
+	</table>
+	<form class="form-inline">
+		<div class="form-group">
+			<label for="statisticsDate">Dato</label>
+			<input type="text" class="form-control date" id="statisticsDate" value="{statsDate}">
+		</div>
+	</form>
 </div>
