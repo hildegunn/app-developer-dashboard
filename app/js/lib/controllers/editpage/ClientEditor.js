@@ -324,8 +324,7 @@ define(function(require) {
 
 					return that.app.usercontext.isClientAuthorizedToIDporten(that.current)
 						.then(function(isAuthorized) {
-
-							that.aps = new AuthProviderSelector(that.el.find('.authproviders'), that.feideconnect, that.app.app.providerdata, that.current.authproviders, isAuthorized);
+							that.aps = new AuthProviderSelector(that.el.find('.authproviders'), that.feideconnect, that.app.app.providerdata, that.current.authproviders, isAuthorized, that.dict);
 							that.aps.on('save', function(providers) {
 								that.actUpdateAuthProviders(providers);
 							});

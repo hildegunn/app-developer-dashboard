@@ -5,17 +5,26 @@
 			$ = require('jquery'),
 			Controller = require('./Controller'),
 
+			TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 			EventEmitter = require('../EventEmitter');
+
+		var authProviderTemplate = require('text!templates/AuthProviders.html');
+		var providerTemplate = require('text!templates/partials/AuthProvider.html');
+		var providerExtraTemplate = require('text!templates/partials/AuthProviderExtra.html');
 
 		var AuthProviderSelector = Controller.extend({
 
-			"init": function(el, feideconnect, providerdata, selectedProviders, idportenAuthorized) {
+			"init": function(el, feideconnect, providerdata, selectedProviders, idportenAuthorized, dict) {
 
 				var that = this;
 				this.feideconnect = feideconnect;
 				this.providerdata = providerdata;
 				this.selectedProviders = selectedProviders;
 				this.idportenAuthorized = idportenAuthorized;
+
+				this.template = new TemplateEngine(authProviderTemplate, dict);
+				TemplateEngine.prototype.loadPartial('AuthProvider', providerTemplate);
+				TemplateEngine.prototype.loadPartial('AuthProviderExtra', providerExtraTemplate);
 
 				if (selectedProviders === null) {
 					this.selectedProviders = ['all'];
@@ -58,7 +67,6 @@
 					that.updateDataFromInputControls();
 					that.emit("save", that.selectedProviders);
 				});
-
 
 			},
 
@@ -103,7 +111,7 @@
 					"otherlist": [],
 					"orglistgo": [],
 					"orglistvgs": [],
-					"orglisthe": [],
+					"orglisthe": []
 				};
 
 				this.el.find('input.selectgroup').each(function(i, item) {
@@ -218,69 +226,61 @@
 
 			},
 
-			"getProviderExtraHTML": function(item, restricted) {
+			"getProviderExtraView": function(item, restricted) {
 				var txt = '';
 				var classes = [];
 				var id = item.def.join('|');
 				var active = this.hasItem(id);
-				var checked = (active ? 'checked="checked"' : '');
+				var checked = '';
 				if (active) {
 					classes.push('list-group-item-info');
+					checked = 'checked="checked"';
 				}
+
+				var view = {
+					id: id,
+					classes: classes,
+					checked: checked,
+					restricted: restricted,
+					title: item.title
+				};
 
 				// console.error("ABout to show IDporten ", restricted);
-
-				var disabledtxt = (restricted ? ' disabled="disabled" ' : '');
-				var restrtxt = '';
-				if (restricted) {
-					restrtxt = '<p class="text-danger"><i class="fa fa-warning"></i> ID-porten is not allowed for this application. Contact UNINETT to get permission to enable IDporten.</p>';
-				}
-
 
 				var authbase = this.feideconnect.config.apis.auth;
 
 				var iconImage = '';
 				if (item.iconImage) {
-					iconImage = '<img class="media-object logo-small" src="' + authbase + '/static/media/disco/' + item.iconImage + '" alt="...">';
+					view.iconImage = authbase + '/static/media/disco/' + item.iconImage;
 				} else if (item.icon) {
-					iconImage = '<i style="margin-left: 6px" class="' + item.icon + '"></i>';
+					view.icon = item.icon;
 				}
-				// var datastr = 'data-id="' + Utils.quoteattr(this.entityID) + '" data-subid="' + Utils.quoteattr(this.entityID) + '" data-type="saml"';
-				txt += '<div data-id="' + id + '" class="list-group-item providerentry ' + classes.join(' ') + '" >' +
-					'<div class="pull-left"><input type="checkbox" ' + checked + ' ' + disabledtxt + ' /></div>' +
-					'<div style="margin-left: 24px" class="media"><div class="media-left media-middle">' +
-					iconImage +
-					'</div>' +
-					'<div class="media-body"><p>' + item.title + '</p>' + restrtxt + '</div>' +
-					'</div>' +
-					'</div>';
-				return txt;
+
+				return view;
 
 			},
 
 
-			"getProviderHTML": function(item) {
-				var txt = '';
+			"getProviderView": function(item) {
 				var classes = [];
 				var id = 'feide|realm|' + item.id;
 				var active = this.hasItem(id);
-				var checked = (active ? 'checked="checked"' : '');
+				var checked = '';
 				if (active) {
 					classes.push('list-group-item-info');
+					checked = 'checked="checked"';
 				}
 
 				var orgLogo = this.feideconnect.orgLogoURL('fc:org:' + item.id);
 
-				// var datastr = 'data-id="' + Utils.quoteattr(this.entityID) + '" data-subid="' + Utils.quoteattr(this.entityID) + '" data-type="saml"';
-				txt += '<div data-id="' + id + '" class="list-group-item providerentry ' + classes.join(' ') + '" >' +
-					'<div class="pull-left"><input type="checkbox" ' + checked + '/></div>' +
-					'<div style="margin-left: 24px" class="media"><div class="media-left media-middle">' +
-					'<img class="media-object logo-small" src="' + orgLogo + '" alt="...">' +
-					'</div>' +
-					'<div class="media-body"><p>' + item.title + '</p></div>' +
-					'</div>' +
-					'</div>';
-				return txt;
+				var view = {
+					id: id,
+					classes: classes.join(' '),
+					checked: checked,
+					orgLogo: orgLogo,
+					title: item.title
+				};
+				return view;
 
 			},
 
@@ -288,14 +288,12 @@
 			"draw": function() {
 				var that = this,
 					i;
-				var txt = {
-					'he': '',
-					'vgs': '',
-					'go': ''
+				var view = {
+					'he': [],
+					'vgs': [],
+					'go': []
 				};
-				var item, txtitem;
-
-				// console.error("Ready.", this.providerdata.extra, this.providerdata.orgs);
+				var item, providerView;
 
 				this.providerdata.orgs.sort(function(a, b) {
 					var xa = (that.hasItem('feide|realm|' + a.id) ? 1 : 0);
@@ -306,49 +304,35 @@
 				for (i = 0; i < this.providerdata.orgs.length; i++) {
 					item = this.providerdata.orgs[i];
 					// console.error("item", item);
-					txtitem = this.getProviderHTML(item);
+					providerView = this.getProviderView(item);
 					for (var j = 0; j < item.type.length; j++) {
-						if (txt.hasOwnProperty(item.type[j])) {
-							txt[item.type[j]] += txtitem;
+						if (view.hasOwnProperty(item.type[j])) {
+							view[item.type[j]].push(providerView);
 						}
 					}
 
 				}
-				// console.error("This is what we got: ", txt);
 
-				this.el.find(".orglistgo").empty().append(txt.go);
-				this.el.find(".orglistvgs").empty().append(txt.vgs);
-				this.el.find(".orglisthe").empty().append(txt.he);
-
-
-				txt.idporten = '';
-				txt.other = '';
-				txt.social = '';
+				view.idporten = [];
+				view.other = [];
+				view.social = [];
 
 				for (i = 0; i < this.providerdata.extra.length; i++) {
-
-					// console.log(this.providerdata.extra[i]);
 
 					item = this.providerdata.extra[i];
 					if (item.def[0] === 'idporten') {
 						item.def = ['idporten'];
-						// console.error("About to show idporten X", that.idportenAuthorized);
-						txtitem = this.getProviderExtraHTML(item, !that.idportenAuthorized);
+						providerView = this.getProviderExtraView(item, !that.idportenAuthorized);
 
 					} else {
-						txtitem = this.getProviderExtraHTML(item, false);
+						providerView = this.getProviderExtraView(item, false);
 					}
 
-
-					txt[item.def[0]] += txtitem;
+					view[item.def[0]].push(providerView);
 
 				}
-
-				this.el.find(".idportenlist").empty().append(txt.idporten);
-				this.el.find(".sociallist").empty().append(txt.social);
-				this.el.find(".otherlist").empty().append(txt.other);
-
-
+				this.template.render(this.el, view).then(function() {
+				});;
 			}
 
 

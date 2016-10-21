@@ -1,0 +1,20 @@
+<div data-id="{id}" class="list-group-item providerentry {classes}" >
+	<div class="pull-left">
+        <input type="checkbox" {checked} {?restricted}disabled="disabled"{/restricted}/>
+    </div>
+	<div style="margin-left: 24px" class="media">
+        <div class="media-left media-middle">
+            {?iconImage}
+            <img class="media-object logo-small" src="{iconImage}" alt="...">
+            {:else}
+            <i style="margin-left: 6px" class="{icon}"></i>
+            {/iconImage}
+		</div>
+		<div class="media-body">
+            <p>{title}</p>
+            {?restricted}
+            <p class="text-danger"><i class="fa fa-warning"></i> ID-porten is not allowed for this application. Contact UNINETT to get permission to enable IDporten.</p>
+            {/restricted}
+        </div>
+	</div>
+</div>
