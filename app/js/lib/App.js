@@ -46,6 +46,7 @@ define(function(require, exports, module) {
 	var sdpolicyinfo = require('text!templates/partials/SDPolicyInfo.html');
 	var sdstatus = require('text!templates/partials/SDStatus.html');
 	var orgadminscopematrix = require('text!templates/partials/OrgAdminScopeMatrix.html');
+	var errorMessageTemplate = require('text!templates/ErrorMessage.html');
 
 	require("bootstrap");
 	require('es6-promise').polyfill();
@@ -138,6 +139,8 @@ define(function(require, exports, module) {
 
 					that.tmpHeader = new TemplateEngine(tmpHeader);
 					that.tmpFooter = new TemplateEngine(tmpFooter);
+					that.errorMessageTemplate = new TemplateEngine(errorMessageTemplate, that.dict);
+
 					TemplateEngine.prototype.loadPartial("trustblock", trustblock);
 					TemplateEngine.prototype.loadPartial("trustinline", trustinline);
 					TemplateEngine.prototype.loadPartial("timeinfo", timeinfo);
@@ -358,24 +361,23 @@ define(function(require, exports, module) {
 
 
 		"setErrorMessage": function(title, type, msg) {
-
-			var that = this;
 			type = (type ? type : "danger");
-
-			// console.error("Error: ", msg.stack);
-
-			var pmsg = '';
-			if (typeof msg === 'object' && msg.hasOwnProperty("message")) {
-				pmsg = '<p>' + utils.escape(msg.message, false).replace("\n", "<br />") + '</p>';
-			} else if (typeof msg === 'string') {
-				pmsg = '<p>' + utils.escape(msg, false).replace("\n", "<br />") + '</p>';
+			var logMessage = '';
+			var view = {
+				type: type
+			};
+			if (title) {
+				view.title = title;
+				logMessage = title + ': ';
 			}
 
-			var str = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' +
-				' <button type="button" class="close" data-dismiss="alert" aria-label=' + that.dict.get().close + '><span aria-hidden="true">&times;</span></button>' +
-				(title ? '<strong>' + utils.escape(title, false).replace("\n", "<br />") + '</strong>' : '') +
-				pmsg +
-				'</div>';
+			if (typeof msg === 'object' && msg.hasOwnProperty("message")) {
+				view.message = msg.message;
+			} else if (typeof msg === 'string') {
+				view.message = msg;
+			}
+			logMessage = logMessage + view.message;
+			console.error(logMessage);
 
 			if (this.hasOwnProperty("errorClearCallback")) {
 				clearTimeout(this.errorClearCallback);
@@ -385,7 +387,7 @@ define(function(require, exports, module) {
 				$("#errorcontainer").empty();
 			}, 10000);
 
-			$("#errorcontainer").empty().append(str);
+			this.errorMessageTemplate.render($("#errorcontainer"), view);
 
 		},
 

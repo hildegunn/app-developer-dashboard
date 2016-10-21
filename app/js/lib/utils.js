@@ -17,23 +17,6 @@ define(function(require, exports, module) {
 			});
 		},
 
-		// Credits to 
-		// http://shebang.brandonmintern.com/foolproof-html-escaping-in-javascript/
-		"escape": function(s, forAttribute) {
-			var r = ((forAttribute !== false) ? 
-				new RegExp('[&<>\'"]', 'g') : 
-				new RegExp('[&<>]', 'g'));
-			var MAP = { '&': '&amp;',
-						'<': '&lt;',
-						'>': '&gt;',
-						'"': '&quot;',
-						"'": '&#39;'};
-			var p = s.replace(r, function(c) {
-				return MAP[c];
-			});
-			return p;
-		},
-
 		"getKeys": function(obj) {
 			var list = [];
 			if (typeof obj !== "object") {
