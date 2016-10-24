@@ -73,7 +73,7 @@ define(function(require, exports, module) {
 
 
 		"setTabHashFragment": function(tabid) {
-			var orgid = this.app.orgid;
+			var orgid = this.app.getID();
 			this.app.app.setHash('/' + orgid + '/apigk/' + this.current.id + '/edit/' + tabid);
 		},
 

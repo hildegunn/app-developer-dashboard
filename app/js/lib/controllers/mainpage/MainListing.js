@@ -66,7 +66,7 @@ define(function(require, exports, module) {
 					that.emit("manageMandatory");
 				});
 
-				this.orgAdminStatus = new SimpleStatusController(this.feideconnect, this.app.orgid, this.usercontext);
+				this.orgAdminStatus = new SimpleStatusController(this.feideconnect, this.app.getID(), this.usercontext);
 				this.orgAdminStatus.initLoad();
 
 				this.orgAdminStatus.on("manageStatus", function() {

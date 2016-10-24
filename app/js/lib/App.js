@@ -16,6 +16,7 @@ define(function(require, exports, module) {
 		LanguageController = require('./controllers/LanguageController'),
 
 		RestrictedOrgApp = require('./RestrictedOrgApp'),
+		PersonalApp = require('./PersonalApp'),
 		OrgApp = require('./OrgApp'),
 
 		PublicAPIPool = require('./models/PublicAPIPool'),
@@ -249,7 +250,7 @@ define(function(require, exports, module) {
 			return this.usercontext.getOrg(orgid)
 				.then(function(org) {
 
-					var app = new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, orgid, org);
+					var app = new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, org);
 					that.addApp(app);
 					return app;
 				});
@@ -271,7 +272,7 @@ define(function(require, exports, module) {
 			// Then setup all the orgApps.
 			.then(function() {
 				if (that.usercontext.policy.register) {
-					that.addApp(new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, '_', null));
+					that.addApp(new PersonalApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis));
 				} else {
 					that.addApp(new RestrictedOrgApp('_', that));
 				}
@@ -280,7 +281,7 @@ define(function(require, exports, module) {
 				that.usercontext.getOrgIdentifiers().map(function(orgid) {
 					// console.error(" ››› Setting up a new orgapp for " + orgid);
 					promises.push(that.usercontext.getOrg(orgid).then(function(org) {
-						that.addApp(new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, orgid, org));
+						that.addApp(new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, org));
 					}));
 					that.defaultApp = orgid;
 				});

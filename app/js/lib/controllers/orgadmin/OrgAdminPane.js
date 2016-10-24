@@ -67,7 +67,7 @@ define(function(require, exports, module) {
 			e.preventDefault();
 			var that = this;
 			var clientid = $(e.currentTarget).closest(".clientEntry").data("clientid");
-			return this.feideconnect.setMandatoryClient(this.orgapp.orgid, clientid)
+			return this.feideconnect.setMandatoryClient(this.orgapp.getID(), clientid)
 				.then(function() {
 					return that.orgAdminClients.load();
 				})
@@ -79,7 +79,7 @@ define(function(require, exports, module) {
 			e.preventDefault();
 			var that = this;
 			var clientid = $(e.currentTarget).closest(".clientEntry").data("clientid");
-			return this.feideconnect.removeMandatoryClient(this.orgapp.orgid, clientid)
+			return this.feideconnect.removeMandatoryClient(this.orgapp.getID(), clientid)
 				.then(function() {
 					return that.orgAdminClients.load();
 				})

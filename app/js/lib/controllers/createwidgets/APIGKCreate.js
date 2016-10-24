@@ -112,8 +112,9 @@ define(function(require, exports, module) {
 				}
 			};
 
-			if (this.app.orgid !== "_") {
-				obj.organization = this.app.orgid;	
+			var orgInfo = this.app.getOrgInfo();
+			if (orgInfo) {
+				obj.organization = orgInfo.id;
 			}
 
 			this.emit("submit", obj);
