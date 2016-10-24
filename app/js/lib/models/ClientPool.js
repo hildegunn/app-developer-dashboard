@@ -43,20 +43,17 @@ define(function(require, exports, module) {
 
 			// console.error("ABOUT TO LOAD client pool with org ", orgid);
 
-
 			return Promise.all([
 				that.loadClients(),
 				that.loadAPIGKs(),
 				that.loadRequests()
 			]).then(function() {
-				return that.processClientRequests()
+				return that.processClientRequests();
 			}).then(function() {
 				that.emit("clientChange", that.clients);
 				that.emit("apigkChange", that.apigks);
 			});
 		},
-
-
 
 		"getClientRequests": function() {
 			if  (this.orgid === null) {
@@ -64,7 +61,6 @@ define(function(require, exports, module) {
 			}
 			return this.feideconnect.apigkClientRequestsByOrg(this.orgid);
 		},
-
 
 		"loadRequests": function() {
 
@@ -85,7 +81,6 @@ define(function(require, exports, module) {
 					}
 
 				});
-
 		},
 
 		// Separate function because clientrequests and apigks are fetched in parallell, 
@@ -94,10 +89,7 @@ define(function(require, exports, module) {
 
 			var i, k;
 
-
-
 			for(var apigkid in this.apigks) {
-
 
 				for (i = 0; i < this.clientRequests.length; i++) {
 					var x = this.clientRequests[i];
@@ -119,7 +111,6 @@ define(function(require, exports, module) {
 
 
 		},
-
 
 		"loadClients": function() {
 			var that = this;
@@ -153,22 +144,27 @@ define(function(require, exports, module) {
 			this.clients[client.id] = client;
 			this.emit("clientChange", this.clients);
 		},
+
 		"setAPIGK": function(apigk) {
 			this.apigks[apigk.id] = apigk;
 			this.emit("apigkChange", this.apigks);
 		},
+
 		"removeClient": function(id) {
 			delete this.clients[id];
 			this.emit("clientChange", this.clients);
 		},
+
 		"getClient": function(id) {
 			if (this.clients.hasOwnProperty(id)) {return this.clients[id];}
 			return null;
 		},
+
 		"getAPIGK": function(id) {
 			if (this.apigks.hasOwnProperty(id)) {return this.apigks[id];}
 			return null;
 		},
+
 		"removeAPIGK": function(id) {
 			delete this.apigks[id];
 			// console.error("DELETE APIGK", id);
