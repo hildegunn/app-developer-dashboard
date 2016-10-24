@@ -43,6 +43,8 @@ define(function(require, exports, module) {
 
 			this._super();
 
+			this.setupRoute(/^\/statistics\/(\d{4}-\d{2}-\d{2})$/, "actStatistics");
+			this.setupRoute(/^\/(clients|apigks|organizationsh|organizationss|statistics)$/, "actTab");
 			this.activeTab = "#clients";
 
 			this.orgPool = new OrganizationPool(this.feideconnect);
@@ -64,6 +66,8 @@ define(function(require, exports, module) {
 
 		"setStatisticsDate": function(moment) {
 			this.statisticsDate = moment.format('YYYY-MM-DD');
+			this.app.setHash('/_platformadmin/statistics/' + this.statisticsDate);
+
 			return this.loadStatistics();
 		},
 
@@ -107,13 +111,16 @@ define(function(require, exports, module) {
 
 		"initLoad": function() {
 			var that = this;
-			var date = moment();
-			date.subtract(1, 'days');
+			if (!this.statisticsDate) {
+				var date = moment();
+				date.subtract(1, 'days');
+				this.statisticsDate = date.format('YYYY-MM-DD');
+			}
 			return Promise.all([
 					this.app.publicClientPool.onLoaded(),
 					this.app.publicapis.onLoaded(),
 					this.orgPool.onLoaded(),
-					this.setStatisticsDate(date)
+					this.loadStatistics()
 				])
 				.then(that.proxy("draw"))
 				.then(that.proxy("_initLoaded"))
@@ -131,6 +138,18 @@ define(function(require, exports, module) {
 		},
 
 		"actMain": function() {
+			this.app.setHash('/_platformadmin');
+			this.app.appSelector.show();
+		},
+
+		"actStatistics": function(date) {
+			this.statisticsDate = date;
+			this.activeTab = '#statistics';
+			this.app.appSelector.show();
+		},
+
+		"actTab": function(tab) {
+			this.activeTab = '#' + tab;
 			this.app.appSelector.show();
 		},
 
@@ -214,13 +233,13 @@ define(function(require, exports, module) {
 
 		"tabChanged": function(e) {
 			this.activeTab = e.target.hash;
+			this.app.setHash('/_platformadmin/' + this.activeTab.substring(1));
 		},
 
 		"activate": function() {
 			this.initLoad();
 			this._super();
 
-			this.app.setHash('/_platformadmin');
 			this.app.bccontroller.hide();
 		},
 
