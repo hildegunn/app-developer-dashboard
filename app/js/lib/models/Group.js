@@ -16,7 +16,7 @@ define(function(require, exports, module) {
 
 		"isMemberType": function(type) {
 			if (!this.has("membership")) {
-				return false
+				return false;
 			}
 			if (!this.membership.hasOwnProperty("basic")) {
 				return false;

@@ -196,10 +196,7 @@ define(function(require, exports, module) {
 
 				}
 
-
-
 			}
-
 
 			// console.error("Data is ", providers)
 			// console.error("List selections", listselections);
