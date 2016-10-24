@@ -20,16 +20,12 @@ define(function(require, exports, module) {
 
 		PublicAPIPool = require('./models/PublicAPIPool'),
 		PublicClientPool = require('./models/PublicClientPool'),
-		ClientPool = require('./models/ClientPool'),
 
 		ProviderData = require('./controllers/ProviderData'),
 
-		Client = require('./models/Client'),
-		APIGK = require('./models/APIGK'),
 		PaneController = require('./controllers/PaneController'),
 		Dictionary = require('./Dictionary'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
-		utils = require('./utils'),
 		dust = require('dust'),
 		dust_helpers = require('dustjs-helpers'),
 		DustIntl = require('DustIntl'),
