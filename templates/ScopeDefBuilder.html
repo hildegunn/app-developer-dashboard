@@ -33,7 +33,7 @@
 					<td style="font-size: 90%"><code>gk_{existing.id}</code></td>
 
 					<td>
-						{#existing}{>sdpolicyinfo/}{/existing}
+						{#existing}{>ScopeDefPolicyInfo/}{/existing}
 					</td>
 					<td>
 						{#existing.scopedef.policy.orgadmin.moderate}
@@ -54,7 +54,7 @@
 						<td>{title}</td>
 						<td style="font-size: 90%"><code>gk_{existing.id}_{scope}</code></td>
 
-						<td>{>sdpolicyinfo/}</td>
+						<td>{>ScopeDefPolicyInfo/}</td>
 						<td>
 							{#policy.orgadmin.moderate}
 								<span class="label label-danger">

@@ -41,10 +41,11 @@ define(function(require, exports, module) {
 	var tmpFooter = require('text!templates/footer.html');
 	var trustblock = require('text!templates/partials/TrustBlock.html');
 	var trustinline = require('text!templates/partials/TrustInline.html');
-	var timeinfo = require('text!templates/partials/timeinfo.html');
+	var TimeInfo = require('text!templates/partials/TimeInfo.html');
 	var apigkinfo = require('text!templates/partials/APIGKInfo.html');
-	var sdpolicyinfo = require('text!templates/partials/SDPolicyInfo.html');
-	var sdstatus = require('text!templates/partials/SDStatus.html');
+	var sdpolicyinfo = require('text!templates/partials/ScopeDefPolicyInfo.html');
+	var sdstatus = require('text!templates/partials/ScopeDefStatus.html');
+	var scopeListing = require('text!templates/partials/ScopeListing.html');
 	var orgadminscopematrix = require('text!templates/partials/OrgAdminScopeMatrix.html');
 	var errorMessageTemplate = require('text!templates/ErrorMessage.html');
 
@@ -141,13 +142,14 @@ define(function(require, exports, module) {
 					that.tmpFooter = new TemplateEngine(tmpFooter);
 					that.errorMessageTemplate = new TemplateEngine(errorMessageTemplate, that.dict);
 
-					TemplateEngine.prototype.loadPartial("trustblock", trustblock);
-					TemplateEngine.prototype.loadPartial("trustinline", trustinline);
-					TemplateEngine.prototype.loadPartial("timeinfo", timeinfo);
-					TemplateEngine.prototype.loadPartial("apigkinfo", apigkinfo);
-					TemplateEngine.prototype.loadPartial("sdpolicyinfo", sdpolicyinfo);
-					TemplateEngine.prototype.loadPartial("sdstatus", sdstatus);
-					TemplateEngine.prototype.loadPartial("orgadminscopematrix", orgadminscopematrix);
+					TemplateEngine.prototype.loadPartial("TrustBlock", trustblock);
+					TemplateEngine.prototype.loadPartial("TrustInline", trustinline);
+					TemplateEngine.prototype.loadPartial("TimeInfo", TimeInfo);
+					TemplateEngine.prototype.loadPartial("APIGKInfo", apigkinfo);
+					TemplateEngine.prototype.loadPartial("ScopeDefPolicyInfo", sdpolicyinfo);
+					TemplateEngine.prototype.loadPartial("ScopeDefStatus", sdstatus);
+					TemplateEngine.prototype.loadPartial("OrgAdminScopeMatrix", orgadminscopematrix);
+					TemplateEngine.prototype.loadPartial("ScopeListing", scopeListing);
 
 					that.providerdata = new ProviderData(that);
 

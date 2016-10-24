@@ -43,7 +43,7 @@
 					</form>
 				</div>
 
-				{> pclients /}
+				{>PlatformAdminClients /}
 			</div>
 
 			<div role="tabpanel" class="tab-pane {activeTabClass.apigks}" id="apigks">
@@ -55,7 +55,7 @@
 					</form>
 				</div>
 
-				{> papis /}
+				{>PlatformAdminAPIGKs /}
 			</div>
 
 			
@@ -69,7 +69,7 @@
 				</div>
 
 				{#orgs.home}
-				{> porgs /}
+				{>PlatformAdminOrgs /}
 				{/orgs.home}
 			</div>
 			
@@ -83,12 +83,12 @@
 				</div>
 
 				{#orgs.services}
-				{> porgs /}
+				{>PlatformAdminOrgs /}
 				{/orgs.services}
 			</div>
 
 			<div role="tabpanel" class="tab-pane {activeTabClass.statistics}" id="statistics">
-				{> pstatistics /}
+				{>PlatformAdminStatistics /}
 			</div>
 
 		</div>

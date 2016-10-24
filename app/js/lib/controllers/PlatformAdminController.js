@@ -19,10 +19,10 @@ define(function(require, exports, module) {
 
 	var template = require('text!templates/platformadmin.html');
 
-	var pclients = require('text!templates/partials/PClients.html');
-	var papis = require('text!templates/partials/PAPIs.html');
-	var porgs = require('text!templates/partials/POrgs.html');
-	var pstatistics = require('text!templates/partials/PStatistics.html');
+	var pclients = require('text!templates/partials/PlatformAdminClients.html');
+	var papis = require('text!templates/partials/PlatformAdminAPIGKs.html');
+	var porgs = require('text!templates/partials/PlatformAdminOrgs.html');
+	var pstatistics = require('text!templates/partials/PlatformAdminStatistics.html');
 
 
 	require('selectize');
@@ -36,10 +36,10 @@ define(function(require, exports, module) {
 			this.feideconnect = this.app.feideconnect;
 
 			this.template = new TemplateEngine(template, this.app.dict);
-			this.template.loadPartial("pclients", pclients);
-			this.template.loadPartial("papis", papis);
-			this.template.loadPartial("porgs", porgs);
-			this.template.loadPartial("pstatistics", pstatistics);
+			TemplateEngine.prototype.loadPartial("PlatformAdminClients", pclients);
+			TemplateEngine.prototype.loadPartial("PlatformAdminAPIGKs", papis);
+			TemplateEngine.prototype.loadPartial("PlatformAdminOrgs", porgs);
+			TemplateEngine.prototype.loadPartial("PlatformAdminStatistics", pstatistics);
 
 			this._super();
 

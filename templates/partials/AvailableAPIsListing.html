@@ -10,16 +10,16 @@
 		</div>
 		{?own}
 		<div class="col-md-11">
-			 {>apigkinfo/}
+			 {>APIGKInfo/}
 		 </div>
 
 		{:else}
 		<div class="col-md-7">
-			{> apigkinfo /}
+			{>APIGKInfo /}
 		</div>
 
 		<div class="col-md-4">
-			{>trustblock/}
+			{>TrustBlock/}
 		</div>
 		{/own}
 
@@ -49,7 +49,7 @@
 						<td>{title}</td>
 						<td style="font-size: 90%"><code>gk_{id}</code></td>
 
-						<td>{>sdpolicyinfo/}</td>
+						<td>{>ScopeDefPolicyInfo/}</td>
 					</tr>
 
 					{#subscopes}
@@ -59,7 +59,7 @@
 							<td>{title}</td>
 							<td style="font-size: 90%"><code>gk_{id}_{scope}</code></td>
 
-							<td>{>sdpolicyinfo/}</td>
+							<td>{>ScopeDefPolicyInfo/}</td>
 						</tr>
 
 					{:else}

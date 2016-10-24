@@ -21,7 +21,6 @@ define(function(require) {
 	var clientTemplate = require('text!templates/ClientEditor.html');
 	var apilistingTemplate = require('text!templates/partials/APIListing.html');
 	var availableAPIsListingTemplate = require('text!templates/partials/AvailableAPIsListing.html');
-	var scopeListingTemplate = require('text!templates/partials/ScopeListing.html');
 
 	var ClientEditor = Editor.extend({
 		"init": function(app, feideconnect, publicapis, clientpool, usercontext) {
@@ -38,8 +37,7 @@ define(function(require) {
 
 			this.dict = new Dictionary();
 			this.template = new TemplateEngine(clientTemplate, this.dict);
-			this.template.loadPartial("apilisting", apilistingTemplate);
-			this.template.loadPartial("scopelisting", scopeListingTemplate);
+			TemplateEngine.prototype.loadPartial("apiListing", apilistingTemplate);
 
 			this.availableapistemplate = new TemplateEngine(availableAPIsListingTemplate, this.dict);
 
