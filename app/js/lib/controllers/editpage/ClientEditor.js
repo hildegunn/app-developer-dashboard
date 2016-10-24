@@ -37,7 +37,7 @@ define(function(require) {
 
 			this.dict = new Dictionary();
 			this.template = new TemplateEngine(clientTemplate, this.dict);
-			TemplateEngine.prototype.loadPartial("apiListing", apilistingTemplate);
+			TemplateEngine.prototype.loadPartial("APIListing", apilistingTemplate);
 
 			this.availableapistemplate = new TemplateEngine(availableAPIsListingTemplate, this.dict);
 
