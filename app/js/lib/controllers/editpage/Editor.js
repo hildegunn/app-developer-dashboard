@@ -95,7 +95,7 @@ define(function(require, exports, module) {
 			var optConfirm = $(e.currentTarget).closest(".scopeEntry").hasClass("optConfirm");
 
 			if (optConfirm) {
-				var ok = confirm('Are you really sure you would like to remove this scope, as you cannot automatically re-add it.')
+				var ok = confirm('Are you really sure you would like to remove this scope, as you cannot automatically re-add it.'); // TODO translate
 				if (!ok) {
 					return;
 				}
