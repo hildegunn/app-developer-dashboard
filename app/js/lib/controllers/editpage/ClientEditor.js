@@ -188,9 +188,23 @@ define(function(require) {
 			this.current = item;
 
 			var view = {
-				"client": item.getView(this.feideconnect)
+				"client": item.getView(this.feideconnect),
+				"groups": []
 			};
-
+			view.client.entityType = this.dict.get()[view.client.entityType];
+			if (view.client.trustOrg) {
+				this.usercontext.getOrg(view.client.organization).then(function(org) {
+					view.client.ownerName = org.name;
+				});
+			} else {
+				view.client.ownerName = this.usercontext.user.name;
+			}
+			console.log(this.usercontext.groups);
+			for (var g in this.usercontext.groups) {
+				if ($.inArray(g, this.current.admins) < 0) {
+					view.groups.push(this.usercontext.groups[g].getView());
+				}
+			}
 
 			var stats = new Statistics(this.app.feideconnect, item.id);
 

@@ -68,7 +68,24 @@ define(function(require, exports, module) {
 
 			});
 
+			this.el.on('click', '.admins a[href="#addgroup"]', function(e) {
+				e.preventDefault();
+				var a = $(e.currentTarget);
+				var groupid = a.data('groupid');
+				if (!groupid) {
+					groupid = $('#addGroup').val();
+				}
+				that.current.admins.push(groupid);
+				that.save(["id", "admins"]);
+			});
 
+			this.el.on('click', '.admins a[href="#rmgroup"]', function(e) {
+				e.preventDefault();
+				var a = $(e.currentTarget);
+				var groupid = a.data('groupid');
+				that.current.admins = that.current.admins.filter(function(id) { return id !== groupid; });
+				that.save(["id", "admins"]);
+			});
 		
 		},
 

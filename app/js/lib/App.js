@@ -46,6 +46,7 @@ define(function(require, exports, module) {
 	var sdpolicyinfo = require('text!templates/partials/ScopeDefPolicyInfo.html');
 	var sdstatus = require('text!templates/partials/ScopeDefStatus.html');
 	var scopeListing = require('text!templates/partials/ScopeListing.html');
+	var adminsTemplate = require('text!templates/partials/Admins.html');
 	var orgadminscopematrix = require('text!templates/partials/OrgAdminScopeMatrix.html');
 	var errorMessageTemplate = require('text!templates/ErrorMessage.html');
 
@@ -150,6 +151,7 @@ define(function(require, exports, module) {
 					TemplateEngine.prototype.loadPartial("ScopeDefStatus", sdstatus);
 					TemplateEngine.prototype.loadPartial("OrgAdminScopeMatrix", orgadminscopematrix);
 					TemplateEngine.prototype.loadPartial("ScopeListing", scopeListing);
+					TemplateEngine.prototype.loadPartial("Admins", adminsTemplate);
 
 					that.providerdata = new ProviderData(that);
 

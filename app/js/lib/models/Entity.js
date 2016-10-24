@@ -24,6 +24,13 @@ define(function(require, exports, module) {
 
 	var Entity = Model.extend({
 
+		"init": function(props) {
+			this._super(props);
+			if (!this.admins) {
+				this.admins = [];
+			}
+		},
+
 		/**
 		 * Takes a scope definition as input and returns all scopes that is defined in the
 		 * scopedef, sorted into available, requested and accepted lists.

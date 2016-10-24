@@ -1,0 +1,35 @@
+<div class="admins">
+	<p>{@blockTrans key="entity_admins_info"}
+		{:entity_type}
+		{entityType}
+		{:owner_name}
+		{ownerName}
+		{/blockTrans}
+	</p>
+	{?admins}
+	<ul class="list-unstyled">
+	{#admins}
+	<li><a href="#rmgroup" data-groupid="{.}"><span class="fa fa-minus"></a>{.}</li>
+	{/admins}
+	</ul>
+	{:else}
+	<strong>{_.no_admins}</strong>
+	{/admins}
+	<h2>{_.add_admin_group}</h2>
+	<ul class="list-unstyled">
+		{#groups}
+		<li><a href="#addgroup" data-groupid="{id}"><span class="fa fa-plus"></span></a>{displayName}</li>
+		{:else}
+		{/groups}
+	</ul>
+
+	<form class="form-inline">
+		<div class="form-group">
+			<label class="sr-only" for="addGroup">{_.admin_group_id}</label>
+			<div class="input-group">
+				<div class="input-group-addon"><a href="#addgroup"><span class="fa fa-plus"></span></a></div>
+				<input type="text" class="form-control" id="addGroup" placeholder="{_.admin_group_id}">
+			</div>
+		</div>
+	</form>
+</div>

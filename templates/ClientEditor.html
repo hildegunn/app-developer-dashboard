@@ -13,6 +13,7 @@
 			{/hasEnabledTestUsers}
 			<li role="presentation" data-tabid="tabScopes" class=""><a href="#">{_.permissions}</a></li>
 			<li role="presentation" data-tabid="tabAPI" class=""><a href="#">{_.thirdpartyapis}</a></li>
+			<li role="presentation" data-tabid="tabAdmins" class=""><a href="#">{_.admins}</a></li>
 
 			<li role="presentation" data-tabid="tabDelete" class=""><a href="#">{_.delete}</a></li>
 		</ul>
@@ -392,6 +393,17 @@
 
 
 
+
+		</div>
+
+		<div id="tabAdmins"  style="" class="row">
+
+			<div class="col-sm-12">
+			    {#client}
+
+                {>Admins /}
+                {/client}
+			</div>
 
 		</div>
 

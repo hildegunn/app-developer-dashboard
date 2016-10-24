@@ -18,6 +18,7 @@ define(function(require, exports, module) {
 
 		"getView": function() {
 			var res = this._super();
+			res.entityType = 'client';
 
 			return res;
 		},
