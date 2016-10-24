@@ -19,6 +19,7 @@ define(function(require, exports, module) {
 
 			this.policy = null;
 			this.groups = {};
+			this.orgAdminFor = {};
 			this.platformadmin = null;
 
 
@@ -45,11 +46,13 @@ define(function(require, exports, module) {
 					for (var i = 0; i < groups.length; i++) {
 
 						var g = new Group(groups[i]);
+						that.groups[g.id] = g;
 
 						if (g.id === 'fc:platformadmin:admins') {
 							that.platformadmin = g;
 							continue;
 						}
+
 						// Only use group memberships where a user is admin in an orgadmin group.
 						if (!g.isType("fc:orgadmin")) {
 							continue;
@@ -57,7 +60,7 @@ define(function(require, exports, module) {
 						if (!g.isMemberType("admin")) {
 							continue;
 						}
-						that.groups[g.org] = g;
+						that.orgAdminFor[g.org] = g;
 					}
 				});
 		},
@@ -113,7 +116,7 @@ define(function(require, exports, module) {
 		"getOrgIdentifiers": function() {
 
 			var keys = [];
-			for (var key in this.groups) {
+			for (var key in this.orgAdminFor) {
 				keys.push(key);
 			}
 			return keys;
