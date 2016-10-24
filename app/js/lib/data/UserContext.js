@@ -16,6 +16,7 @@ define(function(require, exports, module) {
 			var that = this;
 			this.feideconnect = feideconnect;
 			this.app = app;
+			this.user = null;
 
 			this.policy = null;
 			this.groups = {};
@@ -27,6 +28,10 @@ define(function(require, exports, module) {
 
 			this._super(null, true);
 
+		},
+
+		"setUser": function(user) {
+			this.user = user;
 		},
 
 		"initLoad": function() {

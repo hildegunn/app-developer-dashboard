@@ -219,6 +219,7 @@ define(function(require, exports, module) {
 						.then(that.proxy("onLoaded"))
 						.then(function() {
 							var user = that.feideconnect.getUser();
+							that.usercontext.setUser(user);
 							var profilephoto = that.feideconnect.profilePhotoURL(user.profilephoto);
 
 							$("body").addClass("stateLoggedIn");
