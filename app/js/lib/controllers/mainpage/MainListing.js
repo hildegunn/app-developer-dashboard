@@ -3,16 +3,12 @@ define(function(require, exports, module) {
 
 	var 
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
-		Pane = require('../Pane'),
+		Controller = require('../Controller'),
 
 		Dictionary = require('../../Dictionary'),
 		ClientCreate = require('../createwidgets/ClientCreate'),
 		APIGKCreate = require('../createwidgets/APIGKCreate'),
 		EventEmitter = require('../../EventEmitter'),
-
-		SimpleOrgAdminController = require('../orgadmin/SimpleOrgAdminController'),
-		SimpleOrgAdminAPIAuth = require('../orgadmin/SimpleOrgAdminAPIAuth'),
-		SimpleStatusController = require('../orgadmin/SimpleStatusController'),
 
 		Entity = require('../../models/Entity'),
 		utils = require('../../utils'),
@@ -29,14 +25,12 @@ define(function(require, exports, module) {
 	/*
 	 * This controller controls 
 	 */
-	var MainListing = Pane.extend({
-		"init": function(feideconnect, app, orgAdminClients, orgAdminAPIs, usercontext) {
+	var MainListing = Controller.extend({
+		"init": function(feideconnect, app, usercontext) {
 
 			var that = this;
 			this.feideconnect = feideconnect;
 			this.app = app;
-			this.orgAdminClients = orgAdminClients;
-			this.orgAdminAPIs = orgAdminAPIs;
 			this.usercontext = usercontext;
 
 			this._super();
@@ -52,39 +46,6 @@ define(function(require, exports, module) {
 			this.templateLoaded = false;
 			this.elClientsAttached = false;
 			this.elAPIGKsAttached = false;
-
-			this.simpleOrgAdminView = null;
-			this.simpleOrgAdminAPI = null;
-			this.orgAdminStatus = null;
-
-			if (orgAdminClients !== null) {
-
-				this.simpleOrgAdminView = new SimpleOrgAdminController(this.feideconnect, this.orgAdminClients, this.usercontext);
-				this.simpleOrgAdminView.initLoad();
-
-				this.simpleOrgAdminView.on("manageMandatory", function() {
-					that.emit("manageMandatory");
-				});
-
-				this.orgAdminStatus = new SimpleStatusController(this.feideconnect, this.app.getID(), this.usercontext);
-				this.orgAdminStatus.initLoad();
-
-				this.orgAdminStatus.on("manageStatus", function() {
-					that.emit("manageStatus");
-				});
-
-			}
-
-			if (orgAdminAPIs !== null) {
-				this.simpleOrgAdminAPI = new SimpleOrgAdminAPIAuth(this.feideconnect, this.orgAdminAPIs);
-				this.simpleOrgAdminAPI.initLoad();
-
-				this.simpleOrgAdminAPI.on("manageAPIAuth", function() {
-					that.emit("manageAPIAuth");
-				});
-
-			}
-
 
 			this.clientcreate = new ClientCreate(this.app);
 			this.clientcreate.on("submit", function(obj) {
@@ -105,20 +66,19 @@ define(function(require, exports, module) {
 				that.apigkcreate.activate();
 			});
 
-
 			this.ebind("click", ".clientEntry", "selectedClient");
 			this.ebind("click", ".apigkEntry", "selectedAPIGK");
 
-
 		},
+
 		"selectedClient": function(e) {
-			e.preventDefault(); // e.stopPropgate();
+			e.preventDefault();
 			var clientid = $(e.currentTarget).data('clientid');
 			this.emit('clientSelected', clientid);
 		},
 
 		"selectedAPIGK": function(e) {
-			e.preventDefault(); // e.stopPropgate();
+			e.preventDefault();
 			var apigkid = $(e.currentTarget).data('apigkid');
 			this.emit('apigkSelected', apigkid);
 		},
@@ -150,7 +110,6 @@ define(function(require, exports, module) {
 					that.elClientsAttached = true;
 				}
 			});
-
 
 		},
 
@@ -189,7 +148,6 @@ define(function(require, exports, module) {
 				.then(this.proxy("_initLoaded"));
 				
 		},
-
 		
 		"draw": function(act) {
 			var that = this;
@@ -197,24 +155,10 @@ define(function(require, exports, module) {
 			return new Promise(function(resolve, reject) {
 
 				var view = {
-					"personal": that.app.isPersonal(),
-					"simpleOrgAdminStatus": (that.simpleOrgAdminView !== null),
-					"simpleOrgAdminAPI": (that.simpleOrgAdminAPI !== null),
-					"orgAdminStatus": (that.orgAdminStatus !== null)
 				};
 				that.template.render(that.el, view).then(function() {
 					that.el.find('#listingClients').append(that.elClients);
 					that.el.find('#listingAPIGKs').append(that.elAPIGKs);
-
-					if (that.simpleOrgAdminView !== null) {
-						that.el.find(".simpleOrgAdminView").show().append(that.simpleOrgAdminView.el);
-					}
-					if  (that.simpleOrgAdminAPI !== null) {
-						that.el.find(".simpleOrgAdminAPI").show().append(that.simpleOrgAdminAPI.el);
-					}
-					if  (that.orgAdminStatus !== null) {
-						that.el.find(".simpleOrgAdminStatus").show().append(that.orgAdminStatus.el);
-					}
 
 					that.elClientsAttached = true;
 					that.elAPIGKsAttached = true;

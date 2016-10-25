@@ -6,6 +6,7 @@ define(function(require, exports, module) {
 		BaseApp = require('./BaseApp'),
 
 		ClientPool = require('./models/ClientPool'),
+		PersonalMain = require('./controllers/mainpage/PersonalMain'),
 		$ = require('jquery');
 
 	var PersonalApp = BaseApp.extend({
@@ -15,13 +16,10 @@ define(function(require, exports, module) {
 
 			this.clientpool = new ClientPool(feideconnect, null);
 
-			this.orgAdminClients = null;
-			this.orgAdminAPIs = null;
 			this._super(feideconnect, app, usercontext, publicClientPool, publicapis);
-		},
+			this.mainpage = new PersonalMain(this.mainlisting);
+			this.pc.add(this.mainpage);
 
-		"isPersonal": function() {
-			return true;
 		},
 
 		"getClientRequests": function() {

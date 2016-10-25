@@ -38,8 +38,7 @@ define(function(require, exports, module) {
 
 			this.pc = new PaneController(this.el);
 
-			this.mainlisting = new MainListing(this.feideconnect, this, this.orgAdminClients, this.orgAdminAPIs, this.usercontext);
-			this.pc.add(this.mainlisting);
+			this.mainlisting = new MainListing(feideconnect, this, usercontext);
 
 			this.clientpool.on('clientChange', function(clients) {
 				that.mainlisting.updateClients(clients);
@@ -229,7 +228,7 @@ define(function(require, exports, module) {
 		"actMain": function() {
 			this.app.setHash('/' + this.getID());
 			this.app.bccontroller.hide();
-			this.mainlisting.activate();
+			this.mainpage.activate();
 			this.app.appSelector.show();
 		},
 

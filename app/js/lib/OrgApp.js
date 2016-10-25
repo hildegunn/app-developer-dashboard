@@ -7,7 +7,7 @@ define(function(require, exports, module) {
 
 		OrgAdminPane = require('./controllers/orgadmin/OrgAdminPane'),
 		OrgAdminAPIAuthorizationPane = require('./controllers/orgadmin/OrgAdminAPIAuthorizationPane'),
-		SimpleStatusController = require('./controllers/orgadmin/SimpleStatusController'),
+		HostOrgMain = require('./controllers/mainpage/HostOrgMain'),
 		OrgAdminClients = require('./models/OrgAdminClients'),
 		OrgAdminAPIs = require('./models/OrgAdminAPIs'),
 
@@ -23,6 +23,8 @@ define(function(require, exports, module) {
 
 			this.clientpool = new ClientPool(feideconnect, this.org.id);
 
+			this._super(feideconnect, app, usercontext, publicClientPool, publicapis);
+
 			this.orgAdminClients = null;
 			this.orgAdminView = null;
 			this.orgAdminAPIs = null;
@@ -35,40 +37,30 @@ define(function(require, exports, module) {
 
 				this.orgAdminView = new OrgAdminPane(feideconnect, this, publicClientPool, this.orgAdminClients);
 				this.orgAdminView.initLoad();
+				this.pc.add(this.orgAdminView);
 
 				this.orgAdminAPIs = new OrgAdminAPIs(feideconnect, this.org.id);
 				this.orgAdminAPIs.initLoad();
 
 				this.orgAdminAPIAuthorization = new OrgAdminAPIAuthorizationPane(feideconnect, this, this.orgAdminAPIs, publicapis);
 				this.orgAdminAPIAuthorization.initLoad();
-
-			}
-
-			this._super(feideconnect, app, usercontext, publicClientPool, publicapis);
-
-			if (this.isOrgType("home_organization")) {
-				this.pc.add(this.orgAdminView);
 				this.pc.add(this.orgAdminAPIAuthorization);
+
+				this.mainpage = new HostOrgMain(this.mainlisting, feideconnect, this.orgAdminClients, this.orgAdminAPIs, usercontext, org.id);
+				this.pc.add(this.mainpage);
+
+				this.mainpage.on("manageMandatory", function() {
+					that.actMandatory();
+				});
+
+				this.mainpage.on("manageAPIAuth", function() {
+					that.actAPIAuth();
+				});
+
 			}
 
 			this.setupRoute(/^\/mandatory$/, "actMandatory");
 			this.setupRoute(/^\/apiauthorization$/, "actAPIAuth");
-
-			this.mainlisting.on("manageMandatory", function() {
-				if (that.orgAdminView !== null) {
-					that.actMandatory();
-				}
-			});
-
-			this.mainlisting.on("manageAPIAuth", function() {
-				if (that.orgAdminAPIAuthorization !== null) {
-					that.actAPIAuth();
-				}
-			});
-		},
-
-		"isPersonal": function() {
-			return false;
 		},
 
 		"actMandatory": function() {
