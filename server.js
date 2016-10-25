@@ -26,12 +26,6 @@ if (process.env.OIC_REDIRECT_URI) {
 app.set('json spaces', 2);
 
 app.use(cookieParser());
-app.use(function(req, res, next) {
-	console.log(req.method + ' ' + req.url);
-	res.setHeader('Strict-Transport-Security', 'max-age=15768000');
-	next();
-});
-
 if (env === 'development') {
 	console.log("Running app in development mode");
 
@@ -57,6 +51,12 @@ if (env === 'development') {
 		}
 		next();
 	});
+} else {
+    app.use(function(req, res, next) {
+	    console.log(req.method + ' ' + req.url);
+	    res.setHeader('Strict-Transport-Security', 'max-age=15768000');
+	    next();
+    });
 }
 
 
