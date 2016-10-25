@@ -1,0 +1,37 @@
+<div class="row gutter pane">
+	<div class="col-lg-12 well">
+        <div class="row">
+
+	        <div class="col-md-8">
+
+		        <h4>{_.orgstatus_heading}</h4>
+	        </div>
+            {#organization}
+            <div class="col-md-4">
+
+		        <div class="media">
+
+			        <div class="media-body">
+				        <h3 class="media-heading">{name}</h3>
+			        </div>
+			        <div class="media-right">
+				        <div class="imagezone">
+					        <img class="media-object itemlogo" src="{@orgLogoURL id="{id}" /}" alt="{@formatMessage _key="org_logo_alt" orgname=name/}">
+				        </div>
+				        <p style="text-align: center"><i>{_.orgstatus_registered_logo}</i></p>
+			        </div>
+		        </div>
+
+		        {?isPlatformAdmin}
+		        {>PlatformAdminOrgOperations/}
+		        {/isPlatformAdmin}
+
+
+	        </div>
+            {/organization}
+
+        </div>
+    </div>
+</div>
+
+<div class="mainlisting"/>

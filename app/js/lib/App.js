@@ -17,7 +17,8 @@ define(function(require, exports, module) {
 
 		RestrictedOrgApp = require('./RestrictedOrgApp'),
 		PersonalApp = require('./PersonalApp'),
-		OrgApp = require('./OrgApp'),
+		HostOrgApp = require('./HostOrgApp'),
+		ServiceProviderOrgApp = require('./ServiceProviderOrgApp'),
 
 		PublicAPIPool = require('./models/PublicAPIPool'),
 		PublicClientPool = require('./models/PublicClientPool'),
@@ -249,8 +250,12 @@ define(function(require, exports, module) {
 
 			return this.usercontext.getOrg(orgid)
 				.then(function(org) {
-
-					var app = new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, org);
+					var app;
+					if (org.matchType('home_organization')) {
+						app = new HostOrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, org);
+					} else if (org.matchType('service_provider')) {
+						app = new ServiceProviderOrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, org);
+					}
 					that.addApp(app);
 					return app;
 				});
@@ -279,10 +284,7 @@ define(function(require, exports, module) {
 
 				var promises = [];
 				that.usercontext.getOrgIdentifiers().map(function(orgid) {
-					// console.error(" ››› Setting up a new orgapp for " + orgid);
-					promises.push(that.usercontext.getOrg(orgid).then(function(org) {
-						that.addApp(new OrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, org));
-					}));
+					promises.push(that.addOrgAdmin(orgid));
 					that.defaultApp = orgid;
 				});
 				return Promise.all(promises).then(function() {
