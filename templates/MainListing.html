@@ -3,13 +3,14 @@
 	
 	<div class="col-md-6">
 		
-
+		{?createAllowed}
 		<div class="pull-right">
 			<button id="registerNewClient" class="btn registerNewClient">
 				<i class="fa fa-edit"></i>&nbsp;
 				{_.clientsnew}
 			</button>
 		</div>
+		{/createAllowed}
 
 		<h3>{_.clients}</h3>
 
@@ -26,12 +27,14 @@
 	</div>
 	<div class="col-md-6">
 		
+		{?createAllowed}
 		<div style="" class="pull-right">
 			<button id="registerNewAPIGK" class="btn registerNewAPIGK">
 				<i class="fa fa-edit"></i>&nbsp;
 				{_.apigksnew}
 			</button>
 		</div>
+		{/createAllowed}
 
 		<h3>{_.apigks}</h3>
 

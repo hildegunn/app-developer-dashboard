@@ -19,9 +19,12 @@ define(function(require, exports, module) {
 		PersonalApp = require('./PersonalApp'),
 		HostOrgApp = require('./HostOrgApp'),
 		ServiceProviderOrgApp = require('./ServiceProviderOrgApp'),
+		DelegatedOrgApp = require('./DelegatedOrgApp'),
+		DelegatedPersonalApp = require('./DelegatedPersonalApp'),
 
 		PublicAPIPool = require('./models/PublicAPIPool'),
 		PublicClientPool = require('./models/PublicClientPool'),
+		DelegatedEntityPool = require('./models/DelegatedEntityPool'),
 
 		ProviderData = require('./controllers/ProviderData'),
 
@@ -185,7 +188,7 @@ define(function(require, exports, module) {
 
 					that.publicapis = new PublicAPIPool(that.feideconnect);
 					that.publicClientPool = new PublicClientPool(that.feideconnect);
-
+					that.delegatedEntityPool = new DelegatedEntityPool(that.feideconnect);
 
 					$("#header").on("click", ".navbar-brand", function(e) {
 						e.preventDefault();
@@ -262,6 +265,26 @@ define(function(require, exports, module) {
 
 		},
 
+		"addDelegatedOrg": function(orgid, entityPool) {
+			var that = this;
+
+			return this.usercontext.getOrg(orgid)
+				.then(function(org) {
+					var app = new DelegatedOrgApp(that.feideconnect, that, that.usercontext, that.publicClientPool, that.publicapis, org, entityPool);
+					that.addApp(app);
+					return app;
+				});
+		},
+
+		"addDelegatedUser": function(userid, entityPool) {
+			var owner = {
+				id: userid,
+				name: "Delegated User"
+			};
+			var app = new DelegatedPersonalApp(this.feideconnect, this, this.usercontext, this.publicClientPool, this.publicapis, owner, entityPool);
+			this.addApp(app);
+			return app;
+		},
 
 		"initLoad": function() {
 			var that = this;
@@ -270,7 +293,8 @@ define(function(require, exports, module) {
 				this.draw(),
 				that.feideconnect.onAuthenticated(),
 				that.usercontext.onLoaded(),
-				that.appSelector.onLoaded()
+				that.appSelector.onLoaded(),
+				that.delegatedEntityPool.onLoaded()
 			])
 
 
@@ -287,11 +311,25 @@ define(function(require, exports, module) {
 					promises.push(that.addOrgAdmin(orgid));
 					that.defaultApp = orgid;
 				});
+
 				return Promise.all(promises).then(function() {
-					if (that.usercontext.isPlatformAdmin()) {
-						that.addApp(new PlatformAdminController('_platformadmin', that));
+					var promises = [];
+					var delOrgs = that.delegatedEntityPool.getOrganizations();
+					for (var orgid in delOrgs) {
+						if (!that.apps.hasOwnProperty(orgid)) {
+							promises.push(that.addDelegatedOrg(orgid, delOrgs[orgid]));
+						}
 					}
-					that.addApp(new NewOrgController('_neworg', that));
+					var delUsers = that.delegatedEntityPool.getUsers();
+					for (var userid in delUsers) {
+						that.addDelegatedUser(userid, delUsers[userid]);
+					}
+					return Promise.all(promises).then(function() {
+						if (that.usercontext.isPlatformAdmin()) {
+							that.addApp(new PlatformAdminController('_platformadmin', that));
+						}
+						that.addApp(new NewOrgController('_neworg', that));
+					});
 				});
 
 			})

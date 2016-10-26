@@ -1,4 +1,6 @@
 {
+	"delegated_heading": "Delegated Access",
+	"delegated_info": "You can see these applications and api gatekeepers because  the owner or organization has delegated access to you",
 	"add_admin_group": "Add administrator groups",
 	"admin_group_id": "Group ID of group to add",
 	"no_admins": "No adminstrator groups registered",

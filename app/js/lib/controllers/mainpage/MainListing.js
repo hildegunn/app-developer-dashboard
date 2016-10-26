@@ -68,7 +68,12 @@ define(function(require, exports, module) {
 
 			this.ebind("click", ".clientEntry", "selectedClient");
 			this.ebind("click", ".apigkEntry", "selectedAPIGK");
+			this.createAllowed = true;
+		},
 
+		"allowCreate": function(allow) {
+			this.createAllowed = allow;
+			this.draw();
 		},
 
 		"selectedClient": function(e) {
@@ -154,8 +159,12 @@ define(function(require, exports, module) {
 
 			return new Promise(function(resolve, reject) {
 
-				var view = {
-				};
+				var view = {};
+
+				if (that.createAllowed) {
+					view.createAllowed = true;
+				}
+
 				that.template.render(that.el, view).then(function() {
 					that.el.find('#listingClients').append(that.elClients);
 					that.el.find('#listingAPIGKs').append(that.elAPIGKs);
