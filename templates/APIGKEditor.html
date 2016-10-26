@@ -16,20 +16,13 @@
 
 	</div>
 
-
 	<div class="col-sm-10 tabcontainer">
-
-
-
 
 		<div id="tabBasic" class="row">
 
-
 			<div class="col-sm-9">
 
-
 				<form class="" style="">
-
 
 					<div class="form-group">
 						<label for="apiid">{_.identifier}</label>
@@ -87,13 +80,10 @@
 
 					</div>
 
-
-
 					<p><button class="btn btn-success actSaveChanges" class="">
 						<i class="glyphicon glyphicon-ok"></i> {_.savechanges}</button></p>
 
 				</form>
-
 
 				<div class="bs-callout bs-callout-success">
 					<h4><i class="fa fa-eye"></i> {_.regpublic}</h4>
@@ -115,14 +105,9 @@
 
 		</div>
 
-
-
-
 		<div id="tabExtended" class="row">
 
-
 			<div class="col-sm-12">
-
 
 				<form class="" style="">
 
@@ -145,10 +130,6 @@
 							placeholder="http://" value="{docurl}" />
 					</div>
 
-
-
-
-
 					<p><button class="btn btn-success actSaveChanges" class="">
 						<i class="glyphicon glyphicon-ok"></i> {_.savechanges}</button></p>
 
@@ -156,27 +137,15 @@
 
 				{>TimeInfo/}
 
-
 			</div>
 
-
 		</div>
-
-
-
-
-
-
-
-
-
 
 		<div id="tabAccess">
 
 			<div class="row" style="">
 
 				<div class="col-sm-5">
-				
 
 					{#trust}
 
@@ -243,9 +212,6 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 			</div>
 		</div>
 
-
-
-
 		<div id="tabScopes"  style="" class="">
 
 			<div class="row">
@@ -255,15 +221,11 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 				</div>
 			</div>
 
-
 			{>ScopeListing /}
 
 		</div>
 
-
-
 		<div id="tabRequests"  style="" class="row">
-
 
 			<div class="col-sm-12">
 
@@ -391,9 +353,6 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 										{/sd}
 									</tr>
 
-
-
-
 									{#sd.subscopes}
 										<tr>
 											{+gkReqScopeLine/}
@@ -403,31 +362,25 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 										<tr><td colspan="5">{_.no_subscopes}</td></tr>
 									{/sd.subscopes}
 
-
 								</tbody>
 
 							</table>
 
 							<div class="pull-right">
 								
-							<button class="btn btn-primary btn-sm actUpdateAuthz">{_.update_authorizations}</button>
+							    <button class="btn btn-primary btn-sm actUpdateAuthz">{_.update_authorizations}</button>
 
 							</div>
-
 
 						</div>
 					</div>
 
 				{/clientsReq}
 
-
-
-
 			</div>
 		</div>
 
 		<div id="tabClients"  style="" class="row">
-
 
 			<div class="col-sm-12">
 
@@ -508,13 +461,9 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 										<tr><td colspan="5">{_.no_subscopes}</td></tr>
 									{/sd.subscopes}
 
-
 								</tbody>
 
 							</table>
-
-
-
 
 							{#orgadminscopematrix}
 								<div style="margin-top: 2em">
@@ -522,21 +471,16 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 								</div>
 							{/orgadminscopematrix}
 
-
-
 							<div class="pull-right">
 								
 								<button class="btn btn-primary btn-sm actUpdateAuthz">{_.update_authorizations}</button>
 
 							</div>
 
-
 						</div>
 					</div>
 
 				{/clients}
-
-
 
 			</div>
 		</div>
@@ -555,25 +499,19 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 				<p>{_.del_apigk_question}</p>
 
-				<div><button class="btn btn-lg btn-danger actDelete">
-					<i class="glyphicon glyphicon-warning-sign"></i> 
-					{_.del_apigk_button}</button></div>
+				<div>
+					<button class="btn btn-lg btn-danger actDelete">
+						<i class="glyphicon glyphicon-warning-sign"></i>
+						{_.del_apigk_button}
+					</button>
+				</div>
 
 			</div>
 
 		</div>
 
-
-
-
 		</div>
 
-
-
-
-
-
 	</div>
-
 
 </div>
