@@ -199,7 +199,7 @@ define(function(require) {
 			} else {
 				view.client.ownerName = this.usercontext.user.name;
 			}
-			console.log(this.usercontext.groups);
+
 			for (var g in this.usercontext.groups) {
 				if ($.inArray(g, this.current.admins) < 0) {
 					view.groups.push(this.usercontext.groups[g].getView());

@@ -109,6 +109,14 @@ define(function(require, exports, module) {
 			this.current = item;
 
 			var view = item.getView(this.feideconnect);
+
+			view.groups =  [];
+			for (var g in this.usercontext.groups) {
+				if ($.inArray(g, this.current.admins) < 0) {
+					view.groups.push(this.usercontext.groups[g].getView());
+				}
+			}
+
 			// console.error("About to pass on view", view);
 			this.scopedefbuilder.setAPIGK(item);
 
