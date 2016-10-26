@@ -13,8 +13,6 @@ define(function(require, exports, module) {
 	var AppSelector = Controller.extend({
 
 		"init": function(el) {
-
-			var that = this;
 			this.apps = [];
 			this.currentAppID = null;
 

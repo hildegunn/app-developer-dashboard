@@ -26,7 +26,6 @@ define(function(require, exports, module) {
 	var Statistics = Controller.extend({
 
 		"init": function(feideconnect, clientid) {
-			var that = this;
 			this.feideconnect = feideconnect;
 			this.clientid = clientid;
 
@@ -197,7 +196,6 @@ define(function(require, exports, module) {
 		},
 
 		"getStats": function(clientid) {
-			var that = this;
 			return this.processed;
 		}
 

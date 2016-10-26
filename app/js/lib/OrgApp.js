@@ -11,7 +11,6 @@ define(function(require, exports, module) {
 	var OrgApp = BaseApp.extend({
 
 		"init": function(feideconnect, app, usercontext, publicClientPool, publicapis, org, clientPool) {
-			var that = this;
 			this.org = org;
 
 			this.clientpool = clientPool;

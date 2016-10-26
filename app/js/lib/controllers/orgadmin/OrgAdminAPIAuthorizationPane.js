@@ -19,9 +19,8 @@ define(function(require, exports, module) {
 	 * each org.
 	 */
 	var OrgAdminAPIAuthorizationPane = Pane.extend({
-		"init": function(feideconnect, orgapp, orgAdminAPIclients, publicapis) {
 
-			var that = this;
+		"init": function(feideconnect, orgapp, orgAdminAPIclients, publicapis) {
 			this.feideconnect = feideconnect;
 			this.orgapp = orgapp;
 			this.orgAdminAPIclients = orgAdminAPIclients;
@@ -107,7 +106,6 @@ define(function(require, exports, module) {
 		},
 
 		"draw": function() {
-			var that = this;
 			var clientview = this.apiscopeset.getClientView();
 			var view = {
 				"clients": clientview

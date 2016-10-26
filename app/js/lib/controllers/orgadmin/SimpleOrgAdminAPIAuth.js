@@ -14,9 +14,8 @@ define(function(require, exports, module) {
 
 
 	var SimpleOrgAdminAPIAuth = Controller.extend({
-		"init": function(feideconnect, orgAdminAPIs) {
 
-			var that = this;
+		"init": function(feideconnect, orgAdminAPIs) {
 			this.feideconnect = feideconnect;
 			this.orgAdminAPIs = orgAdminAPIs;
 
@@ -80,8 +79,6 @@ define(function(require, exports, module) {
 
 
 		"draw": function() {
-
-			var that = this;
 			// console.error("DRWA");
 			var view = this.processView(this.orgAdminAPIs.getClients());
 

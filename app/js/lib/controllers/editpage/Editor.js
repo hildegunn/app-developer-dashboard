@@ -124,8 +124,6 @@ define(function(require, exports, module) {
 
 		"selectTab": function(id) {
 
-			var that = this;
-
 			this.currentTab = id;
 
 			this.el.find(".tabselector li").each(function(i, el) {

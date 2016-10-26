@@ -104,8 +104,6 @@ define(function(require, exports, module) {
 		},
 
 		"draw": function() {
-			var that = this;
-
 			var clientview = [];
 			for(var key in this.clients) {
 				var x = this.clients[key].getView();

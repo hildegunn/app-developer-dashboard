@@ -10,8 +10,8 @@ define(function(require, exports, module) {
 
 
 	var APIScopeSet = Controller.extend({
+
 		"init": function(feideconnect, orgAdminAPIclients, publicapis) {
-			var that = this;
 			this.clients = null;
 			this.feideconnect = feideconnect;
 			this.orgAdminAPIclients = orgAdminAPIclients;

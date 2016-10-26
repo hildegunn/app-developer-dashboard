@@ -59,7 +59,6 @@ define(function(require, exports, module) {
 		"updateOrgScopeControllers": function() {
 
 			// console.error("updateOrgScopeControllers");
-			var that = this;
 			var t = this.el.find("#basicOrgAdminPolicy");
 			if (t.prop("checked")) {
 				t.closest("form").find(".orgadmintarget").hide();

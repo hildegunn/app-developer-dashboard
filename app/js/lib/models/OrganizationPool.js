@@ -12,7 +12,6 @@ define(function(require, exports, module) {
 
 	var OrganizationPool = Controller.extend({
 		"init": function(feideconnect) {
-			var that = this;
 			this.feideconnect = feideconnect;
 			this.orgs = {};
 

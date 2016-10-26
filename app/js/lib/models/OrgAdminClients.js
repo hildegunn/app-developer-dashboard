@@ -13,10 +13,8 @@ define(function(require, exports, module) {
 
 
 	var OrgAdminClients = Controller.extend({
+
 		"init": function(feideconnect, orgid) {
-
-			var that = this;
-
 			this.feideconnect = feideconnect;
 			this.orgid = orgid;
 

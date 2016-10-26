@@ -11,8 +11,6 @@ define(function(require, exports, module) {
 	var UserContext = Controller.extend({
 
 		"init": function(feideconnect, app) {
-
-			var that = this;
 			this.feideconnect = feideconnect;
 			this.app = app;
 			this.user = null;

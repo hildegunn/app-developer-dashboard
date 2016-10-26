@@ -11,8 +11,6 @@ define(function(require, exports, module) {
 	var PersonalApp = BaseApp.extend({
 
 		"init": function(feideconnect, app, usercontext, publicClientPool, publicapis) {
-			var that = this;
-
 			this.clientpool = new ClientPool(feideconnect, null);
 
 			this._super(feideconnect, app, usercontext, publicClientPool, publicapis);

@@ -14,10 +14,8 @@ define(function(require, exports, module) {
 
 
 	var DelegatedEntityPool = Controller.extend({
+
 		"init": function(feideconnect) {
-
-			var that = this;
-
 			this.feideconnect = feideconnect;
 
 			this.organizations = {};

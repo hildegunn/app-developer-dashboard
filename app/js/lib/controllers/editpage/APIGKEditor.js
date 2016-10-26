@@ -249,7 +249,6 @@ define(function(require, exports, module) {
 		"actSaveChanges": function(e) {
 			e.preventDefault();
 
-			var that = this;
 			var obj;
 
 			this.current.name = this.el.find("#apiname").val();

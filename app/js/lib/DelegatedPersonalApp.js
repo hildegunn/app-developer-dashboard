@@ -9,7 +9,6 @@ define(function(require, exports, module) {
 	var DelegatedOrgApp = BaseApp.extend({
 
 		"init": function(feideconnect, app, usercontext, publicClientPool, publicapis, owner, clientPool) {
-			var that = this;
 			this.owner = owner;
 
 			this.clientpool = clientPool;

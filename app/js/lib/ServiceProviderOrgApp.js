@@ -10,7 +10,6 @@ define(function(require, exports, module) {
 	var HostOrgApp = OrgApp.extend({
 
 		"init": function(feideconnect, app, usercontext, publicClientPool, publicapis, org) {
-			var that = this;
 			var clientPool = new ClientPool(feideconnect, org.id);
 
 			this._super(feideconnect, app, usercontext, publicClientPool, publicapis, org, clientPool);

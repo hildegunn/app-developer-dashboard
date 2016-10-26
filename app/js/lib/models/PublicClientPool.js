@@ -13,7 +13,6 @@ define(function(require, exports, module) {
 	var PublicClientPool = Controller.extend({
 		"init": function(feideconnect) {
 
-			var that = this;
 			this.feideconnect = feideconnect;
 
 			this.clients = {};

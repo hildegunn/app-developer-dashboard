@@ -9,7 +9,6 @@ define(function(require, exports, module) {
 	var ProviderData = Controller.extend({
 
 		"init": function(app) {
-			var that = this;
 			this.app = app;
 			this._super(undefined, true);
 		},

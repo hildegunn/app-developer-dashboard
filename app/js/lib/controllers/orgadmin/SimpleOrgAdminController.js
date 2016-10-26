@@ -83,7 +83,6 @@ define(function(require, exports, module) {
 
 
 		"draw": function() {
-			var that = this;
 			var view = this.processView(this.orgAdminClients.getClients());
 			view.isPlatformAdmin = this.usercontext.isPlatformAdmin();
 

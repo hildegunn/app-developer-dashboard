@@ -123,9 +123,6 @@ define(function(require, exports, module) {
 		},
 
 		"serviceMod": function(service, add) {
-			var that = this;
-
-
 			if (add) {
 				return this.feideconnect.orgServiceAdd(this.orgid, service)
 					.then(this.proxy("loadOrg"))
@@ -182,7 +179,6 @@ define(function(require, exports, module) {
 
 		"initLoad": function() {
 			// console.error("ORG LOAD ...");
-			var that = this;
 			this.loadOrg()
 				.then(this.proxy("draw"))
 				.then(this.proxy("loadLDAPstatus"))

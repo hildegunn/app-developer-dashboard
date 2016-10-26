@@ -361,7 +361,6 @@ define(function(require) {
 		},
 
 		"_drawAPIs": function(own) {
-			var that = this;
 			var view = {
 				"apis": []
 			};

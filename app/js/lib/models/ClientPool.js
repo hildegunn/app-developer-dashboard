@@ -13,10 +13,8 @@ define(function(require, exports, module) {
 
 
 	var ClientPool = Controller.extend({
+
 		"init": function(feideconnect, orgid) {
-
-			var that = this;
-
 			// console.error("setting up clientpool with orgid ", orgid);
 
 			this.feideconnect = feideconnect;

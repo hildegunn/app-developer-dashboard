@@ -12,8 +12,8 @@ define(function(require, exports, module) {
 		template = require('text!templates/DelegatedMain.html');
 
 	var ServiceProviderOrgMain = Pane.extend({
+
 		"init": function(mainlisting, org) {
-			var that = this;
 			this._super();
 			this.org = org;
 
