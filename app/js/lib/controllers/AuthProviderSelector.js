@@ -57,7 +57,6 @@ define(function(require, exports, module) {
 			this.el.on("change", "input.selectgroup", function(e) {
 				e.preventDefault();
 				e.stopPropagation();
-				var t = $(e.currentTarget);
 				that.updateDataFromInputControls();
 			});
 
@@ -224,7 +223,6 @@ define(function(require, exports, module) {
 		},
 
 		"getProviderExtraView": function(item, restricted) {
-			var txt = '';
 			var classes = [];
 			var id = item.def.join('|');
 			var active = this.hasItem(id);
@@ -246,7 +244,6 @@ define(function(require, exports, module) {
 
 			var authbase = this.feideconnect.config.apis.auth;
 
-			var iconImage = '';
 			if (item.iconImage) {
 				view.iconImage = authbase + '/static/media/disco/' + item.iconImage;
 			} else if (item.icon) {

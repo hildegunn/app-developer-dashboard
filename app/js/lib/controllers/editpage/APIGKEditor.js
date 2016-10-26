@@ -147,8 +147,6 @@ define(function(require, exports, module) {
 					view.clients = [];
 					view.clientsReq = [];
 
-					var reqClientsReq = [];
-
 					for (i = 0; i < clients.length; i++) {
 
 						nc = new Client(clients[i]);
@@ -224,8 +222,6 @@ define(function(require, exports, module) {
 				"scopes_remove": []
 			};
 
-
-			var client = this.clients[clientid];
 			for (var scope in scopes) {
 				if (scopes[scope]) {
 					authorizeScopes.scopes_add.push(scope);
@@ -248,8 +244,6 @@ define(function(require, exports, module) {
 
 		"actSaveChanges": function(e) {
 			e.preventDefault();
-
-			var obj;
 
 			this.current.name = this.el.find("#apiname").val();
 			this.current.descr = this.el.find("#descr").val();

@@ -68,8 +68,7 @@ define(function(require, exports, module) {
 					// console.log("DATA CLIENT REQUESTS...", clients);
 
 					that.clientRequests = [];
-					var i, nc, cv;
-					var reqClientsReq = [];
+					var i, nc;
 
 					for (i = 0; i < clients.length; i++) {
 						nc = new Client(clients[i]);
@@ -85,7 +84,7 @@ define(function(require, exports, module) {
 		// this will need to wait for both to be completed.
 		"processClientRequests": function() {
 
-			var i, k;
+			var i;
 
 			for(var apigkid in this.apigks) {
 

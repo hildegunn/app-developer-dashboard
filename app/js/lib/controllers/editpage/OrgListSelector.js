@@ -123,7 +123,6 @@ define(function(require, exports, module) {
 				});
 			}
 			for (i = 0; i < this.providerdata.orgs.length; i++) {
-				var c = i % noc;
 				this.providerdata.orgs[i].selected = this.isSelected(this.providerdata.orgs[i].id);
 				columns[i % noc].orgs.push(this.providerdata.orgs[i]);
 			}

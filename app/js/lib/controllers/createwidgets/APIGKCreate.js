@@ -179,7 +179,6 @@ define(function(require, exports, module) {
 			
 
 			var identifier = $(this.el).find("#newAPIid").val();
-			var name = $(this.el).find("#newAPIname").val(); 
 			var endpoint = $(this.el).find("#newAPIendpoint").val();
 
 			if (!identifier.match(/^[a-z0-9\-_]+$/)) {

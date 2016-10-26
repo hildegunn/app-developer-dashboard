@@ -43,8 +43,6 @@ define(function(require, exports, module) {
 			var that = this;
 			var data = {};
 
-
-			var items = [];
 			this.el.find("input.scopeauthentry").each(function(i, item) {
 				var clientid = $(item).data("clientid");
 				var scope = $(item).data("scopeid");

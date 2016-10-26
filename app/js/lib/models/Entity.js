@@ -204,7 +204,6 @@ define(function(require, exports, module) {
 			"orgs": []
 		};
 
-		var orgauthorization = client.orgauthorization;
 		var orgs = apigk.scopedef.getRealmList();
 		var allScopes = client.getScopesObjects();
 		var scopes = apigk.getOrgTargetedScopes(allScopes);

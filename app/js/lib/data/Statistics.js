@@ -119,7 +119,6 @@ define(function(require, exports, module) {
 					resolve();
 				}
 
-				var ix = 0;
 				var fillrunn = that.first.clone();
 				while (!that.last.isBefore(fillrunn)) {
 					var fidx = fillrunn.format('YYYY-MM-DD HH');
