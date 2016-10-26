@@ -279,7 +279,7 @@ define(function(require, exports, module) {
 		"addDelegatedUser": function(userid, entityPool) {
 			var owner = {
 				id: userid,
-				name: "Delegated User"
+				name: this.delegatedEntityPool.getUsersName(userid)
 			};
 			var app = new DelegatedPersonalApp(this.feideconnect, this, this.usercontext, this.publicClientPool, this.publicapis, owner, entityPool);
 			this.addApp(app);

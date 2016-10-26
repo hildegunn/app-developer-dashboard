@@ -22,6 +22,7 @@ define(function(require, exports, module) {
 
 			this.organizations = {};
 			this.users = {};
+			this.usersNames = {};
 			this._super();
 			this.initLoad();
 		},
@@ -52,6 +53,8 @@ define(function(require, exports, module) {
 				that.loadClients(),
 				that.loadAPIGKs(),
 			]).then(function() {
+				return that.resolveUsersNames();
+			}).then(function() {
 				that.emit("orgsChange", that.organizations);
 				that.emit("usersChange", that.users);
 			});
@@ -86,6 +89,32 @@ define(function(require, exports, module) {
 						that._set(new APIGK(apigks[i]), 'apigks');
 					}
 				});
+		},
+
+		"resolveUsersNames": function() {
+			var that = this;
+			var promises = [];
+			var nameFunc = function(userid, clientid) {
+				return that.feideconnect.getPublicClient(clientid).then(function(client) {
+					that.usersNames[userid] = client.owner.name;
+				});
+			};
+			for (var userid in this.users) {
+				var found = false;
+				for (var clientid in this.users[userid].clients) {
+					promises.push(nameFunc(userid, clientid));
+					found = true;
+					break;
+				}
+				if (!found) {
+					this.usersNames[userid] = "Unknown user";
+				}
+			}
+			return Promise.all(promises);
+		},
+
+		"getUsersName": function(userid) {
+			return this.usersNames[userid];
 		},
 
 		"getOrganizations": function() {
