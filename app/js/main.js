@@ -56,8 +56,8 @@ define.amd.dust = true;
 if (!window.console) {
 	window.console = {
 		"log": function() {},
-		"error": function() {},
-	}
+		"error": function() {}
+	};
 }
 
 define(function(require, exports, module) {

@@ -355,13 +355,10 @@ define(function(require) {
 
 		},
 
-
-
 		"doSearch": function(term) {
 
 			return this.drawAPIs();
 		},
-
 
 		"_drawAPIs": function(own) {
 			var that = this;

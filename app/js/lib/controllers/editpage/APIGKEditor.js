@@ -234,7 +234,6 @@ define(function(require, exports, module) {
 				}
 			}
 
-
 			this.feideconnect.clientsAuthorizeAPIGKscopes(clientid, authorizeScopes)
 				.then(function(savedObject) {
 					var x = new Client(savedObject);

@@ -17,9 +17,8 @@ define(function(require, exports, module) {
 	var templateldapstatus = require('text!templates/ldapstatus.html');
 	var porgoperations = require('text!templates/partials/PlatformAdminOrgOperations.html');
 
-
-
 	var SimpleStatusController = Controller.extend({
+
 		"init": function(feideconnect, orgid, usercontext) {
 
 			var that = this;
@@ -67,15 +66,11 @@ define(function(require, exports, module) {
 					var file = files[i];
 
 					that.logoUploaded(file);
-
-
 				}
 				return false;
 			});
 
 		},
-
-
 
 		"logoUploaded": function(data) {
 			var that = this;
@@ -91,25 +86,18 @@ define(function(require, exports, module) {
 				});
 		},
 
-
-
-
 		"actGeo": function(e) {
 			e.preventDefault(); 
 			this.el.find("#geoeditorcontainer").show();
 
-
 			this.el.find("#geoeditor").text(this.orgstatus.getGeoTxt() );
 		},
-
-
 
 		"actCancelGeo": function(e) {
 			this.el.find("#geoeditorcontainer").hide();	
 		},
-		"actSaveGeo": function(e) {
-			
 
+		"actSaveGeo": function(e) {
 			try {
 				var geotxt = this.el.find("#geoeditor").val();
 				console.log("Got text", geotxt);
@@ -129,9 +117,8 @@ define(function(require, exports, module) {
 				this.el.find("#geoeditorcontainer").hide();
 			} catch (err) {
 				console.error("err", err);
-				alert("Invalid syntax.", err.message)
+				alert("Invalid syntax.", err.message);
 			}
-			
 
 		},
 
@@ -148,7 +135,6 @@ define(function(require, exports, module) {
 					.then(this.proxy("loadOrg"))
 					.then(this.proxy("draw"));
 			}
-
 
 		},
 

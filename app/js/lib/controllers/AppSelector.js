@@ -10,8 +10,6 @@ define(function(require, exports, module) {
 
 	var template = require('text!templates/AppSelector.html');
 
-
-
 	var AppSelector = Controller.extend({
 
 		"init": function(el) {

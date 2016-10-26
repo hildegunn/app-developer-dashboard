@@ -39,12 +39,10 @@ define(function(require, exports, module) {
 
 		},
 
-
 		"actSaveChanges": function(e) {
 			e.preventDefault();
+
 			var that = this;
-
-
 			var data = {};
 
 
@@ -64,8 +62,6 @@ define(function(require, exports, module) {
 			});
 			var orgid = this.orgapp.orgid.substring(7);
 
-
-
 			var toUpdate = [];
 			for (var key in data) {
 				toUpdate.push({
@@ -73,7 +69,6 @@ define(function(require, exports, module) {
 					"scopes": data[key]
 				});
 			}
-
 
 			return toUpdate.reduce(function(current, client) {
 				// console.error("UPDATING", orgid, client.client, client.scopes);

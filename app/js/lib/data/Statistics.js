@@ -18,7 +18,7 @@ define(function(require, exports, module) {
 			return 1;
 		}
 		return 0;
-	}
+	};
 
 
 	var template = require('text!templates/Statistics.html');
@@ -113,11 +113,11 @@ define(function(require, exports, module) {
 					var timeslot = moment(that.data[i].timeslot);
 					var timeidx = timeslot.format('YYYY-MM-DD HH');
 					// console.log("INSERT ", timeidx, timeslot, that.data[i]);
-					that.insertProcessedItem(timeidx, moment(timeidx + ':00'), that.data[i])
+					that.insertProcessedItem(timeidx, moment(timeidx + ':00'), that.data[i]);
 				}
 
 				if (that.first === null) {
-					resolve()
+					resolve();
 				}
 
 				var ix = 0;

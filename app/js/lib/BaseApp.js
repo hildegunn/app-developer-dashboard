@@ -167,8 +167,7 @@ define(function(require, exports, module) {
 		},
 
 		"getBCItem": function() {
-			var title = this.dict.getItem('mainoverviewpersonal');
-			var groupname = 'na';
+			var title = this.dict.getItem('mainoverviewpersonal');  // TODO make subclasses decide this
 			if (this.org) {
 				title = this.dict.getItem('mainoverview') + ' ' + this.org.name;
 			}

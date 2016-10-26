@@ -19,8 +19,8 @@ define(function(require, exports, module) {
 
 
 	var ScopeDefBuilder = Controller.extend({
-		"init": function(feideconnect, app) {
 
+		"init": function(feideconnect, app) {
 			var that = this;
 
 			this.feideconnect = feideconnect;
@@ -69,7 +69,7 @@ define(function(require, exports, module) {
 			}
 
 			this.el.find(".subScopeEntry").each(function(i, item) {
-				var x = $(item).find("input.scopePolicyOrgAdmin")
+				var x = $(item).find("input.scopePolicyOrgAdmin");
 				if (x.prop("checked")) {
 					// console.error("")
 					x.closest("form").find(".orgadmintarget").hide();

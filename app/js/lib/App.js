@@ -400,8 +400,6 @@ define(function(require, exports, module) {
 
 		},
 
-
-
 		"setErrorMessage": function(title, type, msg) {
 			type = (type ? type : "danger");
 			var logMessage = '';

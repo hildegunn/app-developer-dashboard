@@ -329,7 +329,7 @@ define(function(require, exports, module) {
 
 			}
 			this.template.render(this.el, view).then(function() {
-			});;
+			});
 		}
 
 
