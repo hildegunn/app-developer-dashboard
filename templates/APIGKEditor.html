@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-sm-2">
-			
+
 		<ul class="nav nav-pills nav-stacked tabselector" style="text-align: right">
 			<li role="presentation" data-tabid="tabBasic" class=""><a href="#">{_.basicinfo}</a></li>
 			<li role="presentation" data-tabid="tabExtended" class=""><a href="#">{_.extendedinfo}</a></li>
@@ -45,7 +45,7 @@
 							<input id="ispublic" class="" type="checkbox" {#statuses.public} checked="checked" {/statuses.public} /> {_.public_api}
 						</label>
 						<p>{_.public_api_info}</p>
-						
+
 					</div>
 
 					<div class="form-group">
@@ -69,7 +69,7 @@
 					<div class="form-group">
 						<label for="endpoint">{_.apiendpoint}</label>
 						<p>{_.apigk_endpoint_descr}</p>
-						
+
 						<input type="text" class="form-control" id="endpoint" placeholder="https://example.org/api" value="{endpoints[0]}" >
 
 						<div class="endpointFormatDescr">
@@ -95,7 +95,7 @@
 			</div>
 
 			<div class="col-sm-3 ">
-				
+
 				<div class="imagezone">
 					<img class="itemlogo"  src="{@apigkLogoURL id="{id}" /}" style="padding: 5px; border: 1px solid #ddd; border-radius: 4px; backgroud: #eee" />
 				</div>
@@ -120,14 +120,14 @@
 					<div class="form-group">
 						<label for="privacypolicyurl">{_.privacypolicyurl}</label>
 						<input class="form-control" id="privacypolicyurl" 
-							placeholder="http://" value="{privacypolicyurl}" />
+						       placeholder="http://" value="{privacypolicyurl}" />
 					</div>
 
 
 					<div class="form-group">
 						<label for="docurl">{_.api_documentation}</label>
 						<input class="form-control" id="docurl" 
-							placeholder="http://" value="{docurl}" />
+						       placeholder="http://" value="{docurl}" />
 					</div>
 
 					<p><button class="btn btn-success actSaveChanges" class="">
@@ -149,50 +149,50 @@
 
 					{#trust}
 
-					<p>{_.apigk_creds_info}</p>
+						<p>{_.apigk_creds_info}</p>
 
-					<dl>
-						<dt>{_.trust_type}</dt>
-						<dd><code>{type}</code></dd>
+						<dl>
+							<dt>{_.trust_type}</dt>
+							<dd><code>{type}</code></dd>
 
-						<dt>{_.username}</dt>
-						<dd><code>{username}</code></dd>
+							<dt>{_.username}</dt>
+							<dd><code>{username}</code></dd>
 
-						<dt>{_.password}</dt>
-						
-						<dd><code>{password}</code></dd>
-						
+							<dt>{_.password}</dt>
 
-					</dl>
+							<dd><code>{password}</code></dd>
+
+
+						</dl>
 					{/trust}
 				</div>
 
 				<div class="col-sm-7">
-					
+
 
 					<p>{_.apigk_baseurl_info}</p>
 
 					<p><code>https://{id}.{_appconfig.gkdomain}</code></p>
-					
+
 
 					{@blockTrans key="apigk_request_example"}
-						{:inurl}<code>https://{id}.{_appconfig.gkdomain}/foo/bar</code>
-						{:inrequest}
-<pre><code class="language-http">
+					{:inurl}<code>https://{id}.{_appconfig.gkdomain}/foo/bar</code>
+					{:inrequest}
+						<pre><code class="language-http">
 GET /foo/bar HTTP/1.1{~n}
 Host: {id}.{_appconfig.gkdomain}{~n}
 Authorization: Bearer a005656a-8510-4d34-8897-f10638bb7b05
-</code></pre>	
-						{:outurl}<code>{endpoints[0]}/foo/bar</code>
-						{:outrequest}
-<pre><code class="language-http">
+						</code></pre>
+					{:outurl}<code>{endpoints[0]}/foo/bar</code>
+					{:outrequest}
+						<pre><code class="language-http">
 GET {examplePathPrefix}/foo/bar HTTP/1.1{~n}
 Host: {exampleHost}{~n}
 Authorization: Basic XXXXXXXX{~n}
 X-Dataporten-clientid: 42b0c02e-0dda-4882-9da0-882a4b1abad6{~n}
 X-Dataporten-userid: 76a7a061-3c55-430d-8ee0-6f82ec42501f{~n}
 X-Dataporten-userid-sec: feide:xxxx@uninett.no
-</code></pre>
+						</code></pre>
 					{/blockTrans}
 					<p>{_.http_header_casing_note}</p>
 
@@ -237,7 +237,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 						<div class="col-md-8">
 
 							<div class="media">
-										
+
 								<div class="media-left">
 									<img class="media-object logo" src="{@clientLogoURL id="{id}" /}" alt="{_.logo_of_client}">
 								</div>
@@ -272,8 +272,8 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 				{<gkClientExtendedInfo}
 					<div style="margin-top: 1.4em">
 						{?systemdescr}
-						<h5>{_.extended_description_for_system_administrators}</h5>
-						<p class="list-group-item-text">{systemdescr|s|h|acceptnewline}</p>
+							<h5>{_.extended_description_for_system_administrators}</h5>
+							<p class="list-group-item-text">{systemdescr|s|h|acceptnewline}</p>
 						{/systemdescr}
 
 						<ul style="margin-top: .6em">
@@ -306,18 +306,18 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 						{:else}
 
 							{#status.requested}
-							<div class="radio">
-								<label>
-									<input type="radio" name="{fullid}" value="reject" class="radioscopeauthz">
-									<i class="fa fa-times"></i>&nbsp; {_.reject}
-								</label>
-							</div>
-							<div class="radio">
-								<label>
-									<input type="radio" name="{fullid}" value="accept" class="radioscopeauthz">
-									<i class="fa fa-check"></i>&nbsp; {_.accept}
-								</label>
-							</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="{fullid}" value="reject" class="radioscopeauthz">
+										<i class="fa fa-times"></i>&nbsp; {_.reject}
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="{fullid}" value="accept" class="radioscopeauthz">
+										<i class="fa fa-check"></i>&nbsp; {_.accept}
+									</label>
+								</div>
 
 
 							{/status.requested}
@@ -336,7 +336,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 								<thead>
 									<tr>
-										
+
 										<td>{_.scope_name}</td>
 										<td>{_.scope}</td>
 										<td>Policy</td>
@@ -349,7 +349,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 								<tbody>
 									<tr>
 										{#sd}
-										{+gkReqScopeLine/}
+											{+gkReqScopeLine/}
 										{/sd}
 									</tr>
 
@@ -367,8 +367,8 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 							</table>
 
 							<div class="pull-right">
-								
-							    <button class="btn btn-primary btn-sm actUpdateAuthz">{_.update_authorizations}</button>
+
+								<button class="btn btn-primary btn-sm actUpdateAuthz">{_.update_authorizations}</button>
 
 							</div>
 
@@ -401,12 +401,12 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 					<td>
 
 						{#status.accepted}
-						<input class="authscope" data-scopemoderate="{fullid}" type="checkbox" checked="checked" />
+							<input class="authscope" data-scopemoderate="{fullid}" type="checkbox" checked="checked" />
 						{:else}
 
-						{#status.requested}
-						<input class="authscope" data-scopemoderate="{fullid}" type="checkbox"  />
-						{/status.requested}
+							{#status.requested}
+								<input class="authscope" data-scopemoderate="{fullid}" type="checkbox"  />
+							{/status.requested}
 
 						{/status.accepted}
 
@@ -421,7 +421,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 							<div>
 								<p class="list-group-item-text" style="margin-top: 15px">{_.authorized_scopes_not_heading} &nbsp;
-								
+								    
 									{#scopes}
 										<code>{.}</code> &nbsp;
 									{/scopes}
@@ -434,7 +434,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 
 								<thead>
 									<tr>
-										
+
 										<td>{_.scope_name}</td>
 										<td>{_.scope}</td>
 										<td>Policy</td>
@@ -472,7 +472,7 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 							{/orgadminscopematrix}
 
 							<div class="pull-right">
-								
+
 								<button class="btn btn-primary btn-sm actUpdateAuthz">{_.update_authorizations}</button>
 
 							</div>
@@ -507,8 +507,6 @@ X-Dataporten-userid-sec: feide:xxxx@uninett.no
 				</div>
 
 			</div>
-
-		</div>
 
 		</div>
 
