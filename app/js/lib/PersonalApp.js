@@ -6,8 +6,7 @@ define(function(require, exports, module) {
 		BaseApp = require('./BaseApp'),
 
 		ClientPool = require('./models/ClientPool'),
-		PersonalMain = require('./controllers/mainpage/PersonalMain'),
-		$ = require('jquery');
+		PersonalMain = require('./controllers/mainpage/PersonalMain');
 
 	var PersonalApp = BaseApp.extend({
 

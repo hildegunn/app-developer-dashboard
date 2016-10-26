@@ -2,7 +2,6 @@ define(function(require, exports, module) {
 	"use strict";
 
 	var
-		$ = require('jquery'),
 		Controller = require('../controllers/Controller'),
 		Organiation = require('../models/Organization'),
 		Group = require('../models/Group'),

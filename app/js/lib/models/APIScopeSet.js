@@ -6,7 +6,6 @@ define(function(require, exports, module) {
 	// $ = require('jquery'),
 		Controller = require('../controllers/Controller'),
 		EventEmitter = require('../EventEmitter'),
-		Client = require('./Client'),
 		Scope = require('./Scope');
 
 

@@ -4,7 +4,6 @@ define(function(require, exports, module) {
 
 	var 
 
-		Class = require('../class'),
 		EventEmitter = require('../EventEmitter'),
 		Controller = require('../controllers/Controller'),
 		APIGK = require('./APIGK')

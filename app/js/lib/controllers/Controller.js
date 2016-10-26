@@ -3,8 +3,7 @@ define(function(require, exports, module) {
 	
 	var 
 		$ = require('jquery'),
-		Class = require('../class'),
-		EventEmitter = require('../EventEmitter')
+		Class = require('../class')
 		;
 	
 	var Controller = Class.extend({

@@ -5,7 +5,6 @@ define(function(require, exports, module) {
 		moment = require('bower/momentjs/moment'),
 		APIGK = require('./APIGK'),
 		Entity = require('./Entity'),
-		Scope = require('./Scope'),
 		utils = require('../utils');
 
 	function parseDate(input) {

@@ -10,10 +10,7 @@ define(function(require, exports, module) {
 
 		SimpleOrgAdminAPIAuth = require('../orgadmin/SimpleOrgAdminAPIAuth'),
 		SimpleOrgAdminController = require('../orgadmin/SimpleOrgAdminController'),
-		SimpleStatusController = require('../orgadmin/SimpleStatusController'),
-
-	$ = require('jquery')
-		;
+		SimpleStatusController = require('../orgadmin/SimpleStatusController');
 
 	var 
 		template = require('text!templates/HostOrgMain.html');

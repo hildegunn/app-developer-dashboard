@@ -11,8 +11,7 @@ define(function(require, exports, module) {
 		OrgAdminClients = require('./models/OrgAdminClients'),
 		OrgAdminAPIs = require('./models/OrgAdminAPIs'),
 
-		ClientPool = require('./models/ClientPool'),
-		$ = require('jquery');
+		ClientPool = require('./models/ClientPool');
 
 
 	var HostOrgApp = OrgApp.extend({

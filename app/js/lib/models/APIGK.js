@@ -2,10 +2,8 @@ define(function(require, exports, module) {
 	"use strict";
 
 	var
-		$ = require('jquery'),
 		moment = require('bower/momentjs/moment'),
 		Entity = require('./Entity'),
-		Client = require('./Client'),
 		ScopeDef = require('./ScopeDef');
 
 	function parseDate(input) {

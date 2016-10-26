@@ -10,7 +10,6 @@ define(function(require, exports, module) {
 		OrgListSelector = require('./OrgListSelector'),
 
 		EventEmitter = require('../../EventEmitter'),
-		utils = require('../../utils'),
 		$ = require('jquery');
 
 

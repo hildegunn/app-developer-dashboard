@@ -4,8 +4,7 @@ define(function(require, exports, module) {
 	var
 		moment = require('bower/momentjs/moment'),
 		Model = require('./Model'),
-		Scope = require('./Scope'),
-		utils = require('../utils');
+		Scope = require('./Scope');
 
 
 	function parseDate(input) {

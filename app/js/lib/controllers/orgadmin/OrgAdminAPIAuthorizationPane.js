@@ -9,7 +9,6 @@ define(function(require, exports, module) {
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
 
 		APIScopeSet = require('../../models/APIScopeSet'),
-		utils = require('../../utils'),
 		$ = require('jquery');
 
 	var

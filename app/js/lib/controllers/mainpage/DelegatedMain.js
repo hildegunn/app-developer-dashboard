@@ -6,10 +6,7 @@ define(function(require, exports, module) {
 		Pane = require('../Pane'),
 
 		Dictionary = require('../../Dictionary'),
-		EventEmitter = require('../../EventEmitter'),
-
-		$ = require('jquery')
-		;
+		EventEmitter = require('../../EventEmitter');
 
 	var 
 		template = require('text!templates/DelegatedMain.html');

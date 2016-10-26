@@ -5,8 +5,7 @@ define(function(require, exports, module) {
 	var
 		BaseApp = require('./BaseApp'),
 
-		ClientPool = require('./models/ClientPool'),
-		$ = require('jquery');
+		ClientPool = require('./models/ClientPool');
 
 
 	var OrgApp = BaseApp.extend({

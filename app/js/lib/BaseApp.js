@@ -11,10 +11,7 @@ define(function(require, exports, module) {
 		Client = require('./models/Client'),
 		APIGK = require('./models/APIGK'),
 		PaneController = require('./controllers/PaneController'),
-		Dictionary = require('./Dictionary'),
-		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
-		utils = require('./utils'),
-		$ = require('jquery');
+		Dictionary = require('./Dictionary');
 
 
 	var BaseApp = Pane.extend({

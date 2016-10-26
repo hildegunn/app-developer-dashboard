@@ -7,7 +7,6 @@ define(function(require, exports, module) {
 		Dictionary = require('../../Dictionary'),
 		EventEmitter = require('../../EventEmitter'),
 		TemplateEngine = require('bower/feideconnectjs/src/TemplateEngine'),
-		utils = require('../../utils'),
 		$ = require('jquery')
 		;
 

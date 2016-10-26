@@ -4,8 +4,6 @@ define(function(require, exports, module) {
 	var 
 		Pane = require('../Pane'),
 
-		Client = require('../../models/Client'),
-
 		EventEmitter = require('../../EventEmitter'),
 
 		$ = require('jquery')

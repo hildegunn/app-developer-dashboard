@@ -2,7 +2,6 @@ define(function(require, exports, module) {
 	"use strict";
 
 	var 
-		$ = require('jquery'),
 		Controller = require('../Controller'),
 		EventEmitter = require('../../EventEmitter'),
 		Dictionary = require('../../Dictionary'),
