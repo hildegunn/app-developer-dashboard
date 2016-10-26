@@ -209,15 +209,9 @@ define(function(require) {
 			var stats = new Statistics(this.app.feideconnect, item.id);
 
 			stats.onLoaded()
-				.then(function() {
-					var s = stats.getStats(item.id);
-					// console.log(s);
-				})
 				.catch(function(err) {
 					console.error("Error loading statistics for this client ", err);
 				});
-
-
 
 			var includeHidden = this.usercontext.isPlatformAdmin();
 			var scopes = item.getScopes(this.scopePolicy, includeHidden);
