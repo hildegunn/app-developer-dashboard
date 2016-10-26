@@ -2,16 +2,9 @@ define(function(require, exports, module) {
 	"use strict";
 
 	var
-		moment = require('bower/momentjs/moment'),
 		APIGK = require('./APIGK'),
 		Entity = require('./Entity'),
 		utils = require('../utils');
-
-	function parseDate(input) {
-		var x = input.substring(0, 19) + 'Z';
-		return moment(x);
-	}
-
 
 	var Client = Entity.extend({
 

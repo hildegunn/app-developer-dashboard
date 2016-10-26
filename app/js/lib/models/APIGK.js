@@ -2,15 +2,8 @@ define(function(require, exports, module) {
 	"use strict";
 
 	var
-		moment = require('bower/momentjs/moment'),
 		Entity = require('./Entity'),
 		ScopeDef = require('./ScopeDef');
-
-	function parseDate(input) {
-		var x = input.substring(0, 19) + 'Z';
-		// console.log("About to parse date " + input, x);
-		return moment(x);
-	}
 
 	function parseURL(url) {
 		var l = document.createElement("a");
