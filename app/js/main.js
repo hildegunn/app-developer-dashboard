@@ -67,7 +67,7 @@ define(function(require, exports, module) {
 		App = require('lib/App');
 
 	$(document).ready(function() {
-		new App();
+		var app = new App();
 	});
 
 });
